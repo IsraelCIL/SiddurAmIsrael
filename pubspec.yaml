@@ -34,6 +34,9 @@ dependencies:
   # Internationalization / Hebrew date formatting
   intl: ^0.19.0
 
+  # Hebrew / Jewish calendar calculations (offline-first)
+  kosher_dart: ^2.0.17
+
 # ─────────────────────────────────────────────────────────────────────────────
 # DEV / BUILD-TIME DEPENDENCIES
 # Code generation: dart run build_runner build --delete-conflicting-outputs
