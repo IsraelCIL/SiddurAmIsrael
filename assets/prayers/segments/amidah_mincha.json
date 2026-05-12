@@ -1,0 +1,10 @@
+{
+  "id": "amidah_mincha",
+  "default_text": "אֲדֹנָי, שְׂפָתַי תִּפְתָּח וּפִי יַגִּיד תְּהִלָּתֶךָ...\n[עמידת מנחה - נוסח ברירת מחדל]",
+  "variants": {
+    "shabbat_mincha": "אֲדֹנָי, שְׂפָתַי תִּפְתָּח...\n[עמידת שבת מנחה]"
+  },
+  "condition_flags": [],
+  "exclude_flags": [],
+  "optional": false
+}
