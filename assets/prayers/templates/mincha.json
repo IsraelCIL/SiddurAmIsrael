@@ -1,0 +1,48 @@
+{
+  "id": "mincha",
+  "name": "מנחה",
+  "segments": [
+    {
+      "segment_id": "ashrei",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "petihat_eliyahu",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": ["edot_mizrach"]
+    },
+    {
+      "segment_id": "kriat_hatorah_mincha",
+      "condition_flags": ["monday_thursday_mincha"],
+      "exclude_flags": [],
+      "optional": true,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "amidah_mincha",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "tachanun",
+      "condition_flags": [],
+      "exclude_flags": ["skip_tachanun"],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "aleinu",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    }
+  ]
+}

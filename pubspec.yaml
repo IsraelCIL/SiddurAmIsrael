@@ -62,8 +62,9 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
+    - assets/prayers/templates/
     - assets/prayers/segments/
-    - assets/prayers/structure/ashkenaz/
-    - assets/prayers/structure/sfard/
-    - assets/prayers/structure/edot_mizrach/
-    - assets/prayers/structure/chabad/
+    - assets/prayers/nusach/ashkenaz/
+    - assets/prayers/nusach/sfard/
+    - assets/prayers/nusach/edot_mizrach/
+    - assets/prayers/nusach/chabad/
