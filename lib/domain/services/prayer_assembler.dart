@@ -1,5 +1,5 @@
 import '../entities/assembled_segment.dart';
-import '../entities/nusach_override.dart';
+import '../entities/nusach_segment_text.dart';
 import '../entities/prayer_segment.dart';
 import '../entities/prayer_template.dart';
 import '../entities/user_context.dart';
@@ -18,11 +18,6 @@ class PrayerAssembler implements IPrayerAssembler {
   }) async {
     final template = await _repository.loadTemplate(templateId);
     final contextKeys = _buildContextKeys(userContext);
-    final nusachOverride = await _repository.loadNusachOverride(
-      userContext.nusach,
-      templateId,
-    );
-
     final results = <AssembledSegment>[];
 
     for (final entry in template.segments) {
@@ -32,9 +27,14 @@ class PrayerAssembler implements IPrayerAssembler {
 
       if (!_segmentPassesFilters(segment, contextKeys)) continue;
 
+      final nusachText = await _repository.loadNusachSegmentText(
+        userContext.nusach,
+        entry.segmentId,
+      );
+
       results.add(AssembledSegment(
         id: segment.id,
-        resolvedText: _resolveText(segment, nusachOverride, contextKeys),
+        resolvedText: _resolveText(segment, nusachText, contextKeys),
         optional: entry.optional || segment.optional,
       ));
     }
@@ -42,9 +42,6 @@ class PrayerAssembler implements IPrayerAssembler {
     return results;
   }
 
-  // Derives the full set of context keys used for flag checks and text resolution.
-  // Gender and Israel-status are normalized into flat strings so the resolution
-  // algorithm treats them identically to calendar flags.
   List<String> _buildContextKeys(UserContext ctx) => [
         ...ctx.activeFlags,
         ctx.gender == Gender.male ? 'gender_male' : 'gender_female',
@@ -56,14 +53,11 @@ class PrayerAssembler implements IPrayerAssembler {
     UserContext userContext,
     List<String> contextKeys,
   ) {
-    // Nusach-specific segments: skip entirely when the user's nusach is not listed.
     if (entry.allowedNusach.isNotEmpty &&
         !entry.allowedNusach.contains(userContext.nusach)) {
       return false;
     }
-    // All condition_flags must be present.
     if (!entry.conditionFlags.every(contextKeys.contains)) return false;
-    // No exclude_flag may be present.
     if (entry.excludeFlags.any(contextKeys.contains)) return false;
     return true;
   }
@@ -75,23 +69,20 @@ class PrayerAssembler implements IPrayerAssembler {
   }
 
   // Priority resolution (highest to lowest):
-  //   P1 — nusach override keyed as '{id}:{context}'
-  //   P2 — nusach override keyed as '{id}'
-  //   P3 — segment variant keyed by context string
-  //   P4 — segment default_text
+  //   P1 — nusach segment variant keyed by context flag
+  //   P2 — nusach segment text (nusach-specific default)
+  //   P3 — base segment variant keyed by context flag
+  //   P4 — base segment default_text
   String _resolveText(
     PrayerSegment segment,
-    NusachOverride? override,
+    NusachSegmentText? nusachText,
     List<String> contextKeys,
   ) {
-    if (override != null) {
+    if (nusachText != null) {
       for (final ctx in contextKeys) {
-        final key = '${segment.id}:$ctx';
-        if (override.overrides.containsKey(key)) return override.overrides[key]!;
+        if (nusachText.variants.containsKey(ctx)) return nusachText.variants[ctx]!;
       }
-      if (override.overrides.containsKey(segment.id)) {
-        return override.overrides[segment.id]!;
-      }
+      return nusachText.text;
     }
     for (final ctx in contextKeys) {
       if (segment.variants.containsKey(ctx)) return segment.variants[ctx]!;
