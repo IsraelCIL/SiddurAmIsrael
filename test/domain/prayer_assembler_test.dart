@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:smart_siddur/domain/entities/assembled_segment.dart';
-import 'package:smart_siddur/domain/entities/nusach_override.dart';
+import 'package:smart_siddur/domain/entities/nusach_segment_text.dart';
 import 'package:smart_siddur/domain/entities/prayer_segment.dart';
 import 'package:smart_siddur/domain/entities/prayer_template.dart';
 import 'package:smart_siddur/domain/entities/user_context.dart';
@@ -33,14 +33,15 @@ void main() {
     );
   }
 
-  void stubSegment(String id, {String text = 'default', Map<String, String> variants = const {}}) {
+  void stubSegment(String id,
+      {String text = 'default', Map<String, String> variants = const {}}) {
     when(() => repository.loadSegment(id)).thenAnswer(
       (_) async => PrayerSegment(id: id, defaultText: text, variants: variants),
     );
   }
 
-  void stubNoOverride(String nusach) {
-    when(() => repository.loadNusachOverride(nusach, any()))
+  void stubNoNusachText(String nusach) {
+    when(() => repository.loadNusachSegmentText(nusach, any()))
         .thenAnswer((_) async => null);
   }
 
@@ -52,66 +53,67 @@ void main() {
     test('P4 — returns default_text when nothing else matches', () async {
       stubTemplate('mincha', [const TemplateEntry(segmentId: 'ashrei')]);
       stubSegment('ashrei', text: 'default ashrei');
-      stubNoOverride('ashkenaz');
+      stubNoNusachText('ashkenaz');
 
       final result = await assembler.assemble(
         templateId: 'mincha',
         userContext: ashkUser,
       );
 
-      expect(result, [const AssembledSegment(id: 'ashrei', resolvedText: 'default ashrei')]);
+      expect(result,
+          [const AssembledSegment(id: 'ashrei', resolvedText: 'default ashrei')]);
     });
 
     test('P3 — segment variant wins over default_text', () async {
       stubTemplate('mincha', [const TemplateEntry(segmentId: 'ashrei')]);
-      stubSegment('ashrei', text: 'default', variants: {'shabbat_mincha': 'shabbat variant'});
-      stubNoOverride('sfard');
+      stubSegment('ashrei',
+          text: 'default', variants: {'rosh_chodesh': 'rosh chodesh ashrei'});
+      stubNoNusachText('sfard');
 
       final result = await assembler.assemble(
         templateId: 'mincha',
-        userContext: UserContext(nusach: 'sfard', activeFlags: ['shabbat_mincha']),
+        userContext: UserContext(nusach: 'sfard', activeFlags: ['rosh_chodesh']),
       );
 
-      expect(result.single.resolvedText, 'shabbat variant');
+      expect(result.single.resolvedText, 'rosh chodesh ashrei');
     });
 
-    test('P2 — nusach override wins over segment variant', () async {
+    test('P2 — nusach text wins over segment variant', () async {
       stubTemplate('mincha', [const TemplateEntry(segmentId: 'ashrei')]);
-      stubSegment('ashrei', text: 'default', variants: {'shabbat_mincha': 'shabbat variant'});
-      when(() => repository.loadNusachOverride('ashkenaz', 'mincha'))
-          .thenAnswer((_) async => const NusachOverride(
+      stubSegment('ashrei',
+          text: 'default', variants: {'rosh_chodesh': 'rosh chodesh ashrei'});
+      when(() => repository.loadNusachSegmentText('ashkenaz', 'ashrei'))
+          .thenAnswer((_) async => const NusachSegmentText(
+                id: 'ashrei',
                 nusach: 'ashkenaz',
-                prayerId: 'mincha',
-                overrides: {'ashrei': 'ashkenaz ashrei'},
+                text: 'ashkenaz ashrei',
               ));
 
       final result = await assembler.assemble(
         templateId: 'mincha',
-        userContext: UserContext(nusach: 'ashkenaz', activeFlags: ['shabbat_mincha']),
+        userContext: UserContext(nusach: 'ashkenaz', activeFlags: ['rosh_chodesh']),
       );
 
       expect(result.single.resolvedText, 'ashkenaz ashrei');
     });
 
-    test('P1 — nusach:context override wins over plain nusach override', () async {
+    test('P1 — nusach variant wins over plain nusach text', () async {
       stubTemplate('mincha', [const TemplateEntry(segmentId: 'ashrei')]);
       stubSegment('ashrei', text: 'default');
-      when(() => repository.loadNusachOverride('ashkenaz', 'mincha'))
-          .thenAnswer((_) async => const NusachOverride(
+      when(() => repository.loadNusachSegmentText('ashkenaz', 'ashrei'))
+          .thenAnswer((_) async => const NusachSegmentText(
+                id: 'ashrei',
                 nusach: 'ashkenaz',
-                prayerId: 'mincha',
-                overrides: {
-                  'ashrei': 'ashkenaz ashrei',
-                  'ashrei:shabbat_mincha': 'ashkenaz shabbat ashrei',
-                },
+                text: 'ashkenaz ashrei',
+                variants: {'rosh_chodesh': 'ashkenaz rosh chodesh ashrei'},
               ));
 
       final result = await assembler.assemble(
         templateId: 'mincha',
-        userContext: UserContext(nusach: 'ashkenaz', activeFlags: ['shabbat_mincha']),
+        userContext: UserContext(nusach: 'ashkenaz', activeFlags: ['rosh_chodesh']),
       );
 
-      expect(result.single.resolvedText, 'ashkenaz shabbat ashrei');
+      expect(result.single.resolvedText, 'ashkenaz rosh chodesh ashrei');
     });
   });
 
@@ -124,7 +126,7 @@ void main() {
       stubTemplate('mincha', [
         const TemplateEntry(segmentId: 'tachanun', excludeFlags: ['skip_tachanun']),
       ]);
-      stubNoOverride('ashkenaz');
+      stubNoNusachText('ashkenaz');
 
       final result = await assembler.assemble(
         templateId: 'mincha',
@@ -139,7 +141,7 @@ void main() {
         const TemplateEntry(segmentId: 'tachanun', excludeFlags: ['skip_tachanun']),
       ]);
       stubSegment('tachanun', text: 'tachanun text');
-      stubNoOverride('ashkenaz');
+      stubNoNusachText('ashkenaz');
 
       final result = await assembler.assemble(
         templateId: 'mincha',
@@ -156,7 +158,7 @@ void main() {
           conditionFlags: ['monday_thursday_mincha'],
         ),
       ]);
-      stubNoOverride('ashkenaz');
+      stubNoNusachText('ashkenaz');
 
       final result = await assembler.assemble(
         templateId: 'mincha',
@@ -174,7 +176,7 @@ void main() {
         ),
       ]);
       stubSegment('kriat_hatorah', text: 'torah reading');
-      stubNoOverride('ashkenaz');
+      stubNoNusachText('ashkenaz');
 
       final result = await assembler.assemble(
         templateId: 'mincha',
@@ -200,7 +202,7 @@ void main() {
           allowedNusach: ['edot_mizrach'],
         ),
       ]);
-      stubNoOverride('ashkenaz');
+      stubNoNusachText('ashkenaz');
 
       final result = await assembler.assemble(
         templateId: 'mincha',
@@ -217,7 +219,7 @@ void main() {
           allowedNusach: ['edot_mizrach'],
         ),
       ]);
-      stubNoOverride('sfard');
+      stubNoNusachText('sfard');
 
       final result = await assembler.assemble(
         templateId: 'mincha',
@@ -235,8 +237,7 @@ void main() {
         ),
       ]);
       stubSegment('petihat_eliyahu', text: 'eliyahu text');
-      when(() => repository.loadNusachOverride('edot_mizrach', 'mincha'))
-          .thenAnswer((_) async => null);
+      stubNoNusachText('edot_mizrach');
 
       final result = await assembler.assemble(
         templateId: 'mincha',
@@ -249,9 +250,9 @@ void main() {
     test('includes segment for all nusachim when allowed_nusach is empty', () async {
       stubTemplate('mincha', [const TemplateEntry(segmentId: 'ashrei')]);
       stubSegment('ashrei', text: 'ashrei text');
-      stubNoOverride('ashkenaz');
-      stubNoOverride('sfard');
-      stubNoOverride('edot_mizrach');
+      stubNoNusachText('ashkenaz');
+      stubNoNusachText('sfard');
+      stubNoNusachText('edot_mizrach');
 
       for (final user in [ashkUser, sfardUser, edotUser]) {
         final result = await assembler.assemble(
@@ -273,7 +274,7 @@ void main() {
       stubSegment('modeh_ani',
           text: 'מוֹדֶה אֲנִי',
           variants: {'gender_female': 'מוֹדָה אֲנִי'});
-      stubNoOverride('ashkenaz');
+      stubNoNusachText('ashkenaz');
 
       final result = await assembler.assemble(
         templateId: 'mincha',
@@ -288,7 +289,7 @@ void main() {
       stubSegment('modeh_ani',
           text: 'מוֹדֶה אֲנִי',
           variants: {'gender_female': 'מוֹדָה אֲנִי'});
-      stubNoOverride('ashkenaz');
+      stubNoNusachText('ashkenaz');
 
       final result = await assembler.assemble(
         templateId: 'mincha',
@@ -303,7 +304,7 @@ void main() {
       stubSegment('musaf_note',
           text: 'tefila b\'israel',
           variants: {'not_in_israel': 'tefila b\'chutz laaretz'});
-      stubNoOverride('ashkenaz');
+      stubNoNusachText('ashkenaz');
 
       final result = await assembler.assemble(
         templateId: 'mincha',
@@ -327,7 +328,7 @@ void main() {
             defaultText: 'text',
             excludeFlags: ['some_flag'],
           ));
-      stubNoOverride('ashkenaz');
+      stubNoNusachText('ashkenaz');
 
       final result = await assembler.assemble(
         templateId: 'mincha',
@@ -348,7 +349,7 @@ void main() {
         const TemplateEntry(segmentId: 'ashrei', optional: true),
       ]);
       stubSegment('ashrei', text: 'ashrei');
-      stubNoOverride('ashkenaz');
+      stubNoNusachText('ashkenaz');
 
       final result = await assembler.assemble(
         templateId: 'mincha',
@@ -362,7 +363,7 @@ void main() {
       stubTemplate('mincha', [const TemplateEntry(segmentId: 'ashrei')]);
       when(() => repository.loadSegment('ashrei')).thenAnswer((_) async =>
           const PrayerSegment(id: 'ashrei', defaultText: 'text', optional: true));
-      stubNoOverride('ashkenaz');
+      stubNoNusachText('ashkenaz');
 
       final result = await assembler.assemble(
         templateId: 'mincha',

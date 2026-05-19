@@ -43,6 +43,13 @@
       "exclude_flags": [],
       "optional": false,
       "allowed_nusach": []
+    },
+    {
+      "segment_id": "kaddish_yatom",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": ["edot_mizrach"]
     }
   ]
 }
