@@ -1,6 +1,5 @@
 import '../entities/assembled_segment.dart';
-import '../entities/nusach_segment_text.dart';
-import '../entities/prayer_segment.dart';
+import '../entities/blessing_section.dart';
 import '../entities/prayer_template.dart';
 import '../entities/user_context.dart';
 import '../repositories/i_prayer_repository.dart';
@@ -23,18 +22,14 @@ class PrayerAssembler implements IPrayerAssembler {
     for (final entry in template.segments) {
       if (!_entryPassesFilters(entry, userContext, contextKeys)) continue;
 
-      final segment = await _repository.loadSegment(entry.segmentId);
-
-      if (!_segmentPassesFilters(segment, contextKeys)) continue;
-
-      final nusachText = await _repository.loadNusachSegmentText(
+      final segment = await _repository.loadNusachSegment(
         userContext.nusach,
         entry.segmentId,
       );
 
       results.add(AssembledSegment(
         id: segment.id,
-        resolvedText: _resolveText(segment, nusachText, contextKeys),
+        resolvedText: _assembleSections(segment.sections, contextKeys),
         optional: entry.optional || segment.optional,
       ));
     }
@@ -62,31 +57,12 @@ class PrayerAssembler implements IPrayerAssembler {
     return true;
   }
 
-  bool _segmentPassesFilters(PrayerSegment segment, List<String> contextKeys) {
-    if (!segment.conditionFlags.every(contextKeys.contains)) return false;
-    if (segment.excludeFlags.any(contextKeys.contains)) return false;
-    return true;
-  }
-
-  // Priority resolution (highest to lowest):
-  //   P1 — nusach segment variant keyed by context flag
-  //   P2 — nusach segment text (nusach-specific default)
-  //   P3 — base segment variant keyed by context flag
-  //   P4 — base segment default_text
-  String _resolveText(
-    PrayerSegment segment,
-    NusachSegmentText? nusachText,
-    List<String> contextKeys,
-  ) {
-    if (nusachText != null) {
-      for (final ctx in contextKeys) {
-        if (nusachText.variants.containsKey(ctx)) return nusachText.variants[ctx]!;
-      }
-      return nusachText.text;
-    }
-    for (final ctx in contextKeys) {
-      if (segment.variants.containsKey(ctx)) return segment.variants[ctx]!;
-    }
-    return segment.defaultText;
+  String _assembleSections(List<BlessingSection> sections, List<String> contextKeys) {
+    return sections
+        .where((s) => s.conditionFlags.every(contextKeys.contains))
+        .where((s) => !s.excludeFlags.any(contextKeys.contains))
+        .map((s) => s.text)
+        .where((t) => t.isNotEmpty)
+        .join('\n');
   }
 }
