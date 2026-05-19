@@ -18,6 +18,7 @@ class HalachicCalendarService implements ICalendarFlagProvider {
     final flags = <String>{};
 
     _addDayIdentification(cal, date, context, flags);
+    _addSeasonFlags(cal, date, context, flags);
     _addTachanunFlags(cal, flags);
     _addLamenatzeachFlag(context, flags);
     _addAsaretYemeiTeshuva(cal, flags);
@@ -71,6 +72,7 @@ class HalachicCalendarService implements ICalendarFlagProvider {
     if (yomTov == JewishCalendar.HOSHANA_RABBA) {
       f.add(DayFlag.sukkot);
       f.add(DayFlag.hoshanahRaba);
+      f.add(DayFlag.cholHamoedSukkot);
     }
     if (yomTov == JewishCalendar.SHEMINI_ATZERES) {
       f.add(DayFlag.sheminiAtzeret);
@@ -167,7 +169,60 @@ class HalachicCalendarService implements ICalendarFlagProvider {
     return false;
   }
 
-  // ── 2. Tachanun ───────────────────────────────────────────────────────────
+  // ── 2. Season / precipitation flags ──────────────────────────────────────
+
+  void _addSeasonFlags(
+    JewishCalendar cal,
+    DateTime date,
+    UserContext ctx,
+    Set<String> f,
+  ) {
+    final m = cal.getJewishMonth();
+    final d = cal.getJewishDayOfMonth();
+
+    // mashiv_haruach: 22 Tishrei (Shemini Atzeret) through 14 Nisan (Erev Pesach)
+    if (_isMashivHaruachPeriod(m, d)) f.add(DayFlag.mashivHaruach);
+
+    // tal_umatar: Israel from 7 Cheshvan; Diaspora from Dec 4/5; both through 14 Nisan
+    if (_isTalUmatarPeriod(m, d, date, ctx.isInIsrael)) f.add(DayFlag.talUmatar);
+
+    // tisha_beav
+    if (cal.getYomTovIndex() == JewishCalendar.TISHA_BEAV) f.add(DayFlag.tishaBaav);
+  }
+
+  bool _isMashivHaruachPeriod(int m, int d) {
+    if (m == JewishDate.TISHREI && d >= 22) return true;
+    if (m >= JewishDate.CHESHVAN) return true;
+    if (m == JewishDate.NISSAN && d <= 14) return true;
+    return false;
+  }
+
+  bool _isTalUmatarPeriod(int m, int d, DateTime date, bool inIsrael) {
+    // Summer months: no tal u'matar
+    if (m >= JewishDate.IYAR && m < JewishDate.TISHREI) return false;
+    if (m == JewishDate.TISHREI && d < 22) return false;
+    // Ends before 15 Nisan
+    if (m == JewishDate.NISSAN && d >= 15) return false;
+
+    if (inIsrael) {
+      if (m == JewishDate.CHESHVAN && d < 7) return false;
+      return true;
+    }
+
+    // Diaspora: starts December 4 or 5
+    if (date.month == 12) return date.day >= _diasporaTalUmatarStartDay(date.year);
+    if (date.month <= 5) return true; // Jan–May: past December start
+    return false; // Oct–Nov: before December start
+  }
+
+  int _diasporaTalUmatarStartDay(int year) {
+    final nextYear = year + 1;
+    final nextIsLeap =
+        (nextYear % 4 == 0 && nextYear % 100 != 0) || nextYear % 400 == 0;
+    return nextIsLeap ? 5 : 4;
+  }
+
+  // ── 3. Tachanun ───────────────────────────────────────────────────────────
 
   void _addTachanunFlags(JewishCalendar cal, Set<String> f) {
     final m = cal.getJewishMonth();

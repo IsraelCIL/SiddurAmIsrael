@@ -89,6 +89,13 @@ abstract final class DayFlag {
   static const hamelech_hakadosh = 'hamelech_hakadosh';
   static const hamelech_hamishpat = 'hamelech_hamishpat';
 
+  // ── Season / precipitation ────────────────────────────────────────────────
+  static const mashivHaruach = 'mashiv_haruach';
+  static const talUmatar = 'tal_umatar';
+
+  // ── Specific fast days ────────────────────────────────────────────────────
+  static const tishaBaav = 'tisha_beav';
+
   // ── Injected segments ─────────────────────────────────────────────────────
   static const avinoMalkeinu = 'avinu_malkeinu';
   static const yaalehVeyavo = 'yaaleh_veyavo';
