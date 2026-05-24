@@ -3,7 +3,8 @@
   "name": "שחרית",
   "segments": [
 
-    {"segment_id": "birchot_hashachar",   "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
+    {"sub_template_id": "birchot_hatorah_ashkenaz",    "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
+    {"sub_template_id": "birchot_hashachar_ashkenaz",  "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
 
     {"segment_id": "akeidah",             "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
     {"segment_id": "akeidah_yehi_ratzon", "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
