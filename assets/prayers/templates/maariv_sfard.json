@@ -2,31 +2,171 @@
   "id": "maariv_sfard",
   "name": "מעריב",
   "segments": [
-
-    {"segment_id": "psalm_134",               "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
-    {"segment_id": "hashem_tzvaot_maariv",    "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
-    {"sub_template_id": "chatzi_kaddish",     "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
-
-    {"segment_id": "vehu_rachum_arvit",       "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
-    {"segment_id": "barchu",                  "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
-    {"segment_id": "maariv_aravim",           "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
-    {"segment_id": "ahavat_olam",             "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
-    {"segment_id": "shema",                   "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
-    {"segment_id": "emet_veemunh",            "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
-    {"segment_id": "hashkivenu",              "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
-
-    {"sub_template_id": "chatzi_kaddish",     "condition_flags": ["with_minyan"], "exclude_flags": [], "optional": false, "allowed_nusach": []},
-    {"sub_template_id": "amidah",             "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
-    {"sub_template_id": "kaddish_titkabal",   "condition_flags": ["with_minyan"], "exclude_flags": [], "optional": false, "allowed_nusach": []},
-
-    {"segment_id": "psalm_121",               "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
-    {"sub_template_id": "kaddish_yatom",      "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
-
-    {"segment_id": "barchu",                  "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
-    {"segment_id": "aleinu",                  "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
-    {"sub_template_id": "kaddish_yatom",      "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
-
-    {"segment_id": "ladavid",                 "condition_flags": ["ladavid_season"], "exclude_flags": [], "optional": false, "allowed_nusach": []},
-    {"sub_template_id": "kaddish_yatom",      "condition_flags": ["ladavid_season"], "exclude_flags": [], "optional": false, "allowed_nusach": []}
+    {
+      "segment_id": "psalm_134",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "hashem_tzvaot_maariv",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "sub_template_id": "chatzi_kaddish",
+      "condition_flags": [
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "vehu_rachum_arvit",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "barchu",
+      "condition_flags": [
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "maariv_aravim",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "maariv_ahavat_olam",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "shema",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "emet_veemunh",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "hashkivenu",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "sub_template_id": "chatzi_kaddish",
+      "condition_flags": [
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "sub_template_id": "amidah",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "sub_template_id": "kaddish_titkabal",
+      "condition_flags": [
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "psalm_121",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": true,
+      "allowed_nusach": []
+    },
+    {
+      "sub_template_id": "kaddish_yatom",
+      "condition_flags": [
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": true,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "barchu",
+      "condition_flags": [
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": true,
+      "allowed_nusach": []
+    },
+    {
+      "sub_template_id": "sefirat_haomer_sfard",
+      "condition_flags": [
+        "omer_period"
+      ],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "aleinu",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "sub_template_id": "kaddish_yatom",
+      "condition_flags": [
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "ladavid",
+      "condition_flags": [
+        "ladavid_season"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "sub_template_id": "kaddish_yatom",
+      "condition_flags": [
+        "ladavid_season",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    }
   ]
 }

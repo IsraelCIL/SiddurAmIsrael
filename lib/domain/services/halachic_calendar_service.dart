@@ -28,9 +28,60 @@ class HalachicCalendarService implements ICalendarFlagProvider {
     _addMizmorLetodahFlag(context, flags);
     _addTefillinFlag(context, flags);
     _addShemaHotzaahFlag(flags);
+    _addKriatHatorahFlag(flags);
+    _addMusafDayFlag(flags);
+    _addHallelFlags(cal, flags);
+    _addLulavDayFlag(flags);
     _addGenderAndIsrael(context, flags);
 
-    return DayFlags(flags: flags.toList());
+    // Sefirat HaOmer day: kosher_dart returns 1..49 during the count
+    // (16 Nisan through 5 Sivan), or -1 outside that window.
+    final int rawOmer = cal.getDayOfOmer();
+    final int? omerDay = (rawOmer >= 1 && rawOmer <= 49) ? rawOmer : null;
+    if (omerDay != null) flags.add(DayFlag.omerPeriod);
+
+    // Sukkot day (1..7): set only during 15–21 Tishrei.
+    final int? sukkotDay = _computeSukkotDay(cal);
+
+    return DayFlags(
+      flags: flags.toList(),
+      omerDay: omerDay,
+      sukkotDay: sukkotDay,
+    );
+  }
+
+  // ── Hallel ────────────────────────────────────────────────────────────────
+
+  void _addHallelFlags(JewishCalendar cal, Set<String> f) {
+    final tr = TefilaRules();
+    if (!tr.isHallelRecited(cal)) return;
+    if (tr.isHallelShalemRecited(cal)) {
+      f.add(DayFlag.fullHallel);
+    } else {
+      f.add(DayFlag.halfHallel);
+    }
+    // Derived: hallel_with_musaf — Hallel said on a Musaf day.
+    if (f.contains(DayFlag.musafDay)) f.add(DayFlag.hallelWithMusaf);
+  }
+
+  // ── Lulav day ────────────────────────────────────────────────────────────
+  // Set when lulav is taken: any Sukkot day (incl. CHM + Hoshana Raba),
+  // unless overridden by Shabbat. SA + Simchat Torah have no `sukkot` flag
+  // so they are already excluded.
+  void _addLulavDayFlag(Set<String> f) {
+    if (!f.contains(DayFlag.sukkot)) return;
+    if (f.contains(DayFlag.shabbat)) return;
+    f.add(DayFlag.lulavDay);
+  }
+
+  // ── Sukkot day (1..7) ────────────────────────────────────────────────────
+  // Returns the day-of-Sukkot (1 = 15 Tishrei, ..., 7 = 21 Tishrei / Hoshana
+  // Raba), or null if today is outside Sukkot.
+  int? _computeSukkotDay(JewishCalendar cal) {
+    if (cal.getJewishMonth() != JewishDate.TISHREI) return null;
+    final d = cal.getJewishDayOfMonth();
+    if (d < 15 || d > 21) return null;
+    return d - 14;
   }
 
   // ── 1. Day identification ─────────────────────────────────────────────────
@@ -410,6 +461,57 @@ class HalachicCalendarService implements ICalendarFlagProvider {
             !f.contains(DayFlag.erevPesach)) ||
         (f.contains(DayFlag.sukkot) && !f.contains(DayFlag.cholHamoedSukkot));
     if (isYomTovLevel) f.add(DayFlag.shemaHotzaah);
+  }
+
+  // ── 10b. Kriat HaTorah ────────────────────────────────────────────────────
+
+  void _addKriatHatorahFlag(Set<String> f) {
+    // Torah is read on: Monday/Thursday, Rosh Chodesh, public fast days
+    // (Tisha B'Av at Mincha too, but that's the fast_day flag), Chanukah,
+    // Purim, Chol HaMoed Pesach/Sukkot, Yom Tov, Shabbat.
+    final hasKriah = f.contains(DayFlag.mondayThursday) ||
+        f.contains(DayFlag.roshChodesh) ||
+        f.contains(DayFlag.fastDay) ||
+        f.contains(DayFlag.chanukah) ||
+        f.contains(DayFlag.purim) ||
+        f.contains(DayFlag.shushanPurim) ||
+        f.contains(DayFlag.cholHamoedPesach) ||
+        f.contains(DayFlag.cholHamoedSukkot) ||
+        f.contains(DayFlag.shabbat) ||
+        f.contains(DayFlag.roshHashanah) ||
+        f.contains(DayFlag.yomKippur) ||
+        f.contains(DayFlag.pesach) ||
+        f.contains(DayFlag.shavuot) ||
+        f.contains(DayFlag.sukkot) ||
+        f.contains(DayFlag.sheminiAtzeret) ||
+        f.contains(DayFlag.simchatTorah) ||
+        f.contains(DayFlag.hoshanahRaba);
+    if (hasKriah) f.add(DayFlag.kriatHatorah);
+  }
+
+  // ── 10c. Musaf day ────────────────────────────────────────────────────────
+
+  void _addMusafDayFlag(Set<String> f) {
+    // Musaf is recited on: Rosh Chodesh, Chol HaMoed Pesach/Sukkot, Yom Tov,
+    // Shabbat. (Hoshana Raba is Chol HaMoed Sukkot — already covered.)
+    final hasMusaf = f.contains(DayFlag.roshChodesh) ||
+        f.contains(DayFlag.cholHamoedPesach) ||
+        f.contains(DayFlag.cholHamoedSukkot) ||
+        f.contains(DayFlag.shabbat) ||
+        f.contains(DayFlag.roshHashanah) ||
+        f.contains(DayFlag.yomKippur) ||
+        f.contains(DayFlag.pesach) ||
+        f.contains(DayFlag.shavuot) ||
+        f.contains(DayFlag.sukkot) ||
+        f.contains(DayFlag.sheminiAtzeret) ||
+        f.contains(DayFlag.simchatTorah);
+    if (hasMusaf) f.add(DayFlag.musafDay);
+    // Musaf days for which the app currently has content (RC + CHM). Yom Tov
+    // and Shabbat are deliberately excluded for now.
+    final hasMusafContent = f.contains(DayFlag.roshChodesh) ||
+        f.contains(DayFlag.cholHamoedPesach) ||
+        f.contains(DayFlag.cholHamoedSukkot);
+    if (hasMusafContent) f.add(DayFlag.musafContent);
   }
 
   // ── 11. Gender + Israel flags ─────────────────────────────────────────────

@@ -8,10 +8,26 @@ import '../../../domain/entities/prayer_template.dart';
 class PrayerLocalDatasource {
   PrayerLocalDatasource({AssetBundle? bundle}) : _bundle = bundle ?? rootBundle;
 
+  static const String _manifestPath = 'assets/prayers/_manifest.json';
+
   final AssetBundle _bundle;
+  Future<_Manifest>? _manifestFuture;
+
+  Future<_Manifest> _manifest() {
+    return _manifestFuture ??= _loadManifest();
+  }
+
+  Future<_Manifest> _loadManifest() async {
+    final raw = await _bundle.loadString(_manifestPath);
+    final json = jsonDecode(raw) as Map<String, dynamic>;
+    return _Manifest.fromJson(json);
+  }
 
   Future<PrayerTemplate> loadTemplate(String templateId) async {
-    final json = await _readJson('assets/prayers/templates/$templateId.json');
+    final manifest = await _manifest();
+    final path = manifest.templates[templateId] ??
+        'assets/prayers/templates/$templateId.json';
+    final json = await _readJson(path);
     return PrayerTemplate.fromJson(json);
   }
 
@@ -19,19 +35,21 @@ class PrayerLocalDatasource {
     String nusach,
     String segmentId,
   ) async {
-    try {
-      final json = await _readJson(
-        'assets/prayers/nusach/$nusach/$segmentId.json',
-      );
-      return PrayerSegment.fromJson(json);
-    } catch (_) {
-      // Fall back to common/ for segments identical across all nusachim
-      // (biblical texts, shared psalms, kriat shema, etc.)
-      final json = await _readJson(
-        'assets/prayers/common/$segmentId.json',
-      );
+    final manifest = await _manifest();
+    final nusachPath = manifest.nusach[nusach]?[segmentId];
+    if (nusachPath != null) {
+      final json = await _readJson(nusachPath);
       return PrayerSegment.fromJson(json);
     }
+    final commonPath = manifest.common[segmentId];
+    if (commonPath != null) {
+      final json = await _readJson(commonPath);
+      return PrayerSegment.fromJson(json);
+    }
+    throw Exception(
+      'Segment "$segmentId" not found in manifest for nusach "$nusach" '
+      'and not present under common/.',
+    );
   }
 
   Future<Map<String, dynamic>> _readJson(String path) async {
@@ -65,5 +83,38 @@ class PrayerLocalDatasource {
       }).toList();
     }
     return result;
+  }
+}
+
+class _Manifest {
+  _Manifest({
+    required this.templates,
+    required this.nusach,
+    required this.common,
+  });
+
+  final Map<String, String> templates;
+  final Map<String, Map<String, String>> nusach;
+  final Map<String, String> common;
+
+  factory _Manifest.fromJson(Map<String, dynamic> json) {
+    Map<String, String> asStringMap(dynamic raw) {
+      if (raw is! Map) return <String, String>{};
+      return raw.map((k, v) => MapEntry(k as String, v as String));
+    }
+
+    final nusachRaw = json['nusach'];
+    final nusach = <String, Map<String, String>>{};
+    if (nusachRaw is Map) {
+      for (final entry in nusachRaw.entries) {
+        nusach[entry.key as String] = asStringMap(entry.value);
+      }
+    }
+
+    return _Manifest(
+      templates: asStringMap(json['templates']),
+      nusach: nusach,
+      common: asStringMap(json['common']),
+    );
   }
 }

@@ -17,14 +17,29 @@ class _FakeBundle extends AssetBundle {
   }
 }
 
+String _manifestJson({
+  Map<String, String> templates = const {},
+  Map<String, Map<String, String>> nusach = const {},
+  Map<String, String> common = const {},
+}) =>
+    jsonEncode(<String, dynamic>{
+      'templates': templates,
+      'nusach': nusach,
+      'common': common,
+    });
+
 void main() {
   group('PrayerLocalDatasource', () {
     // ── loadTemplate ──────────────────────────────────────────────────────────
 
     test('loadTemplate returns PrayerTemplate from asset JSON', () async {
+      const templatePath = 'assets/prayers/templates/mincha.json';
       final ds = PrayerLocalDatasource(
         bundle: _FakeBundle({
-          'assets/prayers/templates/mincha.json': jsonEncode(<String, dynamic>{
+          'assets/prayers/_manifest.json': _manifestJson(
+            templates: {'mincha': templatePath},
+          ),
+          templatePath: jsonEncode(<String, dynamic>{
             'id': 'mincha',
             'name': 'מנחה',
             'segments': <dynamic>[
@@ -50,10 +65,15 @@ void main() {
 
     test('loadNusachSegment returns PrayerSegment from nusach folder', () async {
       const sectionText = 'עָלֵינוּ לְשַׁבֵּֽחַ לַאֲדוֹן הַכֹּל';
+      const aleinuPath = 'assets/prayers/shared_global/nusach/ashkenaz/aleinu.json';
       final ds = PrayerLocalDatasource(
         bundle: _FakeBundle({
-          'assets/prayers/nusach/ashkenaz/aleinu.json':
-              jsonEncode(<String, dynamic>{
+          'assets/prayers/_manifest.json': _manifestJson(
+            nusach: {
+              'ashkenaz': {'aleinu': aleinuPath},
+            },
+          ),
+          aleinuPath: jsonEncode(<String, dynamic>{
             'id': 'aleinu',
             'sections': <dynamic>[
               <String, dynamic>{
@@ -71,14 +91,46 @@ void main() {
       expect(segment.sections.single.text, sectionText);
     });
 
+    test('loadNusachSegment falls back to common when nusach entry missing',
+        () async {
+      const commonPath =
+          'assets/prayers/shared_global/common/shema.json';
+      final ds = PrayerLocalDatasource(
+        bundle: _FakeBundle({
+          'assets/prayers/_manifest.json': _manifestJson(
+            common: {'shema': commonPath},
+          ),
+          commonPath: jsonEncode(<String, dynamic>{
+            'id': 'shema',
+            'sections': <dynamic>[
+              <String, dynamic>{
+                'text': 'שְׁמַע יִשְׂרָאֵל',
+                'condition_flags': <String>[],
+                'exclude_flags': <String>[],
+              },
+            ],
+          }),
+        }),
+      );
+
+      final segment = await ds.loadNusachSegment('ashkenaz', 'shema');
+      expect(segment.id, 'shema');
+      expect(segment.sections.single.text, 'שְׁמַע יִשְׂרָאֵל');
+    });
+
     // ── text normalization (List<String> → space-joined String) ───────────────
 
     test('loadNusachSegment joins List text inside sections with a single space',
         () async {
+      const avotPath = 'assets/prayers/shared_global/amidah/nusach/ashkenaz/avot.json';
       final ds = PrayerLocalDatasource(
         bundle: _FakeBundle({
-          'assets/prayers/nusach/ashkenaz/avot.json':
-              jsonEncode(<String, dynamic>{
+          'assets/prayers/_manifest.json': _manifestJson(
+            nusach: {
+              'ashkenaz': {'avot': avotPath},
+            },
+          ),
+          avotPath: jsonEncode(<String, dynamic>{
             'id': 'avot',
             'sections': <dynamic>[
               <String, dynamic>{
@@ -98,10 +150,15 @@ void main() {
     test('loadNusachSegment leaves a plain String text field unchanged',
         () async {
       const plain = 'בָּרוּךְ אַתָּה יְהֹוָה';
+      const avotPath = 'assets/prayers/shared_global/amidah/nusach/ashkenaz/avot.json';
       final ds = PrayerLocalDatasource(
         bundle: _FakeBundle({
-          'assets/prayers/nusach/ashkenaz/avot.json':
-              jsonEncode(<String, dynamic>{
+          'assets/prayers/_manifest.json': _manifestJson(
+            nusach: {
+              'ashkenaz': {'avot': avotPath},
+            },
+          ),
+          avotPath: jsonEncode(<String, dynamic>{
             'id': 'avot',
             'sections': <dynamic>[
               <String, dynamic>{
@@ -118,9 +175,13 @@ void main() {
       expect(segment.sections.single.text, plain);
     });
 
-    test('loadNusachSegment throws when the nusach file does not exist',
+    test('loadNusachSegment throws when the segment is missing entirely',
         () async {
-      final ds = PrayerLocalDatasource(bundle: _FakeBundle({}));
+      final ds = PrayerLocalDatasource(
+        bundle: _FakeBundle({
+          'assets/prayers/_manifest.json': _manifestJson(),
+        }),
+      );
       expect(
         () => ds.loadNusachSegment('ashkenaz', 'nonexistent'),
         throwsA(isA<Exception>()),
