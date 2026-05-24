@@ -10,6 +10,15 @@ class DayFlags with _$DayFlags {
 
   const factory DayFlags({
     @Default([]) List<String> flags,
+    // 1..49 during Sefirat HaOmer (16 Nisan through 5 Sivan). Null otherwise.
+    // When set, the [DayFlag.omerPeriod] flag is also added to [flags].
+    int? omerDay,
+    // 1..7 during the 7 days of Sukkot (15–21 Tishrei).
+    // 1 = Yom Tov (first day), 2..6 = Chol HaMoed, 7 = Hoshana Raba.
+    // Used to resolve the daily korban in Musaf and other day-specific
+    // content (Hoshanot, Daily Torah Reading, Gr"a Shir Shel Yom). Null
+    // outside Sukkot.
+    int? sukkotDay,
   }) = _DayFlags;
 
   // ── Convenience getters ────────────────────────────────────────────────────
@@ -32,8 +41,11 @@ class DayFlags with _$DayFlags {
   bool get sayYaalehVeyavo => flags.contains(DayFlag.yaalehVeyavo);
   bool get sayAlHaNisim => flags.contains(DayFlag.alHaNisim);
 
-  DayFlags operator +(DayFlags other) =>
-      DayFlags(flags: {...flags, ...other.flags}.toList());
+  DayFlags operator +(DayFlags other) => DayFlags(
+        flags: {...flags, ...other.flags}.toList(),
+        omerDay: other.omerDay ?? omerDay,
+        sukkotDay: other.sukkotDay ?? sukkotDay,
+      );
 }
 
 /// Canonical flag string constants — single source of truth.
@@ -88,6 +100,16 @@ abstract final class DayFlag {
   // ── Tefillin on Chol HaMoed ───────────────────────────────────────────────
   static const skipTefillin = 'skip_tefillin';
   static const tefillinOptionalAccordion = 'tefillin_optional_accordion';
+  // hefsek_tefillin: user makes a hefsek (interruption) between yad and rosh
+  // tefillin — relevant for EM's optional second bracha on rosh.
+  static const hefsekTefillin = 'hefsek_tefillin';
+
+  // ── Tzitzit / Tallit ──────────────────────────────────────────────────────
+  // wears_tallit_gadol: user wears a Tallit Gadol (vs. only the small under-
+  // garment). Determines which bracha is recited:
+  //   - true  → "להתעטף בציצית" (birkat_tzitzit_gadol)
+  //   - false → "על מצות ציצית" (birkat_tzitzit_katan)
+  static const wearsTallitGadol = 'wears_tallit_gadol';
 
   // ── Aseret Yemei Teshuva text changes ────────────────────────────────────
   static const hamelech_hakadosh = 'hamelech_hakadosh';
@@ -137,6 +159,47 @@ abstract final class DayFlag {
   static const notInIsrael = 'not_in_israel';
 
   // ── Kriat HaTorah ────────────────────────────────────────────────────────
+  // kriat_hatorah: Torah is read in this prayer (Monday/Thursday, Rosh
+  // Chodesh, public fast days, Chanukah, Purim, Chol HaMoed — plus
+  // Shabbat / Yom Tov when the siddur covers them).
+  static const kriatHatorah = 'kriat_hatorah';
+
+  // ── Sefirat HaOmer ────────────────────────────────────────────────────────
+  // omer_period: today is one of the 49 counting days (16 Nisan – 5 Sivan).
+  // The actual day number (1..49) lives on [DayFlags.omerDay] and
+  // [UserContext.omerDay], not as a flag.
+  static const omerPeriod = 'omer_period';
+
+  // ── Hallel ────────────────────────────────────────────────────────────────
+  // full_hallel: complete (shalem) Hallel — Sukkot (all 7 days), Shemini
+  //   Atzeret + Simchat Torah, first day(s) of Pesach, Shavuot, Chanukah
+  //   (all 8 days).
+  // half_hallel: half Hallel — Rosh Chodesh (not RH), Chol HaMoed Pesach,
+  //   last day(s) of Pesach.
+  static const fullHallel = 'full_hallel';
+  static const halfHallel = 'half_hallel';
+  // hallel_with_musaf: Hallel (full or half) IS recited AND today is a
+  // Musaf day. Triggers the post-Hallel Kaddish Titkabal sequence and,
+  // for Sfard, the Shir Shel Yom (+ Barchi Nafshi on RC) + Kaddish Yatom
+  // block that comes between Hallel and Kriat HaTorah on RC / Chol HaMoed.
+  // On Chanukah (Hallel without Musaf) and Shabbat (Musaf without Hallel)
+  // this flag is NOT set, leaving the regular flow intact.
+  static const hallelWithMusaf = 'hallel_with_musaf';
+
+  // ── Musaf ────────────────────────────────────────────────────────────────
+  // musaf_day: a day on which Musaf is recited — Rosh Chodesh, Chol HaMoed,
+  // Yom Tov, Shabbat. Affects sequencing after Hallel (Kaddish Titkabal +
+  // Shir Shel Yom for Sfard before Kriat HaTorah) and triggers Brich Shmei
+  // in EM Hotzaat Sefer Torah.
+  static const musafDay = 'musaf_day';
+  // musaf_content: a Musaf day for which the app currently has Musaf
+  // content available — Rosh Chodesh, Chol HaMoed Pesach, Chol HaMoed
+  // Sukkot. Yom Tov and Shabbat are intentionally excluded from D.12 scope
+  // (per user). Gates the pre-Musaf Chatzi Kaddish + musaf sub-template
+  // insertion in sof_hatfila, and excludes the standard closing Kaddish
+  // Titkabal at end of acharei_amidah (since on Musaf-content days the
+  // closing kaddish is recited AFTER Musaf, not before).
+  static const musafContent = 'musaf_content';
   // shema_hotzaah: Shabbat, Yom Tov, or Hoshana Raba — days when the Shema
   // declaration is recited during hotzaat sefer Torah.
   static const shemaHotzaah = 'shema_hotzaah';
@@ -145,4 +208,19 @@ abstract final class DayFlag {
   static const nusachAshkenaz = 'nusach_ashkenaz';
   static const nusachSfard = 'nusach_sfard';
   static const nusachEdotMizrach = 'nusach_edot_mizrach';
+
+  // ── Lulav ────────────────────────────────────────────────────────────────
+  // lulav_day: a day on which lulav is taken — Sukkot (incl. CHM + Hoshana
+  // Raba), excluding Shabbat. Shemini Atzeret + Simchat Torah are
+  // intentionally excluded (no lulav after 7th day). Gates the pre-Hallel
+  // Birkat HaLulav + L'shem Yichud insertion in acharei_amidah.
+  static const lulavDay = 'lulav_day';
+
+  // ── Minyan ───────────────────────────────────────────────────────────────
+  // with_minyan: user is davening with a minyan. Gates devarim shebikdushah:
+  // Kaddish (all forms), Chazarat HaShatz (and Kedushah / Birkat Kohanim /
+  // Modim deRabbanan inside it), Kriat HaTorah and Barchu, and Yud-Gimel
+  // Middot inside Tachanun / Selichot. Default true in UserContext —
+  // user toggles off when davening b'yechidut.
+  static const withMinyan = 'with_minyan';
 }

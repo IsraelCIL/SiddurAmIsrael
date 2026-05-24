@@ -67,8 +67,65 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
+    - assets/prayers/_manifest.json
     - assets/prayers/templates/
-    - assets/prayers/common/
-    - assets/prayers/nusach/ashkenaz/
-    - assets/prayers/nusach/sfard/
-    - assets/prayers/nusach/edot_mizrach/
+
+    # Shacharit
+    - assets/prayers/shacharit/lifnei_hatfila/common/
+    - assets/prayers/shacharit/lifnei_hatfila/nusach/ashkenaz/
+    - assets/prayers/shacharit/lifnei_hatfila/nusach/sfard/
+    - assets/prayers/shacharit/lifnei_hatfila/nusach/edot_mizrach/
+    - assets/prayers/shacharit/pesukei_dezimra/common/
+    - assets/prayers/shacharit/pesukei_dezimra/nusach/ashkenaz/
+    - assets/prayers/shacharit/pesukei_dezimra/nusach/sfard/
+    - assets/prayers/shacharit/pesukei_dezimra/nusach/edot_mizrach/
+    - assets/prayers/shacharit/birkot_kriat_shema/nusach/ashkenaz/
+    - assets/prayers/shacharit/birkot_kriat_shema/nusach/sfard/
+    - assets/prayers/shacharit/birkot_kriat_shema/nusach/edot_mizrach/
+    - assets/prayers/shacharit/acharei_amidah/common/
+    - assets/prayers/shacharit/acharei_amidah/nusach/ashkenaz/
+    - assets/prayers/shacharit/acharei_amidah/nusach/sfard/
+    - assets/prayers/shacharit/acharei_amidah/nusach/edot_mizrach/
+    - assets/prayers/shacharit/sof_hatfila/common/
+    - assets/prayers/shacharit/sof_hatfila/nusach/edot_mizrach/
+
+    # Mincha
+    - assets/prayers/mincha/lifnei_mincha/nusach/edot_mizrach/
+    - assets/prayers/mincha/acharei_amidah/nusach/ashkenaz/
+    - assets/prayers/mincha/acharei_amidah/nusach/sfard/
+    - assets/prayers/mincha/acharei_amidah/nusach/edot_mizrach/
+
+    # Maariv
+    - assets/prayers/maariv/lifnei_maariv/common/
+    - assets/prayers/maariv/lifnei_maariv/nusach/sfard/
+    - assets/prayers/maariv/lifnei_maariv/nusach/edot_mizrach/
+    - assets/prayers/maariv/birkot_kriat_shema/common/
+    - assets/prayers/maariv/birkot_kriat_shema/nusach/ashkenaz/
+    - assets/prayers/maariv/birkot_kriat_shema/nusach/sfard/
+    - assets/prayers/maariv/birkot_kriat_shema/nusach/edot_mizrach/
+    - assets/prayers/maariv/sefirat_haomer/
+    - assets/prayers/maariv/sefirat_haomer/common/
+    - assets/prayers/maariv/sefirat_haomer/nusach/ashkenaz/
+    - assets/prayers/maariv/sefirat_haomer/nusach/sfard/
+    - assets/prayers/maariv/sefirat_haomer/nusach/edot_mizrach/
+
+    # Musaf
+    - assets/prayers/musaf/amidah/nusach/ashkenaz/
+    - assets/prayers/musaf/amidah/nusach/sfard/
+    - assets/prayers/musaf/amidah/nusach/edot_mizrach/
+    - assets/prayers/musaf/sukkot/
+
+    # Shared (multi-prayer segments)
+    - assets/prayers/shared_global/common/
+    - assets/prayers/shared_global/nusach/ashkenaz/
+    - assets/prayers/shared_global/nusach/sfard/
+    - assets/prayers/shared_global/nusach/edot_mizrach/
+    - assets/prayers/shared_global/amidah/nusach/ashkenaz/
+    - assets/prayers/shared_global/amidah/nusach/sfard/
+    - assets/prayers/shared_global/amidah/nusach/edot_mizrach/
+    - assets/prayers/shared_global/kaddish/nusach/ashkenaz/
+    - assets/prayers/shared_global/kaddish/nusach/sfard/
+    - assets/prayers/shared_global/kaddish/nusach/edot_mizrach/
+    - assets/prayers/shared_global/tachanun/nusach/ashkenaz/
+    - assets/prayers/shared_global/tachanun/nusach/sfard/
+    - assets/prayers/shared_global/tachanun/nusach/edot_mizrach/

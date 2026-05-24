@@ -2,13 +2,30 @@ import '../entities/assembled_segment.dart';
 import '../entities/blessing_section.dart';
 import '../entities/prayer_template.dart';
 import '../entities/user_context.dart';
+import '../repositories/i_omer_mapping_repository.dart';
 import '../repositories/i_prayer_repository.dart';
+import '../repositories/i_sukkot_korbanot_repository.dart';
 import 'i_prayer_assembler.dart';
+import 'omer_post_processor.dart';
+import 'sukkot_korbanot_post_processor.dart';
 
 class PrayerAssembler implements IPrayerAssembler {
-  const PrayerAssembler(this._repository);
+  const PrayerAssembler(
+    this._repository, {
+    IOmerMappingRepository? omerRepository,
+    ISukkotKorbanotRepository? sukkotRepository,
+    OmerPostProcessor omerProcessor = const OmerPostProcessor(),
+    SukkotKorbanotPostProcessor sukkotProcessor = const SukkotKorbanotPostProcessor(),
+  })  : _omerRepository = omerRepository,
+        _omerProcessor = omerProcessor,
+        _sukkotRepository = sukkotRepository,
+        _sukkotProcessor = sukkotProcessor;
 
   final IPrayerRepository _repository;
+  final IOmerMappingRepository? _omerRepository;
+  final OmerPostProcessor _omerProcessor;
+  final ISukkotKorbanotRepository? _sukkotRepository;
+  final SukkotKorbanotPostProcessor _sukkotProcessor;
 
   @override
   Future<List<AssembledSegment>> assemble({
@@ -43,7 +60,28 @@ class PrayerAssembler implements IPrayerAssembler {
       ));
     }
 
-    return results;
+    var out = results;
+
+    // Sefirat HaOmer post-processing: fill {{omer_day_count}} / {{omer_sefira}}
+    // placeholders and inject <b>...</b> bold tokens into Lamenatzeach + Ana
+    // BeKoach for the day's word/letter highlights.
+    if (userContext.omerDay != null && _omerRepository != null) {
+      final day = await _omerRepository!.loadDay(userContext.omerDay!);
+      out = [for (final s in out) _omerProcessor.process(s, day, userContext.nusach)];
+    }
+
+    // Sukkot daily korban: fill {{daily_korban}} in
+    // amidah_musaf_intermediate_chm_sukkot with the day's pasuk from
+    // Numbers 29 (per sukkotDay and isInIsrael).
+    if (userContext.sukkotDay != null && _sukkotRepository != null) {
+      final day = await _sukkotRepository!.loadDay(userContext.sukkotDay!);
+      out = [
+        for (final s in out)
+          _sukkotProcessor.process(s, day, isInIsrael: userContext.isInIsrael),
+      ];
+    }
+
+    return out;
   }
 
   List<String> _buildContextKeys(UserContext ctx) => [

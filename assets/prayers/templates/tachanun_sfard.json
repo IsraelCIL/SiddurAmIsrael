@@ -2,10 +2,46 @@
   "id": "tachanun_sfard",
   "name": "תחנון",
   "segments": [
-    {"segment_id": "vidui_yud_gimel_midot",            "condition_flags": [],              "exclude_flags": [], "optional": true,  "allowed_nusach": []},
-    {"segment_id": "tachanun_nfilat_apayim",           "condition_flags": [],              "exclude_flags": [], "optional": false, "allowed_nusach": []},
-    {"segment_id": "vehu_rachum",                      "condition_flags": ["monday_thursday"], "exclude_flags": [], "optional": false, "allowed_nusach": []},
-    {"segment_id": "tachanun_monday_thursday_addition","condition_flags": ["monday_thursday"], "exclude_flags": [], "optional": false, "allowed_nusach": []},
-    {"segment_id": "shomer_yisrael",                   "condition_flags": [],              "exclude_flags": [], "optional": false, "allowed_nusach": []}
+    {
+      "segment_id": "vidui_yud_gimel_midot",
+      "condition_flags": [
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": true,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "tachanun_nfilat_apayim",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "vehu_rachum",
+      "condition_flags": [
+        "monday_thursday"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "tachanun_monday_thursday_addition",
+      "condition_flags": [
+        "monday_thursday"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "shomer_yisrael",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    }
   ]
 }

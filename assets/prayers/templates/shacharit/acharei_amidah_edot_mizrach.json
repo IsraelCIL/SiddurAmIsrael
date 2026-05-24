@@ -1,0 +1,167 @@
+{
+  "id": "shacharit_acharei_amidah_edot_mizrach",
+  "name": "shacharit_acharei_amidah_edot_mizrach",
+  "segments": [
+    {
+      "sub_template_id": "tachanun_edot_mizrach",
+      "condition_flags": [],
+      "exclude_flags": [
+        "skip_tachanun"
+      ],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "avinu_malkeinu",
+      "condition_flags": [
+        "avinu_malkeinu",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "lulav_lshem_yichud",
+      "condition_flags": [
+        "lulav_day"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "lulav_bracha",
+      "condition_flags": [
+        "lulav_day"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "hallel",
+      "condition_flags": [
+        "full_hallel"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "hallel_half",
+      "condition_flags": [
+        "half_hallel"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "sub_template_id": "kaddish_titkabal",
+      "condition_flags": [
+        "hallel_with_musaf",
+        "with_minyan"
+      ],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "el_erech_apayim",
+      "condition_flags": [
+        "kriat_hatorah"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "kriat_hatorah_hotzaah",
+      "condition_flags": [
+        "kriat_hatorah",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "hagbahah",
+      "condition_flags": [
+        "kriat_hatorah"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "kriat_hatorah_shacharit",
+      "condition_flags": [
+        "kriat_hatorah",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "yehi_ratzon",
+      "condition_flags": [
+        "kriat_hatorah"
+      ],
+      "exclude_flags": [
+        "skip_tachanun"
+      ],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "ashrei",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "lamenatzeach",
+      "condition_flags": [],
+      "exclude_flags": [
+        "skip_lamenatzeach"
+      ],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "uva_letzion",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "sub_template_id": "kaddish_titkabal",
+      "condition_flags": [
+        "with_minyan"
+      ],
+      "exclude_flags": [
+        "musaf_content"
+      ],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "sub_template_id": "chatzi_kaddish",
+      "condition_flags": [
+        "musaf_content",
+        "with_minyan"
+      ],
+      "exclude_flags": []
+    },
+    {
+      "sub_template_id": "musaf_edot_mizrach",
+      "condition_flags": [
+        "musaf_content"
+      ],
+      "exclude_flags": []
+    }
+  ]
+}
