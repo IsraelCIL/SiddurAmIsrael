@@ -68,6 +68,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/prayers/templates/
+    - assets/prayers/common/
     - assets/prayers/nusach/ashkenaz/
     - assets/prayers/nusach/sfard/
     - assets/prayers/nusach/edot_mizrach/

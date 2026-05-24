@@ -22,6 +22,15 @@ class PrayerAssembler implements IPrayerAssembler {
     for (final entry in template.segments) {
       if (!_entryPassesFilters(entry, userContext, contextKeys)) continue;
 
+      if (entry.subTemplateId.isNotEmpty) {
+        final subSegments = await assemble(
+          templateId: entry.subTemplateId,
+          userContext: userContext,
+        );
+        results.addAll(subSegments);
+        continue;
+      }
+
       final segment = await _repository.loadNusachSegment(
         userContext.nusach,
         entry.segmentId,
@@ -41,6 +50,7 @@ class PrayerAssembler implements IPrayerAssembler {
         ...ctx.activeFlags,
         ctx.gender == Gender.male ? 'gender_male' : 'gender_female',
         ctx.isInIsrael ? 'in_israel' : 'not_in_israel',
+        'nusach_${ctx.nusach}',
       ];
 
   bool _entryPassesFilters(

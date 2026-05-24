@@ -64,6 +64,18 @@ final userContextProvider = Provider<UserContext>((ref) {
 
 final minchaProvider = FutureProvider<List<AssembledSegment>>((ref) {
   final assembler = ref.watch(prayerAssemblerProvider);
-  final ctx = ref.watch(userContextProvider);
+  final baseCtx = ref.watch(userContextProvider);
+  // Inject Mincha-specific flags. tisha_beav is a whole-day flag, but Nachem
+  // (and EM's Tisha B'Av chatima) only enter the bracha at Mincha.
+  final minchaFlags = <String>{
+    ...baseCtx.activeFlags,
+    if (baseCtx.activeFlags.contains('tisha_beav')) 'tisha_beav_mincha',
+  }.toList();
+  final ctx = UserContext(
+    nusach: baseCtx.nusach,
+    isInIsrael: baseCtx.isInIsrael,
+    gender: baseCtx.gender,
+    activeFlags: minchaFlags,
+  );
   return assembler.assemble(templateId: 'mincha', userContext: ctx);
 });
