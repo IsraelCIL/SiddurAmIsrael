@@ -1,0 +1,10 @@
+{
+  "id": "tachanun_edot_mizrach",
+  "name": "תחנון",
+  "segments": [
+    {"segment_id": "vidui_yud_gimel_midot",              "condition_flags": [],              "exclude_flags": [], "optional": false, "allowed_nusach": []},
+    {"segment_id": "tachanun_nfilat_apayim",              "condition_flags": [],              "exclude_flags": [], "optional": false, "allowed_nusach": []},
+    {"segment_id": "tachanun_em_selichot_monday_thursday","condition_flags": ["monday_thursday"], "exclude_flags": [], "optional": false, "allowed_nusach": []},
+    {"segment_id": "vehu_rachum",                         "condition_flags": ["monday_thursday"], "exclude_flags": [], "optional": false, "allowed_nusach": []}
+  ]
+}

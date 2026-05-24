@@ -27,6 +27,7 @@ class HalachicCalendarService implements ICalendarFlagProvider {
     _addAlHaNisim(flags);
     _addMizmorLetodahFlag(context, flags);
     _addTefillinFlag(context, flags);
+    _addShemaHotzaahFlag(flags);
     _addGenderAndIsrael(context, flags);
 
     return DayFlags(flags: flags.toList());
@@ -48,6 +49,17 @@ class HalachicCalendarService implements ICalendarFlagProvider {
     if (dow == DateTime.saturday) f.add(DayFlag.shabbat);
     if (dow == DateTime.monday || dow == DateTime.thursday) {
       f.add(DayFlag.mondayThursday);
+    }
+
+    // Day-of-week flags — used for shir_shel_yom and other day-specific content
+    switch (dow) {
+      case DateTime.sunday:    f.add(DayFlag.daySunday);    break;
+      case DateTime.monday:    f.add(DayFlag.dayMonday);    break;
+      case DateTime.tuesday:   f.add(DayFlag.dayTuesday);   break;
+      case DateTime.wednesday: f.add(DayFlag.dayWednesday); break;
+      case DateTime.thursday:  f.add(DayFlag.dayThursday);  break;
+      case DateTime.friday:    f.add(DayFlag.dayFriday);    break;
+      case DateTime.saturday:  f.add(DayFlag.dayShabbat);   break;
     }
 
     // Rosh Chodesh (days 1 and 30 of applicable months)
@@ -123,6 +135,18 @@ class HalachicCalendarService implements ICalendarFlagProvider {
 
     // Fast days (covers 10 Tevet, Tzom Gedaliah, Taanit Esther, 17 Tammuz, 9 Av, YK)
     if (cal.isTaanis()) f.add(DayFlag.fastDay);
+
+    // Elul flag: Elul month, excluding Erev Rosh Hashana (29 Elul)
+    if (m == JewishDate.ELUL && !f.contains(DayFlag.erevRoshHashanah)) {
+      f.add(DayFlag.elul);
+    }
+
+    // ladavid_season: Elul (all days) + 1–10 Tishri
+    if (m == JewishDate.ELUL) f.add(DayFlag.ladavid_season);
+    if (m == JewishDate.TISHREI && d <= 10) f.add(DayFlag.ladavid_season);
+
+    // erev_shabbat: Friday
+    if (date.weekday == DateTime.friday) f.add(DayFlag.erevShabbat);
   }
 
   void _addPurimFlags(
@@ -307,8 +331,12 @@ class HalachicCalendarService implements ICalendarFlagProvider {
     final isFast = f.contains(DayFlag.fastDay);
     final isShabbat = f.contains(DayFlag.shabbat);
     final isYomKippur = f.contains(DayFlag.yomKippur);
+    final isTishaBaav = f.contains(DayFlag.tishaBaav);
 
-    if ((isAyt || isFast) && !isShabbat) f.add(DayFlag.avinoMalkeinu);
+    // Tisha B'Av: NOT said, even though it's a fast day (Halachic exception).
+    if ((isAyt || isFast) && !isShabbat && !isTishaBaav) {
+      f.add(DayFlag.avinoMalkeinu);
+    }
     // Yom Kippur: always said, even on Shabbat
     if (isYomKippur) f.add(DayFlag.avinoMalkeinu);
   }
@@ -363,7 +391,28 @@ class HalachicCalendarService implements ICalendarFlagProvider {
     }
   }
 
-  // ── 10. Gender + Israel flags ─────────────────────────────────────────────
+  // ── 10. Shema at Hotzaat HaTorah ─────────────────────────────────────────
+
+  void _addShemaHotzaahFlag(Set<String> f) {
+    // Shema + proclamations are said during hotzaat sefer Torah only on
+    // Shabbat, Yom Tov (all days), and Hoshana Raba — not on weekdays,
+    // Rosh Chodesh, or Chol HaMoed.
+    final isYomTovLevel =
+        f.contains(DayFlag.shabbat) ||
+        f.contains(DayFlag.roshHashanah) ||
+        f.contains(DayFlag.yomKippur) ||
+        f.contains(DayFlag.hoshanahRaba) ||
+        f.contains(DayFlag.sheminiAtzeret) ||
+        f.contains(DayFlag.simchatTorah) ||
+        f.contains(DayFlag.shavuot) ||
+        (f.contains(DayFlag.pesach) &&
+            !f.contains(DayFlag.cholHamoedPesach) &&
+            !f.contains(DayFlag.erevPesach)) ||
+        (f.contains(DayFlag.sukkot) && !f.contains(DayFlag.cholHamoedSukkot));
+    if (isYomTovLevel) f.add(DayFlag.shemaHotzaah);
+  }
+
+  // ── 11. Gender + Israel flags ─────────────────────────────────────────────
 
   void _addGenderAndIsrael(UserContext ctx, Set<String> f) {
     f.add(ctx.gender == Gender.male ? DayFlag.genderMale : DayFlag.genderFemale);

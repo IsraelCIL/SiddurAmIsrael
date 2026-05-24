@@ -21,6 +21,10 @@ class DayFlags with _$DayFlags {
   bool get isFastDay => flags.contains(DayFlag.fastDay);
   bool get isAsaretYemeiTeshuva => flags.contains(DayFlag.asaretYemeiTeshuva);
 
+  bool get isElul => flags.contains(DayFlag.elul);
+  bool get isLadavidSeason => flags.contains(DayFlag.ladavid_season);
+  bool get isErevShabbat => flags.contains(DayFlag.erevShabbat);
+
   bool get skipTachanun => flags.contains(DayFlag.skipTachanun);
   bool get skipTachanunMincha => flags.contains(DayFlag.skipTachanunMincha);
   bool get skipLamenatzeach => flags.contains(DayFlag.skipLamenatzeach);
@@ -93,8 +97,18 @@ abstract final class DayFlag {
   static const mashivHaruach = 'mashiv_haruach';
   static const talUmatar = 'tal_umatar';
 
+  // ── Seasonal customs ──────────────────────────────────────────────────────
+  static const elul = 'elul';                          // Elul month (shofar blowing period, excl. Erev RH)
+  static const ladavid_season = 'ladavid_season';       // Elul through Yom Kippur (ladavid / psalm 27)
+  static const erevShabbat = 'erev_shabbat';            // Friday (for Avinu Malkeinu exclusion at Mincha)
+
   // ── Specific fast days ────────────────────────────────────────────────────
   static const tishaBaav = 'tisha_beav';
+  // tisha_beav_mincha: injected by the Mincha provider when today is Tisha B'Av.
+  // Triggers Nachem insertion in amidah_yerushalayim (and EM's TB'A-specific
+  // chatima). Not a calendar-derived day flag — set only when the caller knows
+  // the current prayer is Mincha.
+  static const tishaBavMincha = 'tisha_beav_mincha';
 
   // ── Injected segments ─────────────────────────────────────────────────────
   static const avinoMalkeinu = 'avinu_malkeinu';
@@ -105,6 +119,15 @@ abstract final class DayFlag {
   static const uchtov = 'uchtov';
   static const bseferChaim = 'bsefer_chaim';
 
+  // ── Day of week (for shir_shel_yom and similar day-specific content) ────
+  static const daySunday = 'day_sunday';
+  static const dayMonday = 'day_monday';
+  static const dayTuesday = 'day_tuesday';
+  static const dayWednesday = 'day_wednesday';
+  static const dayThursday = 'day_thursday';
+  static const dayFriday = 'day_friday';
+  static const dayShabbat = 'day_shabbat';
+
   // ── Gender (mirrors UserContext, re-emitted as flags) ────────────────────
   static const genderMale = 'gender_male';
   static const genderFemale = 'gender_female';
@@ -112,4 +135,14 @@ abstract final class DayFlag {
   // ── Israel ────────────────────────────────────────────────────────────────
   static const inIsrael = 'in_israel';
   static const notInIsrael = 'not_in_israel';
+
+  // ── Kriat HaTorah ────────────────────────────────────────────────────────
+  // shema_hotzaah: Shabbat, Yom Tov, or Hoshana Raba — days when the Shema
+  // declaration is recited during hotzaat sefer Torah.
+  static const shemaHotzaah = 'shema_hotzaah';
+
+  // ── Nusach (mirrors UserContext.nusach, re-emitted as flags) ─────────────
+  static const nusachAshkenaz = 'nusach_ashkenaz';
+  static const nusachSfard = 'nusach_sfard';
+  static const nusachEdotMizrach = 'nusach_edot_mizrach';
 }

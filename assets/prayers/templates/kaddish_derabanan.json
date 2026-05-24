@@ -1,0 +1,9 @@
+{
+  "id": "kaddish_derabanan",
+  "name": "קדיש דרבנן",
+  "segments": [
+    {"segment_id": "kaddish_body",                "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
+    {"segment_id": "kaddish_derabanan_paragraph", "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
+    {"segment_id": "kaddish_closing",             "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []}
+  ]
+}

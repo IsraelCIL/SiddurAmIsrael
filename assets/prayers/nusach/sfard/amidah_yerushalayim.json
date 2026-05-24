@@ -7,7 +7,10 @@
         "וּבְנֵה אוֹתָהּ בְּקָרוֹב בְּיָמֵֽינוּ בִּנְיַן עוֹלָם",
         "וְכִסֵּא דָוִד מְהֵרָה לְתוֹכָהּ תָּכִין:"
       ],
-      "condition_flags": [], "exclude_flags": ["tisha_beav"]
+      "condition_flags": [],
+      "exclude_flags": [
+        "tisha_beav_mincha"
+      ]
     },
     {
       "text": [
@@ -22,11 +25,17 @@
         "כָּאָמוּר וַאֲנִי אֶהְיֶה לָהּ נְאֻם יְהֹוָה חוֹמַת אֵשׁ סָבִיב וּלְכָבוֹד אֶהְיֶה בְּתוֹכָהּ:",
         "בָּרוּךְ אַתָּה יְהֹוָה מְנַחֵם צִיּוֹן וּבוֹנֵה יְרוּשָׁלָֽיִם:"
       ],
-      "condition_flags": ["tisha_beav"], "exclude_flags": []
+      "condition_flags": [
+        "tisha_beav_mincha"
+      ],
+      "exclude_flags": []
     },
     {
       "text": "בָּרוּךְ אַתָּה יְהֹוָה בּוֹנֵה יְרוּשָׁלָֽיִם:",
-      "condition_flags": [], "exclude_flags": ["tisha_beav"]
+      "condition_flags": [],
+      "exclude_flags": [
+        "tisha_beav_mincha"
+      ]
     }
   ]
 }

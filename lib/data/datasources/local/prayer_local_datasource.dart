@@ -19,10 +19,19 @@ class PrayerLocalDatasource {
     String nusach,
     String segmentId,
   ) async {
-    final json = await _readJson(
-      'assets/prayers/nusach/$nusach/$segmentId.json',
-    );
-    return PrayerSegment.fromJson(json);
+    try {
+      final json = await _readJson(
+        'assets/prayers/nusach/$nusach/$segmentId.json',
+      );
+      return PrayerSegment.fromJson(json);
+    } catch (_) {
+      // Fall back to common/ for segments identical across all nusachim
+      // (biblical texts, shared psalms, kriat shema, etc.)
+      final json = await _readJson(
+        'assets/prayers/common/$segmentId.json',
+      );
+      return PrayerSegment.fromJson(json);
+    }
   }
 
   Future<Map<String, dynamic>> _readJson(String path) async {

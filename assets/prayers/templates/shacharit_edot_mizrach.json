@@ -1,0 +1,80 @@
+{
+  "id": "shacharit_edot_mizrach",
+  "name": "שחרית",
+  "segments": [
+
+    {"segment_id": "birchot_hashachar",   "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
+
+    {"segment_id": "akeidah",             "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
+    {"segment_id": "akeidah_yehi_ratzon", "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
+    {"segment_id": "korbanot",            "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
+    {"sub_template_id": "kaddish_derabanan",   "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
+
+    {"segment_id": "hodu",                "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
+    {"segment_id": "psalm_030",           "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
+    {"segment_id": "hashem_melech",       "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
+    {"segment_id": "psalm_067",           "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
+    {"segment_id": "baruch_sheamar",      "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
+    {"segment_id": "mizmor_letodah",      "condition_flags": [], "exclude_flags": ["skip_mizmor_letodah"], "optional": false, "allowed_nusach": []},
+    {"segment_id": "yehi_kevod",          "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
+    {"segment_id": "yehi_chasdecha",      "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
+    {"segment_id": "ashrei",              "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
+    {"segment_id": "psalm_146",           "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
+    {"segment_id": "psalm_147",           "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
+    {"segment_id": "psalm_148",           "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
+    {"segment_id": "psalm_149",           "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
+    {"segment_id": "psalm_150",           "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
+    {"segment_id": "az_yashir",           "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
+    {"segment_id": "vayevarech_david",    "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
+    {"segment_id": "yishtabach",          "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
+
+    {"sub_template_id": "chatzi_kaddish",      "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
+    {"segment_id": "barchu",              "condition_flags": [], "exclude_flags": ["kriat_hatorah"], "optional": false, "allowed_nusach": []},
+    {"segment_id": "yotzer_or",           "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
+    {"segment_id": "ahavat_olam",         "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
+
+    {"segment_id": "shema",               "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
+    {"segment_id": "emet_veyatziv",       "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
+
+    {"sub_template_id": "amidah",         "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
+
+    {"sub_template_id": "chazarat_hashatz", "condition_flags": ["with_minyan"], "exclude_flags": [], "optional": false, "allowed_nusach": []},
+
+    {"sub_template_id": "tachanun_edot_mizrach", "condition_flags": [], "exclude_flags": ["skip_tachanun"], "optional": false, "allowed_nusach": []},
+
+    {"segment_id": "avinu_malkeinu",      "condition_flags": ["avinu_malkeinu", "with_minyan"], "exclude_flags": [], "optional": false, "allowed_nusach": []},
+
+    {"segment_id": "hallel",              "condition_flags": ["full_hallel"],  "exclude_flags": [], "optional": false, "allowed_nusach": []},
+    {"segment_id": "hallel_half",         "condition_flags": ["half_hallel"],  "exclude_flags": [], "optional": false, "allowed_nusach": []},
+
+    {"segment_id": "kriat_hatorah_hotzaah",  "condition_flags": ["kriat_hatorah"], "exclude_flags": [], "optional": false, "allowed_nusach": []},
+    {"segment_id": "hagbahah",               "condition_flags": ["kriat_hatorah"], "exclude_flags": [], "optional": false, "allowed_nusach": []},
+    {"segment_id": "kriat_hatorah_shacharit","condition_flags": ["kriat_hatorah"], "exclude_flags": [], "optional": false, "allowed_nusach": []},
+
+    {"segment_id": "yehi_ratzon",         "condition_flags": ["kriat_hatorah"], "exclude_flags": ["skip_tachanun"], "optional": false, "allowed_nusach": []},
+    {"segment_id": "ashrei",              "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
+    {"segment_id": "lamenatzeach",        "condition_flags": [], "exclude_flags": ["skip_lamenatzeach"], "optional": false, "allowed_nusach": []},
+    {"segment_id": "uva_letzion",         "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
+
+    {"sub_template_id": "kaddish_titkabal",    "condition_flags": ["with_minyan"], "exclude_flags": [], "optional": false, "allowed_nusach": []},
+
+    {"segment_id": "kriat_hatorah_hachnasah","condition_flags": ["kriat_hatorah"], "exclude_flags": [], "optional": false, "allowed_nusach": []},
+
+    {"segment_id": "tefila_ledavid_ps86", "condition_flags": [], "exclude_flags": ["skip_tachanun"], "optional": false, "allowed_nusach": []},
+    {"segment_id": "beit_yaakov",         "condition_flags": [], "exclude_flags": ["skip_tachanun"], "optional": false, "allowed_nusach": []},
+    {"segment_id": "shir_hamaalot_lulei", "condition_flags": [], "exclude_flags": ["skip_tachanun"], "optional": false, "allowed_nusach": []},
+
+    {"sub_template_id": "shir_shel_yom",   "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
+    {"sub_template_id": "kaddish_yatom",       "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
+
+    {"segment_id": "ein_keloheinu",       "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
+    {"segment_id": "pitum_haketoreh",     "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
+    {"sub_template_id": "kaddish_derabanan",   "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
+
+    {"segment_id": "aleinu",              "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
+
+    {"segment_id": "shofar_elul",         "condition_flags": ["elul"],           "exclude_flags": [], "optional": false, "allowed_nusach": []},
+    {"segment_id": "ladavid",             "condition_flags": ["ladavid_season"], "exclude_flags": [], "optional": false, "allowed_nusach": []},
+    {"sub_template_id": "kaddish_yatom",       "condition_flags": ["ladavid_season"], "exclude_flags": [], "optional": false, "allowed_nusach": []}
+  ]
+}
