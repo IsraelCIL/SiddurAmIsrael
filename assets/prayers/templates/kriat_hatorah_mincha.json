@@ -12,7 +12,7 @@
       "allowed_nusach": []
     },
     {
-      "segment_id": "kriat_hatorah_mincha_taanit",
+      "segment_id": "kriah_fast_day",
       "condition_flags": [],
       "exclude_flags": [],
       "optional": false,
@@ -26,11 +26,54 @@
       "allowed_nusach": []
     },
     {
+      "segment_id": "haftarah_bracha_lifnei",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": [
+        "ashkenaz",
+        "sfard"
+      ]
+    },
+    {
       "segment_id": "haftarah_taanit",
       "condition_flags": [],
       "exclude_flags": [],
       "optional": false,
-      "allowed_nusach": []
+      "allowed_nusach": [
+        "ashkenaz",
+        "sfard"
+      ]
+    },
+    {
+      "segment_id": "haftarah_bracha_acharei_1",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": [
+        "ashkenaz",
+        "sfard"
+      ]
+    },
+    {
+      "segment_id": "haftarah_bracha_acharei_2",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": [
+        "ashkenaz",
+        "sfard"
+      ]
+    },
+    {
+      "segment_id": "haftarah_bracha_acharei_3",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": [
+        "ashkenaz",
+        "sfard"
+      ]
     },
     {
       "segment_id": "kriat_hatorah_hachnasah",
