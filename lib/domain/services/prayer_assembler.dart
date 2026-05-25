@@ -3,6 +3,7 @@ import '../entities/blessing_section.dart';
 import '../entities/prayer_template.dart';
 import '../entities/user_context.dart';
 import '../repositories/i_gra_ssy_repository.dart';
+import '../repositories/i_kriah_repository.dart';
 import '../repositories/i_omer_mapping_repository.dart';
 import '../repositories/i_prayer_repository.dart';
 import '../repositories/i_sukkot_korbanot_repository.dart';
@@ -16,13 +17,15 @@ class PrayerAssembler implements IPrayerAssembler {
     IOmerMappingRepository? omerRepository,
     ISukkotKorbanotRepository? sukkotRepository,
     IGraSsyRepository? graSsyRepository,
+    IKriahRepository? kriahRepository,
     OmerPostProcessor omerProcessor = const OmerPostProcessor(),
     SukkotKorbanotPostProcessor sukkotProcessor = const SukkotKorbanotPostProcessor(),
   })  : _omerRepository = omerRepository,
         _omerProcessor = omerProcessor,
         _sukkotRepository = sukkotRepository,
         _sukkotProcessor = sukkotProcessor,
-        _graSsyRepository = graSsyRepository;
+        _graSsyRepository = graSsyRepository,
+        _kriahRepository = kriahRepository;
 
   final IPrayerRepository _repository;
   final IOmerMappingRepository? _omerRepository;
@@ -30,6 +33,7 @@ class PrayerAssembler implements IPrayerAssembler {
   final ISukkotKorbanotRepository? _sukkotRepository;
   final SukkotKorbanotPostProcessor _sukkotProcessor;
   final IGraSsyRepository? _graSsyRepository;
+  final IKriahRepository? _kriahRepository;
 
   @override
   Future<List<AssembledSegment>> assemble({
@@ -83,6 +87,25 @@ class PrayerAssembler implements IPrayerAssembler {
         for (final s in out)
           _sukkotProcessor.process(s, day, isInIsrael: userContext.isInIsrael),
       ];
+    }
+
+    // Kriat HaTorah Mon/Thu: resolve the upcoming parashah's reading text
+    // and inject into the `kriat_hatorah_reading_text` placeholder. Only
+    // fires when kriat_hatorah_mon_thu is in activeFlags (gate is also
+    // applied at the template level — this is a defensive guard).
+    if (userContext.upcomingParshah != null &&
+        userContext.activeFlags.contains('kriat_hatorah_mon_thu') &&
+        _kriahRepository != null) {
+      final text =
+          await _kriahRepository!.loadMonThuReading(userContext.upcomingParshah!);
+      if (text != null) {
+        out = [
+          for (final s in out)
+            s.id == 'kriat_hatorah_reading_text'
+                ? s.copyWith(resolvedText: text)
+                : s,
+        ];
+      }
     }
 
     // Gr"a Shir Shel Yom: resolve and inject the day's Tehillim chapter

@@ -84,6 +84,8 @@ flutter:
     - assets/prayers/shacharit/birkot_kriat_shema/nusach/edot_mizrach/
     - assets/prayers/shacharit/acharei_amidah/common/
     - assets/prayers/shacharit/acharei_amidah/common/hoshanot/
+    - assets/prayers/shacharit/acharei_amidah/common/torah_reading/
+    - assets/prayers/shacharit/acharei_amidah/common/torah_reading/mon_thu/
     - assets/prayers/shacharit/acharei_amidah/nusach/ashkenaz/
     - assets/prayers/shacharit/acharei_amidah/nusach/sfard/
     - assets/prayers/shacharit/acharei_amidah/nusach/edot_mizrach/

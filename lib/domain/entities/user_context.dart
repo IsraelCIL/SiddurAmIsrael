@@ -39,6 +39,9 @@ class UserContext with _$UserContext {
     // post-processor to look up the day's Tehillim chapter. Null outside
     // those chagim.
     int? chagYt1Weekday,
+    // Slug of the upcoming Shabbat's parashah (combined → first single).
+    // Used by the Mon/Thu Torah-reading post-processor.
+    String? upcomingParshah,
     // User is davening with a minyan. Drives the [DayFlag.withMinyan] flag,
     // which gates Kaddish / Chazarat HaShatz / Kriat HaTorah / Barchu /
     // Yud-Gimel Middot. Default true.

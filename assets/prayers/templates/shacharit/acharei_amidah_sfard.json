@@ -263,6 +263,16 @@
       "allowed_nusach": []
     },
     {
+      "segment_id": "kriat_hatorah_reading_text",
+      "condition_flags": [
+        "kriat_hatorah_mon_thu",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
       "segment_id": "hagbahah",
       "condition_flags": [
         "kriat_hatorah"

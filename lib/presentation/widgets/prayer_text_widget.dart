@@ -53,6 +53,7 @@ const _segmentLabels = <String, String>{
   'hoshanot_day_5': 'הושענות',
   'hoshanot_day_6': 'הושענות',
   'hoshanot_hoshana_rabba': 'הושענות — הושענא רבא',
+  'kriat_hatorah_reading_text': 'קריאת התורה',
 };
 
 class PrayerTextWidget extends ConsumerWidget {
