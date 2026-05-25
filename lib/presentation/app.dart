@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'pages/prayers/mincha_screen.dart';
+import 'app_shell.dart';
 
 class SmartSiddurApp extends ConsumerWidget {
   const SmartSiddurApp({super.key});
@@ -31,7 +31,7 @@ class SmartSiddurApp extends ConsumerWidget {
           elevation: 0,
         ),
       ),
-      home: const MinchaScreen(),
+      home: const AppShell(),
     );
   }
 }
