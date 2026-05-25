@@ -52,6 +52,22 @@ class HalachicCalendarService implements ICalendarFlagProvider {
       chagYt1Weekday = _yt1Weekday(date, pesachDay);
     }
 
+    // Emit sukkot_day_<N> boolean flags + hoshanot_day flag.
+    if (sukkotDay != null) {
+      const sukkotDayFlags = [
+        DayFlag.sukkotDay1, DayFlag.sukkotDay2, DayFlag.sukkotDay3,
+        DayFlag.sukkotDay4, DayFlag.sukkotDay5, DayFlag.sukkotDay6,
+        DayFlag.sukkotDay7,
+      ];
+      flags.add(sukkotDayFlags[sukkotDay - 1]);
+      // hoshanot_day: days 2..7, not Shabbat.
+      if (sukkotDay >= 2 &&
+          sukkotDay <= 7 &&
+          !flags.contains(DayFlag.shabbat)) {
+        flags.add(DayFlag.hoshanotDay);
+      }
+    }
+
     // Derived: gra_ssy_day on CHM Pesach + CHM Sukkot (incl. Hoshana Raba).
     // The first/last days of the chag are YT and have their own SSY (92 on
     // Shabbat, 76 on weekdays of Sukkot, 114 of Pesach) — Gr"a only swaps

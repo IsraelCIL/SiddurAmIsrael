@@ -242,6 +242,23 @@ abstract final class DayFlag {
   static const nusachSfard = 'nusach_sfard';
   static const nusachEdotMizrach = 'nusach_edot_mizrach';
 
+  // ── Sukkot day-of-chag boolean flags ─────────────────────────────────────
+  // One flag per day of Sukkot (1..7 = 15..21 Tishrei). Exactly one fires
+  // on Sukkot proper. Used to gate day-specific Hoshanot segments without
+  // needing a post-processor.
+  static const sukkotDay1 = 'sukkot_day_1';
+  static const sukkotDay2 = 'sukkot_day_2';
+  static const sukkotDay3 = 'sukkot_day_3';
+  static const sukkotDay4 = 'sukkot_day_4';
+  static const sukkotDay5 = 'sukkot_day_5';
+  static const sukkotDay6 = 'sukkot_day_6';
+  static const sukkotDay7 = 'sukkot_day_7';
+
+  // hoshanot_day: any Sukkot day 2..7 (CHM + Hoshana Rabba), excluding
+  // Shabbat. Gates the Hoshanot block inserted after Hallel. Day 1
+  // (Yom Tov) is intentionally excluded — out of scope.
+  static const hoshanotDay = 'hoshanot_day';
+
   // ── Gra Shir Shel Yom ────────────────────────────────────────────────────
   // Set on Chol HaMoed Pesach + Chol HaMoed Sukkot (incl. Hoshana Raba).
   // Gates an optional `shir_shel_yom_gra` segment in sof_hatfila for Ashk
