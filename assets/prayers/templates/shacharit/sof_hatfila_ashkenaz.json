@@ -42,6 +42,17 @@
       "allowed_nusach": []
     },
     {
+      "segment_id": "shir_shel_yom_gra",
+      "condition_flags": [
+        "gra_ssy_day"
+      ],
+      "exclude_flags": [],
+      "optional": true,
+      "allowed_nusach": [
+        "ashkenaz"
+      ]
+    },
+    {
       "sub_template_id": "kaddish_yatom",
       "condition_flags": [
         "with_minyan"

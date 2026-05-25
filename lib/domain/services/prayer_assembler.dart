@@ -2,6 +2,7 @@ import '../entities/assembled_segment.dart';
 import '../entities/blessing_section.dart';
 import '../entities/prayer_template.dart';
 import '../entities/user_context.dart';
+import '../repositories/i_gra_ssy_repository.dart';
 import '../repositories/i_omer_mapping_repository.dart';
 import '../repositories/i_prayer_repository.dart';
 import '../repositories/i_sukkot_korbanot_repository.dart';
@@ -14,18 +15,21 @@ class PrayerAssembler implements IPrayerAssembler {
     this._repository, {
     IOmerMappingRepository? omerRepository,
     ISukkotKorbanotRepository? sukkotRepository,
+    IGraSsyRepository? graSsyRepository,
     OmerPostProcessor omerProcessor = const OmerPostProcessor(),
     SukkotKorbanotPostProcessor sukkotProcessor = const SukkotKorbanotPostProcessor(),
   })  : _omerRepository = omerRepository,
         _omerProcessor = omerProcessor,
         _sukkotRepository = sukkotRepository,
-        _sukkotProcessor = sukkotProcessor;
+        _sukkotProcessor = sukkotProcessor,
+        _graSsyRepository = graSsyRepository;
 
   final IPrayerRepository _repository;
   final IOmerMappingRepository? _omerRepository;
   final OmerPostProcessor _omerProcessor;
   final ISukkotKorbanotRepository? _sukkotRepository;
   final SukkotKorbanotPostProcessor _sukkotProcessor;
+  final IGraSsyRepository? _graSsyRepository;
 
   @override
   Future<List<AssembledSegment>> assemble({
@@ -79,6 +83,27 @@ class PrayerAssembler implements IPrayerAssembler {
         for (final s in out)
           _sukkotProcessor.process(s, day, isInIsrael: userContext.isInIsrael),
       ];
+    }
+
+    // Gr"a Shir Shel Yom: resolve and inject the day's Tehillim chapter
+    // into the `shir_shel_yom_gra` segment (optional accordion). Only
+    // runs on CHM Pesach + CHM Sukkot where the chag-day flags are set.
+    if (userContext.chagYt1Weekday != null && _graSsyRepository != null) {
+      final chag = userContext.sukkotDay != null ? 'sukkot' : 'pesach';
+      final dayInChag = userContext.sukkotDay ?? userContext.pesachDay;
+      if (dayInChag != null) {
+        final text = await _graSsyRepository!.resolveChapter(
+          chag: chag,
+          yt1Weekday: userContext.chagYt1Weekday!,
+          dayInChag: dayInChag,
+        );
+        if (text != null) {
+          out = [
+            for (final s in out)
+              s.id == 'shir_shel_yom_gra' ? s.copyWith(resolvedText: text) : s,
+          ];
+        }
+      }
     }
 
     return out;

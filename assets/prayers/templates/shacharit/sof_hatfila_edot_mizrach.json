@@ -49,6 +49,97 @@
       "allowed_nusach": []
     },
     {
+      "segment_id": "ssy_em_extra_tzom_gedalia_10_tevet",
+      "condition_flags": [
+        "fast_gedalia"
+      ],
+      "exclude_flags": [
+        "hallel_with_musaf"
+      ],
+      "optional": false,
+      "allowed_nusach": [
+        "edot_mizrach"
+      ]
+    },
+    {
+      "segment_id": "ssy_em_extra_tzom_gedalia_10_tevet",
+      "condition_flags": [
+        "fast_10_tevet"
+      ],
+      "exclude_flags": [
+        "hallel_with_musaf"
+      ],
+      "optional": false,
+      "allowed_nusach": [
+        "edot_mizrach"
+      ]
+    },
+    {
+      "segment_id": "ssy_em_extra_day_after_yk",
+      "condition_flags": [
+        "day_after_yom_kippur"
+      ],
+      "exclude_flags": [
+        "hallel_with_musaf"
+      ],
+      "optional": false,
+      "allowed_nusach": [
+        "edot_mizrach"
+      ]
+    },
+    {
+      "segment_id": "ssy_em_extra_chanukah",
+      "condition_flags": [
+        "chanukah"
+      ],
+      "exclude_flags": [
+        "hallel_with_musaf"
+      ],
+      "optional": false,
+      "allowed_nusach": [
+        "edot_mizrach"
+      ]
+    },
+    {
+      "segment_id": "ssy_em_extra_esther_purim",
+      "condition_flags": [
+        "fast_esther"
+      ],
+      "exclude_flags": [
+        "hallel_with_musaf"
+      ],
+      "optional": false,
+      "allowed_nusach": [
+        "edot_mizrach"
+      ]
+    },
+    {
+      "segment_id": "ssy_em_extra_esther_purim",
+      "condition_flags": [
+        "purim"
+      ],
+      "exclude_flags": [
+        "hallel_with_musaf"
+      ],
+      "optional": false,
+      "allowed_nusach": [
+        "edot_mizrach"
+      ]
+    },
+    {
+      "segment_id": "ssy_em_extra_17_tammuz",
+      "condition_flags": [
+        "fast_17_tammuz"
+      ],
+      "exclude_flags": [
+        "hallel_with_musaf"
+      ],
+      "optional": false,
+      "allowed_nusach": [
+        "edot_mizrach"
+      ]
+    },
+    {
       "sub_template_id": "kaddish_yatom",
       "condition_flags": [
         "with_minyan"

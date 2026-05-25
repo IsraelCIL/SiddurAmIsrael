@@ -12,6 +12,46 @@
       "allowed_nusach": []
     },
     {
+      "segment_id": "selichot_gedalia",
+      "condition_flags": [
+        "fast_gedalia",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "selichot_10_tevet",
+      "condition_flags": [
+        "fast_10_tevet",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "selichot_esther",
+      "condition_flags": [
+        "fast_esther",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "selichot_17_tammuz",
+      "condition_flags": [
+        "fast_17_tammuz",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
       "segment_id": "avinu_malkeinu",
       "condition_flags": [
         "avinu_malkeinu",

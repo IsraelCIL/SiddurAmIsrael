@@ -3,13 +3,44 @@
   "name": "shacharit_acharei_amidah_ashkenaz",
   "segments": [
     {
-      "segment_id": "selichot",
+      "segment_id": "selichot_10_tevet",
       "condition_flags": [
-        "avinu_malkeinu",
-        "with_minyan",
-        "fast_day"
+        "fast_10_tevet",
+        "with_minyan"
       ],
       "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "selichot_esther",
+      "condition_flags": [
+        "fast_esther",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "selichot_17_tammuz",
+      "condition_flags": [
+        "fast_17_tammuz",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "selichot_bahab",
+      "condition_flags": [
+        "bahab_day",
+        "with_minyan"
+      ],
+      "exclude_flags": [
+        "skip_tachanun"
+      ],
       "optional": false,
       "allowed_nusach": []
     },

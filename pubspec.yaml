@@ -87,6 +87,7 @@ flutter:
     - assets/prayers/shacharit/acharei_amidah/nusach/sfard/
     - assets/prayers/shacharit/acharei_amidah/nusach/edot_mizrach/
     - assets/prayers/shacharit/sof_hatfila/common/
+    - assets/prayers/shacharit/sof_hatfila/common/tehillim_gra/
     - assets/prayers/shacharit/sof_hatfila/nusach/edot_mizrach/
 
     # Mincha

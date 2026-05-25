@@ -44,6 +44,8 @@ const _segmentLabels = <String, String>{
   'sefirat_haomer_lamenatzeach': 'למנצח בנגינות',
   'sefirat_haomer_ana_bekoach': 'אנא בכח',
   'sefirat_haomer_ribono_shel_olam': 'ריבונו של עולם',
+  // Optional / accordion segments
+  'shir_shel_yom_gra': 'שיר של יום — מנהג הגר״א',
 };
 
 class PrayerTextWidget extends ConsumerWidget {
@@ -60,6 +62,15 @@ class PrayerTextWidget extends ConsumerWidget {
       height: 1.9,
       color: Colors.black87,
     );
+
+    if (segment.optional) {
+      return _OptionalSegmentTile(
+        label: label,
+        factor: factor,
+        bodyStyle: bodyStyle,
+        segment: segment,
+      );
+    }
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
@@ -84,6 +95,97 @@ class PrayerTextWidget extends ConsumerWidget {
           if (segment.id == 'sefirat_haomer_day_count') _OmerSummary(factor: factor),
           const Divider(height: 32, color: Color(0xFFE0D5C5)),
         ],
+      ),
+    );
+  }
+}
+
+/// Renders an [AssembledSegment] whose `optional` flag is true as a
+/// collapsed accordion. The user sees a stylized header (label + chevron
+/// + hint) and taps to expand. Use for community-specific or alternate
+/// minhag content (e.g. Gr"a Shir Shel Yom variants, alternate L'shem
+/// Yichud forms) that shouldn't be in the main reading flow by default.
+class _OptionalSegmentTile extends StatefulWidget {
+  const _OptionalSegmentTile({
+    required this.label,
+    required this.factor,
+    required this.bodyStyle,
+    required this.segment,
+  });
+
+  final String label;
+  final double factor;
+  final TextStyle bodyStyle;
+  final AssembledSegment segment;
+
+  @override
+  State<_OptionalSegmentTile> createState() => _OptionalSegmentTileState();
+}
+
+class _OptionalSegmentTileState extends State<_OptionalSegmentTile> {
+  bool _expanded = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final headerStyle = TextStyle(
+      fontSize: 14 * widget.factor,
+      fontWeight: FontWeight.w700,
+      color: const Color(0xFF8B1A1A),
+      letterSpacing: 0.5,
+    );
+    final hintStyle = TextStyle(
+      fontSize: 12 * widget.factor,
+      fontWeight: FontWeight.w400,
+      color: const Color(0xFF8B1A1A).withValues(alpha: 0.6),
+      letterSpacing: 0.3,
+    );
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
+      child: Theme(
+        data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+        child: ExpansionTile(
+          tilePadding: EdgeInsets.zero,
+          childrenPadding: const EdgeInsets.only(top: 4, bottom: 12),
+          initiallyExpanded: false,
+          shape: const Border(),
+          collapsedShape: const Border(),
+          onExpansionChanged: (v) => setState(() => _expanded = v),
+          title: Directionality(
+            textDirection: TextDirection.rtl,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Icon(
+                  _expanded ? Icons.expand_less : Icons.expand_more,
+                  size: 20 * widget.factor,
+                  color: const Color(0xFF8B1A1A),
+                ),
+                const SizedBox(width: 6),
+                Flexible(
+                  child: Text.rich(
+                    TextSpan(children: [
+                      TextSpan(text: widget.label, style: headerStyle),
+                      if (!_expanded) ...[
+                        TextSpan(text: '  ', style: hintStyle),
+                        TextSpan(text: '[לחץ להצגה]', style: hintStyle),
+                      ],
+                    ]),
+                    textDirection: TextDirection.rtl,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          children: [
+            RichPrayerText(
+              text: widget.segment.resolvedText,
+              style: widget.bodyStyle,
+            ),
+            const SizedBox(height: 8),
+            const Divider(height: 1, color: Color(0xFFE0D5C5)),
+          ],
+        ),
       ),
     );
   }
