@@ -54,7 +54,9 @@ function cleanHebrew(s) {
   return s.replace(/[֑-֯]/g, '').replace(/׃/g, ':').replace(/\s+/g, ' ').trim();
 }
 
-const ALIYAH_WORDS = ['שני', 'שלישי', 'רביעי'];
+// Sefaria's CHM Pesach source uses explicit role labels (לוי / ישראל)
+// instead of ordinals — so we accept both conventions.
+const ALIYAH_WORDS = ['שני', 'שלישי', 'רביעי', 'לוי', 'ישראל'];
 const ALIYAH_RE = new RegExp(
   `:(${ALIYAH_WORDS.join('|')})(?=[\\u05D0-\\u05EA])`,
   'g',
@@ -158,10 +160,12 @@ function splitWithMarkers(raw) {
       ASSETS, 'templates', 'shacharit', `acharei_amidah_${nusach}.json`,
     );
     const tpl = readJson(tplPath);
-    if (tpl.segments.some((s) => s.segment_id === 'kriah_chm_pesach_day_2')) {
-      console.log(`  ${rel(tplPath)}: already patched`);
-      continue;
-    }
+    // Idempotent: first remove ALL prior kriah_chm_* entries (any
+    // earlier run of this script), then re-insert in the up-to-date
+    // form. This lets the script absorb shifts in our gating logic.
+    tpl.segments = tpl.segments.filter(
+      (s) => !(s.segment_id && s.segment_id.startsWith('kriah_chm_')),
+    );
     // Anchor: after the last kriah_* entry in the existing template, or
     // after kriat_hatorah_reading_text if no kriah_rc.
     let lastIdx = -1;
@@ -175,19 +179,79 @@ function splitWithMarkers(raw) {
     }
 
     const newEntries = [];
-    for (let d = 2; d <= 6; d++) {
-      newEntries.push({
-        segment_id: `kriah_chm_pesach_day_${d}`,
-        condition_flags: [
-          `pesach_day_${d}`,
-          'chol_hamoed_pesach',
-          'with_minyan',
-        ],
-        exclude_flags: [],
-        optional: false,
-        allowed_nusach: [],
-      });
-    }
+    // CHM Pesach entries — regular case + Thursday-YT1 shift.
+    // Regular case: pesach_day_N reads kriah_chm_pesach_day_N.
+    //   Day 4 + 5 excluded when pesach_yt1_thursday is set (shifted).
+    // Thursday shift:
+    //   pesach_day_4 (Sun, post-Shabbat) reads kriah_chm_pesach_day_3
+    //     (would normally be day 3 = Shabbat in this scenario).
+    //   pesach_day_5 (Mon) reads kriah_chm_pesach_day_4.
+    //   Day 5 ("Psal Lecha", normally pesach_day_5) is consumed by
+    //     Shabbat CHM (OOS) → no Mon/Tue reading for it.
+    //   pesach_day_6 (Tue) unchanged.
+    newEntries.push({
+      segment_id: 'kriah_chm_pesach_day_2',
+      condition_flags: ['pesach_day_2', 'chol_hamoed_pesach', 'with_minyan'],
+      exclude_flags: [],
+      optional: false,
+      allowed_nusach: [],
+    });
+    newEntries.push({
+      segment_id: 'kriah_chm_pesach_day_3',
+      condition_flags: ['pesach_day_3', 'chol_hamoed_pesach', 'with_minyan'],
+      exclude_flags: [],
+      optional: false,
+      allowed_nusach: [],
+    });
+    // Thursday-shift: pesach_day_4 reads day_3 content.
+    newEntries.push({
+      segment_id: 'kriah_chm_pesach_day_3',
+      condition_flags: [
+        'pesach_day_4',
+        'chol_hamoed_pesach',
+        'with_minyan',
+        'pesach_yt1_thursday',
+      ],
+      exclude_flags: [],
+      optional: false,
+      allowed_nusach: [],
+    });
+    // Regular day 4 — only when NOT in Thursday shift.
+    newEntries.push({
+      segment_id: 'kriah_chm_pesach_day_4',
+      condition_flags: ['pesach_day_4', 'chol_hamoed_pesach', 'with_minyan'],
+      exclude_flags: ['pesach_yt1_thursday'],
+      optional: false,
+      allowed_nusach: [],
+    });
+    // Thursday-shift: pesach_day_5 reads day_4 content.
+    newEntries.push({
+      segment_id: 'kriah_chm_pesach_day_4',
+      condition_flags: [
+        'pesach_day_5',
+        'chol_hamoed_pesach',
+        'with_minyan',
+        'pesach_yt1_thursday',
+      ],
+      exclude_flags: [],
+      optional: false,
+      allowed_nusach: [],
+    });
+    // Regular day 5 — only when NOT in Thursday shift.
+    newEntries.push({
+      segment_id: 'kriah_chm_pesach_day_5',
+      condition_flags: ['pesach_day_5', 'chol_hamoed_pesach', 'with_minyan'],
+      exclude_flags: ['pesach_yt1_thursday'],
+      optional: false,
+      allowed_nusach: [],
+    });
+    newEntries.push({
+      segment_id: 'kriah_chm_pesach_day_6',
+      condition_flags: ['pesach_day_6', 'chol_hamoed_pesach', 'with_minyan'],
+      exclude_flags: [],
+      optional: false,
+      allowed_nusach: [],
+    });
     for (let d = 2; d <= 7; d++) {
       newEntries.push({
         segment_id: `kriah_chm_sukkot_day_${d}`,
@@ -202,8 +266,28 @@ function splitWithMarkers(raw) {
       });
     }
     tpl.segments.splice(lastIdx + 1, 0, ...newEntries);
+
+    // Chatzi Kaddish AFTER the last kriah_* entry — appears on any
+    // kriat_hatorah day, between the reading block and yehi_ratzon
+    // (Mon/Thu) or hagbahah (Ashk/Sfard) / yehi_ratzon (EM).
+    // Idempotent: only insert if no chatzi_kaddish-after-kriah already
+    // present at this position.
+    const afterReadingIdx = lastIdx + 1 + newEntries.length;
+    const alreadyHasKaddish =
+      tpl.segments[afterReadingIdx] &&
+      tpl.segments[afterReadingIdx].sub_template_id === 'chatzi_kaddish' &&
+      Array.isArray(tpl.segments[afterReadingIdx].condition_flags) &&
+      tpl.segments[afterReadingIdx].condition_flags.includes('kriat_hatorah');
+    if (!alreadyHasKaddish) {
+      tpl.segments.splice(afterReadingIdx, 0, {
+        sub_template_id: 'chatzi_kaddish',
+        condition_flags: ['kriat_hatorah', 'with_minyan'],
+        exclude_flags: [],
+      });
+    }
+
     writeJson(tplPath, tpl);
-    console.log(`  ${rel(tplPath)}: inserted ${newEntries.length} CHM entries at idx ${lastIdx + 1}`);
+    console.log(`  ${rel(tplPath)}: inserted ${newEntries.length} CHM entries + chatzi_kaddish at idx ${lastIdx + 1}`);
   }
 
   function sortKeys(o) {

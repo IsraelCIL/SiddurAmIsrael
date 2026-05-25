@@ -60,6 +60,12 @@ class HalachicCalendarService implements ICalendarFlagProvider {
         DayFlag.pesachDay7,
       ];
       flags.add(pesachDayFlags[pesachDay - 1]);
+      // CHM Pesach reading shift when YT1 falls on Thursday (Dart=4):
+      // Shabbat lands at pesachDay 3, so readings 3-5 shift down by one
+      // (Psal Lecha goes to Shabbat, OOS for us).
+      if (chagYt1Weekday == DateTime.thursday) {
+        flags.add(DayFlag.pesachYt1Thursday);
+      }
     }
 
     // Emit sukkot_day_<N> boolean flags + hoshanot_day flag.
