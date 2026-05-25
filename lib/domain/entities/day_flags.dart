@@ -27,6 +27,11 @@ class DayFlags with _$DayFlags {
     // Sukkot). Used together with [pesachDay] / [sukkotDay] by the Gr"a
     // SSY post-processor. Null outside Pesach/Sukkot.
     int? chagYt1Weekday,
+    // Slug of the upcoming Shabbat's parashah, with combined parshiot
+    // collapsed to the FIRST single (Tazria-Metzora → tazria). Used by
+    // the Mon/Thu Torah-reading post-processor. Null on Shabbat or when
+    // kosher_dart's getParshah() returns NONE (special Shabbatot, etc.).
+    String? upcomingParshah,
   }) = _DayFlags;
 
   // ── Convenience getters ────────────────────────────────────────────────────
@@ -55,6 +60,7 @@ class DayFlags with _$DayFlags {
         sukkotDay: other.sukkotDay ?? sukkotDay,
         pesachDay: other.pesachDay ?? pesachDay,
         chagYt1Weekday: other.chagYt1Weekday ?? chagYt1Weekday,
+        upcomingParshah: other.upcomingParshah ?? upcomingParshah,
       );
 }
 
@@ -196,6 +202,11 @@ abstract final class DayFlag {
   // Chodesh, public fast days, Chanukah, Purim, Chol HaMoed — plus
   // Shabbat / Yom Tov when the siddur covers them).
   static const kriatHatorah = 'kriat_hatorah';
+  // kriat_hatorah_mon_thu: regular Monday/Thursday weekly-parashah reading.
+  // Set when the day is Mon or Thu AND no overriding special reading
+  // (RC/Chanukah/Purim/CHM/fast) applies. The KriahPostProcessor uses
+  // [DayFlags.upcomingParshah] to pick the right parashah's text.
+  static const kriatHatorahMonThu = 'kriat_hatorah_mon_thu';
 
   // ── Sefirat HaOmer ────────────────────────────────────────────────────────
   // omer_period: today is one of the 49 counting days (16 Nisan – 5 Sivan).

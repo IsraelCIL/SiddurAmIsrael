@@ -3,10 +3,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/calendar/hebrew_date.dart';
 import '../../domain/entities/day_flags.dart';
 import '../../data/datasources/local/gra_ssy_datasource.dart';
+import '../../data/datasources/local/kriah_datasource.dart';
 import '../../data/datasources/local/omer_mapping_datasource.dart';
 import '../../data/datasources/local/prayer_local_datasource.dart';
 import '../../data/datasources/local/sukkot_korbanot_datasource.dart';
 import '../../data/repositories/gra_ssy_repository_impl.dart';
+import '../../data/repositories/kriah_repository_impl.dart';
 import '../../data/repositories/omer_mapping_repository_impl.dart';
 import '../../data/repositories/prayer_repository_impl.dart';
 import '../../data/repositories/sukkot_korbanot_repository_impl.dart';
@@ -14,6 +16,7 @@ import '../../domain/entities/assembled_segment.dart';
 import '../../domain/entities/omer_day.dart';
 import '../../domain/entities/user_context.dart';
 import '../../domain/repositories/i_gra_ssy_repository.dart';
+import '../../domain/repositories/i_kriah_repository.dart';
 import '../../domain/repositories/i_omer_mapping_repository.dart';
 import '../../domain/repositories/i_prayer_repository.dart';
 import '../../domain/repositories/i_sukkot_korbanot_repository.dart';
@@ -56,12 +59,21 @@ final graSsyRepositoryProvider = Provider<IGraSsyRepository>(
   (ref) => GraSsyRepositoryImpl(ref.watch(graSsyDatasourceProvider)),
 );
 
+final kriahDatasourceProvider = Provider<KriahDatasource>(
+  (ref) => KriahDatasource(),
+);
+
+final kriahRepositoryProvider = Provider<IKriahRepository>(
+  (ref) => KriahRepositoryImpl(ref.watch(kriahDatasourceProvider)),
+);
+
 final prayerAssemblerProvider = Provider<IPrayerAssembler>(
   (ref) => PrayerAssembler(
     ref.watch(prayerRepositoryProvider),
     omerRepository: ref.watch(omerMappingRepositoryProvider),
     sukkotRepository: ref.watch(sukkotKorbanotRepositoryProvider),
     graSsyRepository: ref.watch(graSsyRepositoryProvider),
+    kriahRepository: ref.watch(kriahRepositoryProvider),
   ),
 );
 
@@ -116,6 +128,7 @@ final userContextProvider = Provider<UserContext>((ref) {
     sukkotDay: dayFlags.sukkotDay,
     pesachDay: dayFlags.pesachDay,
     chagYt1Weekday: dayFlags.chagYt1Weekday,
+    upcomingParshah: dayFlags.upcomingParshah,
   );
 });
 
@@ -150,6 +163,7 @@ final minchaProvider = FutureProvider<List<AssembledSegment>>((ref) {
     sukkotDay: baseCtx.sukkotDay,
     pesachDay: baseCtx.pesachDay,
     chagYt1Weekday: baseCtx.chagYt1Weekday,
+    upcomingParshah: baseCtx.upcomingParshah,
   );
   return assembler.assemble(templateId: 'mincha', userContext: ctx);
 });

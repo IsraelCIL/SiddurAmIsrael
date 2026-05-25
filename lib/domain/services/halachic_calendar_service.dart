@@ -68,6 +68,26 @@ class HalachicCalendarService implements ICalendarFlagProvider {
       }
     }
 
+    // Upcoming parashah slug (for Mon/Thu Torah reading lookup). Mapped
+    // combined-parshiot → first single per the standard Mon/Thu rule.
+    final upcomingParshah = _computeUpcomingParshah(cal);
+
+    // kriat_hatorah_mon_thu: gate the regular weekly reading. Set only
+    // when there's no overriding special reading. The user said in
+    // future batches we'll add specific flags for RC/CHM/Chanukah/Purim
+    // etc.; for now the override list mirrors them.
+    if (flags.contains(DayFlag.mondayThursday) &&
+        upcomingParshah != null &&
+        !flags.contains(DayFlag.roshChodesh) &&
+        !flags.contains(DayFlag.chanukah) &&
+        !flags.contains(DayFlag.purim) &&
+        !flags.contains(DayFlag.shushanPurim) &&
+        !flags.contains(DayFlag.cholHamoedPesach) &&
+        !flags.contains(DayFlag.cholHamoedSukkot) &&
+        !flags.contains(DayFlag.fastDay)) {
+      flags.add(DayFlag.kriatHatorahMonThu);
+    }
+
     // Derived: gra_ssy_day on CHM Pesach + CHM Sukkot (incl. Hoshana Raba).
     // The first/last days of the chag are YT and have their own SSY (92 on
     // Shabbat, 76 on weekdays of Sukkot, 114 of Pesach) — Gr"a only swaps
@@ -83,7 +103,30 @@ class HalachicCalendarService implements ICalendarFlagProvider {
       sukkotDay: sukkotDay,
       pesachDay: pesachDay,
       chagYt1Weekday: chagYt1Weekday,
+      upcomingParshah: upcomingParshah,
     );
+  }
+
+  // ── Upcoming parashah (Mon/Thu Torah reading lookup) ───────────────────
+  // kosher_dart's getParshah() returns the parashah for the upcoming
+  // Shabbat (or NONE for special Shabbatot when YT/RC override). For
+  // combined parshiot we collapse to the FIRST single (Tazria-Metzora →
+  // tazria) per the standard Mon/Thu rule.
+  String? _computeUpcomingParshah(JewishCalendar cal) {
+    final p = cal.getParshah();
+    if (p == Parsha.NONE) return null;
+    // Combined → first single.
+    const collapsed = <Parsha, Parsha>{
+      Parsha.VAYAKHEL_PEKUDEI: Parsha.VAYAKHEL,
+      Parsha.TAZRIA_METZORA: Parsha.TAZRIA,
+      Parsha.ACHREI_MOS_KEDOSHIM: Parsha.ACHREI_MOS,
+      Parsha.BEHAR_BECHUKOSAI: Parsha.BEHAR,
+      Parsha.CHUKAS_BALAK: Parsha.CHUKAS,
+      Parsha.MATOS_MASEI: Parsha.MATOS,
+      Parsha.NITZAVIM_VAYEILECH: Parsha.NITZAVIM,
+    };
+    final single = collapsed[p] ?? p;
+    return single.name.toLowerCase();
   }
 
   // ── Hallel ────────────────────────────────────────────────────────────────
