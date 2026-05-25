@@ -57,8 +57,37 @@ function cleanHebrew(s) {
   return s.replace(/[֑-֯]/g, '').replace(/׃/g, ':').replace(/\s+/g, ' ').trim();
 }
 
+// Sefaria's Mon/Thu source marks aliyah boundaries by inserting the
+// aliyah ordinal word (שני/שלישי/...) directly after the sof-pasuk colon
+// of the previous aliyah's last verse, with NO surrounding whitespace.
+// We insert a delimiter line wrapped in <b>...</b> so RichPrayerText
+// renders it as a visible bold marker between aliyot.
+// Aliyot 5-7 + maftir only appear on Shabbat/YT (OOS per app constraints).
+// Mon/Thu has 3 olim, RC/CHM have 4. Limit detection accordingly.
+const ALIYAH_WORDS = ['שני', 'שלישי', 'רביעי'];
+const ALIYAH_RE = new RegExp(`:(${ALIYAH_WORDS.join('|')})(?=[\\u05D0-\\u05EA])`, 'g');
+
 function splitToLines(s) {
-  return cleanHebrew(s).split(/(?<=:)\s+/).filter((p) => p.trim().length > 0);
+  // First insert a sentinel before each aliyah marker so it becomes its
+  // own line after splitting.
+  const withMarkers = cleanHebrew(s).replace(
+    ALIYAH_RE,
+    (_, word) => `: ‹‹ALIYAH=${word}››`,
+  );
+  // Split at sof-pasuk-followed-by-space.
+  const parts = withMarkers.split(/(?<=:)\s+/).filter((p) => p.trim().length > 0);
+  // Replace sentinels with a bold-marker line on its own.
+  const out = [];
+  for (const p of parts) {
+    const m = p.match(/^‹‹ALIYAH=(.+?)››\s*(.*)$/);
+    if (m) {
+      out.push(`<b>— ${m[1]} —</b>`);
+      if (m[2].trim()) out.push(m[2].trim());
+    } else {
+      out.push(p);
+    }
+  }
+  return out;
 }
 
 // Parashah name (as printed in Sefaria) → kosher_dart Parsha enum slug.
