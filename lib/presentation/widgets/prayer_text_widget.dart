@@ -46,6 +46,13 @@ const _segmentLabels = <String, String>{
   'sefirat_haomer_ribono_shel_olam': 'ריבונו של עולם',
   // Optional / accordion segments
   'shir_shel_yom_gra': 'שיר של יום — מנהג הגר״א',
+  'hoshanot_ashk_link': 'הושענות — לחץ להצגת הסבר',
+  'hoshanot_day_2': 'הושענות',
+  'hoshanot_day_3': 'הושענות',
+  'hoshanot_day_4': 'הושענות',
+  'hoshanot_day_5': 'הושענות',
+  'hoshanot_day_6': 'הושענות',
+  'hoshanot_hoshana_rabba': 'הושענות — הושענא רבא',
 };
 
 class PrayerTextWidget extends ConsumerWidget {

@@ -98,6 +98,72 @@
       "allowed_nusach": []
     },
     {
+      "segment_id": "hoshanot_day_2",
+      "condition_flags": [
+        "sukkot_day_2",
+        "hoshanot_day",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "hoshanot_day_3",
+      "condition_flags": [
+        "sukkot_day_3",
+        "hoshanot_day",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "hoshanot_day_4",
+      "condition_flags": [
+        "sukkot_day_4",
+        "hoshanot_day",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "hoshanot_day_5",
+      "condition_flags": [
+        "sukkot_day_5",
+        "hoshanot_day",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "hoshanot_day_6",
+      "condition_flags": [
+        "sukkot_day_6",
+        "hoshanot_day",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "hoshanot_hoshana_rabba",
+      "condition_flags": [
+        "sukkot_day_7",
+        "hoshanot_day",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
       "sub_template_id": "kaddish_titkabal",
       "condition_flags": [
         "hallel_with_musaf",

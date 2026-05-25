@@ -83,9 +83,11 @@ flutter:
     - assets/prayers/shacharit/birkot_kriat_shema/nusach/sfard/
     - assets/prayers/shacharit/birkot_kriat_shema/nusach/edot_mizrach/
     - assets/prayers/shacharit/acharei_amidah/common/
+    - assets/prayers/shacharit/acharei_amidah/common/hoshanot/
     - assets/prayers/shacharit/acharei_amidah/nusach/ashkenaz/
     - assets/prayers/shacharit/acharei_amidah/nusach/sfard/
     - assets/prayers/shacharit/acharei_amidah/nusach/edot_mizrach/
+    - assets/prayers/shacharit/acharei_amidah/nusach/edot_mizrach/hoshanot/
     - assets/prayers/shacharit/sof_hatfila/common/
     - assets/prayers/shacharit/sof_hatfila/common/tehillim_gra/
     - assets/prayers/shacharit/sof_hatfila/nusach/edot_mizrach/
