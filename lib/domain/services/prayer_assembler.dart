@@ -108,6 +108,23 @@ class PrayerAssembler implements IPrayerAssembler {
       }
     }
 
+    // RC Tevet composite: olim 1-3 from RC + Chanukah day-N as oleh 4.
+    // Always falls during Chanukah, so chanukahDay must be set.
+    if (userContext.activeFlags.contains('rc_tevet') &&
+        userContext.chanukahDay != null &&
+        _kriahRepository != null) {
+      final text =
+          await _kriahRepository!.loadRcTevetComposite(userContext.chanukahDay!);
+      if (text != null) {
+        out = [
+          for (final s in out)
+            s.id == 'kriah_rc_tevet'
+                ? s.copyWith(resolvedText: text)
+                : s,
+        ];
+      }
+    }
+
     // Gr"a Shir Shel Yom: resolve and inject the day's Tehillim chapter
     // into the `shir_shel_yom_gra` segment (optional accordion). Only
     // runs on CHM Pesach + CHM Sukkot where the chag-day flags are set.

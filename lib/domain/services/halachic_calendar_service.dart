@@ -44,6 +44,9 @@ class HalachicCalendarService implements ICalendarFlagProvider {
     final int? sukkotDay = _computeSukkotDay(cal);
     // Pesach day (1..7 EY): set only during 15-21 Nisan.
     final int? pesachDay = _computePesachDay(cal);
+    // Chanukah day (1..8): kosher_dart returns -1 outside Chanukah.
+    final int rawChan = cal.getDayOfChanukah();
+    final int? chanukahDay = (rawChan >= 1 && rawChan <= 8) ? rawChan : null;
     // YT1 weekday for the current chag (Pesach or Sukkot). Null outside.
     int? chagYt1Weekday;
     if (sukkotDay != null) {
@@ -109,6 +112,24 @@ class HalachicCalendarService implements ICalendarFlagProvider {
         !flags.contains(DayFlag.chanukah)) {
       flags.add(DayFlag.kriatHatorahRc);
     }
+    // RC Tevet — always falls during Chanukah. Composite reading: olim
+    // 1-3 from RC, oleh 4 from Chanukah day-N. Handled by KriahPostProcessor.
+    if (flags.contains(DayFlag.roshChodesh) &&
+        flags.contains(DayFlag.chanukah)) {
+      flags.add(DayFlag.rcTevet);
+    }
+    // Chanukah standalone — NOT on RC Tevet (composite there).
+    if (flags.contains(DayFlag.chanukah) &&
+        !flags.contains(DayFlag.roshChodesh)) {
+      flags.add(DayFlag.kriatHatorahChanukah);
+    }
+    // Purim Torah reading. Already gated by purim flag (which respects
+    // UserContext.purimDate); shushanPurim also gets a reading in walled
+    // cities. We fire on either to match standard practice.
+    if (flags.contains(DayFlag.purim) ||
+        flags.contains(DayFlag.shushanPurim)) {
+      flags.add(DayFlag.kriatHatorahPurim);
+    }
 
     // Derived: gra_ssy_day on CHM Pesach + CHM Sukkot (incl. Hoshana Raba).
     // The first/last days of the chag are YT and have their own SSY (92 on
@@ -119,11 +140,22 @@ class HalachicCalendarService implements ICalendarFlagProvider {
       flags.add(DayFlag.graSsyDay);
     }
 
+    // chanukah_day_<N> boolean flags.
+    if (chanukahDay != null) {
+      const chanukahDayFlags = [
+        DayFlag.chanukahDay1, DayFlag.chanukahDay2, DayFlag.chanukahDay3,
+        DayFlag.chanukahDay4, DayFlag.chanukahDay5, DayFlag.chanukahDay6,
+        DayFlag.chanukahDay7, DayFlag.chanukahDay8,
+      ];
+      flags.add(chanukahDayFlags[chanukahDay - 1]);
+    }
+
     return DayFlags(
       flags: flags.toList(),
       omerDay: omerDay,
       sukkotDay: sukkotDay,
       pesachDay: pesachDay,
+      chanukahDay: chanukahDay,
       chagYt1Weekday: chagYt1Weekday,
       upcomingParshah: upcomingParshah,
     );

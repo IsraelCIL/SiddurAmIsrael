@@ -127,6 +127,7 @@ final userContextProvider = Provider<UserContext>((ref) {
     omerDay: dayFlags.omerDay,
     sukkotDay: dayFlags.sukkotDay,
     pesachDay: dayFlags.pesachDay,
+    chanukahDay: dayFlags.chanukahDay,
     chagYt1Weekday: dayFlags.chagYt1Weekday,
     upcomingParshah: dayFlags.upcomingParshah,
   );
@@ -162,6 +163,7 @@ final minchaProvider = FutureProvider<List<AssembledSegment>>((ref) {
     omerDay: baseCtx.omerDay,
     sukkotDay: baseCtx.sukkotDay,
     pesachDay: baseCtx.pesachDay,
+    chanukahDay: baseCtx.chanukahDay,
     chagYt1Weekday: baseCtx.chagYt1Weekday,
     upcomingParshah: baseCtx.upcomingParshah,
   );

@@ -22,17 +22,12 @@ class KriahDatasource {
         parsed.map((k, v) => MapEntry(k, v as String));
   }
 
-  /// Resolves the parashah slug to its Mon/Thu reading text. Returns null
-  /// if no mapping entry exists (which indicates an unmapped parashah
-  /// name from kosher_dart — a coding bug, not a user issue).
-  Future<String?> loadMonThuReading(String parashahSlug) async {
-    final mapping = await _loadMonThuMapping();
-    final segmentId = mapping[parashahSlug];
-    if (segmentId == null) return null;
-
+  /// Loads a segment's joined text by manifest common-key. Returns null
+  /// when the key is not present in manifest.common.
+  Future<String?> _loadCommonSegmentText(String key) async {
     final manifestRaw = await _bundle.loadString(_manifestPath);
     final manifest = jsonDecode(manifestRaw) as Map<String, dynamic>;
-    final p = (manifest['common'] as Map)[segmentId];
+    final p = (manifest['common'] as Map)[key];
     if (p is! String) return null;
     final segRaw = await _bundle.loadString(p);
     final seg = jsonDecode(segRaw) as Map<String, dynamic>;
@@ -47,5 +42,31 @@ class KriahDatasource {
       }
     }
     return lines.join(' ');
+  }
+
+  /// Resolves the parashah slug to its Mon/Thu reading text. Returns null
+  /// if no mapping entry exists (which indicates an unmapped parashah
+  /// name from kosher_dart — a coding bug, not a user issue).
+  Future<String?> loadMonThuReading(String parashahSlug) async {
+    final mapping = await _loadMonThuMapping();
+    final segmentId = mapping[parashahSlug];
+    if (segmentId == null) return null;
+    return _loadCommonSegmentText(segmentId);
+  }
+
+  /// RC-Tevet composite: olim 1-3 from kriah_rc (truncated before the
+  /// original "— רביעי —" marker, which is the וּבְרָאשֵׁי חָדְשֵׁיכֶם
+  /// passage we don't want on RC Tevet) followed by a fresh
+  /// "— רביעי —" marker and the Chanukah day-N reading as the 4th oleh.
+  Future<String?> loadRcTevetComposite(int chanukahDay) async {
+    final rcText = await _loadCommonSegmentText('kriah_rc');
+    final chanText =
+        await _loadCommonSegmentText('kriah_chanukah_day_$chanukahDay');
+    if (rcText == null || chanText == null) return null;
+    final reviiMarkerRe = RegExp(r'<b>—\s*רביעי[^<]*—</b>');
+    final m = reviiMarkerRe.firstMatch(rcText);
+    final rcUpToOlim3 =
+        m == null ? rcText : rcText.substring(0, m.start).trimRight();
+    return '$rcUpToOlim3 <b>— רביעי —</b> $chanText';
   }
 }

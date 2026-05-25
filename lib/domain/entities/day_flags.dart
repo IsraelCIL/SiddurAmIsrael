@@ -23,6 +23,10 @@ class DayFlags with _$DayFlags {
     // 1 = YT1, 7 = YT7 (last YT in EY), 8 = Acharon shel Pesach (chu"l).
     // Used by Gr"a Shir Shel Yom mapping. Null outside Pesach.
     int? pesachDay,
+    // 1..8 during Chanukah. Used by KriahPostProcessor for the RC Tevet
+    // composite reading (oleh 4 reads Chanukah day-N) and for direct
+    // per-day Chanukah Torah reading dispatch. Null outside Chanukah.
+    int? chanukahDay,
     // Day-of-week (Mon=1 … Sun=7) of YT1 of the current chag (Pesach or
     // Sukkot). Used together with [pesachDay] / [sukkotDay] by the Gr"a
     // SSY post-processor. Null outside Pesach/Sukkot.
@@ -59,6 +63,7 @@ class DayFlags with _$DayFlags {
         omerDay: other.omerDay ?? omerDay,
         sukkotDay: other.sukkotDay ?? sukkotDay,
         pesachDay: other.pesachDay ?? pesachDay,
+        chanukahDay: other.chanukahDay ?? chanukahDay,
         chagYt1Weekday: other.chagYt1Weekday ?? chagYt1Weekday,
         upcomingParshah: other.upcomingParshah ?? upcomingParshah,
       );
@@ -211,6 +216,27 @@ abstract final class DayFlag {
   // Set on RC days that are NOT also Chanukah — RC Tevet during Chanukah
   // gets a composite reading handled separately in E.8e.
   static const kriatHatorahRc = 'kriat_hatorah_rc';
+  // kriat_hatorah_chanukah: Chanukah Torah reading (day-specific via the
+  // chanukah_day_<N> flag). Excluded on RC Tevet (composite reading).
+  static const kriatHatorahChanukah = 'kriat_hatorah_chanukah';
+  // kriat_hatorah_purim: Purim Torah reading (Shemot 17:8-16 — וַיָּבֹא
+  // עֲמָלֵק). Fires on Purim 14 (or 15 in walled cities, depending on
+  // PurimDate). Does NOT fire on Shushan Purim Katan / Purim Katan.
+  static const kriatHatorahPurim = 'kriat_hatorah_purim';
+  // rc_tevet: Rosh Chodesh Tevet — always falls during Chanukah.
+  // Triggers a composite reading: RC olim 1-3, Chanukah day-N oleh 4.
+  static const rcTevet = 'rc_tevet';
+
+  // ── Chanukah day-of-chag boolean flags ───────────────────────────────────
+  // One flag per day of Chanukah (1..8). Exactly one fires on Chanukah.
+  static const chanukahDay1 = 'chanukah_day_1';
+  static const chanukahDay2 = 'chanukah_day_2';
+  static const chanukahDay3 = 'chanukah_day_3';
+  static const chanukahDay4 = 'chanukah_day_4';
+  static const chanukahDay5 = 'chanukah_day_5';
+  static const chanukahDay6 = 'chanukah_day_6';
+  static const chanukahDay7 = 'chanukah_day_7';
+  static const chanukahDay8 = 'chanukah_day_8';
 
   // ── Sefirat HaOmer ────────────────────────────────────────────────────────
   // omer_period: today is one of the 49 counting days (16 Nisan – 5 Sivan).
