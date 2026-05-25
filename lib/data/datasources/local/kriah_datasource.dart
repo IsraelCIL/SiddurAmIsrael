@@ -54,19 +54,19 @@ class KriahDatasource {
     return _loadCommonSegmentText(segmentId);
   }
 
-  /// RC-Tevet composite: olim 1-3 from kriah_rc (truncated before the
-  /// original "— רביעי —" marker, which is the וּבְרָאשֵׁי חָדְשֵׁיכֶם
-  /// passage we don't want on RC Tevet) followed by a fresh
-  /// "— רביעי —" marker and the Chanukah day-N reading as the 4th oleh.
+  /// RC-Tevet composite: the full RC reading is collapsed into 3 olim —
+  /// olim 1-2 unchanged, and the original 3rd + 4th portions
+  /// (וּבְרָאשֵׁי חָדְשֵׁיכֶם …) are merged into oleh 3. The new oleh 4
+  /// reads the Chanukah day-N passage. We achieve this by stripping the
+  /// original "— רביעי —" marker (joining its text to shlishi) and
+  /// appending a fresh marker + Chanukah text.
   Future<String?> loadRcTevetComposite(int chanukahDay) async {
     final rcText = await _loadCommonSegmentText('kriah_rc');
     final chanText =
         await _loadCommonSegmentText('kriah_chanukah_day_$chanukahDay');
     if (rcText == null || chanText == null) return null;
-    final reviiMarkerRe = RegExp(r'<b>—\s*רביעי[^<]*—</b>');
-    final m = reviiMarkerRe.firstMatch(rcText);
-    final rcUpToOlim3 =
-        m == null ? rcText : rcText.substring(0, m.start).trimRight();
-    return '$rcUpToOlim3 <b>— רביעי —</b> $chanText';
+    final reviiMarkerRe = RegExp(r'\s*<b>—\s*רביעי[^<]*—</b>\s*');
+    final rcMerged = rcText.replaceFirst(reviiMarkerRe, ' ').trimRight();
+    return '$rcMerged <b>— רביעי —</b> $chanText';
   }
 }
