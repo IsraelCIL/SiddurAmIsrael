@@ -9,4 +9,8 @@ class KriahRepositoryImpl implements IKriahRepository {
   @override
   Future<String?> loadMonThuReading(String parashahSlug) =>
       _ds.loadMonThuReading(parashahSlug);
+
+  @override
+  Future<String?> loadRcTevetComposite(int chanukahDay) =>
+      _ds.loadRcTevetComposite(chanukahDay);
 }

@@ -379,6 +379,114 @@
       "allowed_nusach": []
     },
     {
+      "segment_id": "kriah_chanukah_day_1",
+      "condition_flags": [
+        "chanukah_day_1",
+        "kriat_hatorah_chanukah",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "kriah_chanukah_day_2",
+      "condition_flags": [
+        "chanukah_day_2",
+        "kriat_hatorah_chanukah",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "kriah_chanukah_day_3",
+      "condition_flags": [
+        "chanukah_day_3",
+        "kriat_hatorah_chanukah",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "kriah_chanukah_day_4",
+      "condition_flags": [
+        "chanukah_day_4",
+        "kriat_hatorah_chanukah",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "kriah_chanukah_day_5",
+      "condition_flags": [
+        "chanukah_day_5",
+        "kriat_hatorah_chanukah",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "kriah_chanukah_day_6",
+      "condition_flags": [
+        "chanukah_day_6",
+        "kriat_hatorah_chanukah",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "kriah_chanukah_day_7",
+      "condition_flags": [
+        "chanukah_day_7",
+        "kriat_hatorah_chanukah",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "kriah_chanukah_day_8",
+      "condition_flags": [
+        "chanukah_day_8",
+        "kriat_hatorah_chanukah",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "kriah_purim",
+      "condition_flags": [
+        "kriat_hatorah_purim",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "kriah_rc_tevet",
+      "condition_flags": [
+        "rc_tevet",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
       "sub_template_id": "chatzi_kaddish",
       "condition_flags": [
         "kriat_hatorah",

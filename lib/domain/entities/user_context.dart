@@ -34,6 +34,9 @@ class UserContext with _$UserContext {
     // 1 = YT1, 7 = YT7 (last YT in EY), 8 = Acharon Pesach (chu"l only).
     // Used by Gr"a Shir Shel Yom mapping. Null outside Pesach.
     int? pesachDay,
+    // 1..8 during Chanukah. Used by KriahPostProcessor for the RC Tevet
+    // composite reading. Null outside Chanukah.
+    int? chanukahDay,
     // Day-of-week (Mon=1 … Sun=7) of YT1 of the current chag (Pesach or
     // Sukkot). Used together with pesachDay/sukkotDay by the Gr"a SSY
     // post-processor to look up the day's Tehillim chapter. Null outside
