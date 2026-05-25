@@ -63,13 +63,41 @@ const ALIYAH_RE = new RegExp(
   'g',
 );
 
-function splitWithMarkers(raw) {
+function splitWithMarkers(raw, opts) {
+  opts = opts || {};
   let s = cleanHebrew(raw);
-  // Sefaria Chanukah days 2-8 prefix the body with "כהן / שלישי" (no
-  // surrounding whitespace). Promote that prefix to its own bold marker
-  // line at the very beginning.
-  s = s.replace(/^כהן\s*\/\s*שלישי/, '‹‹MARK=כהן / שלישי›› ');
+  // Sefaria Chanukah days 2-7 prefix the body with "כהן / שלישי" (no
+  // surrounding whitespace) — Kohen + 3rd oleh share the same passage.
+  // Promote that prefix to its own bold marker line at the very
+  // beginning. NOT applied to Zot Chanukah (day 8) — see below.
+  if (opts.useKohenShlishi) {
+    s = s.replace(/^כהן\s*\/\s*שלישי/, '‹‹MARK=כהן / שלישי›› ');
+  } else {
+    // Day 8 Sefaria source includes the same "כהן / שלישי" prefix but
+    // it's WRONG per standard practice: on Zot Chanukah the 3rd oleh
+    // does NOT repeat — they read FORWARD from "ביום התשיעי" through
+    // "כן עשה את המנורה". Strip the misleading prefix.
+    s = s.replace(/^כהן\s*\/\s*שלישי\s*/, '');
+  }
   s = s.replace(ALIYAH_RE, (_, w) => `: ‹‹MARK=${w}››`);
+  // Day 8 only: insert a "שלישי" marker BEFORE the verse that starts
+  // with "ביום התשיעי" (Numbers 7:60) — that's where Yisrael begins
+  // reading per standard practice for Zot Chanukah. The literal niqqud
+  // sequence varies, so search via niqqud-stripped text and map back to
+  // the original index.
+  if (opts.insertShlishiAtTeshii) {
+    const bare = s.replace(/[ְ-ׇ]/g, '');
+    const bareIdx = bare.indexOf('ביום התשיעי');
+    if (bareIdx >= 0) {
+      // Map bareIdx → original index by stepping through s.
+      let originalIdx = 0, b = 0;
+      while (b < bareIdx && originalIdx < s.length) {
+        if (!/[ְ-ׇ]/.test(s.charAt(originalIdx))) b++;
+        originalIdx++;
+      }
+      s = s.slice(0, originalIdx) + '‹‹MARK=שלישי›› ' + s.slice(originalIdx);
+    }
+  }
   const parts = s.split(/(?<=:)\s+/).filter((p) => p.trim().length > 0);
   // Sentinel may also appear at the START of the very first part (no
   // preceding colon-split). Handle that.
@@ -108,7 +136,13 @@ function splitWithMarkers(raw) {
   for (let day = 1; day <= 8; day++) {
     const body = String(chText[CHANUKAH_BODY_INDICES[day - 1]] ?? '').trim();
     if (!body) { console.warn(`  ⚠ no body for Chanukah day ${day}`); continue; }
-    const lines = splitWithMarkers(body);
+    const lines = splitWithMarkers(body, {
+      // Day 1: no prefix in source (starts with normal kohen reading).
+      // Days 2-7: kohen + 3rd oleh share the same passage.
+      // Day 8 (Zot Chanukah): 3rd oleh reads forward from "ביום התשיעי".
+      useKohenShlishi: day >= 2 && day <= 7,
+      insertShlishiAtTeshii: day === 8,
+    });
     const segmentId = `kriah_chanukah_day_${day}`;
     const filePath = path.join(READING_DIR, `${segmentId}.json`);
     writeJson(filePath, {

@@ -379,6 +379,16 @@
       "allowed_nusach": []
     },
     {
+      "segment_id": "kriah_rc_tevet",
+      "condition_flags": [
+        "rc_tevet",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
       "segment_id": "kriah_chanukah_day_1",
       "condition_flags": [
         "chanukah_day_1",
@@ -470,16 +480,6 @@
       "segment_id": "kriah_purim",
       "condition_flags": [
         "kriat_hatorah_purim",
-        "with_minyan"
-      ],
-      "exclude_flags": [],
-      "optional": false,
-      "allowed_nusach": []
-    },
-    {
-      "segment_id": "kriah_rc_tevet",
-      "condition_flags": [
-        "rc_tevet",
         "with_minyan"
       ],
       "exclude_flags": [],
