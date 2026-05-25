@@ -1,26 +1,15 @@
 {
   "permissions": {
     "allow": [
-      "Bash(flutter *)",
-      "Bash(dart *)",
-      "Bash(git status*)",
-      "Bash(git log*)",
-      "Bash(git diff*)",
-      "Bash(git add*)",
-      "Bash(git branch*)",
-      "Bash(git checkout*)",
-      "Bash(git stash*)",
-      "Bash(npm *)",
-      "PowerShell(Get-ChildItem*)",
-      "PowerShell(Get-Command*)",
-      "PowerShell(Test-Path*)",
-      "PowerShell(Get-Content*)",
-      "PowerShell(Get-Item*)",
-      "PowerShell(Get-PSDrive*)",
-      "PowerShell(Get-ItemProperty*)",
-      "PowerShell(New-Item*)",
-      "PowerShell(Write-Output*)",
-      "PowerShell(where.exe*)"
+      "Bash(*)",
+      "PowerShell(*)",
+      "WebFetch(domain:pub.dev)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:www.sefaria.org)",
+      "WebFetch(domain:sefaria.org)",
+      "WebFetch(domain:sefaria.org.il)",
+      "WebFetch(domain:www.sefaria.org.il)"
     ]
   }
 }

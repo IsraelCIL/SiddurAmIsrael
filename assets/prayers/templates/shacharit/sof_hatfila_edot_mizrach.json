@@ -1,0 +1,212 @@
+{
+  "id": "shacharit_sof_hatfila_edot_mizrach",
+  "name": "shacharit_sof_hatfila_edot_mizrach",
+  "segments": [
+    {
+      "segment_id": "kriat_hatorah_hachnasah",
+      "condition_flags": [
+        "kriat_hatorah",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "tefila_ledavid_ps86",
+      "condition_flags": [],
+      "exclude_flags": [
+        "skip_tachanun"
+      ],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "beit_yaakov",
+      "condition_flags": [],
+      "exclude_flags": [
+        "skip_tachanun"
+      ],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "shir_hamaalot_lulei",
+      "condition_flags": [],
+      "exclude_flags": [
+        "skip_tachanun"
+      ],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "sub_template_id": "shir_shel_yom",
+      "condition_flags": [],
+      "exclude_flags": [
+        "hallel_with_musaf"
+      ],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "ssy_em_extra_tzom_gedalia_10_tevet",
+      "condition_flags": [
+        "fast_gedalia"
+      ],
+      "exclude_flags": [
+        "hallel_with_musaf"
+      ],
+      "optional": false,
+      "allowed_nusach": [
+        "edot_mizrach"
+      ]
+    },
+    {
+      "segment_id": "ssy_em_extra_tzom_gedalia_10_tevet",
+      "condition_flags": [
+        "fast_10_tevet"
+      ],
+      "exclude_flags": [
+        "hallel_with_musaf"
+      ],
+      "optional": false,
+      "allowed_nusach": [
+        "edot_mizrach"
+      ]
+    },
+    {
+      "segment_id": "ssy_em_extra_day_after_yk",
+      "condition_flags": [
+        "day_after_yom_kippur"
+      ],
+      "exclude_flags": [
+        "hallel_with_musaf"
+      ],
+      "optional": false,
+      "allowed_nusach": [
+        "edot_mizrach"
+      ]
+    },
+    {
+      "segment_id": "ssy_em_extra_chanukah",
+      "condition_flags": [
+        "chanukah"
+      ],
+      "exclude_flags": [
+        "hallel_with_musaf"
+      ],
+      "optional": false,
+      "allowed_nusach": [
+        "edot_mizrach"
+      ]
+    },
+    {
+      "segment_id": "ssy_em_extra_esther_purim",
+      "condition_flags": [
+        "fast_esther"
+      ],
+      "exclude_flags": [
+        "hallel_with_musaf"
+      ],
+      "optional": false,
+      "allowed_nusach": [
+        "edot_mizrach"
+      ]
+    },
+    {
+      "segment_id": "ssy_em_extra_esther_purim",
+      "condition_flags": [
+        "purim"
+      ],
+      "exclude_flags": [
+        "hallel_with_musaf"
+      ],
+      "optional": false,
+      "allowed_nusach": [
+        "edot_mizrach"
+      ]
+    },
+    {
+      "segment_id": "ssy_em_extra_17_tammuz",
+      "condition_flags": [
+        "fast_17_tammuz"
+      ],
+      "exclude_flags": [
+        "hallel_with_musaf"
+      ],
+      "optional": false,
+      "allowed_nusach": [
+        "edot_mizrach"
+      ]
+    },
+    {
+      "sub_template_id": "kaddish_yatom",
+      "condition_flags": [
+        "with_minyan"
+      ],
+      "exclude_flags": [
+        "hallel_with_musaf"
+      ],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "ein_keloheinu",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "pitum_haketoreh",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "sub_template_id": "kaddish_derabanan",
+      "condition_flags": [
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "aleinu",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "shofar_elul",
+      "condition_flags": [
+        "elul"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "ladavid",
+      "condition_flags": [
+        "ladavid_season"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "sub_template_id": "kaddish_yatom",
+      "condition_flags": [
+        "ladavid_season",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    }
+  ]
+}

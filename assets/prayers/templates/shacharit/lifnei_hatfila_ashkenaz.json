@@ -1,0 +1,313 @@
+{
+  "id": "shacharit_lifnei_hatfila_ashkenaz",
+  "name": "shacharit_lifnei_hatfila_ashkenaz",
+  "segments": [
+    {
+      "segment_id": "modeh_ani",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "al_netilat_yadayim",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "asher_yatzar",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "elokai_neshama",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "birchot_hatorah_la_asok",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "birchot_hatorah_vehaarev",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "birchot_hatorah_natan_torah",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "birchot_hatorah_pesukim",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "elu_devarim",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "yehi_ratzon_tzitzit",
+      "condition_flags": [
+        "wears_tallit_gadol"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "birkat_tzitzit_gadol",
+      "condition_flags": [
+        "wears_tallit_gadol"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "mah_yakar_tallit",
+      "condition_flags": [
+        "wears_tallit_gadol"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "birkat_tzitzit_katan",
+      "condition_flags": [],
+      "exclude_flags": [
+        "wears_tallit_gadol"
+      ],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "seder_tefillin",
+      "condition_flags": [],
+      "exclude_flags": [
+        "skip_tefillin"
+      ],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "parshat_kadesh",
+      "condition_flags": [],
+      "exclude_flags": [
+        "skip_tefillin"
+      ],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "parshat_vehaya_ki_yeviacha",
+      "condition_flags": [],
+      "exclude_flags": [
+        "skip_tefillin"
+      ],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "ma_tovu",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "adon_olam",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "yigdal",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "hanoten_lasechvi",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "shelo_asani_goy",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "shelo_asani_eved",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "shelo_asani_ishah",
+      "condition_flags": [
+        "gender_male"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "sheasani_kirtzono",
+      "condition_flags": [
+        "gender_female"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "pokeach_ivrim",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "malbish_arumim",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "matir_asurim",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "zokef_kefufim",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "rokea_haaretz",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "sheasah_li_kol_tzorki",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "hamechin_mitzedei_gever",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "ozer_yisrael",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "oter_yisrael",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "hanoten_layaef_koach",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "hamaavir_sheinah",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "yehi_ratzon_shelo_yavo",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "akeidah",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "akeidah_yehi_ratzon",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "leolam_yehe_adam",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "korbanot",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "sub_template_id": "kaddish_derabanan",
+      "condition_flags": [
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    }
+  ]
+}

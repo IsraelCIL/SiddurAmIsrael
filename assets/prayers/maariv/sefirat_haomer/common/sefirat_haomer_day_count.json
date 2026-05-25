@@ -1,0 +1,10 @@
+{
+  "id": "sefirat_haomer_day_count",
+  "sections": [
+    {
+      "text": "{{omer_day_count}}",
+      "condition_flags": [],
+      "exclude_flags": []
+    }
+  ]
+}

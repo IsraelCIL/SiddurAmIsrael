@@ -1,5 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import 'blessing_section.dart';
+
 part 'prayer_segment.freezed.dart';
 part 'prayer_segment.g.dart';
 
@@ -7,8 +9,8 @@ part 'prayer_segment.g.dart';
 class PrayerSegment with _$PrayerSegment {
   const factory PrayerSegment({
     required String id,
-    @JsonKey(name: 'default_text') required String defaultText,
-    // Keys are flat context strings: 'shabbat_mincha', 'gender_female', etc.
+    @JsonKey(name: 'default_text') @Default('') String defaultText,
+    @Default([]) List<BlessingSection> sections,
     @Default({}) Map<String, String> variants,
     @Default([]) @JsonKey(name: 'condition_flags') List<String> conditionFlags,
     @Default([]) @JsonKey(name: 'exclude_flags') List<String> excludeFlags,

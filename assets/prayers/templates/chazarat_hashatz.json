@@ -1,0 +1,36 @@
+{
+  "id": "chazarat_hashatz",
+  "name": "חזרת הש״ץ",
+  "segments": [
+    {"segment_id": "amidah_avot",             "condition_flags": [],                "exclude_flags": [],                            "optional": false, "allowed_nusach": []},
+    {"segment_id": "amidah_gevurot",          "condition_flags": [],                "exclude_flags": [],                            "optional": false, "allowed_nusach": []},
+
+    {"segment_id": "kedushah",                  "condition_flags": [],                "exclude_flags": [],                            "optional": false, "allowed_nusach": []},
+    {"segment_id": "kedushah_ledorvador",       "condition_flags": [],                "exclude_flags": [],                            "optional": false, "allowed_nusach": ["ashkenaz"]},
+
+    {"segment_id": "amidah_kedushah_hashem",  "condition_flags": [],                "exclude_flags": [],                            "optional": false, "allowed_nusach": []},
+    {"segment_id": "amidah_daat",             "condition_flags": [],                "exclude_flags": [],                            "optional": false, "allowed_nusach": []},
+    {"segment_id": "amidah_teshuva",          "condition_flags": [],                "exclude_flags": [],                            "optional": false, "allowed_nusach": []},
+    {"segment_id": "amidah_selicha",          "condition_flags": [],                "exclude_flags": [],                            "optional": false, "allowed_nusach": []},
+    {"segment_id": "amidah_geula",            "condition_flags": [],                "exclude_flags": [],                            "optional": false, "allowed_nusach": []},
+    {"segment_id": "anenu_shliach_tzibur",      "condition_flags": ["fast_day"],      "exclude_flags": [],                            "optional": false, "allowed_nusach": []},
+    {"segment_id": "amidah_refuah",           "condition_flags": [],                "exclude_flags": [],                            "optional": false, "allowed_nusach": []},
+    {"segment_id": "amidah_shanim",           "condition_flags": [],                "exclude_flags": [],                            "optional": false, "allowed_nusach": []},
+    {"segment_id": "amidah_galuyot",          "condition_flags": [],                "exclude_flags": [],                            "optional": false, "allowed_nusach": []},
+    {"segment_id": "amidah_mishpat",          "condition_flags": [],                "exclude_flags": [],                            "optional": false, "allowed_nusach": []},
+    {"segment_id": "amidah_minim",            "condition_flags": [],                "exclude_flags": [],                            "optional": false, "allowed_nusach": []},
+    {"segment_id": "amidah_tzaddikim",        "condition_flags": [],                "exclude_flags": [],                            "optional": false, "allowed_nusach": []},
+    {"segment_id": "amidah_yerushalayim",     "condition_flags": [],                "exclude_flags": [],                            "optional": false, "allowed_nusach": []},
+    {"segment_id": "amidah_david",            "condition_flags": [],                "exclude_flags": [],                            "optional": false, "allowed_nusach": []},
+    {"segment_id": "amidah_shema_koleinu",    "condition_flags": [],                "exclude_flags": [],                            "optional": false, "allowed_nusach": []},
+    {"segment_id": "amidah_retzeh",           "condition_flags": [],                "exclude_flags": [],                            "optional": false, "allowed_nusach": []},
+    {"segment_id": "amidah_modim",            "condition_flags": [],                "exclude_flags": [],                            "optional": false, "allowed_nusach": []},
+    {"segment_id": "modim_derabanan",           "condition_flags": [],                "exclude_flags": [],                            "optional": false, "allowed_nusach": []},
+
+    {"segment_id": "birkat_kohanim",            "condition_flags": ["kohanim"],       "exclude_flags": ["tefila_mincha"],             "optional": false, "allowed_nusach": []},
+    {"segment_id": "elokeinu_velohei_avoteinu", "condition_flags": [],                "exclude_flags": ["kohanim", "tefila_mincha"],  "optional": false, "allowed_nusach": []},
+
+    {"segment_id": "amidah_shalom",           "condition_flags": [],                "exclude_flags": [],                            "optional": false, "allowed_nusach": []},
+    {"segment_id": "amidah_conclusion",       "condition_flags": [],                "exclude_flags": [],                            "optional": false, "allowed_nusach": []}
+  ]
+}

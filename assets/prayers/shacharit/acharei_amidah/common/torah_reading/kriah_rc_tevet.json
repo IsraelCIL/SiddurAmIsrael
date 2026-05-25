@@ -1,0 +1,12 @@
+{
+  "id": "kriah_rc_tevet",
+  "sections": [
+    {
+      "text": [
+        "{{rc_tevet_composite}}"
+      ],
+      "condition_flags": [],
+      "exclude_flags": []
+    }
+  ]
+}
