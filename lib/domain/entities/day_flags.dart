@@ -19,6 +19,14 @@ class DayFlags with _$DayFlags {
     // content (Hoshanot, Daily Torah Reading, Gr"a Shir Shel Yom). Null
     // outside Sukkot.
     int? sukkotDay,
+    // 1..7 (EY) / 1..8 (chu"l) during Pesach (15-21 or -22 Nisan).
+    // 1 = YT1, 7 = YT7 (last YT in EY), 8 = Acharon shel Pesach (chu"l).
+    // Used by Gr"a Shir Shel Yom mapping. Null outside Pesach.
+    int? pesachDay,
+    // Day-of-week (Mon=1 … Sun=7) of YT1 of the current chag (Pesach or
+    // Sukkot). Used together with [pesachDay] / [sukkotDay] by the Gr"a
+    // SSY post-processor. Null outside Pesach/Sukkot.
+    int? chagYt1Weekday,
   }) = _DayFlags;
 
   // ── Convenience getters ────────────────────────────────────────────────────
@@ -45,6 +53,8 @@ class DayFlags with _$DayFlags {
         flags: {...flags, ...other.flags}.toList(),
         omerDay: other.omerDay ?? omerDay,
         sukkotDay: other.sukkotDay ?? sukkotDay,
+        pesachDay: other.pesachDay ?? pesachDay,
+        chagYt1Weekday: other.chagYt1Weekday ?? chagYt1Weekday,
       );
 }
 
@@ -70,6 +80,9 @@ abstract final class DayFlag {
   static const asaretYemeiTeshuva = 'aseret_yemei_teshuva';
   static const erevYomKippur = 'erev_yom_kippur';
   static const yomKippur = 'yom_kippur';
+  // The day immediately after Yom Kippur (11 Tishrei). Used by EM SSY to
+  // append a special mizmor (Tehillim 85) after the daily Shir Shel Yom.
+  static const dayAfterYomKippur = 'day_after_yom_kippur';
   static const sukkot = 'sukkot';
   static const hoshanahRaba = 'hoshana_raba';
   static const sheminiAtzeret = 'shemini_atzeret';
@@ -125,6 +138,26 @@ abstract final class DayFlag {
   static const erevShabbat = 'erev_shabbat';            // Friday (for Avinu Malkeinu exclusion at Mincha)
 
   // ── Specific fast days ────────────────────────────────────────────────────
+  // Individual flags for the four "public" minor fasts. Used to gate the
+  // day-specific selichot inserted into the morning prayer. `fast_day` is
+  // still emitted as a union flag covering all minor fasts + Tisha B'Av +
+  // Yom Kippur — keep using it for things that apply to ALL fasts (like
+  // Anenu). The flags below fire ONLY on their specific day.
+  static const fast10Tevet = 'fast_10_tevet';
+  static const fastEsther = 'fast_esther';
+  static const fast17Tammuz = 'fast_17_tammuz';
+  static const fastGedalia = 'fast_gedalia';
+
+  // BaHaB (בה"ב) — Mon-Thu-Mon penitential days observed in some communities
+  // starting the SECOND Monday of Cheshvan (post-Sukkot) and SECOND Monday
+  // of Iyar (post-Pesach). Three flags fire — one per day in each series.
+  // Ashk has a single combined selichot text gated by any-of; Sfard has
+  // three separate texts. EM does NOT observe BaHaB in-prayer.
+  static const bahabSheniKama = 'bahab_sheni_kama';   // first Mon of series
+  static const bahabChamishi = 'bahab_chamishi';      // following Thu
+  static const bahabSheniBatra = 'bahab_sheni_batra'; // following Mon
+  static const bahabDay = 'bahab_day';                // union of the three
+
   static const tishaBaav = 'tisha_beav';
   // tisha_beav_mincha: injected by the Mincha provider when today is Tisha B'Av.
   // Triggers Nachem insertion in amidah_yerushalayim (and EM's TB'A-specific
@@ -208,6 +241,13 @@ abstract final class DayFlag {
   static const nusachAshkenaz = 'nusach_ashkenaz';
   static const nusachSfard = 'nusach_sfard';
   static const nusachEdotMizrach = 'nusach_edot_mizrach';
+
+  // ── Gra Shir Shel Yom ────────────────────────────────────────────────────
+  // Set on Chol HaMoed Pesach + Chol HaMoed Sukkot (incl. Hoshana Raba).
+  // Gates an optional `shir_shel_yom_gra` segment in sof_hatfila for Ashk
+  // + Sfard — the GraSsyPostProcessor resolves the right Tehillim chapter
+  // from `_gra_ssy_mapping.json` based on (chag, YT1 weekday, day-in-chag).
+  static const graSsyDay = 'gra_ssy_day';
 
   // ── Lulav ────────────────────────────────────────────────────────────────
   // lulav_day: a day on which lulav is taken — Sukkot (incl. CHM + Hoshana

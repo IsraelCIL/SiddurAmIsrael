@@ -30,6 +30,15 @@ class UserContext with _$UserContext {
     // 2..6 = Chol HaMoed, 7 = Hoshana Raba. Used to resolve the daily korban
     // in Musaf and other day-specific content. Null outside Sukkot.
     int? sukkotDay,
+    // 1..7 (EY) / 1..8 (chu"l) during Pesach (15 Nisan onward).
+    // 1 = YT1, 7 = YT7 (last YT in EY), 8 = Acharon Pesach (chu"l only).
+    // Used by Gr"a Shir Shel Yom mapping. Null outside Pesach.
+    int? pesachDay,
+    // Day-of-week (Mon=1 … Sun=7) of YT1 of the current chag (Pesach or
+    // Sukkot). Used together with pesachDay/sukkotDay by the Gr"a SSY
+    // post-processor to look up the day's Tehillim chapter. Null outside
+    // those chagim.
+    int? chagYt1Weekday,
     // User is davening with a minyan. Drives the [DayFlag.withMinyan] flag,
     // which gates Kaddish / Chazarat HaShatz / Kriat HaTorah / Barchu /
     // Yud-Gimel Middot. Default true.

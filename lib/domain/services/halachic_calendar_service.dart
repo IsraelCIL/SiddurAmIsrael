@@ -42,11 +42,31 @@ class HalachicCalendarService implements ICalendarFlagProvider {
 
     // Sukkot day (1..7): set only during 15–21 Tishrei.
     final int? sukkotDay = _computeSukkotDay(cal);
+    // Pesach day (1..7 EY): set only during 15-21 Nisan.
+    final int? pesachDay = _computePesachDay(cal);
+    // YT1 weekday for the current chag (Pesach or Sukkot). Null outside.
+    int? chagYt1Weekday;
+    if (sukkotDay != null) {
+      chagYt1Weekday = _yt1Weekday(date, sukkotDay);
+    } else if (pesachDay != null) {
+      chagYt1Weekday = _yt1Weekday(date, pesachDay);
+    }
+
+    // Derived: gra_ssy_day on CHM Pesach + CHM Sukkot (incl. Hoshana Raba).
+    // The first/last days of the chag are YT and have their own SSY (92 on
+    // Shabbat, 76 on weekdays of Sukkot, 114 of Pesach) — Gr"a only swaps
+    // SSY on the intermediate CHM days, which is what we gate here.
+    if ((pesachDay != null && pesachDay >= 2 && pesachDay <= 6) ||
+        (sukkotDay != null && sukkotDay >= 2 && sukkotDay <= 7)) {
+      flags.add(DayFlag.graSsyDay);
+    }
 
     return DayFlags(
       flags: flags.toList(),
       omerDay: omerDay,
       sukkotDay: sukkotDay,
+      pesachDay: pesachDay,
+      chagYt1Weekday: chagYt1Weekday,
     );
   }
 
@@ -62,6 +82,39 @@ class HalachicCalendarService implements ICalendarFlagProvider {
     }
     // Derived: hallel_with_musaf — Hallel said on a Musaf day.
     if (f.contains(DayFlag.musafDay)) f.add(DayFlag.hallelWithMusaf);
+  }
+
+  // ── BaHaB ────────────────────────────────────────────────────────────────
+  // BaHaB (בה"ב) is a 3-day Mon/Thu/Mon penitential observance held in
+  // some communities in Cheshvan (after Sukkot) and Iyar (after Pesach).
+  // The standard rule: starts on the SECOND Monday of the Jewish month.
+  // Subsequent days: Thursday +3, next Monday +7.
+  //
+  // On days where Tachanun is skipped (RC, Pesach Sheni, etc.), the
+  // selichot are also skipped — the segment-level `exclude_flags:
+  // ['skip_tachanun']` handles that override.
+  void _addBahabFlags(JewishCalendar cal, DateTime date, Set<String> f) {
+    final m = cal.getJewishMonth();
+    if (m != JewishDate.CHESHVAN && m != JewishDate.IYAR) return;
+    final today = cal.getJewishDayOfMonth();
+    // Gregorian date of Jewish day 1 of this month.
+    final day1Greg = date.subtract(Duration(days: today - 1));
+    // weekday in Dart: Mon=1 ... Sun=7.
+    final daysUntilFirstMon = (1 - day1Greg.weekday + 7) % 7;
+    final firstMondayJDay = 1 + daysUntilFirstMon;
+    final secondMondayJDay = firstMondayJDay + 7;
+    final thursdayJDay = secondMondayJDay + 3;
+    final thirdMondayJDay = secondMondayJDay + 7;
+    if (today == secondMondayJDay) {
+      f.add(DayFlag.bahabSheniKama);
+      f.add(DayFlag.bahabDay);
+    } else if (today == thursdayJDay) {
+      f.add(DayFlag.bahabChamishi);
+      f.add(DayFlag.bahabDay);
+    } else if (today == thirdMondayJDay) {
+      f.add(DayFlag.bahabSheniBatra);
+      f.add(DayFlag.bahabDay);
+    }
   }
 
   // ── Lulav day ────────────────────────────────────────────────────────────
@@ -82,6 +135,21 @@ class HalachicCalendarService implements ICalendarFlagProvider {
     final d = cal.getJewishDayOfMonth();
     if (d < 15 || d > 21) return null;
     return d - 14;
+  }
+
+  // Pesach day-in-chag (1..7 EY, 1..8 chu"l). Null outside 15-22 Nisan.
+  int? _computePesachDay(JewishCalendar cal) {
+    if (cal.getJewishMonth() != JewishDate.NISSAN) return null;
+    final d = cal.getJewishDayOfMonth();
+    if (d < 15 || d > 22) return null;
+    return d - 14;
+  }
+
+  // Day-of-week (Dart's Mon=1..Sun=7) of YT1 of the current chag, derived
+  // from today's date and how many days into the chag we are.
+  int _yt1Weekday(DateTime today, int dayInChag) {
+    final yt1 = today.subtract(Duration(days: dayInChag - 1));
+    return yt1.weekday;
   }
 
   // ── 1. Day identification ─────────────────────────────────────────────────
@@ -123,6 +191,11 @@ class HalachicCalendarService implements ICalendarFlagProvider {
     if (yomTov == JewishCalendar.ROSH_HASHANA) f.add(DayFlag.roshHashanah);
     if (yomTov == JewishCalendar.EREV_YOM_KIPPUR) f.add(DayFlag.erevYomKippur);
     if (yomTov == JewishCalendar.YOM_KIPPUR) f.add(DayFlag.yomKippur);
+    // 11 Tishrei — the day immediately after Yom Kippur.
+    if (cal.getJewishMonth() == JewishDate.TISHREI &&
+        cal.getJewishDayOfMonth() == 11) {
+      f.add(DayFlag.dayAfterYomKippur);
+    }
 
     // Sukkot season
     if (yomTov == JewishCalendar.SUCCOS) {
@@ -186,6 +259,15 @@ class HalachicCalendarService implements ICalendarFlagProvider {
 
     // Fast days (covers 10 Tevet, Tzom Gedaliah, Taanit Esther, 17 Tammuz, 9 Av, YK)
     if (cal.isTaanis()) f.add(DayFlag.fastDay);
+
+    // Individual minor fasts — used to gate day-specific selichot.
+    if (yomTov == JewishCalendar.TENTH_OF_TEVES) f.add(DayFlag.fast10Tevet);
+    if (yomTov == JewishCalendar.FAST_OF_GEDALYAH) f.add(DayFlag.fastGedalia);
+    if (yomTov == JewishCalendar.FAST_OF_ESTHER) f.add(DayFlag.fastEsther);
+    if (yomTov == JewishCalendar.SEVENTEEN_OF_TAMMUZ) f.add(DayFlag.fast17Tammuz);
+
+    // BaHaB — Mon/Thu/Mon series in Cheshvan and Iyar.
+    _addBahabFlags(cal, date, f);
 
     // Elul flag: Elul month, excluding Erev Rosh Hashana (29 Elul)
     if (m == JewishDate.ELUL && !f.contains(DayFlag.erevRoshHashanah)) {

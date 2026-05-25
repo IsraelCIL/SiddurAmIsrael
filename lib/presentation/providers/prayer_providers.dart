@@ -2,15 +2,18 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/calendar/hebrew_date.dart';
 import '../../domain/entities/day_flags.dart';
+import '../../data/datasources/local/gra_ssy_datasource.dart';
 import '../../data/datasources/local/omer_mapping_datasource.dart';
 import '../../data/datasources/local/prayer_local_datasource.dart';
 import '../../data/datasources/local/sukkot_korbanot_datasource.dart';
+import '../../data/repositories/gra_ssy_repository_impl.dart';
 import '../../data/repositories/omer_mapping_repository_impl.dart';
 import '../../data/repositories/prayer_repository_impl.dart';
 import '../../data/repositories/sukkot_korbanot_repository_impl.dart';
 import '../../domain/entities/assembled_segment.dart';
 import '../../domain/entities/omer_day.dart';
 import '../../domain/entities/user_context.dart';
+import '../../domain/repositories/i_gra_ssy_repository.dart';
 import '../../domain/repositories/i_omer_mapping_repository.dart';
 import '../../domain/repositories/i_prayer_repository.dart';
 import '../../domain/repositories/i_sukkot_korbanot_repository.dart';
@@ -45,11 +48,20 @@ final sukkotKorbanotRepositoryProvider = Provider<ISukkotKorbanotRepository>(
   (ref) => SukkotKorbanotRepositoryImpl(ref.watch(sukkotKorbanotDatasourceProvider)),
 );
 
+final graSsyDatasourceProvider = Provider<GraSsyDatasource>(
+  (ref) => GraSsyDatasource(),
+);
+
+final graSsyRepositoryProvider = Provider<IGraSsyRepository>(
+  (ref) => GraSsyRepositoryImpl(ref.watch(graSsyDatasourceProvider)),
+);
+
 final prayerAssemblerProvider = Provider<IPrayerAssembler>(
   (ref) => PrayerAssembler(
     ref.watch(prayerRepositoryProvider),
     omerRepository: ref.watch(omerMappingRepositoryProvider),
     sukkotRepository: ref.watch(sukkotKorbanotRepositoryProvider),
+    graSsyRepository: ref.watch(graSsyRepositoryProvider),
   ),
 );
 
@@ -102,6 +114,8 @@ final userContextProvider = Provider<UserContext>((ref) {
     activeFlags: flags,
     omerDay: dayFlags.omerDay,
     sukkotDay: dayFlags.sukkotDay,
+    pesachDay: dayFlags.pesachDay,
+    chagYt1Weekday: dayFlags.chagYt1Weekday,
   );
 });
 
@@ -134,6 +148,8 @@ final minchaProvider = FutureProvider<List<AssembledSegment>>((ref) {
     activeFlags: minchaFlags,
     omerDay: baseCtx.omerDay,
     sukkotDay: baseCtx.sukkotDay,
+    pesachDay: baseCtx.pesachDay,
+    chagYt1Weekday: baseCtx.chagYt1Weekday,
   );
   return assembler.assemble(templateId: 'mincha', userContext: ctx);
 });
