@@ -54,6 +54,18 @@ const _segmentLabels = <String, String>{
   'hoshanot_day_6': 'הושענות',
   'hoshanot_hoshana_rabba': 'הושענות — הושענא רבא',
   'kriat_hatorah_reading_text': 'קריאת התורה',
+  'kriah_rc': 'קריאת התורה — ראש חודש',
+  'kriah_chm_pesach_day_2': 'קריאת התורה — חוה״מ פסח, יום א׳',
+  'kriah_chm_pesach_day_3': 'קריאת התורה — חוה״מ פסח, יום ב׳',
+  'kriah_chm_pesach_day_4': 'קריאת התורה — חוה״מ פסח, יום ג׳',
+  'kriah_chm_pesach_day_5': 'קריאת התורה — חוה״מ פסח, יום ד׳',
+  'kriah_chm_pesach_day_6': 'קריאת התורה — חוה״מ פסח, יום ה׳',
+  'kriah_chm_sukkot_day_2': 'קריאת התורה — חוה״מ סוכות, יום א׳',
+  'kriah_chm_sukkot_day_3': 'קריאת התורה — חוה״מ סוכות, יום ב׳',
+  'kriah_chm_sukkot_day_4': 'קריאת התורה — חוה״מ סוכות, יום ג׳',
+  'kriah_chm_sukkot_day_5': 'קריאת התורה — חוה״מ סוכות, יום ד׳',
+  'kriah_chm_sukkot_day_6': 'קריאת התורה — חוה״מ סוכות, יום ה׳',
+  'kriah_chm_sukkot_day_7': 'קריאת התורה — הושענא רבא',
 };
 
 class PrayerTextWidget extends ConsumerWidget {

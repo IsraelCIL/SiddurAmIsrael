@@ -52,6 +52,16 @@ class HalachicCalendarService implements ICalendarFlagProvider {
       chagYt1Weekday = _yt1Weekday(date, pesachDay);
     }
 
+    // Emit pesach_day_<N> boolean flags.
+    if (pesachDay != null) {
+      const pesachDayFlags = [
+        DayFlag.pesachDay1, DayFlag.pesachDay2, DayFlag.pesachDay3,
+        DayFlag.pesachDay4, DayFlag.pesachDay5, DayFlag.pesachDay6,
+        DayFlag.pesachDay7,
+      ];
+      flags.add(pesachDayFlags[pesachDay - 1]);
+    }
+
     // Emit sukkot_day_<N> boolean flags + hoshanot_day flag.
     if (sukkotDay != null) {
       const sukkotDayFlags = [
@@ -86,6 +96,12 @@ class HalachicCalendarService implements ICalendarFlagProvider {
         !flags.contains(DayFlag.cholHamoedSukkot) &&
         !flags.contains(DayFlag.fastDay)) {
       flags.add(DayFlag.kriatHatorahMonThu);
+    }
+    // Standalone RC reading: RC NOT during Chanukah (RC Tevet → composite
+    // reading handled separately in E.8e, NOT here).
+    if (flags.contains(DayFlag.roshChodesh) &&
+        !flags.contains(DayFlag.chanukah)) {
+      flags.add(DayFlag.kriatHatorahRc);
     }
 
     // Derived: gra_ssy_day on CHM Pesach + CHM Sukkot (incl. Hoshana Raba).

@@ -273,6 +273,137 @@
       "allowed_nusach": []
     },
     {
+      "segment_id": "kriah_rc",
+      "condition_flags": [
+        "kriat_hatorah_rc",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "kriah_chm_pesach_day_2",
+      "condition_flags": [
+        "pesach_day_2",
+        "chol_hamoed_pesach",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "kriah_chm_pesach_day_3",
+      "condition_flags": [
+        "pesach_day_3",
+        "chol_hamoed_pesach",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "kriah_chm_pesach_day_4",
+      "condition_flags": [
+        "pesach_day_4",
+        "chol_hamoed_pesach",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "kriah_chm_pesach_day_5",
+      "condition_flags": [
+        "pesach_day_5",
+        "chol_hamoed_pesach",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "kriah_chm_pesach_day_6",
+      "condition_flags": [
+        "pesach_day_6",
+        "chol_hamoed_pesach",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "kriah_chm_sukkot_day_2",
+      "condition_flags": [
+        "sukkot_day_2",
+        "chol_hamoed_sukkot",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "kriah_chm_sukkot_day_3",
+      "condition_flags": [
+        "sukkot_day_3",
+        "chol_hamoed_sukkot",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "kriah_chm_sukkot_day_4",
+      "condition_flags": [
+        "sukkot_day_4",
+        "chol_hamoed_sukkot",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "kriah_chm_sukkot_day_5",
+      "condition_flags": [
+        "sukkot_day_5",
+        "chol_hamoed_sukkot",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "kriah_chm_sukkot_day_6",
+      "condition_flags": [
+        "sukkot_day_6",
+        "chol_hamoed_sukkot",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "kriah_chm_sukkot_day_7",
+      "condition_flags": [
+        "sukkot_day_7",
+        "chol_hamoed_sukkot",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
       "segment_id": "hagbahah",
       "condition_flags": [
         "kriat_hatorah"
