@@ -1,0 +1,7 @@
+{
+  "id": "chatzi_kaddish",
+  "name": "חצי קדיש",
+  "segments": [
+    {"segment_id": "kaddish_body", "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []}
+  ]
+}

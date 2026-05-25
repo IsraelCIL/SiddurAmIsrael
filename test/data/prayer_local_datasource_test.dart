@@ -17,14 +17,29 @@ class _FakeBundle extends AssetBundle {
   }
 }
 
+String _manifestJson({
+  Map<String, String> templates = const {},
+  Map<String, Map<String, String>> nusach = const {},
+  Map<String, String> common = const {},
+}) =>
+    jsonEncode(<String, dynamic>{
+      'templates': templates,
+      'nusach': nusach,
+      'common': common,
+    });
+
 void main() {
   group('PrayerLocalDatasource', () {
     // ── loadTemplate ──────────────────────────────────────────────────────────
 
     test('loadTemplate returns PrayerTemplate from asset JSON', () async {
+      const templatePath = 'assets/prayers/templates/mincha.json';
       final ds = PrayerLocalDatasource(
         bundle: _FakeBundle({
-          'assets/prayers/templates/mincha.json': jsonEncode(<String, dynamic>{
+          'assets/prayers/_manifest.json': _manifestJson(
+            templates: {'mincha': templatePath},
+          ),
+          templatePath: jsonEncode(<String, dynamic>{
             'id': 'mincha',
             'name': 'מנחה',
             'segments': <dynamic>[
@@ -46,88 +61,131 @@ void main() {
       expect(template.segments.single.segmentId, 'ashrei');
     });
 
-    // ── loadSegment ───────────────────────────────────────────────────────────
+    // ── loadNusachSegment ─────────────────────────────────────────────────────
 
-    test('loadSegment returns PrayerSegment from asset JSON', () async {
-      const ashreiText = 'אַשְׁרֵי יוֹשְׁבֵי בֵיתֶֽךָ';
+    test('loadNusachSegment returns PrayerSegment from nusach folder', () async {
+      const sectionText = 'עָלֵינוּ לְשַׁבֵּֽחַ לַאֲדוֹן הַכֹּל';
+      const aleinuPath = 'assets/prayers/shared_global/nusach/ashkenaz/aleinu.json';
       final ds = PrayerLocalDatasource(
         bundle: _FakeBundle({
-          'assets/prayers/segments/ashrei.json': jsonEncode(<String, dynamic>{
-            'id': 'ashrei',
-            'default_text': ashreiText,
-            'variants': <String, String>{},
-            'condition_flags': <String>[],
-            'exclude_flags': <String>[],
-            'optional': false,
-          }),
-        }),
-      );
-
-      final segment = await ds.loadSegment('ashrei');
-      expect(segment.id, 'ashrei');
-      expect(segment.defaultText, ashreiText);
-      expect(segment.variants, isEmpty);
-    });
-
-    // ── loadNusachSegmentText ─────────────────────────────────────────────────
-
-    test('loadNusachSegmentText returns NusachSegmentText for a known file',
-        () async {
-      const text = 'עָלֵינוּ לְשַׁבֵּֽחַ לַאֲדוֹן הַכֹּל';
-      final ds = PrayerLocalDatasource(
-        bundle: _FakeBundle({
-          'assets/prayers/nusach/ashkenaz/aleinu.json':
-              jsonEncode(<String, dynamic>{
+          'assets/prayers/_manifest.json': _manifestJson(
+            nusach: {
+              'ashkenaz': {'aleinu': aleinuPath},
+            },
+          ),
+          aleinuPath: jsonEncode(<String, dynamic>{
             'id': 'aleinu',
-            'nusach': 'ashkenaz',
-            'text': text,
-            'variants': <String, String>{},
-            'has_nikud': true,
-            'gender_tagged': false,
-            'sources': <String>[
-              'Siddur Ashkenaz, Weekday, Minchah, Concluding Prayers, Alenu',
+            'sections': <dynamic>[
+              <String, dynamic>{
+                'text': sectionText,
+                'condition_flags': <String>[],
+                'exclude_flags': <String>[],
+              },
             ],
           }),
         }),
       );
 
-      final result = await ds.loadNusachSegmentText('ashkenaz', 'aleinu');
-      expect(result, isNotNull);
-      expect(result!.id, 'aleinu');
-      expect(result.nusach, 'ashkenaz');
-      expect(result.text, text);
-      expect(result.hasNikud, isTrue);
-      expect(result.genderTagged, isFalse);
-      expect(result.sources, hasLength(1));
+      final segment = await ds.loadNusachSegment('ashkenaz', 'aleinu');
+      expect(segment.id, 'aleinu');
+      expect(segment.sections.single.text, sectionText);
     });
 
-    test('loadNusachSegmentText returns null when the file does not exist',
+    test('loadNusachSegment falls back to common when nusach entry missing',
         () async {
-      final ds = PrayerLocalDatasource(bundle: _FakeBundle({}));
-      final result = await ds.loadNusachSegmentText('ashkenaz', 'nonexistent');
-      expect(result, isNull);
-    });
-
-    test('loadNusachSegmentText returns null for a nusach with no override file',
-        () async {
+      const commonPath =
+          'assets/prayers/shared_global/common/shema.json';
       final ds = PrayerLocalDatasource(
         bundle: _FakeBundle({
-          'assets/prayers/nusach/ashkenaz/aleinu.json':
-              jsonEncode(<String, dynamic>{
-            'id': 'aleinu',
-            'nusach': 'ashkenaz',
-            'text': 'text',
-            'variants': <String, String>{},
-            'has_nikud': false,
-            'gender_tagged': false,
-            'sources': <String>[],
+          'assets/prayers/_manifest.json': _manifestJson(
+            common: {'shema': commonPath},
+          ),
+          commonPath: jsonEncode(<String, dynamic>{
+            'id': 'shema',
+            'sections': <dynamic>[
+              <String, dynamic>{
+                'text': 'שְׁמַע יִשְׂרָאֵל',
+                'condition_flags': <String>[],
+                'exclude_flags': <String>[],
+              },
+            ],
           }),
         }),
       );
 
-      // sfard file is absent — should return null gracefully
-      final result = await ds.loadNusachSegmentText('sfard', 'aleinu');
-      expect(result, isNull);
+      final segment = await ds.loadNusachSegment('ashkenaz', 'shema');
+      expect(segment.id, 'shema');
+      expect(segment.sections.single.text, 'שְׁמַע יִשְׂרָאֵל');
+    });
+
+    // ── text normalization (List<String> → space-joined String) ───────────────
+
+    test('loadNusachSegment joins List text inside sections with a single space',
+        () async {
+      const avotPath = 'assets/prayers/shared_global/amidah/nusach/ashkenaz/avot.json';
+      final ds = PrayerLocalDatasource(
+        bundle: _FakeBundle({
+          'assets/prayers/_manifest.json': _manifestJson(
+            nusach: {
+              'ashkenaz': {'avot': avotPath},
+            },
+          ),
+          avotPath: jsonEncode(<String, dynamic>{
+            'id': 'avot',
+            'sections': <dynamic>[
+              <String, dynamic>{
+                'text': <String>['חֵלֶק רִאשׁוֹן', 'חֵלֶק שֵׁנִי'],
+                'condition_flags': <String>[],
+                'exclude_flags': <String>[],
+              },
+            ],
+          }),
+        }),
+      );
+
+      final segment = await ds.loadNusachSegment('ashkenaz', 'avot');
+      expect(segment.sections.single.text, 'חֵלֶק רִאשׁוֹן חֵלֶק שֵׁנִי');
+    });
+
+    test('loadNusachSegment leaves a plain String text field unchanged',
+        () async {
+      const plain = 'בָּרוּךְ אַתָּה יְהֹוָה';
+      const avotPath = 'assets/prayers/shared_global/amidah/nusach/ashkenaz/avot.json';
+      final ds = PrayerLocalDatasource(
+        bundle: _FakeBundle({
+          'assets/prayers/_manifest.json': _manifestJson(
+            nusach: {
+              'ashkenaz': {'avot': avotPath},
+            },
+          ),
+          avotPath: jsonEncode(<String, dynamic>{
+            'id': 'avot',
+            'sections': <dynamic>[
+              <String, dynamic>{
+                'text': plain,
+                'condition_flags': <String>[],
+                'exclude_flags': <String>[],
+              },
+            ],
+          }),
+        }),
+      );
+
+      final segment = await ds.loadNusachSegment('ashkenaz', 'avot');
+      expect(segment.sections.single.text, plain);
+    });
+
+    test('loadNusachSegment throws when the segment is missing entirely',
+        () async {
+      final ds = PrayerLocalDatasource(
+        bundle: _FakeBundle({
+          'assets/prayers/_manifest.json': _manifestJson(),
+        }),
+      );
+      expect(
+        () => ds.loadNusachSegment('ashkenaz', 'nonexistent'),
+        throwsA(isA<Exception>()),
+      );
     });
   });
 }

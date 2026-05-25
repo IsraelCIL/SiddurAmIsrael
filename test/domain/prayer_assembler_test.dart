@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:smart_siddur/domain/entities/assembled_segment.dart';
-import 'package:smart_siddur/domain/entities/nusach_segment_text.dart';
+import 'package:smart_siddur/domain/entities/blessing_section.dart';
 import 'package:smart_siddur/domain/entities/prayer_segment.dart';
 import 'package:smart_siddur/domain/entities/prayer_template.dart';
 import 'package:smart_siddur/domain/entities/user_context.dart';
@@ -24,7 +24,7 @@ void main() {
   const edotUser = UserContext(nusach: 'edot_mizrach');
 
   // ---------------------------------------------------------------------------
-  // Helpers
+  // Stub helpers
   // ---------------------------------------------------------------------------
 
   void stubTemplate(String id, List<TemplateEntry> entries) {
@@ -33,92 +33,26 @@ void main() {
     );
   }
 
-  void stubSegment(String id,
-      {String text = 'default', Map<String, String> variants = const {}}) {
-    when(() => repository.loadSegment(id)).thenAnswer(
-      (_) async => PrayerSegment(id: id, defaultText: text, variants: variants),
-    );
+  void stubNusachSegment(String nusach, String id, PrayerSegment segment) {
+    when(() => repository.loadNusachSegment(nusach, id))
+        .thenAnswer((_) async => segment);
   }
 
-  void stubNoNusachText(String nusach) {
-    when(() => repository.loadNusachSegmentText(nusach, any()))
-        .thenAnswer((_) async => null);
+  void stubSegmentForAllNusachim(String id, {String text = 'default'}) {
+    for (final nusach in ['ashkenaz', 'sfard', 'edot_mizrach']) {
+      stubNusachSegment(
+        nusach,
+        id,
+        PrayerSegment(
+          id: id,
+          sections: [BlessingSection(text: text)],
+        ),
+      );
+    }
   }
 
   // ---------------------------------------------------------------------------
-  // Text resolution priorities
-  // ---------------------------------------------------------------------------
-
-  group('text resolution', () {
-    test('P4 — returns default_text when nothing else matches', () async {
-      stubTemplate('mincha', [const TemplateEntry(segmentId: 'ashrei')]);
-      stubSegment('ashrei', text: 'default ashrei');
-      stubNoNusachText('ashkenaz');
-
-      final result = await assembler.assemble(
-        templateId: 'mincha',
-        userContext: ashkUser,
-      );
-
-      expect(result,
-          [const AssembledSegment(id: 'ashrei', resolvedText: 'default ashrei')]);
-    });
-
-    test('P3 — segment variant wins over default_text', () async {
-      stubTemplate('mincha', [const TemplateEntry(segmentId: 'ashrei')]);
-      stubSegment('ashrei',
-          text: 'default', variants: {'rosh_chodesh': 'rosh chodesh ashrei'});
-      stubNoNusachText('sfard');
-
-      final result = await assembler.assemble(
-        templateId: 'mincha',
-        userContext: UserContext(nusach: 'sfard', activeFlags: ['rosh_chodesh']),
-      );
-
-      expect(result.single.resolvedText, 'rosh chodesh ashrei');
-    });
-
-    test('P2 — nusach text wins over segment variant', () async {
-      stubTemplate('mincha', [const TemplateEntry(segmentId: 'ashrei')]);
-      stubSegment('ashrei',
-          text: 'default', variants: {'rosh_chodesh': 'rosh chodesh ashrei'});
-      when(() => repository.loadNusachSegmentText('ashkenaz', 'ashrei'))
-          .thenAnswer((_) async => const NusachSegmentText(
-                id: 'ashrei',
-                nusach: 'ashkenaz',
-                text: 'ashkenaz ashrei',
-              ));
-
-      final result = await assembler.assemble(
-        templateId: 'mincha',
-        userContext: UserContext(nusach: 'ashkenaz', activeFlags: ['rosh_chodesh']),
-      );
-
-      expect(result.single.resolvedText, 'ashkenaz ashrei');
-    });
-
-    test('P1 — nusach variant wins over plain nusach text', () async {
-      stubTemplate('mincha', [const TemplateEntry(segmentId: 'ashrei')]);
-      stubSegment('ashrei', text: 'default');
-      when(() => repository.loadNusachSegmentText('ashkenaz', 'ashrei'))
-          .thenAnswer((_) async => const NusachSegmentText(
-                id: 'ashrei',
-                nusach: 'ashkenaz',
-                text: 'ashkenaz ashrei',
-                variants: {'rosh_chodesh': 'ashkenaz rosh chodesh ashrei'},
-              ));
-
-      final result = await assembler.assemble(
-        templateId: 'mincha',
-        userContext: UserContext(nusach: 'ashkenaz', activeFlags: ['rosh_chodesh']),
-      );
-
-      expect(result.single.resolvedText, 'ashkenaz rosh chodesh ashrei');
-    });
-  });
-
-  // ---------------------------------------------------------------------------
-  // Flag filtering — template level
+  // Template-level flag filtering
   // ---------------------------------------------------------------------------
 
   group('template-level flag filtering', () {
@@ -126,7 +60,6 @@ void main() {
       stubTemplate('mincha', [
         const TemplateEntry(segmentId: 'tachanun', excludeFlags: ['skip_tachanun']),
       ]);
-      stubNoNusachText('ashkenaz');
 
       final result = await assembler.assemble(
         templateId: 'mincha',
@@ -140,8 +73,13 @@ void main() {
       stubTemplate('mincha', [
         const TemplateEntry(segmentId: 'tachanun', excludeFlags: ['skip_tachanun']),
       ]);
-      stubSegment('tachanun', text: 'tachanun text');
-      stubNoNusachText('ashkenaz');
+      stubNusachSegment(
+        'ashkenaz', 'tachanun',
+        const PrayerSegment(
+          id: 'tachanun',
+          sections: [BlessingSection(text: 'tachanun text')],
+        ),
+      );
 
       final result = await assembler.assemble(
         templateId: 'mincha',
@@ -158,7 +96,6 @@ void main() {
           conditionFlags: ['monday_thursday_mincha'],
         ),
       ]);
-      stubNoNusachText('ashkenaz');
 
       final result = await assembler.assemble(
         templateId: 'mincha',
@@ -175,8 +112,10 @@ void main() {
           conditionFlags: ['monday_thursday_mincha'],
         ),
       ]);
-      stubSegment('kriat_hatorah', text: 'torah reading');
-      stubNoNusachText('ashkenaz');
+      stubNusachSegment(
+        'ashkenaz', 'kriat_hatorah',
+        const PrayerSegment(id: 'kriat_hatorah', sections: []),
+      );
 
       final result = await assembler.assemble(
         templateId: 'mincha',
@@ -202,7 +141,6 @@ void main() {
           allowedNusach: ['edot_mizrach'],
         ),
       ]);
-      stubNoNusachText('ashkenaz');
 
       final result = await assembler.assemble(
         templateId: 'mincha',
@@ -219,7 +157,6 @@ void main() {
           allowedNusach: ['edot_mizrach'],
         ),
       ]);
-      stubNoNusachText('sfard');
 
       final result = await assembler.assemble(
         templateId: 'mincha',
@@ -236,8 +173,13 @@ void main() {
           allowedNusach: ['edot_mizrach'],
         ),
       ]);
-      stubSegment('petihat_eliyahu', text: 'eliyahu text');
-      stubNoNusachText('edot_mizrach');
+      stubNusachSegment(
+        'edot_mizrach', 'petihat_eliyahu',
+        const PrayerSegment(
+          id: 'petihat_eliyahu',
+          sections: [BlessingSection(text: 'eliyahu text')],
+        ),
+      );
 
       final result = await assembler.assemble(
         templateId: 'mincha',
@@ -249,10 +191,7 @@ void main() {
 
     test('includes segment for all nusachim when allowed_nusach is empty', () async {
       stubTemplate('mincha', [const TemplateEntry(segmentId: 'ashrei')]);
-      stubSegment('ashrei', text: 'ashrei text');
-      stubNoNusachText('ashkenaz');
-      stubNoNusachText('sfard');
-      stubNoNusachText('edot_mizrach');
+      stubSegmentForAllNusachim('ashrei', text: 'ashrei text');
 
       for (final user in [ashkUser, sfardUser, edotUser]) {
         final result = await assembler.assemble(
@@ -265,16 +204,92 @@ void main() {
   });
 
   // ---------------------------------------------------------------------------
-  // UserContext — gender and Israel
+  // Section-level conditional assembly
   // ---------------------------------------------------------------------------
 
-  group('user context keys', () {
-    test('gender_female resolves to female variant', () async {
+  group('section-level conditional assembly', () {
+    test('includes section when its condition_flag is active', () async {
+      stubTemplate('mincha', [const TemplateEntry(segmentId: 'modim')]);
+      stubNusachSegment(
+        'ashkenaz', 'modim',
+        const PrayerSegment(
+          id: 'modim',
+          sections: [
+            BlessingSection(text: 'main text'),
+            BlessingSection(
+                text: 'al hanisim', conditionFlags: ['al_hanisim']),
+          ],
+        ),
+      );
+
+      final result = await assembler.assemble(
+        templateId: 'mincha',
+        userContext: UserContext(nusach: 'ashkenaz', activeFlags: ['al_hanisim']),
+      );
+
+      expect(result.single.resolvedText, 'main text\nal hanisim');
+    });
+
+    test('excludes section when its condition_flag is absent', () async {
+      stubTemplate('mincha', [const TemplateEntry(segmentId: 'modim')]);
+      stubNusachSegment(
+        'ashkenaz', 'modim',
+        const PrayerSegment(
+          id: 'modim',
+          sections: [
+            BlessingSection(text: 'main text'),
+            BlessingSection(
+                text: 'al hanisim', conditionFlags: ['al_hanisim']),
+          ],
+        ),
+      );
+
+      final result = await assembler.assemble(
+        templateId: 'mincha',
+        userContext: ashkUser,
+      );
+
+      expect(result.single.resolvedText, 'main text');
+    });
+
+    test('excludes section when its exclude_flag is active', () async {
+      stubTemplate('mincha', [const TemplateEntry(segmentId: 'shalom')]);
+      stubNusachSegment(
+        'ashkenaz', 'shalom',
+        const PrayerSegment(
+          id: 'shalom',
+          sections: [
+            BlessingSection(text: 'shalom rav', excludeFlags: ['fast_day']),
+            BlessingSection(
+                text: 'sim shalom', conditionFlags: ['fast_day']),
+          ],
+        ),
+      );
+
+      final result = await assembler.assemble(
+        templateId: 'mincha',
+        userContext: UserContext(nusach: 'ashkenaz', activeFlags: ['fast_day']),
+      );
+
+      expect(result.single.resolvedText, 'sim shalom');
+    });
+
+    test('gender_female section is included when Gender.female is set', () async {
       stubTemplate('mincha', [const TemplateEntry(segmentId: 'modeh_ani')]);
-      stubSegment('modeh_ani',
-          text: 'מוֹדֶה אֲנִי',
-          variants: {'gender_female': 'מוֹדָה אֲנִי'});
-      stubNoNusachText('ashkenaz');
+      stubNusachSegment(
+        'ashkenaz', 'modeh_ani',
+        const PrayerSegment(
+          id: 'modeh_ani',
+          sections: [
+            BlessingSection(
+                text: 'מוֹדֶה אֲנִי',
+                excludeFlags: ['gender_female']),
+            BlessingSection(
+                text: 'מוֹדָה אֲנִי',
+                conditionFlags: ['gender_female']),
+          ],
+        ),
+      );
 
       final result = await assembler.assemble(
         templateId: 'mincha',
@@ -284,27 +299,19 @@ void main() {
       expect(result.single.resolvedText, 'מוֹדָה אֲנִי');
     });
 
-    test('gender_male resolves to default when no male variant defined', () async {
-      stubTemplate('mincha', [const TemplateEntry(segmentId: 'modeh_ani')]);
-      stubSegment('modeh_ani',
-          text: 'מוֹדֶה אֲנִי',
-          variants: {'gender_female': 'מוֹדָה אֲנִי'});
-      stubNoNusachText('ashkenaz');
-
-      final result = await assembler.assemble(
-        templateId: 'mincha',
-        userContext: const UserContext(nusach: 'ashkenaz', gender: Gender.male),
-      );
-
-      expect(result.single.resolvedText, 'מוֹדֶה אֲנִי');
-    });
-
-    test('not_in_israel context key is active when isInIsrael is false', () async {
+    test('not_in_israel section is included when isInIsrael is false', () async {
       stubTemplate('mincha', [const TemplateEntry(segmentId: 'musaf_note')]);
-      stubSegment('musaf_note',
-          text: 'tefila b\'israel',
-          variants: {'not_in_israel': 'tefila b\'chutz laaretz'});
-      stubNoNusachText('ashkenaz');
+      stubNusachSegment(
+        'ashkenaz', 'musaf_note',
+        const PrayerSegment(
+          id: 'musaf_note',
+          sections: [
+            BlessingSection(
+                text: 'tefila b\'chutz laaretz',
+                conditionFlags: ['not_in_israel']),
+          ],
+        ),
+      );
 
       final result = await assembler.assemble(
         templateId: 'mincha',
@@ -313,29 +320,20 @@ void main() {
 
       expect(result.single.resolvedText, "tefila b'chutz laaretz");
     });
-  });
 
-  // ---------------------------------------------------------------------------
-  // Segment-level flag filtering
-  // ---------------------------------------------------------------------------
-
-  group('segment-level flag filtering', () {
-    test('skips segment when segment exclude_flag is active', () async {
-      stubTemplate('mincha', [const TemplateEntry(segmentId: 'special')]);
-      when(() => repository.loadSegment('special')).thenAnswer((_) async =>
-          const PrayerSegment(
-            id: 'special',
-            defaultText: 'text',
-            excludeFlags: ['some_flag'],
-          ));
-      stubNoNusachText('ashkenaz');
+    test('empty sections produce empty resolved text', () async {
+      stubTemplate('mincha', [const TemplateEntry(segmentId: 'placeholder')]);
+      stubNusachSegment(
+        'ashkenaz', 'placeholder',
+        const PrayerSegment(id: 'placeholder', sections: []),
+      );
 
       final result = await assembler.assemble(
         templateId: 'mincha',
-        userContext: UserContext(nusach: 'ashkenaz', activeFlags: ['some_flag']),
+        userContext: ashkUser,
       );
 
-      expect(result, isEmpty);
+      expect(result.single.resolvedText, '');
     });
   });
 
@@ -348,8 +346,13 @@ void main() {
       stubTemplate('mincha', [
         const TemplateEntry(segmentId: 'ashrei', optional: true),
       ]);
-      stubSegment('ashrei', text: 'ashrei');
-      stubNoNusachText('ashkenaz');
+      stubNusachSegment(
+        'ashkenaz', 'ashrei',
+        const PrayerSegment(
+          id: 'ashrei',
+          sections: [BlessingSection(text: 'ashrei')],
+        ),
+      );
 
       final result = await assembler.assemble(
         templateId: 'mincha',
@@ -361,9 +364,14 @@ void main() {
 
     test('assembled segment is optional when segment itself is optional', () async {
       stubTemplate('mincha', [const TemplateEntry(segmentId: 'ashrei')]);
-      when(() => repository.loadSegment('ashrei')).thenAnswer((_) async =>
-          const PrayerSegment(id: 'ashrei', defaultText: 'text', optional: true));
-      stubNoNusachText('ashkenaz');
+      stubNusachSegment(
+        'ashkenaz', 'ashrei',
+        const PrayerSegment(
+          id: 'ashrei',
+          sections: [BlessingSection(text: 'text')],
+          optional: true,
+        ),
+      );
 
       final result = await assembler.assemble(
         templateId: 'mincha',
@@ -371,6 +379,70 @@ void main() {
       );
 
       expect(result.single.optional, isTrue);
+    });
+
+    test('assembled segment is not optional by default', () async {
+      stubTemplate('mincha', [const TemplateEntry(segmentId: 'ashrei')]);
+      stubNusachSegment(
+        'ashkenaz', 'ashrei',
+        const PrayerSegment(
+          id: 'ashrei',
+          sections: [BlessingSection(text: 'text')],
+        ),
+      );
+
+      final result = await assembler.assemble(
+        templateId: 'mincha',
+        userContext: ashkUser,
+      );
+
+      expect(result.single.optional, isFalse);
+    });
+  });
+
+  // ---------------------------------------------------------------------------
+  // AssembledSegment value equality
+  // ---------------------------------------------------------------------------
+
+  group('AssembledSegment', () {
+    test('resolves single section text correctly', () async {
+      stubTemplate('mincha', [const TemplateEntry(segmentId: 'ashrei')]);
+      stubNusachSegment(
+        'ashkenaz', 'ashrei',
+        const PrayerSegment(
+          id: 'ashrei',
+          sections: [BlessingSection(text: 'אַשְׁרֵי יוֹשְׁבֵי בֵיתֶֽךָ')],
+        ),
+      );
+
+      final result = await assembler.assemble(
+        templateId: 'mincha',
+        userContext: ashkUser,
+      );
+
+      expect(result,
+          [const AssembledSegment(id: 'ashrei', resolvedText: 'אַשְׁרֵי יוֹשְׁבֵי בֵיתֶֽךָ')]);
+    });
+
+    test('joins multiple active sections with newline', () async {
+      stubTemplate('mincha', [const TemplateEntry(segmentId: 'test')]);
+      stubNusachSegment(
+        'ashkenaz', 'test',
+        const PrayerSegment(
+          id: 'test',
+          sections: [
+            BlessingSection(text: 'section one'),
+            BlessingSection(text: 'section two'),
+          ],
+        ),
+      );
+
+      final result = await assembler.assemble(
+        templateId: 'mincha',
+        userContext: ashkUser,
+      );
+
+      expect(result.single.resolvedText, 'section one\nsection two');
     });
   });
 }

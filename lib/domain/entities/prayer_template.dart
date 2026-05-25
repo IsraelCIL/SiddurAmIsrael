@@ -18,7 +18,8 @@ class PrayerTemplate with _$PrayerTemplate {
 @freezed
 class TemplateEntry with _$TemplateEntry {
   const factory TemplateEntry({
-    @JsonKey(name: 'segment_id') required String segmentId,
+    @Default('') @JsonKey(name: 'segment_id') String segmentId,
+    @Default('') @JsonKey(name: 'sub_template_id') String subTemplateId,
     @Default([]) @JsonKey(name: 'condition_flags') List<String> conditionFlags,
     @Default([]) @JsonKey(name: 'exclude_flags') List<String> excludeFlags,
     @Default(false) bool optional,

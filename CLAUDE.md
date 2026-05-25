@@ -19,6 +19,22 @@
 - **Forbidden content**: Any reference — direct or indirect — to Reform, Conservative, Egalitarian, Liberal, or Reconstructionist practices is strictly forbidden anywhere in the codebase (source code, comments, JSON data, tests, and documentation). This includes but is not limited to: adding the Imahot (matriarchs) to the Avot blessing, egalitarian liturgical changes, or gender-neutral God-language.
 - **Gender variants**: The only permitted gender differences are those that have a recognised Halachic basis in mainstream Orthodox poskim (e.g. a woman reciting a different verbal form). Always cite the Halachic source before adding such a variant.
 
+## JSON Text Formatting
+- **Long text must be split into arrays**: Any `text` field in a segment JSON that would exceed ~80 characters on a single line must be written as a JSON array of strings. The parser joins them with a single space at runtime. This keeps files readable without requiring scrolling.
+  ```json
+  // Bad – one unreadable long line:
+  "text": "בָּרוּךְ אַתָּה יְהֹוָה ... מָגֵן אַבְרָהָם:"
+
+  // Good – split into natural phrase groups:
+  "text": [
+    "בָּרוּךְ אַתָּה יְהֹוָה אֱלֹהֵֽינוּ וֵאלֹהֵי אֲבוֹתֵֽינוּ",
+    "אֱלֹהֵי אַבְרָהָם אֱלֹהֵי יִצְחָק וֵאלֹהֵי יַעֲקֹב",
+    "... מָגֵן אַבְרָהָם:"
+  ]
+  ```
+- **Parser compatibility**: The `text` field parser must accept both `String` and `List<String>`. A `List` is joined with `" "` before use. All new and updated segments must use the array form for long texts.
+- **Split at natural phrase boundaries**: Break at cantillation pauses, clause endings, or logical groupings — not arbitrarily mid-word.
+
 ## Environment & Tech
 - Framework: Flutter.
 - Primary Language: Hebrew (UI/Content), English (Code/Docs).

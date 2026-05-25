@@ -1,4 +1,3 @@
-import '../../domain/entities/nusach_segment_text.dart';
 import '../../domain/entities/prayer_segment.dart';
 import '../../domain/entities/prayer_template.dart';
 import '../../domain/repositories/i_prayer_repository.dart';
@@ -14,13 +13,6 @@ class PrayerRepositoryImpl implements IPrayerRepository {
       _datasource.loadTemplate(templateId);
 
   @override
-  Future<PrayerSegment> loadSegment(String segmentId) =>
-      _datasource.loadSegment(segmentId);
-
-  @override
-  Future<NusachSegmentText?> loadNusachSegmentText(
-    String nusach,
-    String segmentId,
-  ) =>
-      _datasource.loadNusachSegmentText(nusach, segmentId);
+  Future<PrayerSegment> loadNusachSegment(String nusach, String segmentId) =>
+      _datasource.loadNusachSegment(nusach, segmentId);
 }

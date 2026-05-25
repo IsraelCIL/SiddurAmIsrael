@@ -1,0 +1,327 @@
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Internal Server Error</title>
+    <meta property="og:title" content="Internal Server Error"/>
+    <meta name="twitter:title" content="Internal Server Error"/>
+    <meta charset="utf-8"/>
+    <meta name="description" content=""/>
+    <meta property="og:description" content=""/>
+    <meta name="twitter:description" content=""/>
+
+    
+
+    <link rel="search" type="application/opensearchdescription+xml" title="Sefaria Search" href="https://www.sefaria.org/static/files/opensearch.xml?v=f45fa208" />
+
+    
+    <link rel="alternate" href="https://www.sefaria.org/api/texts/Siddur_Edot_HaMizrach,_Weekday,_Pesukei_Dezimra,_Beit_Yaakov" hreflang="en" />
+    <link rel="alternate" href="https://www.sefaria.org.il/api/texts/Siddur_Edot_HaMizrach,_Weekday,_Pesukei_Dezimra,_Beit_Yaakov" hreflang="he" />
+    
+
+    
+
+    
+        <meta property="og:type" content="website"/>
+    
+
+    
+        <meta property="og:image" content="https://www.sefaria.org/api/img-gen/api/texts/Siddur_Edot_HaMizrach,_Weekday,_Pesukei_Dezimra,_Beit_Yaakov?lang=he&platform=facebook&ven=&vhe=" />
+        <meta property="og:image:type" content="image/png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+    
+
+    <meta property="og:url" content="https://www.sefaria.org/api/texts/Siddur_Edot_HaMizrach,_Weekday,_Pesukei_Dezimra,_Beit_Yaakov?lang=he&amp;context=0" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    
+    <meta name="twitter:site" content="@sefariaproject" />
+    <meta name="twitter:image" content="https://www.sefaria.org/api/img-gen/api/texts/Siddur_Edot_HaMizrach,_Weekday,_Pesukei_Dezimra,_Beit_Yaakov?lang=he&platform=twitter&ven=&vhe=" />
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-itunes-app" content="app-id=1163273965">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    
+    
+    <link rel="shortcut icon" href="https://www.sefaria.org/static/icons//favicon.ico?v=3" sizes="48x48">
+    <link rel="icon" type="image/svg+xml" href="https://www.sefaria.org/static/icons//favicon.svg?v=3" sizes="any">
+    <link rel="icon" type="image/png" href="https://www.sefaria.org/static/icons//favicon.png?v=3" sizes="96x96">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://www.sefaria.org/static/icons//apple-touch-icon.png?v=3">
+    <link rel="manifest" href="/site.webmanifest?v=3">
+    
+    <meta name="theme-color" content="#18345D">
+    <meta name="apple-mobile-web-app-title"
+          content="
+                    Library
+                  ">
+    
+
+    
+
+    
+
+    
+
+    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
+    <script>
+        WebFont.load({
+          google: {
+            families: ['Crimson Text:100,200,300,400,500,600,700,800,900'],
+            text: 'ăǎġḥḤḫḳḲŏŠšṭżūẓŻāīēḗęîìi̧ ̆̄'
+          },
+          typekit: {
+            id: 'aeg8div' // Adobe Garamond Pro
+          }
+        });
+        WebFont.load({
+          google: {
+            families: ['Roboto:100,200,300,400,500,600,700,800,900', 'Heebo:100,200,300,400,500,600,700,800,900:hebrew', 'Miriam Libre:400,500,600,700'] // The dotted h causes Heebo not to load.
+          }
+        });
+        WebFont.load({
+          google: {
+            families: ['Noto Sans Samaritan'],
+            text: 'ࠀࠁࠂࠃࠄࠅࠆࠇࠈࠉࠊࠋࠌࠍࠎࠏࠐࠑࠒࠓࠔࠕ'
+          }
+        });
+    </script>
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <link rel="stylesheet" href="https://www.sefaria.org/static/css/common.css?v=305af3bd">
+    <link rel="stylesheet" href="https://www.sefaria.org/static/font-awesome/css/font-awesome.css?v=151bd7ea">
+    <link rel="stylesheet" href="https://www.sefaria.org/static/css/fonts.css?v=6a0132d4">
+    <link rel="stylesheet" href="https://www.sefaria.org/static/css/header.css?v=f4c71c1c">
+    <link rel="stylesheet" href="https://www.sefaria.org/static/css/popover.css?v=2e03266b">
+    <link rel="stylesheet" href="https://www.sefaria.org/static/css/breakpoints.css?v=a38385e0">
+    <link rel="stylesheet" type="text/css" href="https://www.sefaria.org/static/css/keyboard.css?v=2c0640d3">
+        
+    <link rel="stylesheet" href="https://www.sefaria.org/static/css/font-faces.css?v=8d5bcc01">
+    <link rel="stylesheet" href="https://www.sefaria.org/static/css/color-palette.css?v=7a2868b2">
+    <link rel="stylesheet" href="https://www.sefaria.org/static/css/themes/library-theme.css?v=75488c0c">
+    <link rel="stylesheet" href="https://www.sefaria.org/static/css/themes/sheets-theme.css?v=ac584759">
+    <link rel="stylesheet" href="https://www.sefaria.org/static/css/common-components.css?v=0de1860f">
+    <link rel="stylesheet" href="https://www.sefaria.org/static/css/s2.css?v=3563d4f9">
+    <link rel="stylesheet" href="https://www.sefaria.org/static/css/s2-print.css?v=0a760e28" media="print" />
+    <!-- Specific styling to correct behavior of Unbounce banners -->
+    <link rel="stylesheet" href="https://www.sefaria.org/static/css/unbounce-banner.css?v=7cb47188">
+
+    
+    
+    <link rel="stylesheet" href="https://www.sefaria.org/static/css/static.css?v=88a2ca96">
+    
+    
+
+    <style>
+        
+    </style>
+
+
+    
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer',"GTM-NBGXSLP");</script>
+    <!-- End Google Tag Manager -->
+
+    <!-- Start VWO Async SmartCode -->
+    <script type='text/javascript' id='vwoCode'>
+    window._vwo_code=window._vwo_code || (function() {
+    var account_id=682715,
+    version = 1.5,
+    settings_tolerance=2000,
+    library_tolerance=2500,
+    use_existing_jquery=false,
+    is_spa=1,
+    hide_element='body',
+    hide_element_style = 'opacity:0 !important;filter:alpha(opacity=0) !important;background:none !important',
+    /* DO NOT EDIT BELOW THIS LINE */
+    f=false,d=document,vwoCodeEl=d.querySelector('#vwoCode'),code={use_existing_jquery:function(){return use_existing_jquery},library_tolerance:function(){return library_tolerance},hide_element_style:function(){return'{'+hide_element_style+'}'},finish:function(){if(!f){f=true;var e=d.getElementById('_vis_opt_path_hides');if(e)e.parentNode.removeChild(e)}},finished:function(){return f},load:function(e){var t=d.createElement('script');t.fetchPriority='high';t.src=e;t.type='text/javascript';t.innerText;t.onerror=function(){_vwo_code.finish()};d.getElementsByTagName('head')[0].appendChild(t)},getVersion:function(){return version},getMatchedCookies:function(e){var t=[];if(document.cookie){t=document.cookie.match(e)||[]}return t},getCombinationCookie:function(){var e=code.getMatchedCookies(/(?:^|;)\s?(_vis_opt_exp_\d+_combi=[^;$]*)/gi);e=e.map(function(e){try{var t=decodeURIComponent(e);if(!/_vis_opt_exp_\d+_combi=(?:\d+,?)+\s*$/.test(t)){return''}return t}catch(e){return''}});var i=[];e.forEach(function(e){var t=e.match(/([\d,]+)/g);t&&i.push(t.join('-'))});return i.join('|')},init:function(){if(d.URL.indexOf('__vwo_disable__')>-1)return;window.settings_timer=setTimeout(function(){_vwo_code.finish()},settings_tolerance);var e=d.createElement('style'),t=hide_element?hide_element+'{'+hide_element_style+'}':'',i=d.getElementsByTagName('head')[0];e.setAttribute('id','_vis_opt_path_hides');vwoCodeEl&&e.setAttribute('nonce',vwoCodeEl.nonce);e.setAttribute('type','text/css');if(e.styleSheet)e.styleSheet.cssText=t;else e.appendChild(d.createTextNode(t));i.appendChild(e);var n=this.getCombinationCookie();this.load('https://dev.visualwebsiteoptimizer.com/j.php?a='+account_id+'&u='+encodeURIComponent(d.URL)+'&f='+ +is_spa+'&vn='+version+(n?'&c='+n:''));return settings_timer}};window._vwo_settings_timer = code.init();return code;}());
+    </script>
+    <!-- End VWO Async SmartCode -->
+
+    
+
+
+    
+    <!-- Hotjar Tracking Code for https://www.sefaria.org -->
+    <script>
+        (function(h,o,t,j,a,r){
+            h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+            h._hjSettings={hjid:2695522,hjsv:6};
+            a=o.getElementsByTagName('head')[0];
+            r=o.createElement('script');r.async=1;
+            r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+            a.appendChild(r);
+        })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+    </script>
+    
+    
+    <!-- Simple Analytics -->
+    
+    <script>
+      window.sa_event = window.sa_event || function () {
+        const a = [].slice.call(arguments);
+        window.sa_event.q ? window.sa_event.q.push(a) : window.sa_event.q = [a];
+      };
+    </script>
+
+    <!-- Unbounce Embed Code -->
+    <script src="https://fd810a0513c94a16a52ef4d0d9b9c6c8.js.ubembed.com" async></script> 
+</head>
+ <body data-active-module="" data-render-static="True" class="interface-english ">
+    
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NBGXSLP"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    
+
+
+
+    
+
+    <!--Sentry error reporting config-->
+    <script>
+      
+        const sentryDSN = "https://87dd77e2991c48b4a69022eebb2e635f@o4505401832243200.ingest.sentry.io/4505402077675520";
+      
+    </script>
+    <!--End Sentry error reporting config-->
+
+    
+    <!-- Meant to only be the html of the header React component, rendered by passing headerMode: true to ReaderApp  -->
+    <div id="s2" class="headerOnly"></div>
+    
+    
+
+    
+    <div data-active-module="" id="staticContentWrapper">
+        <div id="content" class="interface-english">
+            
+<div id="errorPage" class="biReady container error static">
+    <div class="inner">
+        <h1>
+            <span class="int-en">Internal Server Error</span>
+            <span class="int-he">שגיאה במערכת</span>
+        </h1>
+        <div class="section">
+            <p>
+                <span class="int-en">
+                    Unfortunately, we've encountered an error.
+                    If you have any questions about the problem,
+                    or think you can help us figure out what went wrong,
+                    please email <a href="/cdn-cgi/l/email-protection#c8a0ada4a4a788bbadaea9baa1a9e6a7baaf" target="_blank">us</a>.
+                </span>
+                <span class="int-he">
+                    לצערנו ארעה תקלה במערכת.
+                    אם יש לכם שאלות נוספות לגבי התקלה,
+                    או שביכלתכם להבין את התקלה ולעזור לאתר אותה,  <a href="/cdn-cgi/l/email-protection#80e8e5ececefc0f3e5e6e1f2e9e1aeeff2e7" target="_blank">נשמח לשמוע</a>.
+                </span>
+            </p>
+        </div>
+    </div>
+</div>
+
+        </div>
+    </div>
+
+    
+
+    <div id="overlay"></div>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
+
+    <script src="https://www.sefaria.org/static/js/lib/keyboard.js?v=0730f107"></script>
+    <script src="https://www.sefaria.org/static/js/analyticsEventTracker.js?v=904cda71"></script>
+    <script src="/data..js"></script>
+
+    <script>
+      
+      if (!window.jQuery) {
+        console.log('loading jquery locally');
+        document.write('<script src="/static/js/lib/jquery.js"><\/script><script src="/static/js/lib/jquery-ui.js"><\/script>');
+      }
+      if (!window.React) {
+          console.log('loading react locally');
+          document.write('<script src="/static/js/lib/react.development.js"><\/script><script src="/static/js/lib/react-dom.development.js"><\/script>');
+      }
+
+      var DJANGO_VARS = {
+        props:         {"_uid": null, "_email": "", "slug": "", "is_moderator": false, "is_editor": false, "is_sustainer": false, "experiments": false, "full_name": "", "profile_pic_url": "", "is_history_enabled": true, "translationLanguagePreference": null, "versionPrefsByCorpus": {}, "following": [], "blocking": [], "calendars": [{"title": {"en": "Parashat Hashavua", "he": "פרשת השבוע"}, "displayValue": {"en": "Beha'alotcha", "he": "בהעלותך"}, "url": "Numbers.8.1-12.16", "ref": "Numbers 8:1-12:16", "heRef": "במדבר ח׳:א׳-י״ב:ט״ז", "order": 1, "category": "Tanakh", "extraDetails": {"aliyot": ["Numbers 8:1-8:14", "Numbers 8:15-8:26", "Numbers 9:1-9:14", "Numbers 9:15-10:10", "Numbers 10:11-10:34", "Numbers 10:35-11:29", "Numbers 11:30-12:16", "Numbers 12:14-12:16"]}, "description": {"en": "Beha’alotekha (“When You Raise”) opens with God instructing Moses to inaugurate the Levites for service in the Tabernacle. It also recounts the stories of people who request a second chance to offer the Passover sacrifice, the people of Israel's complaints and punishments, and a disease that affects Miriam.", "he": "בפרשת בהעלותך אהרן מצטווה להדליק את הנרות במנורה, ושבט לוי מוקדש לעבודת המשכן. בעקבות פנייה של קבוצה של טמאים לנפש אדם שאינם יכולים להקריב את קורבן הפסח בזמנו, מתחדש דין פסח שני, שמעניק לאדם טמא או נמצא בדרך רחוקה הזדמנות שנייה להביא את הקורבן. משה מצטווה לעשות חצוצרות למסע העדה, לכינוס העם ולתקיעה במועדים ובשעת מלחמה. במסגרת פירוט מסעות בני ישראל במדבר מסופר על תלונות העם ותאוותיו ועל צרעת מרים."}}, {"title": {"en": "Haftarah", "he": "הפטרה"}, "displayValue": {"en": "Zechariah 2:14-4:7", "he": "זכריה ב׳:י״ד-ד׳:ז׳"}, "url": "Zechariah.2.14-4.7", "ref": "Zechariah 2:14-4:7", "order": 2, "category": "Tanakh"}, {"title": {"en": "Daf Yomi", "he": "דף יומי"}, "displayValue": {"en": "Chullin 24", "he": "חולין כ״ד"}, "url": "Chullin.24", "ref": "Chullin 24", "order": 3, "category": "Talmud"}, {"title": {"en": "929", "he": "929"}, "displayValue": {"en": "Joshua 4 (191)", "he": "יהושע ד׳ (191)"}, "url": "Joshua.4", "ref": "Joshua 4", "order": 4, "category": "Tanakh"}, {"title": {"en": "Daily Mishnah", "he": "משנה יומית"}, "displayValue": {"en": "Mishnah Kelim 5:5-6", "he": "משנה כלים ה׳:ה׳-ו׳"}, "url": "Mishnah_Kelim.5.5-6", "ref": "Mishnah Kelim 5:5-6", "order": 5, "category": "Mishnah"}, {"title": {"en": "Daily Rambam", "he": "הרמב\"ם היומי"}, "displayValue": {"en": "Sabbath 3", "he": "הלכות שבת ג׳"}, "url": "Mishneh_Torah,_Sabbath.3", "ref": "Mishneh Torah, Sabbath 3", "order": 6, "category": "Halakhah"}, {"title": {"en": "Daily Rambam (3 Chapters)", "he": "הרמב\"ם היומי (3 פרקים)"}, "displayValue": {"en": "Vows 7-9", "he": "הלכות נדרים ז׳-ט׳"}, "url": "Mishneh_Torah,_Vows.7-9", "ref": "Mishneh Torah, Vows 7-9", "order": 7, "category": "Halakhah"}, {"title": {"en": "Daf a Week", "he": "דף השבוע"}, "displayValue": {"en": "Nedarim 83", "he": "נדרים פ״ג"}, "url": "Nedarim.83", "ref": "Nedarim 83", "order": 8, "category": "Talmud"}, {"title": {"en": "Halakhah Yomit", "he": "הלכה יומית"}, "displayValue": {"en": "Shulchan Arukh, Orach Chayim 199:6-8", "he": "שולחן ערוך, אורח חיים קצ״ט:ו׳-ח׳"}, "url": "Shulchan_Arukh,_Orach_Chayim.199.6-8", "ref": "Shulchan Arukh, Orach Chayim 199:6-8", "order": 9, "category": "Halakhah"}, {"title": {"en": "Arukh HaShulchan Yomi", "he": "ערוך השולחן היומי"}, "displayValue": {"en": "Orach Chaim 305:19-306:2", "he": "אורח חיים ש״ה:י״ט-ש״ו:ב׳"}, "url": "Arukh_HaShulchan,_Orach_Chaim.305.19-306.2", "ref": "Arukh HaShulchan, Orach Chaim 305:19-306:2", "order": 10, "category": "Halakhah"}, {"title": {"en": "Tanakh Yomi", "he": "תנ\"ך יומי"}, "displayValue": {"en": "Minor Prophets Seder 2", "he": "Minor Prophets סדר ב"}, "url": "Hosea.6.2-10.11", "ref": "Hosea 6:2-10:11", "order": 11, "category": "Tanakh"}, {"title": {"en": "Chok LeYisrael", "he": "חק לישראל"}, "displayValue": {"en": "Beha'alotcha", "he": "בהעלותך"}, "url": "collections/חק-לישראל?tag=Beha%27alotcha", "order": 12, "category": "Tanakh"}, {"title": {"en": "Tanya Yomi", "he": "תניא יומי"}, "displayValue": {"en": "8 Sivan", "he": "ח סיון"}, "url": "Tanya,_Part_II;_Shaar_HaYichud_VehaEmunah.1.6", "ref": "Tanya, Part II; Shaar HaYichud VehaEmunah 1:6", "order": 15, "category": "Chasidut"}, {"title": {"en": "Yerushalmi Yomi", "he": "ירושלמי יומי"}, "displayValue": {"en": "Jerusalem Talmud Bava Kamma 22", "he": "תלמוד ירושלמי בבא קמא כב"}, "url": "Jerusalem_Talmud_Bava_Kamma.4.5.3-9.1", "ref": "Jerusalem Talmud Bava Kamma 4:5:3-9:1", "order": 16, "category": "Talmud"}], "notificationCount": 0, "notifications": [], "saved": {"loaded": false, "items": []}, "last_place": [], "activeModule": "library", "last_cached": 1779101299.1957662, "multiPanel": true, "initialPath": "/api/texts/Siddur_Edot_HaMizrach,_Weekday,_Pesukei_Dezimra,_Beit_Yaakov?lang=he&context=0", "interfaceLang": "english", "domainModules": {"en": {"library": "https://www.sefaria.org", "voices": "https://voices.sefaria.org"}, "he": {"library": "https://www.sefaria.org.il", "voices": "https://chiburim.sefaria.org.il"}}, "translation_language_preference_suggestion": null, "initialSettings": {"language": "bilingual", "layoutDefault": "segmented", "layoutTalmud": "continuous", "layoutTanakh": "segmented", "aliyotTorah": "aliyotOff", "vowels": "all", "punctuationTalmud": "punctuationOn", "biLayout": "stacked", "color": "light", "fontSize": 62.5}, "numLibraryTopics": 5649, "_siteSettings": {"TORAH_SPECIFIC": true, "SITE_NAME": {"en": "Sefaria", "he": "ספריא"}, "LIBRARY_NAME": {"en": "The Sefaria Library", "he": "האוסף של ספריא"}, "SUPPORTED_TRANSLATION_LANGUAGES": ["en", "es", "fr", "de"], "COLLECTIONS_BUCKET": "sefaria-collection-images", "PROFILES_BUCKET": "sefaria-profile-pictures", "UGC_BUCKET": "sheet-user-uploaded-media", "TOPICS_BUCKET": "img.sefaria.org", "HELP_CENTER_URLS": {"EN_US": "https://help.sefaria.org/hc/en-us", "HE": "https://help.sefaria.org/hc/he", "GETTING_STARTED": "https://help.sefaria.org/hc/en-us/articles/21471911125020-Video-Guide-How-to-Get-Started-Navigating-the-Library", "TRANSLATION_PREFERENCE_EN": "https://help.sefaria.org/hc/en-us/articles/18613593620636-How-to-Choose-a-Preferred-Translation", "TRANSLATION_PREFERENCE_HE": "https://help.sefaria.org/hc/he/articles/18613593620636-%D7%91%D7%97%D7%99%D7%A8%D7%AA-%D7%AA%D7%A8%D7%92%D7%95%D7%9D-%D7%9E%D7%95%D7%A2%D7%93%D7%A3"}, "WHAT_ARE_VOICES_PATHS": {"en": "/sheets/674324", "he": "/sheets/674327"}, "MODULE_SWITCHER_LEARN_MORE_PATH": {"en": "/sheets/689609", "he": "/sheets/689610"}, "HELP_CENTER_REDIRECTS": {"en": {"215584": "https://help.sefaria.org/hc/en-us/sections/12756520483868-Text-Formatting-Accessibility", "218610": "https://help.sefaria.org/hc/en-us/sections/18613320256156-Translations", "231440": "https://help.sefaria.org/hc/en-us/categories/12756350371100-Donations", "210670": "https://help.sefaria.org/hc/en-us/categories/13368526623132-Getting-Started", "213949": "https://help.sefaria.org/hc/en-us/articles/21806344785308-How-to-Contact-Sefaria", "218612": "https://help.sefaria.org/hc/en-us/sections/12756518640668-How-to-Reuse-Download-and-Otherwise-Reproduce-Texts", "225828": "https://help.sefaria.org/hc/en-us/sections/20094783356956-The-Sheet-Editor", "218668": "https://help.sefaria.org/hc/en-us/articles/18613227644316-How-to-Find-Interconnected-Texts", "219447": "https://help.sefaria.org/hc/en-us/articles/18472472138652-Quick-Guide-Meet-the-Resource-Panel", "228381": "https://help.sefaria.org/hc/en-us/sections/12756518640668-How-to-Reuse-Download-and-Otherwise-Reproduce-Texts", "220945": "https://help.sefaria.org/hc/en-us/categories/19814642862876-Sefaria-s-Mobile-Apps", "233647": "https://help.sefaria.org/hc/en-us/sections/12756555356956-Study-and-Reference-Tools", "233017": "https://help.sefaria.org/hc/en-us/articles/20533111968540-How-to-Use-Source-Sheet-Collections", "211565": "https://help.sefaria.org/hc/en-us/sections/12721846793116-How-to-Find-Texts", "393695": "https://help.sefaria.org/hc/en-us/sections/20094783356956-The-Sheet-Editor", "429277": "https://help.sefaria.org/hc/en-us/articles/18472614956956-Quick-Guide-Meet-the-A-%D7%90-menu", "231377": "https://help.sefaria.org/hc/en-us/sections/20094169893276-All-About-Topics-Pages", "519205": "https://help.sefaria.org/hc/en-us/articles/18472576952988-Quick-Guide-Meet-the-Table-of-Contents", "289837": "https://help.sefaria.org/hc/en-us/articles/20533111968540-How-to-Use-Source-Sheet-Collections", "274871": "https://help.sefaria.org/hc/en-us/sections/12756555356956-Study-and-Reference-Tools", "303276": "https://help.sefaria.org/hc/en-us/categories/12756351595932-Your-Account", "379494": "https://help.sefaria.org/hc/en-us/sections/12756538060956-Text-Specific-Special-Features", "303288": "https://help.sefaria.org/hc/en-us/categories/12756351595932-Your-Account", "359083": "https://help.sefaria.org/hc/en-us/sections/17430252462236-Managing-Your-Donation", "330784": "https://help.sefaria.org/hc/en-us/articles/18472380899484-Quick-Guide-Meet-the-Homepage", "483970": "https://help.sefaria.org/hc/en-us/sections/18613320256156-Translations-and-Language-Preferences", "511573": "https://help.sefaria.org/hc/en-us/sections/18613320256156-Translations-and-Language-Preferences", "497893": "https://help.sefaria.org/hc/en-us/sections/12756555356956-Study-and-Reference-Tools", "477118": "https://help.sefaria.org/hc/en-us/sections/18472260943900-Sefaria-101-Quick-Guides-and-Sefaria-Basics", "218839": "https://help.sefaria.org/hc/en-us/sections/20094783356956-The-Sheet-Editor", "212911": "https://help.sefaria.org/hc/en-us/sections/20094783356956-All-About-Source-Sheets", "529099": "https://help.sefaria.org/hc/en-us/sections/20235182393244-Sefaria-for-Google-Docs", "584561": "https://help.sefaria.org/hc/en-us/sections/20235182393244-Sefaria-for-Google-Docs"}, "he": {"328503": "https://help.sefaria.org/hc/he/articles/20234245638428-%D7%9B%D7%99%D7%A6%D7%93-%D7%9C%D7%9E%D7%A6%D7%95%D7%90-%D7%9E%D7%99%D7%93%D7%A2-%D7%91%D7%99%D7%95%D7%92%D7%A8%D7%A4%D7%99-%D7%90%D7%95%D7%93%D7%95%D7%AA-%D7%93%D7%9E%D7%95%D7%99%D7%95%D7%AA-%D7%9E%D7%94%D7%AA%D7%9C%D7%9E%D7%95%D7%93", "243658": "https://help.sefaria.org/hc/he/categories/19814642862876-%D7%94%D7%A9%D7%99%D7%9E%D7%95%D7%A9-%D7%91%D7%99%D7%99%D7%A9%D7%95%D7%9E%D7%95%D7%9F-%D7%A1%D7%A4%D7%A8%D7%99%D7%90", "241176": "https://help.sefaria.org/hc/he/sections/12756518640668-%D7%A9%D7%97%D7%96%D7%95%D7%A8-%D7%94%D7%93%D7%A4%D7%A1%D7%94-%D7%95%D7%94%D7%A4%D7%A6%D7%AA-%D7%9E%D7%A7%D7%95%D7%A8%D7%95%D7%AA", "288330": "https://help.sefaria.org/hc/he/sections/12756518640668-%D7%A9%D7%97%D7%96%D7%95%D7%A8-%D7%94%D7%93%D7%A4%D7%A1%D7%94-%D7%95%D7%94%D7%A4%D7%A6%D7%AA-%D7%9E%D7%A7%D7%95%D7%A8%D7%95%D7%AA", "399333": "https://help.sefaria.org/hc/he/sections/20094783356956-%D7%99%D7%A6%D7%99%D7%A8%D7%AA-%D7%93%D7%A4%D7%99-%D7%9E%D7%A7%D7%95%D7%A8%D7%95%D7%AA-%D7%91%D7%A1%D7%A4%D7%A8%D7%99%D7%90", "242573": "https://help.sefaria.org/hc/he/articles/18490652948508-%D7%9B%D7%99%D7%A6%D7%93-%D7%9C%D7%94%D7%93%D7%A4%D7%99%D7%A1-%D7%9E%D7%A7%D7%95%D7%A8%D7%95%D7%AA-%D7%9E%D7%94%D7%A1%D7%A4%D7%A8%D7%99%D7%99%D7%94", "244351": "https://help.sefaria.org/hc/he/sections/12721846793116-%D7%92%D7%99%D7%A9%D7%94-%D7%9C%D7%9E%D7%A7%D7%95%D7%A8%D7%95%D7%AA", "615752": "https://help.sefaria.org/hc/he/sections/12756520483868-%D7%90%D7%A4%D7%A9%D7%A8%D7%95%D7%99%D7%95%D7%AA-%D7%A4%D7%95%D7%A8%D7%9E%D7%98-%D7%98%D7%A7%D7%A1%D7%98-%D7%95%D7%A0%D7%92%D7%99%D7%A9%D7%95%D7%AA", "239441": "https://help.sefaria.org/hc/he/sections/12756520483868-%D7%90%D7%A4%D7%A9%D7%A8%D7%95%D7%99%D7%95%D7%AA-%D7%A4%D7%95%D7%A8%D7%9E%D7%98-%D7%98%D7%A7%D7%A1%D7%98-%D7%95%D7%A0%D7%92%D7%99%D7%A9%D7%95%D7%AA", "288327": "https://help.sefaria.org/hc/he/articles/18472472138652-%D7%9E%D7%93%D7%A8%D7%99%D7%9A-%D7%9E%D7%94%D7%99%D7%A8-%D7%94%D7%9B%D7%99%D7%A8%D7%95-%D7%90%D7%AA-%D7%A1%D7%A8%D7%92%D7%9C-%D7%94%D7%A7%D7%99%D7%A9%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9B%D7%9C%D7%99%D7%9D", "569973": "https://help.sefaria.org/hc/he/categories/20332917021212-%D7%99%D7%A6%D7%99%D7%A8%D7%AA-%D7%93%D7%A4%D7%99-%D7%9E%D7%A7%D7%95%D7%A8%D7%95%D7%AA-%D7%95%D7%A9%D7%99%D7%9E%D7%95%D7%A9-%D7%91%D7%AA%D7%95%D7%A1%D7%A4%D7%99%D7%9D-%D7%9C%D7%93%D7%A4%D7%93%D7%A4%D7%9F", "382833": "https://help.sefaria.org/hc/he/sections/12756538060956-%D7%A4%D7%99%D7%A6-%D7%A8%D7%99%D7%9D-%D7%9C%D7%A9%D7%99%D7%9E%D7%95%D7%A9-%D7%A2%D7%9D-%D7%9E%D7%A7%D7%95%D7%A8%D7%95%D7%AA-%D7%9E%D7%A1%D7%95%D7%99%D7%9E%D7%99%D7%9D", "332893": "https://help.sefaria.org/hc/he/articles/18472380899484-%D7%9E%D7%93%D7%A8%D7%99%D7%9A-%D7%9E%D7%94%D7%99%D7%A8-%D7%94%D7%9B%D7%99%D7%A8%D7%95-%D7%90%D7%AA-%D7%A2%D7%9E%D7%95%D7%93-%D7%94%D7%91%D7%99%D7%AA", "242826": "https://help.sefaria.org/hc/he/articles/18613227644316-%D7%9B%D7%99%D7%A6%D7%93-%D7%9C%D7%90%D7%AA%D7%A8-%D7%9E%D7%A7%D7%95%D7%A8%D7%95%D7%AA-%D7%9E%D7%A7%D7%95%D7%A9%D7%A8%D7%99%D7%9D", "239814": "https://help.sefaria.org/hc/he/categories/12721826687772-%D7%94%D7%A9%D7%99%D7%9E%D7%95%D7%A9-%D7%91%D7%A1%D7%A4%D7%A8%D7%99%D7%90", "293375": "https://help.sefaria.org/hc/he/categories/20332917021212-%D7%99%D7%A6%D7%99%D7%A8%D7%AA-%D7%93%D7%A4%D7%99-%D7%9E%D7%A7%D7%95%D7%A8%D7%95%D7%AA-%D7%95%D7%A9%D7%99%D7%9E%D7%95%D7%A9-%D7%91%D7%AA%D7%95%D7%A1%D7%A4%D7%99%D7%9D-%D7%9C%D7%93%D7%A4%D7%93%D7%A4%D7%9F", "288326": "https://help.sefaria.org/hc/he/sections/12756555356956-%D7%9B%D7%9C%D7%99%D7%9D-%D7%9C%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%91%D7%A1%D7%A4%D7%A8%D7%99%D7%90", "242831": "https://help.sefaria.org/hc/he/sections/17430252462236-%D7%A0%D7%99%D7%94%D7%95%D7%9C-%D7%AA%D7%A8%D7%95%D7%9E%D7%95%D7%AA-%D7%A9%D7%A0%D7%99%D7%AA%D7%A0%D7%95-%D7%9C%D7%A1%D7%A4%D7%A8%D7%99%D7%90", "541372": "https://help.sefaria.org/hc/he/categories/13368526623132-%D7%9E%D7%99%D7%93%D7%A2-%D7%91%D7%A1%D7%99%D7%A1%D7%99-%D7%A2%D7%9C-%D7%A1%D7%A4%D7%A8%D7%99%D7%90", "542809": "https://help.sefaria.org/hc/he/articles/21806344785308-%D7%99%D7%A6%D7%99%D7%A8%D7%AA-%D7%A7%D7%A9%D7%A8-%D7%A2%D7%9D-%D7%A1%D7%A4%D7%A8%D7%99%D7%90", "540832": "https://help.sefaria.org/hc/he/sections/20094783356956-%D7%99%D7%A6%D7%99%D7%A8%D7%AA-%D7%93%D7%A4%D7%99-%D7%9E%D7%A7%D7%95%D7%A8%D7%95%D7%AA-%D7%91%D7%A1%D7%A4%D7%A8%D7%99%D7%90"}}}, "_debug": false, "_debug_mode": null, "chatbot_user_token": null, "chatbot_enabled": false, "chatbot_api_base_url": "https://chat.sefaria.org/api", "chatbot_version": null, "chatbot_max_input_chars": 10000, "chatbot_max_prompts": 100, "chatbot_promo_learn_more_urls": {"en": "https://help.sefaria.org/hc/en-us/articles/26006423836828", "he": "https://help.sefaria.org/hc/he/articles/26006423836828"}, "chatbot_origin": "sefaria-production", "show_join_chatbot_banner": true, "remoteConfig": {"sentry": {"tracesSampleRate": 0.0, "sampleRate": 1.0, "replaysSessionSampleRate": 0.0, "replaysOnErrorSampleRate": 0.0}, "chatbot": {"hide": 0}}},
+        inReaderApp:   false,
+      };
+
+      
+          var STRAPI_INSTANCE =  "https://cms.sefaria.org:443";
+      
+
+      
+    </script>
+
+    
+      <!-- Google tag (gtag.js) -->
+          <script async src="https://www.googletagmanager.com/gtag/js?id=G-5S6RP1RFZ2"></script>
+          <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-5S6RP1RFZ2', {
+              'user_id': DJANGO_VARS.props ? DJANGO_VARS.props._uid : null,
+              'traffic_type': DJANGO_VARS.props && DJANGO_VARS.props._email.includes('sefaria.org') ? 'sefariaemail' : null,
+              'site_lang': 'english',
+            });
+
+            <!-- attach analyticsEventTracker -->
+            AnalyticsEventTracker.attach("#s2, #staticContentWrapper", ['click', 'scrollIntoView', 'toggle', 'mouseover', 'input', 'inputStart']);
+          </script>
+      <!-- End Google tag -->
+    
+
+
+    <script src="https://www.sefaria.org/static/bundles/client/client-61afd6375711cd442518.js" ></script>
+
+    
+    
+    <!-- Default metadata for Simple Analytics -->
+    <script>
+      const SESSION_KEY = 'sa_custom_session_id';
+      if (sessionStorage.getItem(SESSION_KEY) === null) {
+        sessionStorage.setItem(SESSION_KEY, crypto.randomUUID());
+      }
+      const SA_KEY = 'sa_id';
+      if (localStorage.getItem(SA_KEY) === null) {
+        localStorage.setItem(SA_KEY, crypto.randomUUID());
+      }
+      sa_metadata = {
+        logged_in: Boolean(DJANGO_VARS.props._uid),
+        interface_lang: DJANGO_VARS.props.interfaceLang === 'hebrew' ? 'he' : 'en',
+        device_type: DJANGO_VARS.props.multiPanel ? 'desktop' : 'mobile',
+        user_type: Sefaria.isReturningVisitor() ? 'old' : 'new',
+        custom_session_id: sessionStorage.getItem(SESSION_KEY),
+        sefaria_id: localStorage.getItem(SA_KEY),
+        ...(DJANGO_VARS.props._email.includes('sefaria.org') && { traffic_type: 'sefaria_email' })
+      };
+    </script>
+
+    
+    <script 
+      defer 
+      data-hostname="sefaria.org" 
+      data-collect-dnt="true" 
+      src="https://scripts.simpleanalyticscdn.com/latest.js">
+    </script>
+    
+</body>
+</html>
