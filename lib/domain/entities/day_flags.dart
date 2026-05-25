@@ -207,6 +207,10 @@ abstract final class DayFlag {
   // (RC/Chanukah/Purim/CHM/fast) applies. The KriahPostProcessor uses
   // [DayFlags.upcomingParshah] to pick the right parashah's text.
   static const kriatHatorahMonThu = 'kriat_hatorah_mon_thu';
+  // kriat_hatorah_rc: standalone Rosh Chodesh reading (Bamidbar 28).
+  // Set on RC days that are NOT also Chanukah — RC Tevet during Chanukah
+  // gets a composite reading handled separately in E.8e.
+  static const kriatHatorahRc = 'kriat_hatorah_rc';
 
   // ── Sefirat HaOmer ────────────────────────────────────────────────────────
   // omer_period: today is one of the 49 counting days (16 Nisan – 5 Sivan).
@@ -252,6 +256,17 @@ abstract final class DayFlag {
   static const nusachAshkenaz = 'nusach_ashkenaz';
   static const nusachSfard = 'nusach_sfard';
   static const nusachEdotMizrach = 'nusach_edot_mizrach';
+
+  // ── Pesach day-of-chag boolean flags ─────────────────────────────────────
+  // One flag per day of Pesach (1..7 EY = 15..21 Nisan). Day 8 (chu"l) is
+  // out of scope. Used to gate per-day CHM Pesach Torah readings.
+  static const pesachDay1 = 'pesach_day_1';
+  static const pesachDay2 = 'pesach_day_2';
+  static const pesachDay3 = 'pesach_day_3';
+  static const pesachDay4 = 'pesach_day_4';
+  static const pesachDay5 = 'pesach_day_5';
+  static const pesachDay6 = 'pesach_day_6';
+  static const pesachDay7 = 'pesach_day_7';
 
   // ── Sukkot day-of-chag boolean flags ─────────────────────────────────────
   // One flag per day of Sukkot (1..7 = 15..21 Tishrei). Exactly one fires
