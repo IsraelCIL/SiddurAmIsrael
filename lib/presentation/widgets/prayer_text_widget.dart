@@ -76,6 +76,12 @@ const _segmentLabels = <String, String>{
   'kriah_chanukah_day_8': 'קריאת התורה — זאת חנוכה',
   'kriah_purim': 'קריאת התורה — פורים',
   'kriah_rc_tevet': 'קריאת התורה — ראש חודש טבת (משולבת)',
+  'kriah_fast_day': 'קריאת התורה — תענית ציבור',
+  'haftarah_taanit': 'הפטרה — תענית ציבור',
+  'haftarah_bracha_lifnei': 'ברכה לפני ההפטרה',
+  'haftarah_bracha_acharei_1': 'ברכה אחרי ההפטרה',
+  'haftarah_bracha_acharei_2': 'ברכה אחרי ההפטרה',
+  'haftarah_bracha_acharei_3': 'ברכה אחרי ההפטרה',
 };
 
 class PrayerTextWidget extends ConsumerWidget {

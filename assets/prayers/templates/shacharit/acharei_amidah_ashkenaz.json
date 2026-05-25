@@ -480,6 +480,16 @@
       "allowed_nusach": []
     },
     {
+      "segment_id": "kriah_fast_day",
+      "condition_flags": [
+        "fast_day",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
       "sub_template_id": "chatzi_kaddish",
       "condition_flags": [
         "kriat_hatorah",
