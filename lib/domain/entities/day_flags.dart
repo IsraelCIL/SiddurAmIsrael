@@ -257,6 +257,13 @@ abstract final class DayFlag {
   static const nusachSfard = 'nusach_sfard';
   static const nusachEdotMizrach = 'nusach_edot_mizrach';
 
+  // pesach_yt1_thursday: YT1 of Pesach falls on Thursday. In this case
+  // Shabbat falls at pesachDay 3 (= 17 Nisan), so CHM Pesach readings
+  // shift: day_3 reading is consumed on day_4, day_4 reading on day_5;
+  // day_5 ("פסל לך") moves to Shabbat (OOS for us); day_6 reading
+  // unchanged. See KriahPostProcessor / template gates.
+  static const pesachYt1Thursday = 'pesach_yt1_thursday';
+
   // ── Pesach day-of-chag boolean flags ─────────────────────────────────────
   // One flag per day of Pesach (1..7 EY = 15..21 Nisan). Day 8 (chu"l) is
   // out of scope. Used to gate per-day CHM Pesach Torah readings.

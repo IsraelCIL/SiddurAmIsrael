@@ -245,11 +245,37 @@
       "allowed_nusach": []
     },
     {
+      "segment_id": "kriah_chm_pesach_day_3",
+      "condition_flags": [
+        "pesach_day_4",
+        "chol_hamoed_pesach",
+        "with_minyan",
+        "pesach_yt1_thursday"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
       "segment_id": "kriah_chm_pesach_day_4",
       "condition_flags": [
         "pesach_day_4",
         "chol_hamoed_pesach",
         "with_minyan"
+      ],
+      "exclude_flags": [
+        "pesach_yt1_thursday"
+      ],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "kriah_chm_pesach_day_4",
+      "condition_flags": [
+        "pesach_day_5",
+        "chol_hamoed_pesach",
+        "with_minyan",
+        "pesach_yt1_thursday"
       ],
       "exclude_flags": [],
       "optional": false,
@@ -262,7 +288,9 @@
         "chol_hamoed_pesach",
         "with_minyan"
       ],
-      "exclude_flags": [],
+      "exclude_flags": [
+        "pesach_yt1_thursday"
+      ],
       "optional": false,
       "allowed_nusach": []
     },
@@ -342,6 +370,14 @@
       "exclude_flags": [],
       "optional": false,
       "allowed_nusach": []
+    },
+    {
+      "sub_template_id": "chatzi_kaddish",
+      "condition_flags": [
+        "kriat_hatorah",
+        "with_minyan"
+      ],
+      "exclude_flags": []
     },
     {
       "segment_id": "hagbahah",
