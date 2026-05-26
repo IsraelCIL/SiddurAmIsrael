@@ -23,4 +23,7 @@ abstract class ISettingsRepository {
 
   bool getHasSeenSettingsBanner();
   Future<void> setHasSeenSettingsBanner(bool value);
+
+  bool getShowSegmentLabels();
+  Future<void> setShowSegmentLabels(bool value);
 }

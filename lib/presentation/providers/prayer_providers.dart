@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -29,6 +30,24 @@ import '../../domain/services/i_calendar_flag_provider.dart';
 import '../../domain/services/i_prayer_assembler.dart';
 import '../../domain/services/prayer_assembler.dart';
 import '../../domain/services/service_time_resolver.dart';
+
+// ── Dev date/time override (debug builds only) ───────────────────────────────
+
+/// When non-null (debug builds only), overrides the "current time" used by
+/// [hebrewDateProvider], [userContextProvider], and [currentServiceProvider].
+/// Set via the dev panel in the Settings screen.
+final devDateTimeOverrideProvider = StateProvider<DateTime?>(
+  (ref) => null,
+  // Wipe the override on every hot-restart so it never pollutes a new session.
+);
+
+// Convenience: resolves the effective "now" across all providers.
+DateTime _effectiveNow(Ref ref) {
+  if (kDebugMode) {
+    return ref.watch(devDateTimeOverrideProvider) ?? DateTime.now();
+  }
+  return DateTime.now();
+}
 
 // ── Persistence ──────────────────────────────────────────────────────────────
 
@@ -182,10 +201,18 @@ final hasSeenSettingsBannerProvider =
   ),
 );
 
+final showSegmentLabelsProvider =
+    NotifierProvider<_PersistentNotifier<bool>, bool>(
+  () => _PersistentNotifier<bool>(
+    read: (r) => r.getShowSegmentLabels(),
+    write: (r, v) => r.setShowSegmentLabels(v),
+  ),
+);
+
 // ── Derived / computed ───────────────────────────────────────────────────────
 
 final hebrewDateProvider = Provider<HebrewDate>(
-  (ref) => HebrewDate.fromGregorian(DateTime.now()),
+  (ref) => HebrewDate.fromGregorian(_effectiveNow(ref)),
 );
 
 final userContextProvider = Provider<UserContext>((ref) {
@@ -202,7 +229,7 @@ final userContextProvider = Provider<UserContext>((ref) {
     purimDate: purimDate,
     withMinyan: withMinyan,
   );
-  final dayFlags = service.flagsFor(DateTime.now(), baseCtx);
+  final dayFlags = service.flagsFor(_effectiveNow(ref), baseCtx);
   final flags = <String>{
     ...dayFlags.flags,
     if (withMinyan) DayFlag.withMinyan,
@@ -236,7 +263,7 @@ final currentOmerDayProvider = FutureProvider<OmerDay?>((ref) async {
 /// Initial tab in the AppShell reads this once on startup.
 final currentServiceProvider = Provider<PrayerService>((ref) {
   final resolver = ref.watch(serviceTimeResolverProvider);
-  return resolver.currentService(DateTime.now());
+  return resolver.currentService(_effectiveNow(ref));
 });
 
 // ── Prayer content ───────────────────────────────────────────────────────────

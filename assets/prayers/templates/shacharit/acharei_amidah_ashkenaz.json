@@ -174,11 +174,24 @@
       "exclude_flags": []
     },
     {
+      "sub_template_id": "chatzi_kaddish",
+      "condition_flags": [
+        "full_hallel",
+        "kriat_hatorah",
+        "with_minyan"
+      ],
+      "exclude_flags": [
+        "musaf_content"
+      ]
+    },
+    {
       "segment_id": "el_erech_apayim",
       "condition_flags": [
         "kriat_hatorah"
       ],
-      "exclude_flags": [],
+      "exclude_flags": [
+        "skip_tachanun"
+      ],
       "optional": false,
       "allowed_nusach": []
     },
@@ -512,14 +525,18 @@
         "kriat_hatorah",
         "with_minyan"
       ],
-      "exclude_flags": [],
+      "exclude_flags": [
+        "musaf_content"
+      ],
       "optional": false,
       "allowed_nusach": []
     },
     {
-      "segment_id": "yehi_ratzon",
+      "segment_id": "yehi_ratzon_mon_thu",
       "condition_flags": [
-        "kriat_hatorah"
+        "monday_thursday",
+        "kriat_hatorah",
+        "with_minyan"
       ],
       "exclude_flags": [
         "skip_tachanun"
@@ -546,6 +563,17 @@
     {
       "segment_id": "uva_letzion",
       "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "kriat_hatorah_hachnasah",
+      "condition_flags": [
+        "kriat_hatorah",
+        "musaf_content",
+        "with_minyan"
+      ],
       "exclude_flags": [],
       "optional": false,
       "allowed_nusach": []

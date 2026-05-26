@@ -104,6 +104,13 @@
       "allowed_nusach": []
     },
     {
+      "segment_id": "aleinu_al_ken",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
       "sub_template_id": "kaddish_yatom",
       "condition_flags": [
         "with_minyan"

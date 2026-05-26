@@ -39,6 +39,14 @@ class PrayerAssembler implements IPrayerAssembler {
   Future<List<AssembledSegment>> assemble({
     required String templateId,
     required UserContext userContext,
+  }) => _assemble(templateId: templateId, userContext: userContext);
+
+  Future<List<AssembledSegment>> _assemble({
+    required String templateId,
+    required UserContext userContext,
+    // When non-empty, overrides every assembled segment's groupId so that an
+    // entire sub-template expansion can be grouped into a single accordion.
+    String inheritedGroupId = '',
   }) async {
     final template = await _repository.loadTemplate(templateId);
     final contextKeys = _buildContextKeys(userContext);
@@ -47,10 +55,17 @@ class PrayerAssembler implements IPrayerAssembler {
     for (final entry in template.segments) {
       if (!_entryPassesFilters(entry, userContext, contextKeys)) continue;
 
+      // Effective group: parent's inherited id takes precedence (so that a
+      // top-level entry's group_id propagates through nested sub-templates),
+      // then the entry's own group_id.
+      final effectiveGroup =
+          inheritedGroupId.isNotEmpty ? inheritedGroupId : entry.groupId;
+
       if (entry.subTemplateId.isNotEmpty) {
-        final subSegments = await assemble(
+        final subSegments = await _assemble(
           templateId: entry.subTemplateId,
           userContext: userContext,
+          inheritedGroupId: effectiveGroup,
         );
         results.addAll(subSegments);
         continue;
@@ -65,6 +80,7 @@ class PrayerAssembler implements IPrayerAssembler {
         id: segment.id,
         resolvedText: _assembleSections(segment.sections, contextKeys),
         optional: entry.optional || segment.optional,
+        groupId: effectiveGroup,
       ));
     }
 

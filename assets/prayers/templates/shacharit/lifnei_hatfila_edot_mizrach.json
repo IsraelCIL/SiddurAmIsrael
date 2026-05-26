@@ -130,6 +130,13 @@
       "allowed_nusach": []
     },
     {
+      "segment_id": "birkot_hashachar_header",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
       "segment_id": "hanoten_lasechvi",
       "condition_flags": [],
       "exclude_flags": [],
@@ -274,7 +281,56 @@
       "allowed_nusach": []
     },
     {
-      "segment_id": "korbanot",
+      "segment_id": "korbanot_tamid",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "korbanot_ketoret_header",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "korbanot_ketoret",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "korbanot_pitum_header",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "korbanot_pitum",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "korbanot_eizehu_header",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "korbanot_eizehu",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "korbanot_conclusion",
       "condition_flags": [],
       "exclude_flags": [],
       "optional": false,

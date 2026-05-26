@@ -26,6 +26,10 @@ class TemplateEntry with _$TemplateEntry {
     // Empty list means the segment is valid for ALL nusachim.
     // Non-empty: the segment is skipped unless userContext.nusach is listed here.
     @Default([]) @JsonKey(name: 'allowed_nusach') List<String> allowedNusach,
+    // Non-empty: all segments produced by this entry (and any sub-template
+    // expansion) will carry this groupId, causing them to be grouped into a
+    // single collapsible accordion in the presentation layer.
+    @Default('') @JsonKey(name: 'group_id') String groupId,
   }) = _TemplateEntry;
 
   factory TemplateEntry.fromJson(Map<String, dynamic> json) =>

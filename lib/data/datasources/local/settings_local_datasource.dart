@@ -14,6 +14,7 @@ class SettingsLocalDatasource {
   static const _kPurimDate = 'v1.settings.purim_date';
   static const _kFontSize = 'v1.settings.font_size_factor';
   static const _kSeenBanner = 'v1.settings.seen_banner';
+  static const _kShowLabels = 'v1.settings.show_labels';
 
   String? readNusach() => _prefs.getString(_kNusach);
   Future<void> writeNusach(String v) => _prefs.setString(_kNusach, v);
@@ -35,4 +36,7 @@ class SettingsLocalDatasource {
 
   bool? readSeenBanner() => _prefs.getBool(_kSeenBanner);
   Future<void> writeSeenBanner(bool v) => _prefs.setBool(_kSeenBanner, v);
+
+  bool? readShowLabels() => _prefs.getBool(_kShowLabels);
+  Future<void> writeShowLabels(bool v) => _prefs.setBool(_kShowLabels, v);
 }

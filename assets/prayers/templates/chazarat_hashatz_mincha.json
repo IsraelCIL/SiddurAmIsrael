@@ -2,6 +2,7 @@
   "id": "chazarat_hashatz_mincha",
   "name": "חזרת הש״ץ — מנחה",
   "segments": [
+    {"segment_id": "chazarat_hashatz_header",   "condition_flags": [],                "exclude_flags": [],                            "optional": false, "allowed_nusach": []},
     {
       "segment_id": "amidah_avot",
       "condition_flags": [],

@@ -80,7 +80,7 @@ class _AppShellState extends ConsumerState<AppShell> {
             BottomNavigationBarItem(
               icon: Icon(Icons.brightness_4_outlined),
               activeIcon: Icon(Icons.brightness_4),
-              label: 'מעריב',
+              label: 'ערבית',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.settings_outlined),
