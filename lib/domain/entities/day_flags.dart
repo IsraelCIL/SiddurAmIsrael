@@ -176,6 +176,11 @@ abstract final class DayFlag {
   // the current prayer is Mincha.
   static const tishaBavMincha = 'tisha_beav_mincha';
 
+  // ── Musaf RC: ולכפרת פשע ────────────────────────────────────────────────────
+  // Set in a leap year during Cheshvan–Nisan (months 8, 9, 10, 11, 12, 13, 1).
+  // Gates the "ולכפרת פשע" phrase in the Rosh Chodesh Musaf amidah.
+  static const leapKeferatPashay = 'leap_keferat_pashay';
+
   // ── Injected segments ─────────────────────────────────────────────────────
   static const avinoMalkeinu = 'avinu_malkeinu';
   static const yaalehVeyavo = 'yaaleh_veyavo';

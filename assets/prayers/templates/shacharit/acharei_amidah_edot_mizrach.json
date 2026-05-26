@@ -12,6 +12,17 @@
       "allowed_nusach": []
     },
     {
+      "sub_template_id": "chatzi_kaddish",
+      "condition_flags": [
+        "with_minyan"
+      ],
+      "exclude_flags": [
+        "skip_tachanun"
+      ],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
       "segment_id": "selichot_gedalia",
       "condition_flags": [
         "fast_gedalia",
@@ -98,6 +109,15 @@
       "allowed_nusach": []
     },
     {
+      "segment_id": "hallel_rc_psukim",
+      "condition_flags": [
+        "rosh_chodesh"
+      ],
+      "exclude_flags": [],
+      "optional": true,
+      "allowed_nusach": []
+    },
+    {
       "segment_id": "hoshanot_day_2",
       "condition_flags": [
         "sukkot_day_2",
@@ -172,11 +192,24 @@
       "exclude_flags": []
     },
     {
+      "sub_template_id": "chatzi_kaddish",
+      "condition_flags": [
+        "full_hallel",
+        "kriat_hatorah",
+        "with_minyan"
+      ],
+      "exclude_flags": [
+        "musaf_content"
+      ]
+    },
+    {
       "segment_id": "el_erech_apayim",
       "condition_flags": [
         "kriat_hatorah"
       ],
-      "exclude_flags": [],
+      "exclude_flags": [
+        "skip_tachanun"
+      ],
       "optional": false,
       "allowed_nusach": []
     },
@@ -505,17 +538,6 @@
       "exclude_flags": []
     },
     {
-      "segment_id": "yehi_ratzon",
-      "condition_flags": [
-        "kriat_hatorah"
-      ],
-      "exclude_flags": [
-        "skip_tachanun"
-      ],
-      "optional": false,
-      "allowed_nusach": []
-    },
-    {
       "segment_id": "ashrei",
       "condition_flags": [],
       "exclude_flags": [],
@@ -534,6 +556,35 @@
     {
       "segment_id": "uva_letzion",
       "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "beit_yaakov",
+      "condition_flags": [
+        "musaf_content"
+      ],
+      "exclude_flags": [],
+      "optional": true,
+      "allowed_nusach": []
+    },
+    {
+      "sub_template_id": "shir_shel_yom",
+      "condition_flags": [
+        "musaf_content"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "kriat_hatorah_hachnasah",
+      "condition_flags": [
+        "kriat_hatorah",
+        "musaf_content",
+        "with_minyan"
+      ],
       "exclude_flags": [],
       "optional": false,
       "allowed_nusach": []

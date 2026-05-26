@@ -72,4 +72,10 @@ class SettingsRepositoryImpl implements ISettingsRepository {
   @override
   Future<void> setHasSeenSettingsBanner(bool value) =>
       _ds.writeSeenBanner(value);
+
+  @override
+  bool getShowSegmentLabels() => _ds.readShowLabels() ?? true;
+
+  @override
+  Future<void> setShowSegmentLabels(bool value) => _ds.writeShowLabels(value);
 }

@@ -3,6 +3,9 @@
   "name": "ספירת העומר",
   "segments": [
     {
+      "segment_id": "sefirat_haomer_header"
+    },
+    {
       "segment_id": "sefirat_haomer_lshem_yichud"
     },
     {
