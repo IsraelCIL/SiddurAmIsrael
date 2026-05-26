@@ -12,13 +12,29 @@
       ]
     },
     {
+      "segment_id": "lshem_yichud_mincha",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": [
+        "edot_mizrach"
+      ]
+    },
+    {
+      "segment_id": "mah_yedidot",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": [
+        "edot_mizrach"
+      ]
+    },
+    {
       "segment_id": "korbanot_mincha",
       "condition_flags": [],
       "exclude_flags": [],
       "optional": true,
-      "allowed_nusach": [
-        "edot_mizrach"
-      ]
+      "allowed_nusach": []
     },
     {
       "segment_id": "ashrei",
@@ -60,7 +76,8 @@
       ],
       "exclude_flags": [],
       "optional": false,
-      "allowed_nusach": []
+      "allowed_nusach": [],
+      "group_id": "chazarat_hashatz"
     },
     {
       "segment_id": "avinu_malkeinu",
@@ -242,6 +259,13 @@
     },
     {
       "segment_id": "aleinu",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "aleinu_al_ken",
       "condition_flags": [],
       "exclude_flags": [],
       "optional": false,

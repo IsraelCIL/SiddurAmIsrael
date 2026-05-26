@@ -13,24 +13,27 @@
       "allowed_nusach": []
     },
     {
+      "segment_id": "beit_yaakov",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": true,
+      "allowed_nusach": []
+    },
+    {
       "sub_template_id": "shir_shel_yom",
       "condition_flags": [],
-      "exclude_flags": [
-        "hallel_with_musaf"
-      ],
+      "exclude_flags": [],
       "optional": false,
       "allowed_nusach": []
     },
     {
-      "segment_id": "shir_shel_yom_gra",
+      "segment_id": "psalm_030",
       "condition_flags": [
-        "gra_ssy_day"
+        "chanukah"
       ],
       "exclude_flags": [],
       "optional": true,
-      "allowed_nusach": [
-        "sfard"
-      ]
+      "allowed_nusach": []
     },
     {
       "sub_template_id": "kaddish_yatom",
@@ -51,6 +54,27 @@
       "allowed_nusach": []
     },
     {
+      "segment_id": "pitum_haketoreh",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "tana_devei_eliyahu",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "amar_rabbi_elazar",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
       "sub_template_id": "kaddish_derabanan",
       "condition_flags": [
         "with_minyan"
@@ -61,6 +85,13 @@
     },
     {
       "segment_id": "aleinu",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "aleinu_al_ken",
       "condition_flags": [],
       "exclude_flags": [],
       "optional": false,

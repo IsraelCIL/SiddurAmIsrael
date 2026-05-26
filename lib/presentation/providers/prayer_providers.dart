@@ -1,29 +1,71 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../core/calendar/hebrew_date.dart';
-import '../../domain/entities/day_flags.dart';
 import '../../data/datasources/local/gra_ssy_datasource.dart';
 import '../../data/datasources/local/kriah_datasource.dart';
 import '../../data/datasources/local/omer_mapping_datasource.dart';
 import '../../data/datasources/local/prayer_local_datasource.dart';
+import '../../data/datasources/local/settings_local_datasource.dart';
 import '../../data/datasources/local/sukkot_korbanot_datasource.dart';
 import '../../data/repositories/gra_ssy_repository_impl.dart';
 import '../../data/repositories/kriah_repository_impl.dart';
 import '../../data/repositories/omer_mapping_repository_impl.dart';
 import '../../data/repositories/prayer_repository_impl.dart';
+import '../../data/repositories/settings_repository_impl.dart';
 import '../../data/repositories/sukkot_korbanot_repository_impl.dart';
 import '../../domain/entities/assembled_segment.dart';
+import '../../domain/entities/day_flags.dart';
 import '../../domain/entities/omer_day.dart';
 import '../../domain/entities/user_context.dart';
 import '../../domain/repositories/i_gra_ssy_repository.dart';
 import '../../domain/repositories/i_kriah_repository.dart';
 import '../../domain/repositories/i_omer_mapping_repository.dart';
 import '../../domain/repositories/i_prayer_repository.dart';
+import '../../domain/repositories/i_settings_repository.dart';
 import '../../domain/repositories/i_sukkot_korbanot_repository.dart';
 import '../../domain/services/halachic_calendar_service.dart';
 import '../../domain/services/i_calendar_flag_provider.dart';
 import '../../domain/services/i_prayer_assembler.dart';
 import '../../domain/services/prayer_assembler.dart';
+import '../../domain/services/service_time_resolver.dart';
+
+// ── Dev date/time override (debug builds only) ───────────────────────────────
+
+/// When non-null (debug builds only), overrides the "current time" used by
+/// [hebrewDateProvider], [userContextProvider], and [currentServiceProvider].
+/// Set via the dev panel in the Settings screen.
+final devDateTimeOverrideProvider = StateProvider<DateTime?>(
+  (ref) => null,
+  // Wipe the override on every hot-restart so it never pollutes a new session.
+);
+
+// Convenience: resolves the effective "now" across all providers.
+DateTime _effectiveNow(Ref ref) {
+  if (kDebugMode) {
+    return ref.watch(devDateTimeOverrideProvider) ?? DateTime.now();
+  }
+  return DateTime.now();
+}
+
+// ── Persistence ──────────────────────────────────────────────────────────────
+
+/// Overridden in main() with the resolved instance, so widgets get it
+/// synchronously without async hops.
+final sharedPreferencesProvider = Provider<SharedPreferences>(
+  (ref) => throw UnimplementedError(
+    'sharedPreferencesProvider must be overridden in ProviderScope',
+  ),
+);
+
+final settingsLocalDatasourceProvider = Provider<SettingsLocalDatasource>(
+  (ref) => SettingsLocalDatasource(ref.watch(sharedPreferencesProvider)),
+);
+
+final settingsRepositoryProvider = Provider<ISettingsRepository>(
+  (ref) => SettingsRepositoryImpl(ref.watch(settingsLocalDatasourceProvider)),
+);
 
 // ── Infrastructure ───────────────────────────────────────────────────────────
 
@@ -81,24 +123,96 @@ final calendarServiceProvider = Provider<ICalendarFlagProvider>(
   (ref) => HalachicCalendarService(),
 );
 
-// ── User preferences (mutable state) ────────────────────────────────────────
+final serviceTimeResolverProvider = Provider<ServiceTimeResolver>(
+  (ref) => const ServiceTimeResolver(),
+);
 
-final nusachProvider = StateProvider<String>((ref) => 'ashkenaz');
+// ── User preferences (persistent state) ──────────────────────────────────────
 
-final isInIsraelProvider = StateProvider<bool>((ref) => true);
+/// Notifier base that loads the initial value from the settings repository
+/// and persists each change. Avoids the verbose StateNotifier boilerplate for
+/// these simple value holders.
+class _PersistentNotifier<T> extends Notifier<T> {
+  _PersistentNotifier({required this.read, required this.write});
 
-final userGenderProvider = StateProvider<Gender>((ref) => Gender.male);
+  final T Function(ISettingsRepository) read;
+  final Future<void> Function(ISettingsRepository, T) write;
 
-final fontSizeFactorProvider = StateProvider<double>((ref) => 1.0);
+  @override
+  T build() => read(ref.read(settingsRepositoryProvider));
 
-// Default true: most users daven b'tzibur. Toggle off for b'yechidut, which
-// hides Kaddish / Chazarat HaShatz / Kriat HaTorah / Barchu / Yud-Gimel Middot.
-final withMinyanProvider = StateProvider<bool>((ref) => true);
+  void set(T value) {
+    state = value;
+    // Fire-and-forget; SharedPreferences writes are local & fast.
+    write(ref.read(settingsRepositoryProvider), value);
+  }
+}
+
+final nusachProvider = NotifierProvider<_PersistentNotifier<String>, String>(
+  () => _PersistentNotifier<String>(
+    read: (r) => r.getNusach(),
+    write: (r, v) => r.setNusach(v),
+  ),
+);
+
+final isInIsraelProvider = NotifierProvider<_PersistentNotifier<bool>, bool>(
+  () => _PersistentNotifier<bool>(
+    read: (r) => r.getIsInIsrael(),
+    write: (r, v) => r.setIsInIsrael(v),
+  ),
+);
+
+final userGenderProvider =
+    NotifierProvider<_PersistentNotifier<Gender>, Gender>(
+  () => _PersistentNotifier<Gender>(
+    read: (r) => r.getGender(),
+    write: (r, v) => r.setGender(v),
+  ),
+);
+
+final withMinyanProvider = NotifierProvider<_PersistentNotifier<bool>, bool>(
+  () => _PersistentNotifier<bool>(
+    read: (r) => r.getWithMinyan(),
+    write: (r, v) => r.setWithMinyan(v),
+  ),
+);
+
+final purimDateProvider =
+    NotifierProvider<_PersistentNotifier<PurimDate>, PurimDate>(
+  () => _PersistentNotifier<PurimDate>(
+    read: (r) => r.getPurimDate(),
+    write: (r, v) => r.setPurimDate(v),
+  ),
+);
+
+final fontSizeFactorProvider =
+    NotifierProvider<_PersistentNotifier<double>, double>(
+  () => _PersistentNotifier<double>(
+    read: (r) => r.getFontSizeFactor(),
+    write: (r, v) => r.setFontSizeFactor(v),
+  ),
+);
+
+final hasSeenSettingsBannerProvider =
+    NotifierProvider<_PersistentNotifier<bool>, bool>(
+  () => _PersistentNotifier<bool>(
+    read: (r) => r.getHasSeenSettingsBanner(),
+    write: (r, v) => r.setHasSeenSettingsBanner(v),
+  ),
+);
+
+final showSegmentLabelsProvider =
+    NotifierProvider<_PersistentNotifier<bool>, bool>(
+  () => _PersistentNotifier<bool>(
+    read: (r) => r.getShowSegmentLabels(),
+    write: (r, v) => r.setShowSegmentLabels(v),
+  ),
+);
 
 // ── Derived / computed ───────────────────────────────────────────────────────
 
 final hebrewDateProvider = Provider<HebrewDate>(
-  (ref) => HebrewDate.fromGregorian(DateTime.now()),
+  (ref) => HebrewDate.fromGregorian(_effectiveNow(ref)),
 );
 
 final userContextProvider = Provider<UserContext>((ref) {
@@ -106,14 +220,16 @@ final userContextProvider = Provider<UserContext>((ref) {
   final isInIsrael = ref.watch(isInIsraelProvider);
   final gender = ref.watch(userGenderProvider);
   final withMinyan = ref.watch(withMinyanProvider);
+  final purimDate = ref.watch(purimDateProvider);
   final service = ref.watch(calendarServiceProvider);
   final baseCtx = UserContext(
     nusach: nusach,
     isInIsrael: isInIsrael,
     gender: gender,
+    purimDate: purimDate,
     withMinyan: withMinyan,
   );
-  final dayFlags = service.flagsFor(DateTime.now(), baseCtx);
+  final dayFlags = service.flagsFor(_effectiveNow(ref), baseCtx);
   final flags = <String>{
     ...dayFlags.flags,
     if (withMinyan) DayFlag.withMinyan,
@@ -122,6 +238,7 @@ final userContextProvider = Provider<UserContext>((ref) {
     nusach: nusach,
     isInIsrael: isInIsrael,
     gender: gender,
+    purimDate: purimDate,
     withMinyan: withMinyan,
     activeFlags: flags,
     omerDay: dayFlags.omerDay,
@@ -134,8 +251,7 @@ final userContextProvider = Provider<UserContext>((ref) {
 });
 
 /// Resolves the current day's [OmerDay] entry, or null when not in the omer
-/// period. Consumed by widgets that display the per-day sefira / Ana BeKoach
-/// word / Lamenatzeach word / Yismechu letter alongside the count.
+/// period.
 final currentOmerDayProvider = FutureProvider<OmerDay?>((ref) async {
   final ctx = ref.watch(userContextProvider);
   if (ctx.omerDay == null) return null;
@@ -143,29 +259,59 @@ final currentOmerDayProvider = FutureProvider<OmerDay?>((ref) async {
   return repo.loadDay(ctx.omerDay!);
 });
 
+/// Which prayer service is current right now (by halachic zmanim).
+/// Initial tab in the AppShell reads this once on startup.
+final currentServiceProvider = Provider<PrayerService>((ref) {
+  final resolver = ref.watch(serviceTimeResolverProvider);
+  return resolver.currentService(_effectiveNow(ref));
+});
+
 // ── Prayer content ───────────────────────────────────────────────────────────
+
+UserContext _ctxWithExtraFlags(UserContext base, Iterable<String> extra) {
+  final merged = <String>{...base.activeFlags, ...extra}.toList();
+  return UserContext(
+    nusach: base.nusach,
+    isInIsrael: base.isInIsrael,
+    gender: base.gender,
+    purimDate: base.purimDate,
+    withMinyan: base.withMinyan,
+    activeFlags: merged,
+    omerDay: base.omerDay,
+    sukkotDay: base.sukkotDay,
+    pesachDay: base.pesachDay,
+    chanukahDay: base.chanukahDay,
+    chagYt1Weekday: base.chagYt1Weekday,
+    upcomingParshah: base.upcomingParshah,
+  );
+}
+
+final shacharitProvider = FutureProvider<List<AssembledSegment>>((ref) {
+  final assembler = ref.watch(prayerAssemblerProvider);
+  final ctx = ref.watch(userContextProvider);
+  return assembler.assemble(
+    templateId: 'shacharit_${ctx.nusach}',
+    userContext: ctx,
+  );
+});
 
 final minchaProvider = FutureProvider<List<AssembledSegment>>((ref) {
   final assembler = ref.watch(prayerAssemblerProvider);
   final baseCtx = ref.watch(userContextProvider);
   // Inject Mincha-specific flags. tisha_beav is a whole-day flag, but Nachem
   // (and EM's Tisha B'Av chatima) only enter the bracha at Mincha.
-  final minchaFlags = <String>{
-    ...baseCtx.activeFlags,
-    if (baseCtx.activeFlags.contains('tisha_beav')) 'tisha_beav_mincha',
-  }.toList();
-  final ctx = UserContext(
-    nusach: baseCtx.nusach,
-    isInIsrael: baseCtx.isInIsrael,
-    gender: baseCtx.gender,
-    withMinyan: baseCtx.withMinyan,
-    activeFlags: minchaFlags,
-    omerDay: baseCtx.omerDay,
-    sukkotDay: baseCtx.sukkotDay,
-    pesachDay: baseCtx.pesachDay,
-    chanukahDay: baseCtx.chanukahDay,
-    chagYt1Weekday: baseCtx.chagYt1Weekday,
-    upcomingParshah: baseCtx.upcomingParshah,
+  final ctx = _ctxWithExtraFlags(
+    baseCtx,
+    [if (baseCtx.activeFlags.contains('tisha_beav')) 'tisha_beav_mincha'],
   );
   return assembler.assemble(templateId: 'mincha', userContext: ctx);
+});
+
+final maarivProvider = FutureProvider<List<AssembledSegment>>((ref) {
+  final assembler = ref.watch(prayerAssemblerProvider);
+  final ctx = ref.watch(userContextProvider);
+  return assembler.assemble(
+    templateId: 'maariv_${ctx.nusach}',
+    userContext: ctx,
+  );
 });

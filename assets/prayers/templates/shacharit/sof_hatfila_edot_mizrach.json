@@ -8,7 +8,9 @@
         "kriat_hatorah",
         "with_minyan"
       ],
-      "exclude_flags": [],
+      "exclude_flags": [
+        "musaf_content"
+      ],
       "optional": false,
       "allowed_nusach": []
     },
@@ -43,9 +45,18 @@
       "sub_template_id": "shir_shel_yom",
       "condition_flags": [],
       "exclude_flags": [
-        "hallel_with_musaf"
+        "musaf_content"
       ],
       "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "psalm_030",
+      "condition_flags": [
+        "chanukah"
+      ],
+      "exclude_flags": [],
+      "optional": true,
       "allowed_nusach": []
     },
     {
@@ -151,6 +162,29 @@
       "allowed_nusach": []
     },
     {
+      "segment_id": "barchi_nafshi",
+      "condition_flags": [
+        "rosh_chodesh"
+      ],
+      "exclude_flags": [
+        "hallel_with_musaf"
+      ],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "sub_template_id": "kaddish_yatom",
+      "condition_flags": [
+        "rosh_chodesh",
+        "with_minyan"
+      ],
+      "exclude_flags": [
+        "hallel_with_musaf"
+      ],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
       "segment_id": "ein_keloheinu",
       "condition_flags": [],
       "exclude_flags": [],
@@ -158,7 +192,28 @@
       "allowed_nusach": []
     },
     {
+      "segment_id": "atah_hu_shehiktiruv",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
       "segment_id": "pitum_haketoreh",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "tana_devei_eliyahu",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "amar_rabbi_elazar",
       "condition_flags": [],
       "exclude_flags": [],
       "optional": false,
@@ -175,6 +230,13 @@
     },
     {
       "segment_id": "aleinu",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "aleinu_al_ken",
       "condition_flags": [],
       "exclude_flags": [],
       "optional": false,

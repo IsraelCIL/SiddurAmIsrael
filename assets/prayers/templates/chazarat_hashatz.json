@@ -2,6 +2,7 @@
   "id": "chazarat_hashatz",
   "name": "חזרת הש״ץ",
   "segments": [
+    {"segment_id": "chazarat_hashatz_header",   "condition_flags": [],                "exclude_flags": [],                            "optional": false, "allowed_nusach": []},
     {"segment_id": "amidah_avot",             "condition_flags": [],                "exclude_flags": [],                            "optional": false, "allowed_nusach": []},
     {"segment_id": "amidah_gevurot",          "condition_flags": [],                "exclude_flags": [],                            "optional": false, "allowed_nusach": []},
 
@@ -27,8 +28,9 @@
     {"segment_id": "amidah_modim",            "condition_flags": [],                "exclude_flags": [],                            "optional": false, "allowed_nusach": []},
     {"segment_id": "modim_derabanan",           "condition_flags": [],                "exclude_flags": [],                            "optional": false, "allowed_nusach": []},
 
-    {"segment_id": "birkat_kohanim",            "condition_flags": ["kohanim"],       "exclude_flags": ["tefila_mincha"],             "optional": false, "allowed_nusach": []},
-    {"segment_id": "elokeinu_velohei_avoteinu", "condition_flags": [],                "exclude_flags": ["kohanim", "tefila_mincha"],  "optional": false, "allowed_nusach": []},
+    {"segment_id": "birkat_kohanim",            "condition_flags": [],                "exclude_flags": ["tefila_mincha"],             "optional": false, "allowed_nusach": []},
+    {"segment_id": "birkat_kohanim_bracha",     "condition_flags": [],                "exclude_flags": ["tefila_mincha"],             "optional": true,  "allowed_nusach": []},
+    {"segment_id": "elokeinu_velohei_avoteinu", "condition_flags": [],                "exclude_flags": ["tefila_mincha"],             "optional": true,  "allowed_nusach": []},
 
     {"segment_id": "amidah_shalom",           "condition_flags": [],                "exclude_flags": [],                            "optional": false, "allowed_nusach": []},
     {"segment_id": "amidah_conclusion",       "condition_flags": [],                "exclude_flags": [],                            "optional": false, "allowed_nusach": []}

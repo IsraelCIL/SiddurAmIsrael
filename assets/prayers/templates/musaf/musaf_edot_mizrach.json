@@ -3,6 +3,11 @@
   "name": "מוסף",
   "segments": [
     {
+      "segment_id": "musaf_header",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
       "sub_template_id": "amidah_musaf",
       "condition_flags": [],
       "exclude_flags": []
@@ -12,7 +17,8 @@
       "condition_flags": [
         "with_minyan"
       ],
-      "exclude_flags": []
+      "exclude_flags": [],
+      "group_id": "chazarat_hashatz"
     },
     {
       "sub_template_id": "kaddish_titkabal",
@@ -20,6 +26,42 @@
         "with_minyan"
       ],
       "exclude_flags": []
+    },
+    {
+      "segment_id": "barchi_nafshi",
+      "condition_flags": [
+        "rosh_chodesh"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "psalm_107",
+      "condition_flags": [
+        "chol_hamoed_pesach"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "psalm_042",
+      "condition_flags": [
+        "chol_hamoed_sukkot"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "sub_template_id": "kaddish_yatom",
+      "condition_flags": [
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
     }
   ]
 }

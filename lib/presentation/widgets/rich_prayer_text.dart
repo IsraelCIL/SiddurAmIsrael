@@ -48,6 +48,7 @@ class RichPrayerText extends StatelessWidget {
     return Text.rich(
       TextSpan(children: parseBoldSpans(text, baseStyle: style)),
       textDirection: TextDirection.rtl,
+      textAlign: TextAlign.justify,
     );
   }
 }

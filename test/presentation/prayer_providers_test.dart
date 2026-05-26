@@ -1,13 +1,24 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_siddur/domain/entities/user_context.dart';
 import 'package:smart_siddur/presentation/providers/prayer_providers.dart';
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+
+  Future<ProviderContainer> makeContainer({Map<String, Object>? initial}) async {
+    SharedPreferences.setMockInitialValues(initial ?? {});
+    final prefs = await SharedPreferences.getInstance();
+    return ProviderContainer(
+      overrides: [sharedPreferencesProvider.overrideWithValue(prefs)],
+    );
+  }
+
   group('prayer providers — defaults', () {
     late ProviderContainer container;
 
-    setUp(() => container = ProviderContainer());
+    setUp(() async => container = await makeContainer());
     tearDown(() => container.dispose());
 
     test('nusachProvider defaults to ashkenaz', () {
@@ -37,7 +48,7 @@ void main() {
   group('userContextProvider — reactivity', () {
     late ProviderContainer container;
 
-    setUp(() => container = ProviderContainer());
+    setUp(() async => container = await makeContainer());
     tearDown(() => container.dispose());
 
     test('reflects default nusach', () {
@@ -46,19 +57,19 @@ void main() {
     });
 
     test('reflects updated nusach', () {
-      container.read(nusachProvider.notifier).state = 'sfard';
+      container.read(nusachProvider.notifier).set('sfard');
       final ctx = container.read(userContextProvider);
       expect(ctx.nusach, 'sfard');
     });
 
     test('reflects updated isInIsrael', () {
-      container.read(isInIsraelProvider.notifier).state = false;
+      container.read(isInIsraelProvider.notifier).set(false);
       final ctx = container.read(userContextProvider);
       expect(ctx.isInIsrael, isFalse);
     });
 
     test('reflects updated gender', () {
-      container.read(userGenderProvider.notifier).state = Gender.female;
+      container.read(userGenderProvider.notifier).set(Gender.female);
       final ctx = container.read(userContextProvider);
       expect(ctx.gender, Gender.female);
     });
@@ -67,17 +78,39 @@ void main() {
   group('fontSizeFactorProvider — mutation', () {
     late ProviderContainer container;
 
-    setUp(() => container = ProviderContainer());
+    setUp(() async => container = await makeContainer());
     tearDown(() => container.dispose());
 
     test('can be incremented', () {
-      container.read(fontSizeFactorProvider.notifier).state = 1.2;
+      container.read(fontSizeFactorProvider.notifier).set(1.2);
       expect(container.read(fontSizeFactorProvider), closeTo(1.2, 0.001));
     });
 
     test('can be decremented', () {
-      container.read(fontSizeFactorProvider.notifier).state = 0.8;
+      container.read(fontSizeFactorProvider.notifier).set(0.8);
       expect(container.read(fontSizeFactorProvider), closeTo(0.8, 0.001));
+    });
+  });
+
+  group('persistence', () {
+    test('nusach round-trips through SharedPreferences', () async {
+      final c1 = await makeContainer();
+      c1.read(nusachProvider.notifier).set('edot_mizrach');
+      // Allow the fire-and-forget write to complete.
+      await Future<void>.delayed(Duration.zero);
+      c1.dispose();
+
+      // Re-read mock prefs (setMockInitialValues persists for the test session
+      // until reset). Fresh container picks up the persisted value.
+      SharedPreferences.setMockInitialValues({
+        'v1.settings.nusach': 'edot_mizrach',
+      });
+      final prefs = await SharedPreferences.getInstance();
+      final c2 = ProviderContainer(
+        overrides: [sharedPreferencesProvider.overrideWithValue(prefs)],
+      );
+      expect(c2.read(nusachProvider), 'edot_mizrach');
+      c2.dispose();
     });
   });
 }

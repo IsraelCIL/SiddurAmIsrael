@@ -33,6 +33,7 @@ class HalachicCalendarService implements ICalendarFlagProvider {
     _addHallelFlags(cal, flags);
     _addLulavDayFlag(flags);
     _addGenderAndIsrael(context, flags);
+    _addLeapKeferatPashay(cal, flags);
 
     // Sefirat HaOmer day: kosher_dart returns 1..49 during the count
     // (16 Nisan through 5 Sivan), or -1 outside that window.
@@ -538,7 +539,15 @@ class HalachicCalendarService implements ICalendarFlagProvider {
     // 11–14 Tishri (between Yom Kippur and Sukkot)
     if (m == JewishDate.TISHREI && d >= 11 && d <= 14) skipAll = true;
 
-    // Erev Shavuot (5 Sivan) — Mincha only
+    // 1–12 Sivan: no tachanun (preparation for Shavuot through 12 Sivan,
+    // the tashlumin period; Shulchan Aruch O.C. 131:7, Rema).
+    // RC Sivan (1 Sivan), Erev Shavuot (5 Sivan), Shavuot (6 Sivan) and
+    // Isru Chag (7 Sivan) are already caught above — this catches 2–4
+    // and 8–12 Sivan.
+    if (m == JewishDate.SIVAN && d >= 1 && d <= 12) skipAll = true;
+
+    // Erev Shavuot (5 Sivan) — Mincha only (subsumed by the Sivan rule
+    // above, kept for clarity in case the Sivan window is ever narrowed).
     if (f.contains(DayFlag.erevShavuot)) skipMinchaOnly = true;
 
     // EXPLICIT EXCEPTIONS — no skip flag set:
@@ -707,6 +716,21 @@ class HalachicCalendarService implements ICalendarFlagProvider {
         f.contains(DayFlag.cholHamoedPesach) ||
         f.contains(DayFlag.cholHamoedSukkot);
     if (hasMusafContent) f.add(DayFlag.musafContent);
+  }
+
+  // ── 11a. Leap-year ולכפרת פשע (Rosh Chodesh Musaf) ──────────────────────────
+
+  void _addLeapKeferatPashay(JewishCalendar cal, Set<String> f) {
+    if (!cal.isJewishLeapYear()) return;
+    // Months in which ולכפרת פשע is said in a leap year:
+    // Cheshvan (8) through Nisan (1): months 8,9,10,11,12,13 + 1.
+    final m = cal.getJewishMonth();
+    final leapMonths = {
+      JewishDate.CHESHVAN, JewishDate.KISLEV, JewishDate.TEVES,
+      JewishDate.SHEVAT, JewishDate.ADAR, JewishDate.ADAR_II,
+      JewishDate.NISSAN,
+    };
+    if (leapMonths.contains(m)) f.add(DayFlag.leapKeferatPashay);
   }
 
   // ── 11. Gender + Israel flags ─────────────────────────────────────────────
