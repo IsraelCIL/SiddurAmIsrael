@@ -3,7 +3,7 @@
   "name": "מעריב",
   "segments": [
     {
-      "segment_id": "lshem_yichud",
+      "segment_id": "lshem_yichud_maariv",
       "condition_flags": [],
       "exclude_flags": [],
       "optional": true,
@@ -137,6 +137,13 @@
     },
     {
       "segment_id": "aleinu",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "aleinu_al_ken",
       "condition_flags": [],
       "exclude_flags": [],
       "optional": false,

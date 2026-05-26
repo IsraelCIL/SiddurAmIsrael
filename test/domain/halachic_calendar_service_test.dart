@@ -210,11 +210,31 @@ void main() {
         expect(f.skipTachanun, isTrue);
       });
 
-      test('Erev Shavuot (5 Sivan) → skip_tachanun_mincha only, not skip_tachanun', () {
-        // Jun 1, 2025 = 5 Sivan 5785 (Sunday, Erev Shavuot)
+      test('Erev Shavuot (5 Sivan) → skip_tachanun (subsumed by 1–12 Sivan rule)', () {
+        // Jun 1, 2025 = 5 Sivan 5785. Inside the 1–12 Sivan no-tachanun
+        // window per Shulchan Aruch O.C. 131:7 — full skip, not Mincha-only.
         final f = service.flagsFor(DateTime(2025, 6, 1), ctx);
-        expect(f.skipTachanunMincha, isTrue);
+        expect(f.skipTachanun, isTrue);
+      });
+
+      test('2–4 Sivan → skip_tachanun (1–12 Sivan rule)', () {
+        // May 29, 2025 = 2 Sivan 5785.
+        final f = service.flagsFor(DateTime(2025, 5, 29), ctx);
+        expect(f.skipTachanun, isTrue);
+      });
+
+      test('8–12 Sivan (tashlumin days after Shavuot) → skip_tachanun', () {
+        // May 26, 2026 = 9 Sivan 5786. Inside the 8–12 Sivan tashlumin
+        // window (after Shavuot) — no tachanun.
+        final f = service.flagsFor(DateTime(2026, 5, 26), ctx);
+        expect(f.skipTachanun, isTrue);
+      });
+
+      test('13 Sivan → tachanun resumes (outside the 1–12 window)', () {
+        // Jun 9, 2025 = 13 Sivan 5785. Tachanun should NOT be skipped.
+        final f = service.flagsFor(DateTime(2025, 6, 9), ctx);
         expect(f.skipTachanun, isFalse);
+        expect(f.skipTachanunMincha, isFalse);
       });
 
       test('29 Elul → NO skip flags (Mincha HAS tachanun, explicit exception)', () {

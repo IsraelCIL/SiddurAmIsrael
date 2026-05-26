@@ -62,13 +62,14 @@ class OmerPostProcessor {
     final headPart = text.substring(0, headingEnd + 1);
     var bodyPart = text.substring(headingEnd + 1);
 
-    // Step 2 — bold the day's letter inside the "ישמחו" verse FIRST, so
-    // that adding the <b> tags around the Nth word later doesn't shift
-    // the indices used here.
-    bodyPart = _boldYismechuLetter(bodyPart, day.day);
-
-    // Step 3 — bold the Nth word in the body.
+    // Step 2 — bold the Nth word in the body FIRST (on clean text so that
+    // word indices are stable and no nested-tag artefact arises).
     bodyPart = _boldNthWord(bodyPart, day.day);
+
+    // Step 3 — bold the letter in the "ישמחו" verse.  _boldYismechuLetter
+    // uses consonant-only matching that skips the <b>/<b> tags already
+    // inserted in Step 2, so the search and position are still correct.
+    bodyPart = _boldYismechuLetter(bodyPart, day.day);
 
     return headPart + bodyPart;
   }

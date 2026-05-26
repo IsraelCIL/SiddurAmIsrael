@@ -69,6 +69,12 @@ flutter:
   assets:
     - assets/prayers/_manifest.json
     - assets/prayers/templates/
+    - assets/prayers/templates/shacharit/
+    - assets/prayers/templates/musaf/
+    - assets/prayers/templates/maariv/
+
+    # Common (haftarah blessings, shared cross-service segments)
+    - assets/prayers/common/haftarah/
 
     # Shacharit
     - assets/prayers/shacharit/lifnei_hatfila/common/
@@ -92,9 +98,12 @@ flutter:
     - assets/prayers/shacharit/acharei_amidah/nusach/edot_mizrach/hoshanot/
     - assets/prayers/shacharit/sof_hatfila/common/
     - assets/prayers/shacharit/sof_hatfila/common/tehillim_gra/
+    - assets/prayers/shacharit/sof_hatfila/nusach/ashkenaz/
+    - assets/prayers/shacharit/sof_hatfila/nusach/sfard/
     - assets/prayers/shacharit/sof_hatfila/nusach/edot_mizrach/
 
     # Mincha
+    - assets/prayers/mincha/lifnei_mincha/common/
     - assets/prayers/mincha/lifnei_mincha/nusach/edot_mizrach/
     - assets/prayers/mincha/acharei_amidah/nusach/ashkenaz/
     - assets/prayers/mincha/acharei_amidah/nusach/sfard/
@@ -115,6 +124,8 @@ flutter:
     - assets/prayers/maariv/sefirat_haomer/nusach/edot_mizrach/
 
     # Musaf
+    - assets/prayers/musaf/common/
+    - assets/prayers/musaf/amidah/common/
     - assets/prayers/musaf/amidah/nusach/ashkenaz/
     - assets/prayers/musaf/amidah/nusach/sfard/
     - assets/prayers/musaf/amidah/nusach/edot_mizrach/
@@ -125,6 +136,7 @@ flutter:
     - assets/prayers/shared_global/nusach/ashkenaz/
     - assets/prayers/shared_global/nusach/sfard/
     - assets/prayers/shared_global/nusach/edot_mizrach/
+    - assets/prayers/shared_global/amidah/common/
     - assets/prayers/shared_global/amidah/nusach/ashkenaz/
     - assets/prayers/shared_global/amidah/nusach/sfard/
     - assets/prayers/shared_global/amidah/nusach/edot_mizrach/

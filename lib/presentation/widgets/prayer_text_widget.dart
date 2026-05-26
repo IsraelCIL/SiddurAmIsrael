@@ -6,46 +6,242 @@ import '../../domain/entities/omer_day.dart';
 import '../providers/prayer_providers.dart';
 import 'rich_prayer_text.dart';
 
+/// Returns the display label for a segment ID.
+/// Empty string means "no label" (not a section header).
+/// Unknown IDs fall back to the raw ID so they remain visible in dev builds.
+String segmentLabel(String id) => _segmentLabels[id] ?? id;
+
 const _segmentLabels = <String, String>{
+  // ── Lifnei HaTfila — morning prep ─────────────────────────────────────────
+  'modeh_ani': 'מודה אני',
+  'al_netilat_yadayim': 'על נטילת ידים',
+  'asher_yatzar': 'אשר יצר',
+  'elokai_neshama': 'אלקי נשמה',
+  'birchot_hatorah_la_asok': 'ברכות התורה',
+  'vehaarev': '',
+  'natan_torah': '',
+  'pesukim': '',
+  'birchot_hatorah_pesukim': '',
+  'elu_devarim': '',
+  'yehi_ratzon_tzitzit': '',
+  'birkat_tzitzit_gadol': 'ברכת ציצית',
+  'mah_yakar_tallit': '',
+  'birkat_tzitzit_katan': 'ברכת ציצית',
+  'seder_tefillin': 'סדר הנחת תפילין',
+  'parshat_kadesh': 'פרשת קדש לי',
+  'parshat_vehaya_ki_yeviacha': 'פרשת והיה כי יביאך',
+  'ma_tovu': 'מה טובו',
+  'adon_olam': 'אדון עולם',
+  'yigdal': 'יגדל',
+  'vatitpalel_channa': '',
+  'lshem_yichud': 'לשם יחוד',
+  'lshem_yichud_maariv': 'לשם יחוד',
+  'lshem_yichud_mincha': 'לשם יחוד',
+  'mah_yedidot': 'מה יְּדִידוֹת',
+  // ── Birkot HaShachar ──────────────────────────────────────────────────────
+  'birkot_hashachar_header': 'ברכות השחר',
+  'hanoten_lasechvi': '',
+  'shelo_asani_goy': '',
+  'shelo_asani_eved': '',
+  'shelo_asani_ishah': '',
+  'sheasani_kirtzono': '',
+  'pokeach_ivrim': '',
+  'malbish_arumim': '',
+  'matir_asurim': '',
+  'zokef_kefufim': '',
+  'rokea_haaretz': '',
+  'sheasah_li_kol_tzorki': '',
+  'hamechin_mitzedei_gever': '',
+  'ozer_yisrael': '',
+  'oter_yisrael': '',
+  'hanoten_layaef_koach': '',
+  'hamaavir_sheinah': '',
+  'yehi_ratzon_shelo_yavo': '',
+  // ── Akeidah + intro to Korbanot ───────────────────────────────────────────
+  'akeidah': 'פרשת העקידה',
+  'akeidah_yehi_ratzon': '',
+  'leolam_yehe_adam': 'לעולם יהא אדם',
+  // ── Korbanot (whole segment + future sub-segments) ────────────────────────
+  'korbanot': 'קרבנות',
+  'korbanot_tamid': 'פרשת התמיד',
+  'korbanot_ketoret_header': 'פרשת הקטורת',
+  'korbanot_ketoret': '',
+  'korbanot_pitum_header': 'פטום הקטורת',
+  'korbanot_pitum': '',
+  'korbanot_eizehu_header': 'פרק איזהו מקומן',
+  'korbanot_eizehu': '',
+  'korbanot_conclusion': 'ברייתא דרבי ישמעאל',
+  // ── Pesukei DeZimra ───────────────────────────────────────────────────────
+  'hashem_melech': 'ה׳ מלך',
+  'psalm_030': 'מזמור שיר חנוכת הבית',
+  'baruch_sheamar': 'ברוך שאמר',
+  'hodu': 'פסוקי דזמרה',
+  'mizmor_letodah': 'מזמור לתודה',
+  'yehi_kevod': 'יהי כבוד',
   'ashrei': 'אשרי',
+  'psalm_067': 'תהלים סז',
+  'psalm_091': 'תהלים צא',
+  'psalm_121': 'תהלים קכא',
+  'psalm_124': 'תהלים קכד',
+  'psalm_134': 'תהלים קלד',
+  'psalm_146': 'תהלים קמו',
+  'psalm_147': 'תהלים קמז',
+  'psalm_148': 'תהלים קמח',
+  'psalm_149': 'תהלים קמט',
+  'psalm_150': 'תהלים קנ',
+  'vayevarech_david': 'ויברך דוד',
+  'az_yashir': 'שירת הים',
+  'yishtabach': 'ישתבח',
+  // ── Birkot Kriat Shema ────────────────────────────────────────────────────
+  'yotzer_or': 'יוצר אור',
+  'ahavah_rabbah': 'אהבה רבה',
+  'emet_veyatziv': 'אמת ויציב',
+  // ── Other morning segments ────────────────────────────────────────────────
+  'beit_yaakov': 'בית יעקב',
   'petihat_eliyahu': 'פתיחת אליהו',
-  'kriat_hatorah_mincha': 'קריאת התורה במנחה',
-  'amidah': 'עמידה',
-  'amidah_intro': 'פתיחת העמידה',
-  'amidah_avot': 'ברכת אבות',
-  'amidah_gevurot': 'ברכת גבורות',
+  'korbanot_mincha': 'קרבנות',
+  // ── Shacharit structure ────────────────────────────────────────────────────
+  'barchu': 'ברכו',
+  'shema': 'קריאת שמע',
+  'ahavat_olam': 'אהבת עולם',
+  'lamenatzeach': '',
+  'ladavid': '',
+  // ── Amidah ─────────────────────────────────────────────────────────────────
+  'amidah': 'תפילת עמידה',
+  'amidah_intro': 'תפילת עמידה',
+  'amidah_avot': 'אבות',
+  'amidah_gevurot': 'גבורות',
   'amidah_kedushah_hashem': 'קדושת השם',
-  'amidah_daat': 'ברכת הדעת',
-  'amidah_teshuva': 'ברכת התשובה',
-  'amidah_selicha': 'ברכת הסליחה',
-  'amidah_geula': 'ברכת הגאולה',
-  'amidah_refuah': 'ברכת הרפואה',
+  'amidah_daat': 'דעת',
+  'amidah_teshuva': 'תשובה',
+  'amidah_selicha': 'סליחה',
+  'amidah_geula': 'גאולה',
+  'amidah_refuah': 'רפואה',
   'amidah_shanim': 'ברכת השנים',
-  'amidah_galuyot': 'קיבוץ גלויות',
-  'amidah_mishpat': 'ברכת המשפט',
+  'amidah_galuyot': 'קבוץ גלויות',
+  'amidah_mishpat': 'משפט',
   'amidah_minim': 'ברכת המינים',
-  'amidah_tzaddikim': 'ברכת הצדיקים',
-  'amidah_yerushalayim': 'בניין ירושלים',
-  'amidah_david': 'מלכות בית דוד',
-  'amidah_shema_koleinu': 'שמע קולנו',
-  'amidah_retzeh': 'ברכת רצה',
-  'amidah_modim': 'ברכת מודים',
-  'amidah_shalom': 'ברכת שלום',
-  'amidah_conclusion': 'סיום העמידה',
-  'tachanun': 'תחנון',
+  'amidah_tzaddikim': 'על הצדיקים',
+  'amidah_yerushalayim': 'בנין ירושלים',
+  'amidah_david': 'משיח בן דוד',
+  'amidah_shema_koleinu': 'שומע תפילה',
+  'amidah_retzeh': 'עבודה',
+  'amidah_modim': 'הודאה',
+  'amidah_shalom': 'שים שלום',
+  'amidah_conclusion': 'אלקי נצור',
+  // ── Chazarat HaShatz ───────────────────────────────────────────────────────
+  'chazarat_hashatz_header': 'חזרת הש״ץ',
+  'kedushah': 'קדושה',
+  'kedushah_ledorvador': 'לדור ודור',
+  'modim_derabanan': 'מודים דרבנן',
+  'birkat_kohanim': '',
+  'birkat_kohanim_bracha': 'ברכת כהנים',
+  'elokeinu_velohei_avoteinu': 'אלהינו ואלהי אבותינו',
+  'anenu_shliach_tzibur': 'עננו',
+  // ── Post-amidah ────────────────────────────────────────────────────────────
+  'uva_letzion': 'ובא לציון',
+  'avinu_malkeinu': 'אבינו מלכנו',
   'aleinu': 'עלינו לשבח',
-  'kaddish_yatom': 'קדיש יתום',
+  'aleinu_al_ken': '',
+  // ── Kaddish ────────────────────────────────────────────────────────────────
+  'chatzi_kaddish_header': 'חצי קדיש',
+  'kaddish_derabanan_header': 'קדיש דרבנן',
+  'kaddish_yatom_header': 'קדיש יתום',
+  'kaddish_titkabal_header': 'קדיש תתקבל',
+  'kaddish_body': '',
+  'kaddish_closing': '',
+  'kaddish_derabanan_paragraph': '',
+  'kaddish_titkabal_paragraph': '',
+  // ── Sof hatfila ────────────────────────────────────────────────────────────
+  'barchi_nafshi': 'ברכי נפשי',
+  'ein_keloheinu': 'אין כאלהינו',
+  'atah_hu_shehiktiruv': '',
+  'pitum_haketoreh': 'פטום הקטורת',
+  'tana_devei_eliyahu': '',
+  'amar_rabbi_elazar': '',
+  'shir_shel_yom_sunday': 'שיר של יום',
+  'shir_shel_yom_monday': 'שיר של יום',
+  'shir_shel_yom_tuesday': 'שיר של יום',
+  'shir_shel_yom_wednesday': 'שיר של יום',
+  'shir_shel_yom_thursday': 'שיר של יום',
+  'shir_shel_yom_friday': 'שיר של יום',
+  'shir_shel_yom_shabbat': 'שיר של יום',
+  'shir_shel_yom_gra': 'שיר של יום',
+  // ── Maariv ─────────────────────────────────────────────────────────────────
+  'maariv_aravim': 'מעריב ערבים',
+  'maariv_ahavat_olam': 'אהבת עולם',
+  'hashkivenu': 'השכיבנו',
+  'emet_veemunh': 'אמת ואמונה',
+  'yiru_einenu': 'יראו עינינו',
+  'vehu_rachum_arvit': 'והוא רחום',
+  'hashem_tzvaot_maariv': 'ה׳ צבאות עמנו',
+  // ── Sefirat HaOmer ─────────────────────────────────────────────────────────
+  'sefirat_haomer_header': 'ספירת העומר',
   'sefirat_haomer_lshem_yichud': 'לשם יחוד',
   'sefirat_haomer_lshem_yichud_long': 'לשם יחוד (נוסח ארוך)',
-  'sefirat_haomer_birshut': 'ברשות מורי ורבותי',
-  'sefirat_haomer_bracha': 'ברכת ספירת העומר',
-  'sefirat_haomer_day_count': 'ספירת היום',
-  'sefirat_haomer_harachaman': 'הרחמן',
-  'sefirat_haomer_lamenatzeach': 'למנצח בנגינות',
-  'sefirat_haomer_ana_bekoach': 'אנא בכח',
-  'sefirat_haomer_ribono_shel_olam': 'ריבונו של עולם',
-  // Optional / accordion segments
-  'shir_shel_yom_gra': 'שיר של יום — מנהג הגר״א',
+  'sefirat_haomer_birshut': '',
+  'sefirat_haomer_bracha': '',
+  'sefirat_haomer_day_count': '',
+  'sefirat_haomer_harachaman': '',
+  'sefirat_haomer_lamenatzeach': '',
+  'sefirat_haomer_ana_bekoach': '',
+  'sefirat_haomer_ribono_shel_olam': '',
+  // ── EM mincha additions ────────────────────────────────────────────────────
+  'mincha_em_lamenatzeach': 'למנצח',
+  'mincha_em_hashem_malach': 'ה׳ מלך (ערב שבת)',
+  'mincha_em_pesach': 'שיר — חול המועד פסח',
+  'mincha_em_sukkot': 'שיר — חול המועד סוכות',
+  'hallel_rc_psukim': 'ואברהם זקן',
+  'psalm_042': 'למנצח משכיל לבני קרח',
+  'psalm_107': 'הודו לה\'',
+  // ── Kriat HaTorah ──────────────────────────────────────────────────────────
+  'el_erech_apayim': 'אל ארך אפיים',
+  'kriat_hatorah_shacharit': 'ברכות התורה',
+  'kriat_hatorah_mincha': '',
+  'kriat_hatorah_hotzaah': 'הוצאת ספר תורה',
+  'kriat_hatorah_hachnasah': 'הכנסת ספר תורה',
+  'hagbahah': 'הגבהה',
+  'kriat_hatorah_reading_text': '',
+  'kriah_rc': '',
+  'kriah_chm_pesach_day_2': '',
+  'kriah_chm_pesach_day_3': '',
+  'kriah_chm_pesach_day_4': '',
+  'kriah_chm_pesach_day_5': '',
+  'kriah_chm_pesach_day_6': '',
+  'kriah_chm_sukkot_day_2': '',
+  'kriah_chm_sukkot_day_3': '',
+  'kriah_chm_sukkot_day_4': '',
+  'kriah_chm_sukkot_day_5': '',
+  'kriah_chm_sukkot_day_6': '',
+  'kriah_chm_sukkot_day_7': '',
+  'kriah_chanukah_day_1': '',
+  'kriah_chanukah_day_2': '',
+  'kriah_chanukah_day_3': '',
+  'kriah_chanukah_day_4': '',
+  'kriah_chanukah_day_5': '',
+  'kriah_chanukah_day_6': '',
+  'kriah_chanukah_day_7': '',
+  'kriah_chanukah_day_8': '',
+  'kriah_purim': '',
+  'kriah_rc_tevet': '',
+  'kriah_fast_day': '',
+  'haftarah_taanit': '',
+  'haftarah_bracha_lifnei': 'ברכת ההפטרה',
+  'haftarah_bracha_acharei_1': 'ברכות ההפטרה',
+  'haftarah_bracha_acharei_2': '',
+  'haftarah_bracha_acharei_3': '',
+  'yehi_ratzon_mon_thu': '',
+  // ── Musaf ──────────────────────────────────────────────────────────────────
+  'musaf_header': 'מוסף',
+  'amidah_musaf_intermediate_rc': 'ראש חודש',
+  'amidah_musaf_intermediate_chm_pesach': 'חול המועד פסח',
+  'amidah_musaf_intermediate_chm_sukkot': 'חול המועד סוכות',
+  // ── Tachanun ───────────────────────────────────────────────────────────────
+  'tachanun': 'תחנון',
+  'tachanun_nfilat_apayim': 'נפילת אפים',
+  'shomer_yisrael': 'שומר ישראל',
+  'vidui_yud_gimel_midot': 'וידוי וי״ג מידות',
+  // ── Hoshanot ───────────────────────────────────────────────────────────────
   'hoshanot_ashk_link': 'הושענות — לחץ להצגת הסבר',
   'hoshanot_day_2': 'הושענות',
   'hoshanot_day_3': 'הושענות',
@@ -53,35 +249,22 @@ const _segmentLabels = <String, String>{
   'hoshanot_day_5': 'הושענות',
   'hoshanot_day_6': 'הושענות',
   'hoshanot_hoshana_rabba': 'הושענות — הושענא רבא',
-  'kriat_hatorah_reading_text': 'קריאת התורה',
-  'kriah_rc': 'קריאת התורה — ראש חודש',
-  'kriah_chm_pesach_day_2': 'קריאת התורה — חוה״מ פסח, יום א׳',
-  'kriah_chm_pesach_day_3': 'קריאת התורה — חוה״מ פסח, יום ב׳',
-  'kriah_chm_pesach_day_4': 'קריאת התורה — חוה״מ פסח, יום ג׳',
-  'kriah_chm_pesach_day_5': 'קריאת התורה — חוה״מ פסח, יום ד׳',
-  'kriah_chm_pesach_day_6': 'קריאת התורה — חוה״מ פסח, יום ה׳',
-  'kriah_chm_sukkot_day_2': 'קריאת התורה — חוה״מ סוכות, יום א׳',
-  'kriah_chm_sukkot_day_3': 'קריאת התורה — חוה״מ סוכות, יום ב׳',
-  'kriah_chm_sukkot_day_4': 'קריאת התורה — חוה״מ סוכות, יום ג׳',
-  'kriah_chm_sukkot_day_5': 'קריאת התורה — חוה״מ סוכות, יום ד׳',
-  'kriah_chm_sukkot_day_6': 'קריאת התורה — חוה״מ סוכות, יום ה׳',
-  'kriah_chm_sukkot_day_7': 'קריאת התורה — הושענא רבא',
-  'kriah_chanukah_day_1': 'קריאת התורה — חנוכה, יום א׳',
-  'kriah_chanukah_day_2': 'קריאת התורה — חנוכה, יום ב׳',
-  'kriah_chanukah_day_3': 'קריאת התורה — חנוכה, יום ג׳',
-  'kriah_chanukah_day_4': 'קריאת התורה — חנוכה, יום ד׳',
-  'kriah_chanukah_day_5': 'קריאת התורה — חנוכה, יום ה׳',
-  'kriah_chanukah_day_6': 'קריאת התורה — חנוכה, יום ו׳',
-  'kriah_chanukah_day_7': 'קריאת התורה — חנוכה, יום ז׳',
-  'kriah_chanukah_day_8': 'קריאת התורה — זאת חנוכה',
-  'kriah_purim': 'קריאת התורה — פורים',
-  'kriah_rc_tevet': 'קריאת התורה — ראש חודש טבת (משולבת)',
-  'kriah_fast_day': 'קריאת התורה — תענית ציבור',
-  'haftarah_taanit': 'הפטרה — תענית ציבור',
-  'haftarah_bracha_lifnei': 'ברכה לפני ההפטרה',
-  'haftarah_bracha_acharei_1': 'ברכה אחרי ההפטרה',
-  'haftarah_bracha_acharei_2': 'ברכה אחרי ההפטרה',
-  'haftarah_bracha_acharei_3': 'ברכה אחרי ההפטרה',
+};
+
+// Optional segments that should start EXPANDED (open accordion by default).
+const _initiallyExpanded = <String>{'birkat_kohanim_bracha'};
+
+// Segments that are part of a tight block (e.g. kaddish components): no
+// trailing spacer so consecutive segments flow without visual gaps.
+const _noTrailingSpace = <String>{
+  'chatzi_kaddish_header',
+  'kaddish_derabanan_header',
+  'kaddish_yatom_header',
+  'kaddish_titkabal_header',
+  'kaddish_body',
+  'kaddish_closing',
+  'kaddish_derabanan_paragraph',
+  'kaddish_titkabal_paragraph',
 };
 
 class PrayerTextWidget extends ConsumerWidget {
@@ -92,7 +275,8 @@ class PrayerTextWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final factor = ref.watch(fontSizeFactorProvider);
-    final label = _segmentLabels[segment.id] ?? segment.id;
+    final showLabels = ref.watch(showSegmentLabelsProvider);
+    final label = segmentLabel(segment.id);
     final bodyStyle = TextStyle(
       fontSize: 22 * factor,
       height: 1.9,
@@ -105,31 +289,34 @@ class PrayerTextWidget extends ConsumerWidget {
         factor: factor,
         bodyStyle: bodyStyle,
         segment: segment,
+        initiallyExpanded: _initiallyExpanded.contains(segment.id),
       );
     }
 
+    final tight = _noTrailingSpace.contains(segment.id);
+
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+      padding: EdgeInsets.fromLTRB(20, tight ? 0 : 12, 20, 0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(
-            label,
-            textDirection: TextDirection.rtl,
-            style: TextStyle(
-              fontSize: 14 * factor,
-              fontWeight: FontWeight.w700,
-              color: const Color(0xFF8B1A1A),
-              letterSpacing: 0.5,
+          if (showLabels && label.isNotEmpty) ...[
+            Text(
+              label,
+              textDirection: TextDirection.rtl,
+              style: TextStyle(
+                fontSize: 14 * factor,
+                fontWeight: FontWeight.w700,
+                color: const Color(0xFF8B1A1A),
+                letterSpacing: 0.5,
+              ),
             ),
-          ),
-          const SizedBox(height: 8),
-          RichPrayerText(text: segment.resolvedText, style: bodyStyle),
-          // Omer day-count gets a small summary line showing today's kabbalistic
-          // sefira plus the highlighted Ana / Lamenatzeach / Yismechu cues —
-          // visually reinforces the bold markings in the following segments.
+            const SizedBox(height: 8),
+          ],
+          if (segment.resolvedText.isNotEmpty)
+            RichPrayerText(text: segment.resolvedText, style: bodyStyle),
           if (segment.id == 'sefirat_haomer_day_count') _OmerSummary(factor: factor),
-          const Divider(height: 32, color: Color(0xFFE0D5C5)),
+          SizedBox(height: tight ? 2 : 16),
         ],
       ),
     );
@@ -147,19 +334,21 @@ class _OptionalSegmentTile extends StatefulWidget {
     required this.factor,
     required this.bodyStyle,
     required this.segment,
+    this.initiallyExpanded = false,
   });
 
   final String label;
   final double factor;
   final TextStyle bodyStyle;
   final AssembledSegment segment;
+  final bool initiallyExpanded;
 
   @override
   State<_OptionalSegmentTile> createState() => _OptionalSegmentTileState();
 }
 
 class _OptionalSegmentTileState extends State<_OptionalSegmentTile> {
-  bool _expanded = false;
+  late bool _expanded = widget.initiallyExpanded;
 
   @override
   Widget build(BuildContext context) {
@@ -183,7 +372,7 @@ class _OptionalSegmentTileState extends State<_OptionalSegmentTile> {
         child: ExpansionTile(
           tilePadding: EdgeInsets.zero,
           childrenPadding: const EdgeInsets.only(top: 4, bottom: 12),
-          initiallyExpanded: false,
+          initiallyExpanded: widget.initiallyExpanded,
           shape: const Border(),
           collapsedShape: const Border(),
           onExpansionChanged: (v) => setState(() => _expanded = v),
@@ -275,7 +464,7 @@ class _OmerSummary extends ConsumerWidget {
           child: Wrap(
             spacing: 24,
             runSpacing: 8,
-            alignment: WrapAlignment.end,
+            alignment: WrapAlignment.start,
             children: [
               pair('ספירה', day.sefira),
               pair('אנא בכח', day.anaWord),

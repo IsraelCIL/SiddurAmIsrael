@@ -8,5 +8,9 @@ class AssembledSegment with _$AssembledSegment {
     required String id,
     required String resolvedText,
     @Default(false) bool optional,
+    // Non-empty when this segment belongs to a collapsible group (e.g.
+    // 'chazarat_hashatz'). Consecutive segments with the same groupId are
+    // rendered as a single accordion by the presentation layer.
+    @Default('') String groupId,
   }) = _AssembledSegment;
 }

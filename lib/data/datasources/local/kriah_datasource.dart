@@ -65,8 +65,12 @@ class KriahDatasource {
     final chanText =
         await _loadCommonSegmentText('kriah_chanukah_day_$chanukahDay');
     if (rcText == null || chanText == null) return null;
-    final reviiMarkerRe = RegExp(r'\s*<b>—\s*רביעי[^<]*—</b>\s*');
+    final reviiMarkerRe = RegExp(r'\s*<b>—?\s*רביעי[^<]*—?</b>\s*');
     final rcMerged = rcText.replaceFirst(reviiMarkerRe, ' ').trimRight();
-    return '$rcMerged <b>— רביעי —</b> $chanText';
+    // Strip internal oleh division markers from the Chanukah portion —
+    // it serves as a single 4th oleh with no internal divisions.
+    final internalMarkerRe = RegExp(r'\s*<b>(כהן|לוי|ישראל|שני|שלישי|רביעי)</b>\s*');
+    final chanClean = chanText.replaceAll(internalMarkerRe, ' ').trim();
+    return '$rcMerged <b>רביעי</b> $chanClean';
   }
 }
