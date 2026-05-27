@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../domain/entities/assembled_segment.dart';
-import '../../widgets/font_size_fab.dart';
-import '../../widgets/halachic_header.dart';
-import '../../widgets/prayer_text_widget.dart';
-import '../../widgets/settings_reminder_banner.dart';
+import 'package:smart_siddur/domain/entities/assembled_segment.dart';
+import 'package:smart_siddur/presentation/theme/app_colors.dart';
+import 'package:smart_siddur/presentation/widgets/font_size_fab.dart';
+import 'package:smart_siddur/presentation/widgets/halachic_header.dart';
+import 'package:smart_siddur/presentation/widgets/prayer_text_widget.dart';
+import 'package:smart_siddur/presentation/widgets/settings_reminder_banner.dart';
 
 // ── Group accordion config ────────────────────────────────────────────────────
 
@@ -146,7 +147,7 @@ class _PrayerScreenState extends ConsumerState<PrayerScreen> {
   Widget build(BuildContext context) {
     final prayerAsync = ref.watch(widget.contentProvider);
     return Scaffold(
-      backgroundColor: const Color(0xFFFDF8F0),
+      backgroundColor: AppColors.background,
       body: Stack(
         children: [
           Column(
@@ -159,7 +160,7 @@ class _PrayerScreenState extends ConsumerState<PrayerScreen> {
                     SliverAppBar(
                       expandedHeight: 140,
                       pinned: true,
-                      backgroundColor: const Color(0xFF8B1A1A),
+                      backgroundColor: AppColors.primary,
                       foregroundColor: Colors.white,
                       title: Text(
                         widget.title,
@@ -179,7 +180,7 @@ class _PrayerScreenState extends ConsumerState<PrayerScreen> {
                       loading: () => const SliverFillRemaining(
                         child: Center(
                           child: CircularProgressIndicator(
-                              color: Color(0xFF8B1A1A)),
+                              color: AppColors.primary),
                         ),
                       ),
                       error: (err, _) => SliverFillRemaining(
@@ -349,7 +350,7 @@ class _GroupItem extends _ListItem {
     required Set<String> satisfiedGroups,
     required this.itemIndex,
   }) : _key = GlobalKey(),
-       _controller = ExpansionTileController() {
+       _controller = ExpansibleController() {
     // Scan children for nav anchors; update the shared occurrence counter.
     final childKeys = <int, GlobalKey>{};
     final entries = <_NavEntry>[];
@@ -381,7 +382,7 @@ class _GroupItem extends _ListItem {
   final List<AssembledSegment> segments;
   final int itemIndex;
   final GlobalKey _key;
-  final ExpansionTileController _controller;
+  final ExpansibleController _controller;
   late final Map<int, GlobalKey> _childKeys;
   late final List<_NavEntry> _childNavEntries;
   // Set after the full list is built.
@@ -412,7 +413,7 @@ class _GroupAccordion extends StatefulWidget {
 
   final String title;
   final List<AssembledSegment> segments;
-  final ExpansionTileController controller;
+  final ExpansibleController controller;
   final Map<int, GlobalKey> childKeys;
 
   @override
@@ -428,9 +429,9 @@ class _GroupAccordionState extends State<_GroupAccordion> {
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
       child: DecoratedBox(
         decoration: BoxDecoration(
-          color: const Color(0xFFFAF5EC),
+          color: AppColors.surface,
           borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: const Color(0xFFD4C5A9)),
+          border: Border.all(color: AppColors.border),
         ),
         child: Theme(
           data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
@@ -449,14 +450,14 @@ class _GroupAccordionState extends State<_GroupAccordion> {
                 children: [
                   Icon(
                     _expanded ? Icons.expand_less : Icons.expand_more,
-                    color: const Color(0xFF8B1A1A),
+                    color: AppColors.primary,
                     size: 20,
                   ),
                   const SizedBox(width: 8),
                   Text(
                     widget.title,
                     style: const TextStyle(
-                      color: Color(0xFF8B1A1A),
+                      color: AppColors.primary,
                       fontSize: 14,
                       fontWeight: FontWeight.w700,
                       letterSpacing: 0.4,
@@ -467,7 +468,7 @@ class _GroupAccordionState extends State<_GroupAccordion> {
                     Text(
                       '[לחץ להצגה]',
                       style: TextStyle(
-                        color: const Color(0xFF8B1A1A).withValues(alpha: 0.55),
+                        color: AppColors.primary.withValues(alpha: 0.55),
                         fontSize: 12,
                       ),
                     ),
@@ -503,9 +504,9 @@ class _NavFab extends StatelessWidget {
         width: 44,
         height: 44,
         decoration: BoxDecoration(
-          color: const Color(0xFFFDF8F0).withValues(alpha: 0.92),
+          color: AppColors.background.withValues(alpha: 0.92),
           borderRadius: BorderRadius.circular(22),
-          border: Border.all(color: const Color(0xFFD4C5A9)),
+          border: Border.all(color: AppColors.border),
           boxShadow: [
             BoxShadow(
               color: Colors.black.withValues(alpha: 0.18),
@@ -516,7 +517,7 @@ class _NavFab extends StatelessWidget {
         ),
         child: const Icon(
           Icons.format_list_bulleted,
-          color: Color(0xFF8B1A1A),
+          color: AppColors.primary,
           size: 22,
         ),
       ),
@@ -568,7 +569,7 @@ class _NavSheet extends StatelessWidget {
     }
 
     final ctx = entry.key.currentContext;
-    if (ctx != null) {
+    if (ctx != null && ctx.mounted) {
       await Scrollable.ensureVisible(
         ctx,
         duration: const Duration(milliseconds: 400),
@@ -590,7 +591,7 @@ class _NavSheet extends StatelessWidget {
     );
     await Future.delayed(const Duration(milliseconds: 150));
     final ctx2 = entry.key.currentContext;
-    if (ctx2 != null) {
+    if (ctx2 != null && ctx2.mounted) {
       Scrollable.ensureVisible(
         ctx2,
         duration: const Duration(milliseconds: 300),
@@ -609,7 +610,7 @@ class _NavSheet extends StatelessWidget {
       expand: false,
       builder: (_, sheetScroll) => Container(
         decoration: const BoxDecoration(
-          color: Color(0xFFFDF8F0),
+          color: AppColors.background,
           borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
         ),
         child: Column(
@@ -619,7 +620,7 @@ class _NavSheet extends StatelessWidget {
               width: 36,
               height: 4,
               decoration: BoxDecoration(
-                color: const Color(0xFFD4C5A9),
+                color: AppColors.border,
                 borderRadius: BorderRadius.circular(2),
               ),
             ),
@@ -628,12 +629,12 @@ class _NavSheet extends StatelessWidget {
               child: Row(
                 children: [
                   const Icon(Icons.format_list_bulleted,
-                      color: Color(0xFF8B1A1A), size: 18),
+                      color: AppColors.primary, size: 18),
                   const SizedBox(width: 8),
                   const Text(
                     'קפיצה לקטע',
                     style: TextStyle(
-                      color: Color(0xFF8B1A1A),
+                      color: AppColors.primary,
                       fontWeight: FontWeight.w700,
                       fontSize: 15,
                     ),
@@ -648,13 +649,13 @@ class _NavSheet extends StatelessWidget {
                 ],
               ),
             ),
-            const Divider(height: 1, color: Color(0xFFE0D5C5)),
+            const Divider(height: 1, color: AppColors.borderLight),
             Expanded(
               child: ListView.separated(
                 controller: sheetScroll,
                 itemCount: entries.length,
                 separatorBuilder: (_, __) =>
-                    const Divider(height: 1, color: Color(0xFFEEE5D5)),
+                    const Divider(height: 1, color: AppColors.divider),
                 itemBuilder: (ctx, i) {
                   final entry = entries[i];
                   return InkWell(
@@ -665,14 +666,14 @@ class _NavSheet extends StatelessWidget {
                       child: Row(
                         children: [
                           const Icon(Icons.chevron_left,
-                              color: Color(0xFF8B1A1A), size: 18),
+                              color: AppColors.primary, size: 18),
                           const SizedBox(width: 8),
                           Expanded(
                             child: Text(
                               entry.label,
                               textDirection: TextDirection.rtl,
                               style: const TextStyle(
-                                color: Color(0xFF3A2E22),
+                                color: AppColors.textPrimary,
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
                               ),

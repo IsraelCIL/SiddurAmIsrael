@@ -1,7 +1,7 @@
-import '../../domain/entities/prayer_segment.dart';
-import '../../domain/entities/prayer_template.dart';
-import '../../domain/repositories/i_prayer_repository.dart';
-import '../datasources/local/prayer_local_datasource.dart';
+import 'package:smart_siddur/data/datasources/local/prayer_local_datasource.dart';
+import 'package:smart_siddur/domain/entities/prayer_segment.dart';
+import 'package:smart_siddur/domain/entities/prayer_template.dart';
+import 'package:smart_siddur/domain/repositories/i_prayer_repository.dart';
 
 class PrayerRepositoryImpl implements IPrayerRepository {
   const PrayerRepositoryImpl(this._datasource);

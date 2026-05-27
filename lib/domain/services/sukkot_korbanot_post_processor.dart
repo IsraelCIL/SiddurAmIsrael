@@ -1,5 +1,5 @@
-import '../entities/assembled_segment.dart';
-import '../entities/sukkot_korban.dart';
+import 'package:smart_siddur/domain/entities/assembled_segment.dart';
+import 'package:smart_siddur/domain/entities/sukkot_korban.dart';
 
 /// Fills the `{{daily_korban}}` placeholder in
 /// `amidah_musaf_intermediate_chm_sukkot` (per-nusach) with the day's korban

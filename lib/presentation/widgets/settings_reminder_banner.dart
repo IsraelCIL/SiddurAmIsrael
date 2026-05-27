@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../core/utils/hebrew_formatter.dart';
-import '../providers/prayer_providers.dart';
+import 'package:smart_siddur/core/utils/hebrew_formatter.dart';
+import 'package:smart_siddur/presentation/providers/prayer_providers.dart';
+import 'package:smart_siddur/presentation/theme/app_colors.dart';
 
 /// Slim banner shown at the top of every prayer screen on first launch.
 /// Dismissible via the close icon or by tapping the Settings shortcut.
@@ -23,7 +24,7 @@ class SettingsReminderBanner extends ConsumerWidget {
     }
 
     return Material(
-      color: const Color(0xFFFFF6DE),
+      color: AppColors.bannerBackground,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
         child: Directionality(
@@ -31,14 +32,14 @@ class SettingsReminderBanner extends ConsumerWidget {
           child: Row(
             children: [
               const Icon(Icons.info_outline,
-                  size: 18, color: Color(0xFF8B1A1A)),
+                  size: 18, color: AppColors.primary),
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
                   'התפילה מוצגת בנוסח $nusachName. ניתן לשנות בהגדרות.',
                   style: const TextStyle(
                     fontSize: 13,
-                    color: Color(0xFF5A1010),
+                    color: AppColors.primaryDarker,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -49,7 +50,7 @@ class SettingsReminderBanner extends ConsumerWidget {
                   onOpenSettings?.call();
                 },
                 style: TextButton.styleFrom(
-                  foregroundColor: const Color(0xFF8B1A1A),
+                  foregroundColor: AppColors.primary,
                   padding:
                       const EdgeInsets.symmetric(horizontal: 8, vertical: 0),
                   minimumSize: const Size(0, 32),
@@ -60,7 +61,7 @@ class SettingsReminderBanner extends ConsumerWidget {
               IconButton(
                 onPressed: dismiss,
                 icon: const Icon(Icons.close, size: 18),
-                color: const Color(0xFF8B1A1A),
+                color: AppColors.primary,
                 tooltip: 'סגור',
                 visualDensity: VisualDensity.compact,
                 padding: EdgeInsets.zero,

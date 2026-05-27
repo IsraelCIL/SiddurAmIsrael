@@ -1,5 +1,5 @@
-import '../entities/assembled_segment.dart';
-import '../entities/user_context.dart';
+import 'package:smart_siddur/domain/entities/assembled_segment.dart';
+import 'package:smart_siddur/domain/entities/user_context.dart';
 
 abstract class IPrayerAssembler {
   Future<List<AssembledSegment>> assemble({

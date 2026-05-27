@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../domain/entities/day_flags.dart';
+import 'package:smart_siddur/domain/entities/day_flags.dart';
 
 class FlagBadge extends StatelessWidget {
   const FlagBadge({super.key, required this.flag});

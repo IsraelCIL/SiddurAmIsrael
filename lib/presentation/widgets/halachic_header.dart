@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../core/utils/hebrew_formatter.dart';
-import '../providers/prayer_providers.dart';
-import 'flag_badge.dart';
+import 'package:smart_siddur/core/utils/hebrew_formatter.dart';
+import 'package:smart_siddur/presentation/providers/prayer_providers.dart';
+import 'package:smart_siddur/presentation/theme/app_colors.dart';
+import 'package:smart_siddur/presentation/widgets/flag_badge.dart';
 
 class HalachicHeader extends ConsumerWidget {
   const HalachicHeader({super.key});
@@ -23,7 +24,7 @@ class HalachicHeader extends ConsumerWidget {
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          colors: [Color(0xFF6B1212), Color(0xFF8B1A1A)],
+          colors: [AppColors.primaryDark, AppColors.primary],
         ),
       ),
       child: Column(
@@ -44,7 +45,7 @@ class HalachicHeader extends ConsumerWidget {
             'נוסח ${HebrewFormatter.nusachName(nusach)}',
             textDirection: TextDirection.rtl,
             style: const TextStyle(
-              color: Color(0xFFFFCDD2),
+              color: AppColors.headerSubtitle,
               fontSize: 13,
             ),
           ),
