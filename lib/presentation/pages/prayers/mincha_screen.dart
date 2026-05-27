@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-
-import '../../providers/prayer_providers.dart';
-import 'prayer_screen.dart';
+import 'package:smart_siddur/presentation/pages/prayers/prayer_screen.dart';
+import 'package:smart_siddur/presentation/providers/prayer_providers.dart';
 
 class MinchaScreen extends StatelessWidget {
   const MinchaScreen({super.key, this.onOpenSettings});

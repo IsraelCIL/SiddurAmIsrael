@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../domain/services/service_time_resolver.dart';
-import 'pages/prayers/maariv_screen.dart';
-import 'pages/prayers/mincha_screen.dart';
-import 'pages/prayers/shacharit_screen.dart';
-import 'pages/settings/settings_screen.dart';
-import 'providers/prayer_providers.dart';
+import 'package:smart_siddur/domain/services/service_time_resolver.dart';
+import 'package:smart_siddur/presentation/pages/prayers/maariv_screen.dart';
+import 'package:smart_siddur/presentation/pages/prayers/mincha_screen.dart';
+import 'package:smart_siddur/presentation/pages/prayers/shacharit_screen.dart';
+import 'package:smart_siddur/presentation/pages/settings/settings_screen.dart';
+import 'package:smart_siddur/presentation/providers/prayer_providers.dart';
+import 'package:smart_siddur/presentation/theme/app_colors.dart';
 
 /// Top-level shell with 4 bottom tabs:
 ///   0 → Shacharit  (visually rightmost in RTL)
@@ -62,9 +63,9 @@ class _AppShellState extends ConsumerState<AppShell> {
           currentIndex: _currentIndex,
           onTap: (i) => setState(() => _currentIndex = i),
           type: BottomNavigationBarType.fixed,
-          selectedItemColor: const Color(0xFF8B1A1A),
+          selectedItemColor: AppColors.primary,
           unselectedItemColor: Colors.grey,
-          backgroundColor: const Color(0xFFFDF8F0),
+          backgroundColor: AppColors.background,
           showUnselectedLabels: true,
           items: const [
             BottomNavigationBarItem(

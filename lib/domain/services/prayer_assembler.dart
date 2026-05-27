@@ -1,15 +1,15 @@
-import '../entities/assembled_segment.dart';
-import '../entities/blessing_section.dart';
-import '../entities/prayer_template.dart';
-import '../entities/user_context.dart';
-import '../repositories/i_gra_ssy_repository.dart';
-import '../repositories/i_kriah_repository.dart';
-import '../repositories/i_omer_mapping_repository.dart';
-import '../repositories/i_prayer_repository.dart';
-import '../repositories/i_sukkot_korbanot_repository.dart';
-import 'i_prayer_assembler.dart';
-import 'omer_post_processor.dart';
-import 'sukkot_korbanot_post_processor.dart';
+import 'package:smart_siddur/domain/entities/assembled_segment.dart';
+import 'package:smart_siddur/domain/entities/blessing_section.dart';
+import 'package:smart_siddur/domain/entities/prayer_template.dart';
+import 'package:smart_siddur/domain/entities/user_context.dart';
+import 'package:smart_siddur/domain/repositories/i_gra_ssy_repository.dart';
+import 'package:smart_siddur/domain/repositories/i_kriah_repository.dart';
+import 'package:smart_siddur/domain/repositories/i_omer_mapping_repository.dart';
+import 'package:smart_siddur/domain/repositories/i_prayer_repository.dart';
+import 'package:smart_siddur/domain/repositories/i_sukkot_korbanot_repository.dart';
+import 'package:smart_siddur/domain/services/i_prayer_assembler.dart';
+import 'package:smart_siddur/domain/services/omer_post_processor.dart';
+import 'package:smart_siddur/domain/services/sukkot_korbanot_post_processor.dart';
 
 class PrayerAssembler implements IPrayerAssembler {
   const PrayerAssembler(
@@ -90,7 +90,7 @@ class PrayerAssembler implements IPrayerAssembler {
     // placeholders and inject <b>...</b> bold tokens into Lamenatzeach + Ana
     // BeKoach for the day's word/letter highlights.
     if (userContext.omerDay != null && _omerRepository != null) {
-      final day = await _omerRepository!.loadDay(userContext.omerDay!);
+      final day = await _omerRepository.loadDay(userContext.omerDay!);
       out = [for (final s in out) _omerProcessor.process(s, day, userContext.nusach)];
     }
 
@@ -98,7 +98,7 @@ class PrayerAssembler implements IPrayerAssembler {
     // amidah_musaf_intermediate_chm_sukkot with the day's pasuk from
     // Numbers 29 (per sukkotDay and isInIsrael).
     if (userContext.sukkotDay != null && _sukkotRepository != null) {
-      final day = await _sukkotRepository!.loadDay(userContext.sukkotDay!);
+      final day = await _sukkotRepository.loadDay(userContext.sukkotDay!);
       out = [
         for (final s in out)
           _sukkotProcessor.process(s, day, isInIsrael: userContext.isInIsrael),
@@ -113,7 +113,7 @@ class PrayerAssembler implements IPrayerAssembler {
         userContext.activeFlags.contains('kriat_hatorah_mon_thu') &&
         _kriahRepository != null) {
       final text =
-          await _kriahRepository!.loadMonThuReading(userContext.upcomingParshah!);
+          await _kriahRepository.loadMonThuReading(userContext.upcomingParshah!);
       if (text != null) {
         out = [
           for (final s in out)
@@ -130,7 +130,7 @@ class PrayerAssembler implements IPrayerAssembler {
         userContext.chanukahDay != null &&
         _kriahRepository != null) {
       final text =
-          await _kriahRepository!.loadRcTevetComposite(userContext.chanukahDay!);
+          await _kriahRepository.loadRcTevetComposite(userContext.chanukahDay!);
       if (text != null) {
         out = [
           for (final s in out)
@@ -148,7 +148,7 @@ class PrayerAssembler implements IPrayerAssembler {
       final chag = userContext.sukkotDay != null ? 'sukkot' : 'pesach';
       final dayInChag = userContext.sukkotDay ?? userContext.pesachDay;
       if (dayInChag != null) {
-        final text = await _graSsyRepository!.resolveChapter(
+        final text = await _graSsyRepository.resolveChapter(
           chag: chag,
           yt1Weekday: userContext.chagYt1Weekday!,
           dayInChag: dayInChag,
