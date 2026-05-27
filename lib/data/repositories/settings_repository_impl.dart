@@ -1,6 +1,6 @@
-import '../../domain/entities/user_context.dart';
-import '../../domain/repositories/i_settings_repository.dart';
-import '../datasources/local/settings_local_datasource.dart';
+import 'package:smart_siddur/data/datasources/local/settings_local_datasource.dart';
+import 'package:smart_siddur/domain/entities/user_context.dart';
+import 'package:smart_siddur/domain/repositories/i_settings_repository.dart';
 
 class SettingsRepositoryImpl implements ISettingsRepository {
   SettingsRepositoryImpl(this._ds);

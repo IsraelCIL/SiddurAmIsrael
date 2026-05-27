@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/services.dart';
 
-import '../../../domain/entities/prayer_segment.dart';
-import '../../../domain/entities/prayer_template.dart';
+import 'package:smart_siddur/domain/entities/prayer_segment.dart';
+import 'package:smart_siddur/domain/entities/prayer_template.dart';
 
 class PrayerLocalDatasource {
   PrayerLocalDatasource({AssetBundle? bundle}) : _bundle = bundle ?? rootBundle;

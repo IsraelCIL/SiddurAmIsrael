@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'app_shell.dart';
-import 'widgets/dev_overlay.dart';
+import 'package:smart_siddur/presentation/app_shell.dart';
+import 'package:smart_siddur/presentation/theme/app_colors.dart';
+import 'package:smart_siddur/presentation/widgets/dev_overlay.dart';
 
 class SmartSiddurApp extends ConsumerWidget {
   const SmartSiddurApp({super.key});
@@ -23,11 +24,11 @@ class SmartSiddurApp extends ConsumerWidget {
       theme: ThemeData(
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF8B1A1A),
+          seedColor: AppColors.primary,
           brightness: Brightness.light,
         ),
         appBarTheme: const AppBarTheme(
-          backgroundColor: Color(0xFF8B1A1A),
+          backgroundColor: AppColors.primary,
           foregroundColor: Colors.white,
           elevation: 0,
         ),

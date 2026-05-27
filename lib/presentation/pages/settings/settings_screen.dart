@@ -1,9 +1,17 @@
+// The nusach/gender/purim selectors keep RadioListTile bound directly to the
+// persistent providers. Flutter's RadioListTile group API (groupValue/
+// onChanged) is deprecated in favor of a RadioGroup ancestor, but introducing
+// that ancestor would restructure the provider-bound tiles for no behavioral
+// gain, so the deprecation is suppressed locally here instead.
+// ignore_for_file: deprecated_member_use
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../domain/entities/user_context.dart';
-import '../../providers/prayer_providers.dart';
+import 'package:smart_siddur/domain/entities/user_context.dart';
+import 'package:smart_siddur/presentation/providers/prayer_providers.dart';
+import 'package:smart_siddur/presentation/theme/app_colors.dart';
+import 'package:smart_siddur/presentation/theme/app_dimens.dart';
 
 /// User preferences screen. Every change writes through to
 /// SharedPreferences immediately via the persistent providers.
@@ -23,11 +31,11 @@ class SettingsScreen extends ConsumerWidget {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
-        backgroundColor: const Color(0xFFFDF8F0),
+        backgroundColor: AppColors.background,
         appBar: AppBar(
           title: const Text('הגדרות',
               style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700)),
-          backgroundColor: const Color(0xFF8B1A1A),
+          backgroundColor: AppColors.primary,
           foregroundColor: Colors.white,
           centerTitle: true,
         ),
@@ -146,11 +154,11 @@ class SettingsScreen extends ConsumerWidget {
                   Expanded(
                     child: Slider(
                       value: fontFactor,
-                      min: 0.6,
-                      max: 1.6,
-                      divisions: 10,
+                      min: AppDimens.fontFactorMin,
+                      max: AppDimens.fontFactorMax,
+                      divisions: AppDimens.fontFactorDivisions,
                       label: '${(fontFactor * 100).round()}%',
-                      activeColor: const Color(0xFF8B1A1A),
+                      activeColor: AppColors.primary,
                       onChanged: (v) => ref
                           .read(fontSizeFactorProvider.notifier)
                           .set(v),
@@ -166,7 +174,7 @@ class SettingsScreen extends ConsumerWidget {
               child: Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  border: Border.all(color: const Color(0xFFE0D5C5)),
+                  border: Border.all(color: AppColors.borderLight),
                   borderRadius: BorderRadius.circular(8),
                   color: Colors.white,
                 ),
@@ -230,17 +238,17 @@ class _DevDateTimePanel extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Divider(height: 1, color: Color(0xFFE0D5C5)),
+        const Divider(height: 1, color: AppColors.borderLight),
         Padding(
           padding: const EdgeInsets.fromLTRB(16, 16, 16, 6),
           child: Row(
             children: const [
-              Icon(Icons.bug_report, size: 16, color: Color(0xFF8B1A1A)),
+              Icon(Icons.bug_report, size: 16, color: AppColors.primary),
               SizedBox(width: 6),
               Text(
                 'כלי פיתוח — תאריך ושעה',
                 style: TextStyle(
-                  color: Color(0xFF8B1A1A),
+                  color: AppColors.primary,
                   fontSize: 13,
                   fontWeight: FontWeight.w700,
                   letterSpacing: 0.5,
@@ -257,7 +265,7 @@ class _DevDateTimePanel extends ConsumerWidget {
               fontSize: 12,
               color: override == null
                   ? Colors.grey
-                  : const Color(0xFF8B1A1A),
+                  : AppColors.primary,
             ),
           ),
         ),
@@ -306,7 +314,7 @@ class _SectionHeader extends StatelessWidget {
       child: Text(
         title,
         style: const TextStyle(
-          color: Color(0xFF8B1A1A),
+          color: AppColors.primary,
           fontSize: 13,
           fontWeight: FontWeight.w700,
           letterSpacing: 0.5,

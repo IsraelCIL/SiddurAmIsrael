@@ -1,5 +1,5 @@
-import '../../domain/repositories/i_gra_ssy_repository.dart';
-import '../datasources/local/gra_ssy_datasource.dart';
+import 'package:smart_siddur/data/datasources/local/gra_ssy_datasource.dart';
+import 'package:smart_siddur/domain/repositories/i_gra_ssy_repository.dart';
 
 class GraSsyRepositoryImpl implements IGraSsyRepository {
   GraSsyRepositoryImpl(this._ds);
