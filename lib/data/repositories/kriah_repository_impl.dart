@@ -1,5 +1,5 @@
-import '../../domain/repositories/i_kriah_repository.dart';
-import '../datasources/local/kriah_datasource.dart';
+import 'package:smart_siddur/data/datasources/local/kriah_datasource.dart';
+import 'package:smart_siddur/domain/repositories/i_kriah_repository.dart';
 
 class KriahRepositoryImpl implements IKriahRepository {
   KriahRepositoryImpl(this._ds);

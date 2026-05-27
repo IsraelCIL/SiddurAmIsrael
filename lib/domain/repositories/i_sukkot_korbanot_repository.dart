@@ -1,4 +1,4 @@
-import '../entities/sukkot_korban.dart';
+import 'package:smart_siddur/domain/entities/sukkot_korban.dart';
 
 /// Loads the per-day Sukkot Musaf korban mapping
 /// (`assets/prayers/musaf/sukkot/_sukkot_korbanot_mapping.json`).

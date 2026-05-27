@@ -3,7 +3,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../providers/prayer_providers.dart';
+import 'package:smart_siddur/presentation/providers/prayer_providers.dart';
+import 'package:smart_siddur/presentation/theme/app_colors.dart';
+import 'package:smart_siddur/presentation/theme/app_dimens.dart';
 
 /// Bottom-corner mini-FAB cluster for adjusting the prayer text size
 /// while davening one-handed. Fades to ~25% opacity after [_idleFadeDelay]
@@ -74,7 +76,8 @@ class _FontSizeFabState extends ConsumerState<FontSizeFab>
   void _bumpFont(double delta) {
     final notifier = ref.read(fontSizeFactorProvider.notifier);
     final current = ref.read(fontSizeFactorProvider);
-    final next = (current + delta).clamp(0.6, 1.6);
+    final next = (current + delta)
+        .clamp(AppDimens.fontFactorMin, AppDimens.fontFactorMax);
     notifier.set(next);
     _wake();
   }
@@ -97,13 +100,17 @@ class _FontSizeFabState extends ConsumerState<FontSizeFab>
             _MiniFab(
               icon: Icons.text_increase,
               tooltip: 'הגדל גופן',
-              onTap: factor < 1.6 ? () => _bumpFont(0.1) : null,
+              onTap: factor < AppDimens.fontFactorMax
+                  ? () => _bumpFont(AppDimens.fontFactorStep)
+                  : null,
             ),
             const SizedBox(height: 8),
             _MiniFab(
               icon: Icons.text_decrease,
               tooltip: 'הקטן גופן',
-              onTap: factor > 0.6 ? () => _bumpFont(-0.1) : null,
+              onTap: factor > AppDimens.fontFactorMin
+                  ? () => _bumpFont(-AppDimens.fontFactorStep)
+                  : null,
             ),
           ],
         ),
@@ -129,10 +136,10 @@ class _MiniFab extends StatelessWidget {
     return Tooltip(
       message: tooltip,
       child: Material(
-        color: const Color(0xFFFDF8F0).withValues(alpha: 0.92),
+        color: AppColors.background.withValues(alpha: 0.92),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(24),
-          side: const BorderSide(color: Color(0xFF8B1A1A), width: 1.2),
+          side: const BorderSide(color: AppColors.primary, width: 1.2),
         ),
         elevation: 2,
         child: InkWell(
@@ -145,8 +152,8 @@ class _MiniFab extends StatelessWidget {
               icon,
               size: 22,
               color: enabled
-                  ? const Color(0xFF8B1A1A)
-                  : const Color(0xFF8B1A1A).withValues(alpha: 0.35),
+                  ? AppColors.primary
+                  : AppColors.primary.withValues(alpha: 0.35),
             ),
           ),
         ),

@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kosher_dart/kosher_dart.dart';
 
-import '../providers/prayer_providers.dart';
+import 'package:smart_siddur/presentation/providers/prayer_providers.dart';
+import 'package:smart_siddur/presentation/theme/app_colors.dart';
 
 /// Wraps any widget tree with a floating dev button (debug builds only).
 /// In release builds this returns [child] unchanged with zero overhead.
@@ -46,7 +47,7 @@ class _DevFab extends ConsumerWidget {
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
           decoration: BoxDecoration(
             color: isActive
-                ? const Color(0xFF8B1A1A).withValues(alpha: 0.92)
+                ? AppColors.primary.withValues(alpha: 0.92)
                 : Colors.black.withValues(alpha: 0.55),
             borderRadius: BorderRadius.circular(20),
             boxShadow: [
@@ -115,7 +116,7 @@ class _DevPanelState extends ConsumerState<_DevPanel> {
 
     return Container(
       decoration: const BoxDecoration(
-        color: Color(0xFFFDF8F0),
+        color: AppColors.background,
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
       padding: EdgeInsets.only(
@@ -132,12 +133,12 @@ class _DevPanelState extends ConsumerState<_DevPanel> {
             // ── Header ──────────────────────────────────────────────────────
             Row(
               children: [
-                const Icon(Icons.bug_report, color: Color(0xFF8B1A1A), size: 18),
+                const Icon(Icons.bug_report, color: AppColors.primary, size: 18),
                 const SizedBox(width: 6),
                 const Text(
                   'כלי פיתוח — תאריך ושעה',
                   style: TextStyle(
-                    color: Color(0xFF8B1A1A),
+                    color: AppColors.primary,
                     fontWeight: FontWeight.w700,
                     fontSize: 15,
                   ),
@@ -148,7 +149,7 @@ class _DevPanelState extends ConsumerState<_DevPanel> {
                     onPressed: _reset,
                     child: const Text(
                       'איפוס לזמן אמיתי',
-                      style: TextStyle(color: Color(0xFF8B1A1A)),
+                      style: TextStyle(color: AppColors.primary),
                     ),
                   ),
                 IconButton(
@@ -165,12 +166,12 @@ class _DevPanelState extends ConsumerState<_DevPanel> {
               padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
               decoration: BoxDecoration(
                 color: override != null
-                    ? const Color(0xFF8B1A1A).withValues(alpha: 0.08)
+                    ? AppColors.primary.withValues(alpha: 0.08)
                     : Colors.grey.shade100,
                 borderRadius: BorderRadius.circular(10),
                 border: Border.all(
                   color: override != null
-                      ? const Color(0xFF8B1A1A).withValues(alpha: 0.3)
+                      ? AppColors.primary.withValues(alpha: 0.3)
                       : Colors.grey.shade300,
                 ),
               ),
@@ -181,7 +182,7 @@ class _DevPanelState extends ConsumerState<_DevPanel> {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color:
-                      override != null ? const Color(0xFF8B1A1A) : Colors.grey,
+                      override != null ? AppColors.primary : Colors.grey,
                   fontWeight: FontWeight.w600,
                   fontSize: 13,
                 ),
@@ -324,7 +325,7 @@ class _SectionLabel extends StatelessWidget {
       child: Text(
         text,
         style: const TextStyle(
-          color: Color(0xFF8B1A1A),
+          color: AppColors.primary,
           fontSize: 12,
           fontWeight: FontWeight.w700,
           letterSpacing: 0.4,
@@ -350,8 +351,8 @@ class _PickerButton extends StatelessWidget {
       icon: Icon(icon, size: 16),
       label: Text(label),
       style: OutlinedButton.styleFrom(
-        foregroundColor: const Color(0xFF8B1A1A),
-        side: const BorderSide(color: Color(0xFF8B1A1A)),
+        foregroundColor: AppColors.primary,
+        side: const BorderSide(color: AppColors.primary),
         padding: const EdgeInsets.symmetric(vertical: 10),
       ),
       onPressed: onTap,
@@ -371,16 +372,16 @@ class _Preset extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
         decoration: BoxDecoration(
-          color: const Color(0xFFFAF5EC),
+          color: AppColors.surface,
           borderRadius: BorderRadius.circular(8),
-          border: Border.all(color: const Color(0xFFE0D5C5)),
+          border: Border.all(color: AppColors.borderLight),
         ),
         child: Text(
           label,
           textAlign: TextAlign.center,
           style: const TextStyle(
             fontSize: 12,
-            color: Color(0xFF3A2E22),
+            color: AppColors.textPrimary,
             height: 1.4,
           ),
         ),
