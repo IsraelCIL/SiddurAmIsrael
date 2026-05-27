@@ -12,6 +12,15 @@
       "allowed_nusach": []
     },
     {
+      "segment_id": "yehi_shem",
+      "condition_flags": [
+        "skip_tachanun"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
       "sub_template_id": "chatzi_kaddish",
       "condition_flags": [
         "with_minyan"
@@ -536,6 +545,13 @@
         "with_minyan"
       ],
       "exclude_flags": []
+    },
+    {
+      "segment_id": "yehi_chasdecha",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
     },
     {
       "segment_id": "ashrei",

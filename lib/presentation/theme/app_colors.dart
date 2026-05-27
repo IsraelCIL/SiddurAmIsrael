@@ -8,10 +8,10 @@ import 'package:flutter/material.dart';
 /// status colors (`dev_overlay.dart`) are intentionally kept local, as they
 /// are not part of the brand palette.
 abstract final class AppColors {
-  // ── Brand burgundy ──────────────────────────────────────────────────────
-  static const Color primary = Color(0xFF8B1A1A);
-  static const Color primaryDark = Color(0xFF6B1212);
-  static const Color primaryDarker = Color(0xFF5A1010);
+  // ── Brand teal ──────────────────────────────────────────────────────────
+  static const Color primary = Color(0xFF00695C);
+  static const Color primaryDark = Color(0xFF004D40);
+  static const Color primaryDarker = Color(0xFF003830);
 
   // ── Parchment / surfaces ────────────────────────────────────────────────
   static const Color background = Color(0xFFFDF8F0);
@@ -27,8 +27,8 @@ abstract final class AppColors {
   static const Color textSecondary = Color(0xFF6B5848);
 
   // ── Accents ─────────────────────────────────────────────────────────────
-  /// Pink subtitle text on the burgundy header gradient.
-  static const Color headerSubtitle = Color(0xFFFFCDD2);
+  /// Light teal subtitle text on the teal header gradient.
+  static const Color headerSubtitle = Color(0xFF80CBC4);
 
   /// Background of the first-launch settings-reminder banner.
   static const Color bannerBackground = Color(0xFFFFF6DE);
