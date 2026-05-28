@@ -7,10 +7,16 @@ import 'package:smart_siddur/presentation/providers/prayer_providers.dart';
 import 'package:smart_siddur/presentation/theme/app_colors.dart';
 
 /// Wraps any widget tree with a floating dev button (debug builds only).
-/// In release builds this returns [child] unchanged with zero overhead.
+///
+/// **Gating**: The check `if (!kDebugMode) return child` is evaluated against
+/// Flutter's compile-time constant [kDebugMode] (`bool.fromEnvironment`-based).
+/// In release/profile builds the Dart compiler eliminates the entire debug
+/// branch through dead-code removal, so the overlay adds zero overhead and
+/// zero binary footprint to App Store / Play Store submissions.
 ///
 /// Tap the 🛠 button to open the date/time control panel with quick presets
-/// for every testable scenario in the siddur.
+/// for every testable scenario in the siddur (Chanukah, Purim, RC, CHM,
+/// fast days, Omer, etc.).
 class DevOverlay extends StatelessWidget {
   const DevOverlay({super.key, required this.child});
 
@@ -18,6 +24,8 @@ class DevOverlay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // kDebugMode is a compile-time constant — the release compiler prunes
+    // everything below this guard, including _DevFab and all preset logic.
     if (!kDebugMode) return child;
     return Stack(
       children: [
