@@ -84,6 +84,17 @@
       "allowed_nusach": []
     },
     {
+      "segment_id": "barchu",
+      "condition_flags": [
+        "with_minyan"
+      ],
+      "exclude_flags": [
+        "kriat_hatorah"
+      ],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
       "segment_id": "aleinu",
       "condition_flags": [],
       "exclude_flags": [],

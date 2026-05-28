@@ -209,7 +209,7 @@ Lookup order: nusach-specific entry → `common` fallback.
 }
 ```
 
-- **`text`**: `String` or `List<String>`. Arrays are joined with `" "` at runtime. **Texts longer than ~80 characters must use the array form**, split at natural phrase boundaries (CLAUDE.md rule).
+- **`text`**: `String` or `List<String>`. Arrays are joined with `" "` at runtime. **Texts longer than ~80 characters must use the array form**, split at natural phrase/cantillation-pause boundaries.
 - **Sections** are filtered by `condition_flags`/`exclude_flags` and concatenated with `\n`.
 - **Bold syntax**: `<b>word</b>` — used by post-processors; rendered by `RichPrayerText`.
 
@@ -254,7 +254,6 @@ smart_siddur/
 │   └── presentation/             # Provider reactivity · widget rendering
 │
 ├── pubspec.yaml
-├── CLAUDE.md                     # Development rules for AI-assisted and human contributors
 └── README.md                     # This file
 ```
 
@@ -342,10 +341,10 @@ flutter analyze
 
 ## Halachic Standard
 
-This application is a **strictly Orthodox Halachic siddur**. See `CLAUDE.md` for the complete halachic constraints. Key points for all contributors:
+This application is a **strictly Orthodox Halachic siddur**. Key points for all contributors:
 
 - Only mainstream Orthodox Halachic practice is represented. Reform, Conservative, Egalitarian, or Liberal variants are forbidden in any part of the codebase (source, JSON, comments, tests, docs).
-- Every flag constant in `DayFlag` is documented with its Halachic basis and source.
+- Every flag constant in `DayFlag` (`lib/domain/entities/day_flags.dart`) is documented with its Halachic basis.
 - Gender-specific variants require a cited posek from mainstream Orthodox halacha before implementation.
 - The only supported prayer services are Shacharit, Mincha, and Maariv. Kabbalat Shabbat and Musaf Yom Tov/Shabbat are out of scope for the current version.
 
@@ -402,4 +401,4 @@ Upload `build/app/outputs/bundle/release/app-release.aab` to the Play Console.
 5. **Add a label** in `lib/presentation/constants/segment_labels.dart` (empty string = no visible section header).
 6. Run `flutter test` to verify no regressions.
 
-Refer to `CLAUDE.md` for the mandatory JSON text formatting rules (texts over ~80 characters must use array form, split at natural phrase/cantillation-pause boundaries).
+**JSON text formatting rule**: any `text` field longer than ~80 characters must use the array form (`List<String>`), split at natural phrase or cantillation-pause boundaries. The parser joins array elements with a single space at runtime.
