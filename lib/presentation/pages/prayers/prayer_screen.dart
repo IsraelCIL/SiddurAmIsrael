@@ -148,7 +148,9 @@ class _PrayerScreenState extends ConsumerState<PrayerScreen> {
     final prayerAsync = ref.watch(widget.contentProvider);
     return Scaffold(
       backgroundColor: AppColors.background,
-      body: Stack(
+      body: SafeArea(
+        bottom: false,
+        child: Stack(
         children: [
           Column(
             children: [
@@ -222,6 +224,7 @@ class _PrayerScreenState extends ConsumerState<PrayerScreen> {
               child: _NavFab(onTap: _showNavSheet),
             ),
         ],
+      ),
       ),
     );
   }
