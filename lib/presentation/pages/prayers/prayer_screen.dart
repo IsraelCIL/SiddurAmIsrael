@@ -219,8 +219,8 @@ class _PrayerScreenState extends ConsumerState<PrayerScreen> {
           if (prayerAsync.hasValue &&
               (_cachedNavEntries?.isNotEmpty ?? false))
             Positioned(
-              right: 16,
-              bottom: 16,
+              top: kToolbarHeight - 22,
+              right: 12,
               child: _NavFab(onTap: _showNavSheet),
             ),
         ],
@@ -519,9 +519,9 @@ class _NavFab extends StatelessWidget {
           ],
         ),
         child: const Icon(
-          Icons.format_list_bulleted,
+          Icons.keyboard_arrow_up,
           color: AppColors.primary,
-          size: 22,
+          size: 26,
         ),
       ),
     );
