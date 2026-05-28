@@ -28,9 +28,10 @@ jobs:
     - name: Install dependencies
       run: flutter pub get
       
-    - name: Pre-configure iOS Project Metadata
+    - name: Generate Xcode Project Metadata
       run: |
-        flutter build ios --config-only # מייצר את ה-workspace ואת כל קבצי ה-Xcode החסרים אוטומטית על ה-Mac
+        flutter create . --platforms ios
+        flutter build ios --config-only
       
     - name: Install CocoaPods Dependencies
       run: |
