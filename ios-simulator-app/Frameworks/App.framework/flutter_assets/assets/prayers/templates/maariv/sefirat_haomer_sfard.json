@@ -1,0 +1,30 @@
+{
+  "id": "sefirat_haomer_sfard",
+  "name": "ספירת העומר",
+  "segments": [
+    {
+      "segment_id": "sefirat_haomer_header"
+    },
+    {
+      "segment_id": "sefirat_haomer_lshem_yichud"
+    },
+    {
+      "segment_id": "sefirat_haomer_bracha"
+    },
+    {
+      "segment_id": "sefirat_haomer_day_count"
+    },
+    {
+      "segment_id": "sefirat_haomer_harachaman"
+    },
+    {
+      "segment_id": "sefirat_haomer_lamenatzeach"
+    },
+    {
+      "segment_id": "sefirat_haomer_ana_bekoach"
+    },
+    {
+      "segment_id": "sefirat_haomer_ribono_shel_olam"
+    }
+  ]
+}

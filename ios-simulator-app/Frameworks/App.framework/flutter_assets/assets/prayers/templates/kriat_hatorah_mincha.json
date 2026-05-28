@@ -1,0 +1,97 @@
+{
+  "id": "kriat_hatorah_mincha",
+  "name": "קריאת התורה — מנחה תענית",
+  "segments": [
+    {
+      "segment_id": "kriat_hatorah_hotzaah",
+      "condition_flags": [
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "kriah_fast_day",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "hagbahah",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "haftarah_bracha_lifnei",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": [
+        "ashkenaz",
+        "sfard"
+      ]
+    },
+    {
+      "segment_id": "haftarah_taanit",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": [
+        "ashkenaz",
+        "sfard"
+      ]
+    },
+    {
+      "segment_id": "haftarah_bracha_acharei_1",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": [
+        "ashkenaz",
+        "sfard"
+      ]
+    },
+    {
+      "segment_id": "haftarah_bracha_acharei_2",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": [
+        "ashkenaz",
+        "sfard"
+      ]
+    },
+    {
+      "segment_id": "haftarah_bracha_acharei_3",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": [
+        "ashkenaz",
+        "sfard"
+      ]
+    },
+    {
+      "segment_id": "kriat_hatorah_hachnasah",
+      "condition_flags": [
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "sub_template_id": "chatzi_kaddish",
+      "condition_flags": [
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    }
+  ]
+}

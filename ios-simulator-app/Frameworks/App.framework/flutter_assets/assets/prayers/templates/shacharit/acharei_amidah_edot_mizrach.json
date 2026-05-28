@@ -1,0 +1,635 @@
+{
+  "id": "shacharit_acharei_amidah_edot_mizrach",
+  "name": "shacharit_acharei_amidah_edot_mizrach",
+  "segments": [
+    {
+      "sub_template_id": "tachanun_edot_mizrach",
+      "condition_flags": [],
+      "exclude_flags": [
+        "skip_tachanun"
+      ],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "yehi_shem",
+      "condition_flags": [
+        "skip_tachanun"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "sub_template_id": "chatzi_kaddish",
+      "condition_flags": [
+        "with_minyan"
+      ],
+      "exclude_flags": [
+        "skip_tachanun"
+      ],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "selichot_gedalia",
+      "condition_flags": [
+        "fast_gedalia",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "selichot_10_tevet",
+      "condition_flags": [
+        "fast_10_tevet",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "selichot_esther",
+      "condition_flags": [
+        "fast_esther",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "selichot_17_tammuz",
+      "condition_flags": [
+        "fast_17_tammuz",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "avinu_malkeinu",
+      "condition_flags": [
+        "avinu_malkeinu",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "lulav_lshem_yichud",
+      "condition_flags": [
+        "lulav_day"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "lulav_bracha",
+      "condition_flags": [
+        "lulav_day"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "hallel",
+      "condition_flags": [
+        "full_hallel"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "hallel_half",
+      "condition_flags": [
+        "half_hallel"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "hallel_rc_psukim",
+      "condition_flags": [
+        "rosh_chodesh"
+      ],
+      "exclude_flags": [],
+      "optional": true,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "hoshanot_day_2",
+      "condition_flags": [
+        "sukkot_day_2",
+        "hoshanot_day",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "hoshanot_day_3",
+      "condition_flags": [
+        "sukkot_day_3",
+        "hoshanot_day",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "hoshanot_day_4",
+      "condition_flags": [
+        "sukkot_day_4",
+        "hoshanot_day",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "hoshanot_day_5",
+      "condition_flags": [
+        "sukkot_day_5",
+        "hoshanot_day",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "hoshanot_day_6",
+      "condition_flags": [
+        "sukkot_day_6",
+        "hoshanot_day",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "hoshanot_hoshana_rabba",
+      "condition_flags": [
+        "sukkot_day_7",
+        "hoshanot_day",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "sub_template_id": "kaddish_titkabal",
+      "condition_flags": [
+        "hallel_with_musaf",
+        "with_minyan"
+      ],
+      "exclude_flags": []
+    },
+    {
+      "sub_template_id": "chatzi_kaddish",
+      "condition_flags": [
+        "full_hallel",
+        "kriat_hatorah",
+        "with_minyan"
+      ],
+      "exclude_flags": [
+        "musaf_content"
+      ]
+    },
+    {
+      "segment_id": "el_erech_apayim",
+      "condition_flags": [
+        "kriat_hatorah"
+      ],
+      "exclude_flags": [
+        "skip_tachanun"
+      ],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "kriat_hatorah_hotzaah",
+      "condition_flags": [
+        "kriat_hatorah",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "hagbahah",
+      "condition_flags": [
+        "kriat_hatorah"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "kriat_hatorah_shacharit",
+      "condition_flags": [
+        "kriat_hatorah",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "kriat_hatorah_reading_text",
+      "condition_flags": [
+        "kriat_hatorah_mon_thu",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "kriah_rc",
+      "condition_flags": [
+        "kriat_hatorah_rc",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "kriah_chm_pesach_day_2",
+      "condition_flags": [
+        "pesach_day_2",
+        "chol_hamoed_pesach",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "kriah_chm_pesach_day_3",
+      "condition_flags": [
+        "pesach_day_3",
+        "chol_hamoed_pesach",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "kriah_chm_pesach_day_3",
+      "condition_flags": [
+        "pesach_day_4",
+        "chol_hamoed_pesach",
+        "with_minyan",
+        "pesach_yt1_thursday"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "kriah_chm_pesach_day_4",
+      "condition_flags": [
+        "pesach_day_4",
+        "chol_hamoed_pesach",
+        "with_minyan"
+      ],
+      "exclude_flags": [
+        "pesach_yt1_thursday"
+      ],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "kriah_chm_pesach_day_4",
+      "condition_flags": [
+        "pesach_day_5",
+        "chol_hamoed_pesach",
+        "with_minyan",
+        "pesach_yt1_thursday"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "kriah_chm_pesach_day_5",
+      "condition_flags": [
+        "pesach_day_5",
+        "chol_hamoed_pesach",
+        "with_minyan"
+      ],
+      "exclude_flags": [
+        "pesach_yt1_thursday"
+      ],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "kriah_chm_pesach_day_6",
+      "condition_flags": [
+        "pesach_day_6",
+        "chol_hamoed_pesach",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "kriah_chm_sukkot_day_2",
+      "condition_flags": [
+        "sukkot_day_2",
+        "chol_hamoed_sukkot",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "kriah_chm_sukkot_day_3",
+      "condition_flags": [
+        "sukkot_day_3",
+        "chol_hamoed_sukkot",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "kriah_chm_sukkot_day_4",
+      "condition_flags": [
+        "sukkot_day_4",
+        "chol_hamoed_sukkot",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "kriah_chm_sukkot_day_5",
+      "condition_flags": [
+        "sukkot_day_5",
+        "chol_hamoed_sukkot",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "kriah_chm_sukkot_day_6",
+      "condition_flags": [
+        "sukkot_day_6",
+        "chol_hamoed_sukkot",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "kriah_chm_sukkot_day_7",
+      "condition_flags": [
+        "sukkot_day_7",
+        "chol_hamoed_sukkot",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "kriah_rc_tevet",
+      "condition_flags": [
+        "rc_tevet",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "kriah_chanukah_day_1",
+      "condition_flags": [
+        "chanukah_day_1",
+        "kriat_hatorah_chanukah",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "kriah_chanukah_day_2",
+      "condition_flags": [
+        "chanukah_day_2",
+        "kriat_hatorah_chanukah",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "kriah_chanukah_day_3",
+      "condition_flags": [
+        "chanukah_day_3",
+        "kriat_hatorah_chanukah",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "kriah_chanukah_day_4",
+      "condition_flags": [
+        "chanukah_day_4",
+        "kriat_hatorah_chanukah",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "kriah_chanukah_day_5",
+      "condition_flags": [
+        "chanukah_day_5",
+        "kriat_hatorah_chanukah",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "kriah_chanukah_day_6",
+      "condition_flags": [
+        "chanukah_day_6",
+        "kriat_hatorah_chanukah",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "kriah_chanukah_day_7",
+      "condition_flags": [
+        "chanukah_day_7",
+        "kriat_hatorah_chanukah",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "kriah_chanukah_day_8",
+      "condition_flags": [
+        "chanukah_day_8",
+        "kriat_hatorah_chanukah",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "kriah_purim",
+      "condition_flags": [
+        "kriat_hatorah_purim",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "kriah_fast_day",
+      "condition_flags": [
+        "fast_day",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "sub_template_id": "chatzi_kaddish",
+      "condition_flags": [
+        "kriat_hatorah",
+        "with_minyan"
+      ],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "yehi_chasdecha",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "ashrei",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "lamenatzeach",
+      "condition_flags": [],
+      "exclude_flags": [
+        "skip_lamenatzeach"
+      ],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "uva_letzion",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "beit_yaakov",
+      "condition_flags": [
+        "musaf_content"
+      ],
+      "exclude_flags": [],
+      "optional": true,
+      "allowed_nusach": []
+    },
+    {
+      "sub_template_id": "shir_shel_yom",
+      "condition_flags": [
+        "musaf_content"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "kriat_hatorah_hachnasah",
+      "condition_flags": [
+        "kriat_hatorah",
+        "musaf_content",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "sub_template_id": "kaddish_titkabal",
+      "condition_flags": [
+        "with_minyan"
+      ],
+      "exclude_flags": [
+        "musaf_content"
+      ],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "sub_template_id": "chatzi_kaddish",
+      "condition_flags": [
+        "musaf_content",
+        "with_minyan"
+      ],
+      "exclude_flags": []
+    },
+    {
+      "sub_template_id": "musaf_edot_mizrach",
+      "condition_flags": [
+        "musaf_content"
+      ],
+      "exclude_flags": []
+    }
+  ]
+}

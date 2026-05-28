@@ -1,0 +1,12 @@
+{
+  "id": "sheasani_kirtzono",
+  "sections": [
+    {
+      "text": "בָּרוּךְ שֶׁעָשַׂנִי כִּרְצוֹנוֹ:",
+      "condition_flags": [
+        "gender_female"
+      ],
+      "exclude_flags": []
+    }
+  ]
+}
