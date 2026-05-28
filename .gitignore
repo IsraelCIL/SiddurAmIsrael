@@ -45,6 +45,15 @@ macos/Flutter/ephemeral/
 .DS_Store
 Thumbs.db
 
+# Claude Code — local AI assistant files (plans, memory, settings)
+.claude/
+CLAUDE.md
+
+# Flutter platform build directories not needed for iOS/Android submission
+windows/
+linux/
+.metadata
+
 # Scratch / temporary Sefaria fetches & comparison artefacts at repo root.
 # These are inputs to scripts/build_*.js and useful for ad-hoc analysis; the
 # canonical outputs live under assets/prayers/. Safe to delete any time.
