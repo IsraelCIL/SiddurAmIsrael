@@ -37,9 +37,10 @@ class _DevFab extends ConsumerWidget {
     final isActive = override != null;
 
     return Positioned(
-      // Top-left so it doesn't conflict with the font FABs at bottom-left
-      left: 12,
-      top: MediaQuery.of(context).padding.top + 8,
+      // Bottom-right: clear of the settings-banner × button (top-left in RTL),
+      // the nav-sheet arrow (top-right), and the font-size FABs (bottom-left).
+      right: 12,
+      bottom: kBottomNavigationBarHeight + 12,
       child: GestureDetector(
         onTap: () => _showPanel(context),
         child: AnimatedContainer(
