@@ -31,7 +31,7 @@ jobs:
     - name: Generate Xcode Project Metadata
       run: |
         flutter create . --platforms ios
-        flutter build ios --config-only
+        flutter build ios --simulator --config-only
       
     - name: Install CocoaPods Dependencies
       run: |
