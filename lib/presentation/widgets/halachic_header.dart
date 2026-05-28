@@ -19,7 +19,6 @@ class HalachicHeader extends ConsumerWidget {
 
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
       decoration: const BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topCenter,
@@ -28,40 +27,54 @@ class HalachicHeader extends ConsumerWidget {
         ),
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        mainAxisSize: MainAxisSize.min,
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          Text(
-            HebrewFormatter.formatFullDate(hebrewDate),
-            textDirection: TextDirection.rtl,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 15,
-              fontWeight: FontWeight.w500,
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Row(
+                  textDirection: TextDirection.rtl,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      HebrewFormatter.formatFullDate(hebrewDate),
+                      textDirection: TextDirection.rtl,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    Text(
+                      'נוסח ${HebrewFormatter.nusachName(nusach)}',
+                      textDirection: TextDirection.rtl,
+                      style: const TextStyle(
+                        color: AppColors.headerSubtitle,
+                        fontSize: 13,
+                      ),
+                    ),
+                  ],
+                ),
+                if (displayFlags.isNotEmpty) ...[
+                  const SizedBox(height: 6),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    reverse: true,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: displayFlags
+                          .map((f) => FlagBadge(flag: f))
+                          .toList(),
+                    ),
+                  ),
+                ],
+              ],
             ),
           ),
-          const SizedBox(height: 4),
-          Text(
-            'נוסח ${HebrewFormatter.nusachName(nusach)}',
-            textDirection: TextDirection.rtl,
-            style: const TextStyle(
-              color: AppColors.headerSubtitle,
-              fontSize: 13,
-            ),
-          ),
-          if (displayFlags.isNotEmpty) ...[
-            const SizedBox(height: 8),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              reverse: true,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: displayFlags
-                    .map((f) => FlagBadge(flag: f))
-                    .toList(),
-              ),
-            ),
-          ],
         ],
       ),
     );
