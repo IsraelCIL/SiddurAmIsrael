@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:smart_siddur/domain/entities/assembled_segment.dart';
+import 'package:smart_siddur/presentation/providers/prayer_providers.dart';
 import 'package:smart_siddur/presentation/theme/app_colors.dart';
 import 'package:smart_siddur/presentation/widgets/font_size_fab.dart';
 import 'package:smart_siddur/presentation/widgets/halachic_header.dart';
@@ -146,6 +147,7 @@ class _PrayerScreenState extends ConsumerState<PrayerScreen> {
   @override
   Widget build(BuildContext context) {
     final prayerAsync = ref.watch(widget.contentProvider);
+    final bannerSeen = ref.watch(hasSeenSettingsBannerProvider);
     return Scaffold(
       backgroundColor: AppColors.background,
       body: SafeArea(
@@ -219,7 +221,10 @@ class _PrayerScreenState extends ConsumerState<PrayerScreen> {
           if (prayerAsync.hasValue &&
               (_cachedNavEntries?.isNotEmpty ?? false))
             Positioned(
-              top: kToolbarHeight - 22,
+              // Below the collapsed toolbar + clear of the title text.
+              // Add extra offset when the settings banner is still visible
+              // (~44 dp) so the button doesn't land on the banner row.
+              top: bannerSeen ? kToolbarHeight + 4 : kToolbarHeight + 48,
               right: 12,
               child: _NavFab(onTap: _showNavSheet),
             ),
@@ -519,7 +524,7 @@ class _NavFab extends StatelessWidget {
           ],
         ),
         child: const Icon(
-          Icons.keyboard_arrow_up,
+          Icons.keyboard_arrow_down,
           color: AppColors.primary,
           size: 26,
         ),
