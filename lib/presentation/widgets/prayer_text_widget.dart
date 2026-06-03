@@ -38,6 +38,10 @@ class _PrayerInlineToggle extends ConsumerWidget {
     if (segmentId == 'inline_toggle_tallit_gadol') {
       return _buildTallitSegmented(ref);
     }
+    // Kohanim toggle: section title + switch with "יש כהנים" label
+    if (segmentId == 'inline_toggle_kohanim') {
+      return _buildKohanumToggle(ref);
+    }
     final (label, value, onChanged) = _resolve(ref);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
@@ -65,6 +69,63 @@ class _PrayerInlineToggle extends ConsumerWidget {
                 child: Switch(
                   value: value,
                   onChanged: onChanged,
+                  activeColor: AppColors.primary,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildKohanumToggle(WidgetRef ref) {
+    final einKohanim = ref.watch(einKohanumProvider);
+    final yeshKohanim = !einKohanim;
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+      child: Material(
+        color: AppColors.surface,
+        borderRadius: BorderRadius.circular(10),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+          child: Row(
+            textDirection: TextDirection.rtl,
+            children: [
+              // Section title on the right
+              const Text(
+                'ברכת כהנים',
+                style: TextStyle(
+                  fontSize: 14,
+                  color: AppColors.primaryDarker,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              const Spacer(),
+              // "יש כהנים" label + switch
+              GestureDetector(
+                onTap: () => ref
+                    .read(einKohanumProvider.notifier)
+                    .set(yeshKohanim),
+                child: Text(
+                  'יש כהנים',
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: yeshKohanim
+                        ? AppColors.primaryDarker
+                        : AppColors.primaryDarker.withValues(alpha: 0.45),
+                    fontWeight: yeshKohanim
+                        ? FontWeight.w600
+                        : FontWeight.normal,
+                  ),
+                ),
+              ),
+              Transform.scale(
+                scale: 0.8,
+                child: Switch(
+                  value: yeshKohanim,
+                  onChanged: (v) =>
+                      ref.read(einKohanumProvider.notifier).set(!v),
                   activeColor: AppColors.primary,
                 ),
               ),

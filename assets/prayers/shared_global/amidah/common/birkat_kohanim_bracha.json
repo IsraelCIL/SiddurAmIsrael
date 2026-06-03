@@ -1,6 +1,6 @@
 {
   "id": "birkat_kohanim_bracha",
-  "optional": true,
+  "optional": false,
   "sections": [
     {
       "text": [
@@ -9,36 +9,68 @@
         "וְצִוָּנוּ לְבָרֵךְ אֶת עַמּוֹ יִשְׂרָאֵל בְּאַהֲבָה:"
       ],
       "condition_flags": [],
-      "exclude_flags": ["ein_kohanim"]
+      "exclude_flags": [
+        "ein_kohanim"
+      ]
     },
     {
-      "text": ["יְבָרֶכְ֒ךָ יְהֹוָה וְיִשְׁמְ֒רֶֽךָ:", "(אמן)"],
+      "text": [
+        "יְבָרֶכְ֒ךָ יְהֹוָה וְיִשְׁמְ֒רֶֽךָ:",
+        "(אמן)"
+      ],
       "condition_flags": [],
-      "exclude_flags": ["ein_kohanim"]
+      "exclude_flags": [
+        "ein_kohanim"
+      ]
     },
     {
-      "text": ["יְבָרֶכְ֒ךָ יְהֹוָה וְיִשְׁמְ֒רֶֽךָ:", "(כן יהי רצון)"],
-      "condition_flags": ["ein_kohanim"],
+      "text": [
+        "יְבָרֶכְ֒ךָ יְהֹוָה וְיִשְׁמְ֒רֶֽךָ:",
+        "(כן יהי רצון)"
+      ],
+      "condition_flags": [
+        "ein_kohanim"
+      ],
       "exclude_flags": []
     },
     {
-      "text": ["יָאֵר יְהֹוָה פָּנָיו אֵלֶֽיךָ וִיחֻנֶּֽךָּ:", "(אמן)"],
+      "text": [
+        "יָאֵר יְהֹוָה פָּנָיו אֵלֶֽיךָ וִיחֻנֶּֽךָּ:",
+        "(אמן)"
+      ],
       "condition_flags": [],
-      "exclude_flags": ["ein_kohanim"]
+      "exclude_flags": [
+        "ein_kohanim"
+      ]
     },
     {
-      "text": ["יָאֵר יְהֹוָה פָּנָיו אֵלֶֽיךָ וִיחֻנֶּֽךָּ:", "(כן יהי רצון)"],
-      "condition_flags": ["ein_kohanim"],
+      "text": [
+        "יָאֵר יְהֹוָה פָּנָיו אֵלֶֽיךָ וִיחֻנֶּֽךָּ:",
+        "(כן יהי רצון)"
+      ],
+      "condition_flags": [
+        "ein_kohanim"
+      ],
       "exclude_flags": []
     },
     {
-      "text": ["יִשָּׂא יְהֹוָה פָּנָיו אֵלֶֽיךָ וְיָשֵׂם לְךָ שָׁלוֹם:", "(אמן)"],
+      "text": [
+        "יִשָּׂא יְהֹוָה פָּנָיו אֵלֶֽיךָ וְיָשֵׂם לְךָ שָׁלוֹם:",
+        "(אמן)"
+      ],
       "condition_flags": [],
-      "exclude_flags": ["ein_kohanim"]
+      "exclude_flags": [
+        "ein_kohanim"
+      ]
     },
     {
-      "text": ["יִשָּׂא יְהֹוָה פָּנָיו אֵלֶֽיךָ וְיָשֵׂם לְךָ שָׁלוֹם:", "(כן יהי רצון)"],
-      "condition_flags": ["ein_kohanim"],
+      "text": [
+        "יִשָּׂא יְהֹוָה פָּנָיו אֵלֶֽיךָ וְיָשֵׂם לְךָ שָׁלוֹם:",
+        "(כן יהי רצון)"
+      ],
+      "condition_flags": [
+        "ein_kohanim"
+      ],
       "exclude_flags": []
     }
   ]

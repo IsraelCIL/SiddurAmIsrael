@@ -194,7 +194,8 @@
       "segment_id": "birkat_kohanim",
       "condition_flags": [],
       "exclude_flags": [
-        "tefila_mincha"
+        "tefila_mincha",
+        "ein_kohanim"
       ],
       "optional": false,
       "allowed_nusach": []
@@ -216,7 +217,7 @@
       "exclude_flags": [
         "tefila_mincha"
       ],
-      "optional": true,
+      "optional": false,
       "allowed_nusach": []
     },
     {
@@ -226,7 +227,7 @@
         "tefila_mincha",
         "ein_kohanim"
       ],
-      "optional": true,
+      "optional": false,
       "allowed_nusach": []
     },
     {
