@@ -192,7 +192,9 @@
     "inline_toggle_tallit_gadol": "assets/prayers/shared_global/common/inline_toggle_tallit_gadol.json",
     "inline_toggle_shaliach_tzibbur": "assets/prayers/shared_global/common/inline_toggle_shaliach_tzibbur.json",
     "inline_toggle_kohanim": "assets/prayers/shared_global/common/inline_toggle_kohanim.json",
-    "yehi_ratzon_pre_elokai": "assets/prayers/shared_global/amidah/common/yehi_ratzon_pre_elokai.json"
+    "yehi_ratzon_pre_elokai": "assets/prayers/shared_global/amidah/common/yehi_ratzon_pre_elokai.json",
+    "vihi_noam_before_psalm": "assets/prayers/maariv/lifnei_maariv/common/vihi_noam_before_psalm.json",
+    "vihi_noam_after_psalm": "assets/prayers/maariv/lifnei_maariv/common/vihi_noam_after_psalm.json"
   },
   "nusach": {
     "ashkenaz": {

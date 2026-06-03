@@ -85,6 +85,55 @@
       "condition_flags": [
         "with_minyan"
       ],
+      "exclude_flags": [
+        "motzaei_shabbat"
+      ],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "sub_template_id": "chatzi_kaddish",
+      "condition_flags": [
+        "motzaei_shabbat",
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "vihi_noam_before_psalm",
+      "condition_flags": [
+        "motzaei_shabbat"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "psalm_091",
+      "condition_flags": [
+        "motzaei_shabbat"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "vihi_noam_after_psalm",
+      "condition_flags": [
+        "motzaei_shabbat"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "sub_template_id": "kaddish_titkabal",
+      "condition_flags": [
+        "motzaei_shabbat",
+        "with_minyan"
+      ],
       "exclude_flags": [],
       "optional": false,
       "allowed_nusach": []
