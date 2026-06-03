@@ -295,7 +295,9 @@
       "yehi_ratzon_tzitzit": "assets/prayers/shacharit/lifnei_hatfila/nusach/ashkenaz/yehi_ratzon_tzitzit.json",
       "yishtabach": "assets/prayers/shacharit/pesukei_dezimra/nusach/ashkenaz/yishtabach.json",
       "yotzer_or": "assets/prayers/shacharit/birkot_kriat_shema/nusach/ashkenaz/yotzer_or.json",
-      "zokef_kefufim": "assets/prayers/shacharit/lifnei_hatfila/nusach/ashkenaz/zokef_kefufim.json"
+      "zokef_kefufim": "assets/prayers/shacharit/lifnei_hatfila/nusach/ashkenaz/zokef_kefufim.json",
+      "amidah_shalom_rav": "assets/prayers/shared_global/amidah/nusach/ashkenaz/amidah_shalom_rav.json",
+      "pitum_haketoreh_ashkenaz": "assets/prayers/shacharit/sof_hatfila/nusach/ashkenaz/pitum_haketoreh_ashkenaz.json"
     },
     "edot_mizrach": {
       "adon_olam": "assets/prayers/shacharit/lifnei_hatfila/nusach/edot_mizrach/adon_olam.json",
