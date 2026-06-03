@@ -275,6 +275,9 @@ const _segmentLabels = <String, String>{
   'seder_tzitzit_gadol': 'עטיפת טלית',
   'seder_tzitzit_gadol_em': 'עטיפת טלית',
   'ein_kohanim_bracha': '',
+  'inline_toggle_tallit_gadol': '',
+  'inline_toggle_shaliach_tzibbur': '',
+  'inline_toggle_kohanim': '',
   // ── Hoshanot ───────────────────────────────────────────────────────────────
   'hoshanot_ashk_link': 'הושענות — לחץ להצגת הסבר',
   'hoshanot_day_2': 'הושענות',

@@ -89,11 +89,6 @@ class SettingsScreen extends ConsumerWidget {
 
             _SectionHeader(title: 'מיקום'),
             SwitchListTile(
-              title: const Text('אני בארץ ישראל'),
-              subtitle: const Text(
-                'משפיע על מספר ימי החגים, אמירת מוסף ועוד',
-                style: TextStyle(fontSize: 12),
-              ),
               value: inIsrael,
               onChanged: (v) =>
                   ref.read(isInIsraelProvider.notifier).set(v),
@@ -102,41 +97,22 @@ class SettingsScreen extends ConsumerWidget {
             _SectionHeader(title: 'תפילה'),
             if (isAshkenazOrSfard)
               SwitchListTile(
-                title: const Text('מתעטף בטלית גדול'),
-                subtitle: const Text(
-                  'מציג סדר עטיפת טלית גדול (ברירת מחדל: כן)',
-                  style: TextStyle(fontSize: 12),
-                ),
+                subtitle: const Text('לטלית קטן לחץ'),
                 value: wearsTallitGadol,
                 onChanged: (v) =>
                     ref.read(wearsTallitGadolProvider.notifier).set(v),
               ),
             SwitchListTile(
-              title: const Text('אני שליח ציבור'),
-              subtitle: const Text(
-                'מסתיר מודים דרבנן (השליח ציבור אומר את המודים הרגיל)',
-                style: TextStyle(fontSize: 12),
-              ),
               value: isShaliachTzibbur,
               onChanged: (v) =>
                   ref.read(isShaliachTzibburProvider.notifier).set(v),
             ),
             SwitchListTile(
-              title: const Text('אין כהנים'),
-              subtitle: const Text(
-                'מציג "אלהינו ואלהי אבותינו ברכנו" במקום ברכת כהנים',
-                style: TextStyle(fontSize: 12),
-              ),
               value: einKohanim,
               onChanged: (v) =>
                   ref.read(einKohanumProvider.notifier).set(v),
             ),
             SwitchListTile(
-              title: const Text('מתפלל במניין'),
-              subtitle: const Text(
-                'מציג קדיש, חזרת הש״ץ, קריאת התורה, ברכו ויג מידות',
-                style: TextStyle(fontSize: 12),
-              ),
               value: withMinyan,
               onChanged: (v) =>
                   ref.read(withMinyanProvider.notifier).set(v),
@@ -170,11 +146,6 @@ class SettingsScreen extends ConsumerWidget {
 
             _SectionHeader(title: 'תצוגה'),
             SwitchListTile(
-              title: const Text('הצג כותרות קטעים'),
-              subtitle: const Text(
-                'מציג כותרת לכל קטע תפילה (אבות, גבורות וכד׳)',
-                style: TextStyle(fontSize: 12),
-              ),
               value: showLabels,
               onChanged: (v) =>
                   ref.read(showSegmentLabelsProvider.notifier).set(v),

@@ -27,6 +27,82 @@ const _noTrailingSpace = <String>{
   'ein_keloheinu',
 };
 
+/// Compact inline toggle row rendered inside the prayer scroll view.
+class _PrayerInlineToggle extends ConsumerWidget {
+  const _PrayerInlineToggle({required this.segmentId});
+  final String segmentId;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final (label, value, onChanged) = _resolve(ref);
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+      child: Material(
+        color: AppColors.surface,
+        borderRadius: BorderRadius.circular(10),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+          child: Row(
+            textDirection: TextDirection.rtl,
+            children: [
+              Expanded(
+                child: Text(
+                  label,
+                  textDirection: TextDirection.rtl,
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: AppColors.primaryDarker,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+              Transform.scale(
+                scale: 0.8,
+                child: Switch(
+                  value: value,
+                  onChanged: onChanged,
+                  activeColor: AppColors.primary,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  (String, bool, void Function(bool)) _resolve(WidgetRef ref) {
+    switch (segmentId) {
+      case 'inline_toggle_tallit_gadol':
+        return (
+          'מתעטף בטלית גדול',
+          ref.watch(wearsTallitGadolProvider),
+          (v) => ref.read(wearsTallitGadolProvider.notifier).set(v),
+        );
+      case 'inline_toggle_shaliach_tzibbur':
+        return (
+          'אני שליח ציבור',
+          ref.watch(isShaliachTzibburProvider),
+          (v) => ref.read(isShaliachTzibburProvider.notifier).set(v),
+        );
+      case 'inline_toggle_kohanim':
+        return (
+          'יש כהנים',
+          !ref.watch(einKohanumProvider),
+          (v) => ref.read(einKohanumProvider.notifier).set(!v),
+        );
+      default:
+        return ('', false, (_) {});
+    }
+  }
+}
+
+const _inlineToggleIds = {
+  'inline_toggle_tallit_gadol',
+  'inline_toggle_shaliach_tzibbur',
+  'inline_toggle_kohanim',
+};
+
 class PrayerTextWidget extends ConsumerWidget {
   const PrayerTextWidget({super.key, required this.segment});
 
@@ -34,6 +110,11 @@ class PrayerTextWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // Inline toggle markers render as compact toggle rows, not prayer text.
+    if (_inlineToggleIds.contains(segment.id)) {
+      return _PrayerInlineToggle(segmentId: segment.id);
+    }
+
     final factor = ref.watch(fontSizeFactorProvider);
     final showLabels = ref.watch(showSegmentLabelsProvider);
     final label = segmentLabel(segment.id);
