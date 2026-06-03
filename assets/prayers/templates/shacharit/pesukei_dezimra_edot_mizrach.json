@@ -54,13 +54,6 @@
       "allowed_nusach": []
     },
     {
-      "segment_id": "yehi_chasdecha",
-      "condition_flags": [],
-      "exclude_flags": [],
-      "optional": false,
-      "allowed_nusach": []
-    },
-    {
       "segment_id": "ashrei",
       "condition_flags": [],
       "exclude_flags": [],
