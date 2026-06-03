@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'package:siddur_am_israel_chai/domain/entities/assembled_segment.dart';
 import 'package:siddur_am_israel_chai/domain/entities/omer_day.dart';
@@ -34,7 +35,9 @@ class PrayerTextWidget extends ConsumerWidget {
     final factor = ref.watch(fontSizeFactorProvider);
     final showLabels = ref.watch(showSegmentLabelsProvider);
     final label = segmentLabel(segment.id);
-    final bodyStyle = TextStyle(
+    // Explicit font family avoids the TextSpan inheritance issue that prevents
+    // theme-level font from reaching RichText leaf spans.
+    final bodyStyle = GoogleFonts.frankRuhlLibre(
       fontSize: 22 * factor,
       height: 1.9,
       color: Colors.black87,
@@ -61,7 +64,7 @@ class PrayerTextWidget extends ConsumerWidget {
             Text(
               label,
               textDirection: TextDirection.rtl,
-              style: TextStyle(
+              style: GoogleFonts.frankRuhlLibre(
                 fontSize: 14 * factor,
                 fontWeight: FontWeight.w700,
                 color: AppColors.primary,
@@ -109,13 +112,13 @@ class _OptionalSegmentTileState extends State<_OptionalSegmentTile> {
 
   @override
   Widget build(BuildContext context) {
-    final headerStyle = TextStyle(
+    final headerStyle = GoogleFonts.frankRuhlLibre(
       fontSize: 14 * widget.factor,
       fontWeight: FontWeight.w700,
       color: AppColors.primary,
       letterSpacing: 0.5,
     );
-    final hintStyle = TextStyle(
+    final hintStyle = GoogleFonts.frankRuhlLibre(
       fontSize: 12 * widget.factor,
       fontWeight: FontWeight.w400,
       color: AppColors.primary.withValues(alpha: 0.6),
