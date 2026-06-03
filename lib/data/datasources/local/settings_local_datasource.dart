@@ -15,6 +15,7 @@ class SettingsLocalDatasource {
   static const _kFontSize = 'v1.settings.font_size_factor';
   static const _kSeenBanner = 'v1.settings.seen_banner';
   static const _kShowLabels = 'v1.settings.show_labels';
+  static const _kExpandedSegments = 'v1.settings.expanded_segments';
 
   String? readNusach() => _prefs.getString(_kNusach);
   Future<void> writeNusach(String v) => _prefs.setString(_kNusach, v);
@@ -39,4 +40,14 @@ class SettingsLocalDatasource {
 
   bool? readShowLabels() => _prefs.getBool(_kShowLabels);
   Future<void> writeShowLabels(bool v) => _prefs.setBool(_kShowLabels, v);
+
+  /// Returns the set of optional segment IDs the user has chosen to keep open.
+  Set<String> readExpandedSegments() {
+    final raw = _prefs.getString(_kExpandedSegments) ?? '';
+    if (raw.isEmpty) return {};
+    return raw.split(',').where((s) => s.isNotEmpty).toSet();
+  }
+
+  Future<void> writeExpandedSegments(Set<String> ids) =>
+      _prefs.setString(_kExpandedSegments, ids.join(','));
 }

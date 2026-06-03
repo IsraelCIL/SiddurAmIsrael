@@ -78,4 +78,11 @@ class SettingsRepositoryImpl implements ISettingsRepository {
 
   @override
   Future<void> setShowSegmentLabels(bool value) => _ds.writeShowLabels(value);
+
+  @override
+  Set<String> getExpandedSegments() => _ds.readExpandedSegments();
+
+  @override
+  Future<void> setExpandedSegments(Set<String> ids) =>
+      _ds.writeExpandedSegments(ids);
 }
