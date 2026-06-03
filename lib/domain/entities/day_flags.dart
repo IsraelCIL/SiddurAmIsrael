@@ -344,4 +344,11 @@ abstract final class DayFlag {
   // Middot inside Tachanun / Selichot. Default true in UserContext —
   // user toggles off when davening b'yechidut.
   static const withMinyan = 'with_minyan';
+
+  // ── Service identity ─────────────────────────────────────────────────────
+  // Injected by the service-specific providers (shacharitProvider etc.) to
+  // allow segments to condition on which tefila is being assembled.
+  // "כי שם ה' אקרא" is said only at Mincha and Musaf, not Shacharit.
+  static const serviceShacharit = 'service_shacharit';
+  static const serviceMincha = 'service_mincha';
 }

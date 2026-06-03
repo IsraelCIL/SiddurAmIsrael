@@ -288,7 +288,10 @@ UserContext _ctxWithExtraFlags(UserContext base, Iterable<String> extra) {
 
 final shacharitProvider = FutureProvider<List<AssembledSegment>>((ref) {
   final assembler = ref.watch(prayerAssemblerProvider);
-  final ctx = ref.watch(userContextProvider);
+  final baseCtx = ref.watch(userContextProvider);
+  // Inject service_shacharit so segments that must not appear at Shacharit
+  // (e.g. "כי שם ה' אקרא") can use exclude_flags: [service_shacharit].
+  final ctx = _ctxWithExtraFlags(baseCtx, [DayFlag.serviceShacharit]);
   return assembler.assemble(
     templateId: 'shacharit_${ctx.nusach}',
     userContext: ctx,
@@ -302,7 +305,10 @@ final minchaProvider = FutureProvider<List<AssembledSegment>>((ref) {
   // (and EM's Tisha B'Av chatima) only enter the bracha at Mincha.
   final ctx = _ctxWithExtraFlags(
     baseCtx,
-    [if (baseCtx.activeFlags.contains('tisha_beav')) 'tisha_beav_mincha'],
+    [
+      DayFlag.serviceMincha,
+      if (baseCtx.activeFlags.contains('tisha_beav')) 'tisha_beav_mincha',
+    ],
   );
   return assembler.assemble(templateId: 'mincha', userContext: ctx);
 });

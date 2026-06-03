@@ -33,16 +33,16 @@
       "allowed_nusach": []
     },
     {
-      "segment_id": "shir_hamaalot_lulei",
+      "sub_template_id": "shir_shel_yom",
       "condition_flags": [],
       "exclude_flags": [
-        "skip_tachanun"
+        "musaf_content"
       ],
       "optional": false,
       "allowed_nusach": []
     },
     {
-      "sub_template_id": "shir_shel_yom",
+      "segment_id": "hoshienu",
       "condition_flags": [],
       "exclude_flags": [
         "musaf_content"

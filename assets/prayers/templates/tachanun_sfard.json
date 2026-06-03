@@ -8,7 +8,7 @@
         "with_minyan"
       ],
       "exclude_flags": [],
-      "optional": true,
+      "optional": false,
       "allowed_nusach": []
     },
     {

@@ -27,6 +27,13 @@
       "allowed_nusach": []
     },
     {
+      "segment_id": "hoshienu",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
       "segment_id": "psalm_030",
       "condition_flags": [
         "chanukah"
@@ -73,6 +80,15 @@
       "exclude_flags": [],
       "optional": false,
       "allowed_nusach": []
+    },
+    {
+      "segment_id": "psukim_acharei_tanya",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": [
+        "sfard"
+      ]
     },
     {
       "sub_template_id": "kaddish_derabanan",
