@@ -34,6 +34,10 @@ class _PrayerInlineToggle extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // Tallit toggle: segmented control (not a simple on/off switch)
+    if (segmentId == 'inline_toggle_tallit_gadol') {
+      return _buildTallitSegmented(ref);
+    }
     final (label, value, onChanged) = _resolve(ref);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
@@ -49,7 +53,7 @@ class _PrayerInlineToggle extends ConsumerWidget {
                 child: Text(
                   label,
                   textDirection: TextDirection.rtl,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 14,
                     color: AppColors.primaryDarker,
                     fontWeight: FontWeight.w600,
@@ -71,14 +75,48 @@ class _PrayerInlineToggle extends ConsumerWidget {
     );
   }
 
+  Widget _buildTallitSegmented(WidgetRef ref) {
+    final isGadol = ref.watch(wearsTallitGadolProvider);
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+      child: Center(
+        child: SegmentedButton<bool>(
+          segments: const [
+            // RTL: first segment appears on the RIGHT
+            ButtonSegment<bool>(
+              value: true,
+              label: Text('עטיפת טלית', style: TextStyle(fontSize: 13)),
+            ),
+            ButtonSegment<bool>(
+              value: false,
+              label: Text('ברכת ציצית', style: TextStyle(fontSize: 13)),
+            ),
+          ],
+          selected: {isGadol},
+          onSelectionChanged: (Set<bool> s) =>
+              ref.read(wearsTallitGadolProvider.notifier).set(s.first),
+          style: ButtonStyle(
+            foregroundColor: WidgetStateProperty.resolveWith((states) =>
+                states.contains(WidgetState.selected)
+                    ? Colors.white
+                    : AppColors.primary),
+            backgroundColor: WidgetStateProperty.resolveWith((states) =>
+                states.contains(WidgetState.selected)
+                    ? AppColors.primary
+                    : AppColors.surface),
+            side: WidgetStatePropertyAll(
+                BorderSide(color: AppColors.primary)),
+          ),
+        ),
+      ),
+    );
+  }
+
   (String, bool, void Function(bool)) _resolve(WidgetRef ref) {
     switch (segmentId) {
       case 'inline_toggle_tallit_gadol':
-        return (
-          'מתעטף בטלית גדול',
-          ref.watch(wearsTallitGadolProvider),
-          (v) => ref.read(wearsTallitGadolProvider.notifier).set(v),
-        );
+        // Rendered as segmented control (see _buildInlineToggle override below)
+        return ('', false, (_) {});
       case 'inline_toggle_shaliach_tzibbur':
         return (
           'אני שליח ציבור',

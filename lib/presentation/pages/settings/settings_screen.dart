@@ -27,10 +27,7 @@ class SettingsScreen extends ConsumerWidget {
     final purimDate = ref.watch(purimDateProvider);
     final fontFactor = ref.watch(fontSizeFactorProvider);
     final showLabels = ref.watch(showSegmentLabelsProvider);
-    final wearsTallitGadol = ref.watch(wearsTallitGadolProvider);
-    final isShaliachTzibbur = ref.watch(isShaliachTzibburProvider);
-    final einKohanim = ref.watch(einKohanumProvider);
-    final isAshkenazOrSfard = nusach == 'ashkenaz' || nusach == 'sfard';
+    // Tallit / shaliach tzibbur / kohanim toggles are now inline in the prayer screen.
 
     return Directionality(
       textDirection: TextDirection.rtl,
@@ -89,30 +86,15 @@ class SettingsScreen extends ConsumerWidget {
 
             _SectionHeader(title: 'מיקום'),
             SwitchListTile(
+              title: const Text('אני בארץ ישראל'),
               value: inIsrael,
               onChanged: (v) =>
                   ref.read(isInIsraelProvider.notifier).set(v),
             ),
 
             _SectionHeader(title: 'תפילה'),
-            if (isAshkenazOrSfard)
-              SwitchListTile(
-                subtitle: const Text('לטלית קטן לחץ'),
-                value: wearsTallitGadol,
-                onChanged: (v) =>
-                    ref.read(wearsTallitGadolProvider.notifier).set(v),
-              ),
             SwitchListTile(
-              value: isShaliachTzibbur,
-              onChanged: (v) =>
-                  ref.read(isShaliachTzibburProvider.notifier).set(v),
-            ),
-            SwitchListTile(
-              value: einKohanim,
-              onChanged: (v) =>
-                  ref.read(einKohanumProvider.notifier).set(v),
-            ),
-            SwitchListTile(
+              title: const Text('מתפלל במניין'),
               value: withMinyan,
               onChanged: (v) =>
                   ref.read(withMinyanProvider.notifier).set(v),
