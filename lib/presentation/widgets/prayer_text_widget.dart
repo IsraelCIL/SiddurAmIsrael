@@ -77,36 +77,45 @@ class _PrayerInlineToggle extends ConsumerWidget {
 
   Widget _buildTallitSegmented(WidgetRef ref) {
     final isGadol = ref.watch(wearsTallitGadolProvider);
+    final activeStyle = const TextStyle(
+      fontSize: 14,
+      fontWeight: FontWeight.w700,
+      color: AppColors.primaryDarker,
+    );
+    final inactiveStyle = TextStyle(
+      fontSize: 13,
+      color: AppColors.primaryDarker.withValues(alpha: 0.45),
+    );
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
       child: Center(
-        child: SegmentedButton<bool>(
-          segments: const [
-            // RTL: first segment appears on the RIGHT
-            ButtonSegment<bool>(
-              value: true,
-              label: Text('עטיפת טלית', style: TextStyle(fontSize: 13)),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          textDirection: TextDirection.rtl,
+          children: [
+            // Right label (RTL first = visual right): עטיפת טלית
+            GestureDetector(
+              onTap: () =>
+                  ref.read(wearsTallitGadolProvider.notifier).set(true),
+              child: Text('עטיפת טלית',
+                  style: isGadol ? activeStyle : inactiveStyle),
             ),
-            ButtonSegment<bool>(
-              value: false,
-              label: Text('ברכת ציצית', style: TextStyle(fontSize: 13)),
+            const SizedBox(width: 8),
+            Switch(
+              value: isGadol,
+              onChanged: (v) =>
+                  ref.read(wearsTallitGadolProvider.notifier).set(v),
+              activeColor: AppColors.primary,
+            ),
+            const SizedBox(width: 8),
+            // Left label: ברכת ציצית
+            GestureDetector(
+              onTap: () =>
+                  ref.read(wearsTallitGadolProvider.notifier).set(false),
+              child: Text('ברכת ציצית',
+                  style: !isGadol ? activeStyle : inactiveStyle),
             ),
           ],
-          selected: {isGadol},
-          onSelectionChanged: (Set<bool> s) =>
-              ref.read(wearsTallitGadolProvider.notifier).set(s.first),
-          style: ButtonStyle(
-            foregroundColor: WidgetStateProperty.resolveWith((states) =>
-                states.contains(WidgetState.selected)
-                    ? Colors.white
-                    : AppColors.primary),
-            backgroundColor: WidgetStateProperty.resolveWith((states) =>
-                states.contains(WidgetState.selected)
-                    ? AppColors.primary
-                    : AppColors.surface),
-            side: WidgetStatePropertyAll(
-                BorderSide(color: AppColors.primary)),
-          ),
         ),
       ),
     );
