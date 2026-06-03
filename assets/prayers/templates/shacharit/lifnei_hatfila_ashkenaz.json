@@ -78,16 +78,17 @@
         "wears_tallit_gadol"
       ],
       "exclude_flags": [],
-      "optional": true,
+      "optional": false,
       "allowed_nusach": []
     },
     {
       "segment_id": "birkat_tzitzit_katan",
       "condition_flags": [],
       "exclude_flags": [
+        "wears_tallit_gadol",
         "wears_tallit_gadol"
       ],
-      "optional": true,
+      "optional": false,
       "allowed_nusach": []
     },
     {
