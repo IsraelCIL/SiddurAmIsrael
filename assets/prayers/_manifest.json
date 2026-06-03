@@ -541,7 +541,8 @@
       "yishtabach": "assets/prayers/shacharit/pesukei_dezimra/nusach/sfard/yishtabach.json",
       "yotzer_or": "assets/prayers/shacharit/birkot_kriat_shema/nusach/sfard/yotzer_or.json",
       "zokef_kefufim": "assets/prayers/shacharit/lifnei_hatfila/nusach/sfard/zokef_kefufim.json",
-      "psukim_acharei_tanya": "assets/prayers/shacharit/sof_hatfila/nusach/sfard/psukim_acharei_tanya.json"
+      "psukim_acharei_tanya": "assets/prayers/shacharit/sof_hatfila/nusach/sfard/psukim_acharei_tanya.json",
+      "al_tira": "assets/prayers/shared_global/nusach/sfard/al_tira.json"
     }
   },
   "templates": {

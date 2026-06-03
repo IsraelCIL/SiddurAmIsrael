@@ -68,6 +68,15 @@
       "allowed_nusach": []
     },
     {
+      "segment_id": "psukim_acharei_tanya",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": [
+        "sfard"
+      ]
+    },
+    {
       "segment_id": "tana_devei_eliyahu",
       "condition_flags": [],
       "exclude_flags": [],
@@ -80,15 +89,6 @@
       "exclude_flags": [],
       "optional": false,
       "allowed_nusach": []
-    },
-    {
-      "segment_id": "psukim_acharei_tanya",
-      "condition_flags": [],
-      "exclude_flags": [],
-      "optional": false,
-      "allowed_nusach": [
-        "sfard"
-      ]
     },
     {
       "sub_template_id": "kaddish_derabanan",
@@ -123,6 +123,15 @@
       "exclude_flags": [],
       "optional": false,
       "allowed_nusach": []
+    },
+    {
+      "segment_id": "al_tira",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": true,
+      "allowed_nusach": [
+        "sfard"
+      ]
     },
     {
       "sub_template_id": "kaddish_yatom",
