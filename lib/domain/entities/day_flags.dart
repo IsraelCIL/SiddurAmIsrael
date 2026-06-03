@@ -366,7 +366,12 @@ abstract final class DayFlag {
   // yom_tov_next_week: a Yom Tov from the excluded list falls within the
   // next Mon–Fri after this Motzaei Shabbat (Ashkenaz/Sfard only).
   // When set, the Vihi Noam section is shown as an optional accordion.
+  // yom_tov_next_week: a blocking YT falls on a weekday (Mon–Fri) in the
+  // upcoming week → Vihi Noam is omitted entirely for Ashkenaz/Sfard.
   static const yomTovNextWeek = 'yom_tov_next_week';
+  // yom_tov_next_shabbat: blocking YT falls on the very next Shabbat →
+  // Vihi Noam is shown but as an optional accordion for Ashkenaz/Sfard.
+  static const yomTovNextShabbat = 'yom_tov_next_shabbat';
 
   // ── Prayer-role flags (user-toggled) ─────────────────────────────────────
   // is_shaliach_tzibbur: the user is the cantor (shaliach tzibbur).

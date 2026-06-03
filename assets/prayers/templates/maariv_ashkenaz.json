@@ -97,7 +97,9 @@
         "motzaei_shabbat",
         "with_minyan"
       ],
-      "exclude_flags": [],
+      "exclude_flags": [
+        "yom_tov_next_week"
+      ],
       "optional": false,
       "allowed_nusach": []
     },
@@ -106,7 +108,10 @@
       "condition_flags": [
         "motzaei_shabbat"
       ],
-      "exclude_flags": [],
+      "exclude_flags": [
+        "yom_tov_next_week",
+        "yom_tov_next_shabbat"
+      ],
       "optional": false,
       "allowed_nusach": []
     },
@@ -115,7 +120,10 @@
       "condition_flags": [
         "motzaei_shabbat"
       ],
-      "exclude_flags": [],
+      "exclude_flags": [
+        "yom_tov_next_week",
+        "yom_tov_next_shabbat"
+      ],
       "optional": false,
       "allowed_nusach": []
     },
@@ -124,8 +132,41 @@
       "condition_flags": [
         "motzaei_shabbat"
       ],
-      "exclude_flags": [],
+      "exclude_flags": [
+        "yom_tov_next_week",
+        "yom_tov_next_shabbat"
+      ],
       "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "vihi_noam_before_psalm",
+      "condition_flags": [
+        "motzaei_shabbat",
+        "yom_tov_next_shabbat"
+      ],
+      "exclude_flags": [],
+      "optional": true,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "psalm_091",
+      "condition_flags": [
+        "motzaei_shabbat",
+        "yom_tov_next_shabbat"
+      ],
+      "exclude_flags": [],
+      "optional": true,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "vihi_noam_after_psalm",
+      "condition_flags": [
+        "motzaei_shabbat",
+        "yom_tov_next_shabbat"
+      ],
+      "exclude_flags": [],
+      "optional": true,
       "allowed_nusach": []
     },
     {
@@ -134,7 +175,9 @@
         "motzaei_shabbat",
         "with_minyan"
       ],
-      "exclude_flags": [],
+      "exclude_flags": [
+        "yom_tov_next_week"
+      ],
       "optional": false,
       "allowed_nusach": []
     },
