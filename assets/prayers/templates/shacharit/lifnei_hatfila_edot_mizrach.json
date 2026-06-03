@@ -81,9 +81,7 @@
     },
     {
       "segment_id": "seder_tzitzit_gadol_em",
-      "condition_flags": [
-        "wears_tallit_gadol"
-      ],
+      "condition_flags": [],
       "exclude_flags": [],
       "optional": false,
       "allowed_nusach": []
