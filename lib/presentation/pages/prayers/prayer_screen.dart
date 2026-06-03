@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:siddur_am_israel_chai/domain/entities/assembled_segment.dart';
@@ -230,11 +231,18 @@ class _PrayerScreenState extends ConsumerState<PrayerScreen> {
                       data: (segments) {
                         _updateCache(segments);
                         final items = _cachedItems!;
-                        // Eager (non-lazy) list so every GlobalKey is always
-                        // in the widget tree — required for reliable nav scroll.
-                        return SliverList(
-                          delegate: SliverChildListDelegate(
-                            [for (final item in items) item.build(context)],
+                        // Truly eager: a Column inside SliverToBoxAdapter keeps
+                        // EVERY child (and its nav GlobalKey) in the element
+                        // tree at all times — unlike SliverList, which is lazy
+                        // and only builds children near the viewport. This is
+                        // required so Scrollable.ensureVisible can always reach
+                        // any nav target accurately, regardless of distance.
+                        return SliverToBoxAdapter(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              for (final item in items) item.build(context),
+                            ],
                           ),
                         );
                       },
@@ -625,36 +633,26 @@ class _NavSheet extends StatelessWidget {
     }
 
     final ctx = entry.key.currentContext;
-    if (ctx != null && ctx.mounted) {
-      await Scrollable.ensureVisible(
-        ctx,
-        duration: const Duration(milliseconds: 400),
-        curve: Curves.easeInOut,
-        alignment: 0.0,
-      );
-      return;
-    }
+    if (ctx == null || !ctx.mounted) return;
 
-    // Item off-screen — use item-list fraction for a better position estimate.
-    final maxExtent = scrollController.position.maxScrollExtent;
-    final fraction = entry.totalItems > 1
-        ? entry.itemIndex / entry.totalItems
-        : entries.indexOf(entry) / entries.length.clamp(1, 9999);
+    // Compute the exact scroll offset that brings the target to the top of the
+    // viewport, then subtract the pinned app bar's collapsed height so the
+    // section lands just BELOW the app bar instead of behind it.
+    // Because the list is rendered eagerly (Column in SliverToBoxAdapter),
+    // every nav target's render object is always available — no estimation.
+    final box = ctx.findRenderObject();
+    if (box is! RenderBox) return;
+    final viewport = RenderAbstractViewport.of(box);
+    final revealOffset = viewport.getOffsetToReveal(box, 0.0).offset;
+    const pinnedAppBarHeight = kToolbarHeight;
+    final target = (revealOffset - pinnedAppBarHeight)
+        .clamp(0.0, scrollController.position.maxScrollExtent);
+
     await scrollController.animateTo(
-      maxExtent * fraction,
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.easeOut,
+      target,
+      duration: const Duration(milliseconds: 400),
+      curve: Curves.easeInOut,
     );
-    await Future.delayed(const Duration(milliseconds: 150));
-    final ctx2 = entry.key.currentContext;
-    if (ctx2 != null && ctx2.mounted) {
-      Scrollable.ensureVisible(
-        ctx2,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
-        alignment: 0.0,
-      );
-    }
   }
 
   @override
