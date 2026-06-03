@@ -128,9 +128,26 @@ class _PrayerScreenState extends ConsumerState<PrayerScreen> {
 
   void _updateCache(List<AssembledSegment> segments) {
     if (identical(segments, _lastSegments)) return;
+    // Save scroll offset before the list rebuilds (e.g. after inline toggle).
+    final savedOffset = _scrollController.hasClients &&
+            _scrollController.position.hasContentDimensions
+        ? _scrollController.offset
+        : 0.0;
     _lastSegments = segments;
     _cachedItems = _buildListItems(segments);
     _cachedNavEntries = _buildNavEntries(_cachedItems!);
+    // Restore scroll position after layout so inline toggles don't jump.
+    if (savedOffset > 0) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (_scrollController.hasClients &&
+            _scrollController.position.hasContentDimensions) {
+          _scrollController.jumpTo(
+            savedOffset.clamp(
+                0.0, _scrollController.position.maxScrollExtent),
+          );
+        }
+      });
+    }
   }
 
   void _showNavSheet() {
