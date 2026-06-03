@@ -39,15 +39,6 @@
       ]
     },
     {
-      "segment_id": "amidah_kedushah_hashem",
-      "condition_flags": [],
-      "exclude_flags": [],
-      "allowed_nusach": [
-        "ashkenaz",
-        "edot_mizrach"
-      ]
-    },
-    {
       "segment_id": "amidah_musaf_intermediate_rc",
       "condition_flags": [
         "rosh_chodesh"
