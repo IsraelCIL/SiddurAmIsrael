@@ -184,6 +184,9 @@ class _PrayerScreenState extends ConsumerState<PrayerScreen> {
                       ),
                     ),
                     prayerAsync.when(
+                      // Keep showing previous content while inline toggles
+                      // trigger a provider refresh — prevents scroll jumping.
+                      skipLoadingOnRefresh: true,
                       loading: () => const SliverFillRemaining(
                         child: Center(
                           child: CircularProgressIndicator(
