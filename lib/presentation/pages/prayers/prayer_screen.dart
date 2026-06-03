@@ -201,8 +201,12 @@ class _PrayerScreenState extends ConsumerState<PrayerScreen> {
                       ),
                     ),
                     prayerAsync.when(
-                      // Keep showing previous content while inline toggles
-                      // trigger a provider refresh — prevents scroll jumping.
+                      // Inline toggles change a watched provider → the prayer
+                      // FutureProvider RELOADS (dependency change), not just
+                      // refreshes. skipLoadingOnReload keeps the previous
+                      // content visible so the SliverList is never replaced by
+                      // the loading spinner — which is what reset scroll to top.
+                      skipLoadingOnReload: true,
                       skipLoadingOnRefresh: true,
                       loading: () => const SliverFillRemaining(
                         child: Center(
