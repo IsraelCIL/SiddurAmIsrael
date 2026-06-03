@@ -35,7 +35,7 @@ class PrayerTextWidget extends ConsumerWidget {
     final factor = ref.watch(fontSizeFactorProvider);
     final showLabels = ref.watch(showSegmentLabelsProvider);
     final label = segmentLabel(segment.id);
-    final bodyStyle = GoogleFonts.rubik(
+    final bodyStyle = GoogleFonts.notoSerifHebrew(
       fontSize: 22 * factor,
       height: 1.5,
       color: Colors.black87,
