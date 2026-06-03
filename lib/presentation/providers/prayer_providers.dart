@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:kosher_dart/kosher_dart.dart';
 import 'package:siddur_am_israel_chai/core/calendar/hebrew_date.dart';
 import 'package:siddur_am_israel_chai/data/datasources/local/gra_ssy_datasource.dart';
 import 'package:siddur_am_israel_chai/data/datasources/local/kriah_datasource.dart';
@@ -371,14 +372,48 @@ final minchaProvider = FutureProvider<List<AssembledSegment>>((ref) {
   return assembler.assemble(templateId: 'mincha', userContext: ctx);
 });
 
+/// Checks whether any of the Yom Tovim that block Vihi Noam for Ashkenaz/
+/// Sfard fall within the next 6 days (Sun–Fri) or on the next Shabbat
+/// (+7 days). Returns a record of (onWeekday, onShabbat).
+({bool onWeekday, bool onShabbat}) _viHiNoamYomTovCheck(
+    DateTime motzaei, bool inIsrael) {
+  const blockedMonths = {
+    JewishDate.TISHREI: [1, 2, 10, 15, 22], // RH, YK, Sukkot1, SA
+    JewishDate.NISSAN: [15, 21],             // Pesach1, Pesach7
+  };
+
+  for (var delta = 1; delta <= 7; delta++) {
+    final d = motzaei.add(Duration(days: delta));
+    final cal = JewishCalendar.fromDateTime(d);
+    cal.inIsrael = inIsrael;
+    final m = cal.getJewishMonth();
+    final day = cal.getJewishDayOfMonth();
+    final blocked = blockedMonths[m];
+    if (blocked != null && blocked.contains(day)) {
+      if (delta == 7) return (onWeekday: false, onShabbat: true); // next Shabbat
+      return (onWeekday: true, onShabbat: false); // weekday
+    }
+  }
+  return (onWeekday: false, onShabbat: false);
+}
+
 final maarivProvider = FutureProvider<List<AssembledSegment>>((ref) {
   final assembler = ref.watch(prayerAssemblerProvider);
   final baseCtx = ref.watch(userContextProvider);
-  // Inject motzaei_shabbat when viewing Maariv on Shabbat — this gates
-  // Atah Honantanu in amidah_daat and the Vihi Noam section.
-  final extra = [
-    if (baseCtx.activeFlags.contains(DayFlag.shabbat)) DayFlag.motzaeiShabbat,
-  ];
+  final isShabbat = baseCtx.activeFlags.contains(DayFlag.shabbat);
+  final extra = <String>[];
+  if (isShabbat) {
+    extra.add(DayFlag.motzaeiShabbat);
+    // For A/S: check if a blocking Yom Tov falls in the next week.
+    if (baseCtx.nusach == 'ashkenaz' || baseCtx.nusach == 'sfard') {
+      final now = kDebugMode
+          ? (ref.read(devDateTimeOverrideProvider) ?? DateTime.now())
+          : DateTime.now();
+      final check = _viHiNoamYomTovCheck(now, baseCtx.isInIsrael);
+      if (check.onWeekday) extra.add(DayFlag.yomTovNextWeek);
+      if (check.onShabbat) extra.add('yom_tov_next_shabbat');
+    }
+  }
   final ctx = extra.isEmpty ? baseCtx : _ctxWithExtraFlags(baseCtx, extra);
   return assembler.assemble(
     templateId: 'maariv_${ctx.nusach}',

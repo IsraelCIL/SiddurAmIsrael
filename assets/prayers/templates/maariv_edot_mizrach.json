@@ -109,7 +109,9 @@
         "motzaei_shabbat",
         "with_minyan"
       ],
-      "exclude_flags": [],
+      "exclude_flags": [
+        "tisha_beav"
+      ],
       "optional": false,
       "allowed_nusach": []
     },
@@ -118,7 +120,9 @@
       "condition_flags": [
         "motzaei_shabbat"
       ],
-      "exclude_flags": [],
+      "exclude_flags": [
+        "tisha_beav"
+      ],
       "optional": false,
       "allowed_nusach": []
     },
@@ -127,7 +131,9 @@
       "condition_flags": [
         "motzaei_shabbat"
       ],
-      "exclude_flags": [],
+      "exclude_flags": [
+        "tisha_beav"
+      ],
       "optional": false,
       "allowed_nusach": []
     },
@@ -136,7 +142,9 @@
       "condition_flags": [
         "motzaei_shabbat"
       ],
-      "exclude_flags": [],
+      "exclude_flags": [
+        "tisha_beav"
+      ],
       "optional": false,
       "allowed_nusach": []
     },
@@ -146,7 +154,9 @@
         "motzaei_shabbat",
         "with_minyan"
       ],
-      "exclude_flags": [],
+      "exclude_flags": [
+        "tisha_beav"
+      ],
       "optional": false,
       "allowed_nusach": []
     },
