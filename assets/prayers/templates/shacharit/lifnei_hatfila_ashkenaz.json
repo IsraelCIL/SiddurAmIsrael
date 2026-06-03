@@ -66,6 +66,13 @@
       "allowed_nusach": []
     },
     {
+      "segment_id": "inline_toggle_tallit_gadol",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
       "segment_id": "seder_tzitzit_gadol",
       "condition_flags": [
         "wears_tallit_gadol"

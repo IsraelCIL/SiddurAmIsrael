@@ -10,6 +10,13 @@
       "allowed_nusach": []
     },
     {
+      "segment_id": "inline_toggle_shaliach_tzibbur",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
       "segment_id": "amidah_avot",
       "condition_flags": [],
       "exclude_flags": [],
@@ -169,6 +176,17 @@
       "segment_id": "amidah_modim",
       "condition_flags": [],
       "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "inline_toggle_kohanim",
+      "condition_flags": [
+        "with_minyan"
+      ],
+      "exclude_flags": [
+        "tefila_mincha"
+      ],
       "optional": false,
       "allowed_nusach": []
     },
