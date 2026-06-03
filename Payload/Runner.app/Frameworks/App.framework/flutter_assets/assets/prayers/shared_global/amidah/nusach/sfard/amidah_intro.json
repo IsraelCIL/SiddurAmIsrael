@@ -1,7 +1,0 @@
-{
-  "id": "amidah_intro",
-  "sections": [
-    {"text": "(כִּי שֵׁם יְהֹוָה אֶקְרָא הָבוּ גֹֽדֶל לֵאלֹהֵֽינוּ:)", "condition_flags": [], "exclude_flags": []},
-    {"text": "אֲדֹנָי שְׂפָתַי תִּפְתָּח וּפִי יַגִּיד תְּהִלָּתֶֽךָ:", "condition_flags": [], "exclude_flags": []}
-  ]
-}
