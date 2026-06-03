@@ -357,4 +357,13 @@ abstract final class DayFlag {
   // Currently not auto-detected — requires explicit user toggle.
   // Used to gate 'ואני זאת בריתי' in ובא לציון and similar passages.
   static const beitAvel = 'beit_avel';
+
+  // ── Prayer-role flags (user-toggled) ─────────────────────────────────────
+  // is_shaliach_tzibbur: the user is the cantor (shaliach tzibbur).
+  // When set: modim_derabanan is excluded (chazzan says full modim instead).
+  static const isShaliachTzibbur = 'is_shaliach_tzibbur';
+
+  // ein_kohanim: there are no kohanim present to duchen.
+  // When set: birkat_kohanim_bracha is replaced by ein_kohanim_bracha.
+  static const einKohanim = 'ein_kohanim';
 }

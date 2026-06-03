@@ -92,4 +92,17 @@ class SettingsRepositoryImpl implements ISettingsRepository {
   @override
   Future<void> setWearsTallitGadol(bool value) =>
       _ds.writeWearsTallitGadol(value);
+
+  @override
+  bool getIsShaliachTzibbur() => _ds.readIsShaliachTzibbur();
+
+  @override
+  Future<void> setIsShaliachTzibbur(bool value) =>
+      _ds.writeIsShaliachTzibbur(value);
+
+  @override
+  bool getEinKohanim() => _ds.readEinKohanim();
+
+  @override
+  Future<void> setEinKohanim(bool value) => _ds.writeEinKohanim(value);
 }

@@ -55,4 +55,13 @@ class SettingsLocalDatasource {
   bool readWearsTallitGadol() => _prefs.getBool(_kWearsTallitGadol) ?? true;
   Future<void> writeWearsTallitGadol(bool v) =>
       _prefs.setBool(_kWearsTallitGadol, v);
+
+  static const _kIsShaliachTzibbur = 'v1.settings.is_shaliach_tzibbur';
+  bool readIsShaliachTzibbur() => _prefs.getBool(_kIsShaliachTzibbur) ?? false;
+  Future<void> writeIsShaliachTzibbur(bool v) =>
+      _prefs.setBool(_kIsShaliachTzibbur, v);
+
+  static const _kEinKohanim = 'v1.settings.ein_kohanim';
+  bool readEinKohanim() => _prefs.getBool(_kEinKohanim) ?? false;
+  Future<void> writeEinKohanim(bool v) => _prefs.setBool(_kEinKohanim, v);
 }
