@@ -168,6 +168,13 @@
       ]
     },
     {
+      "segment_id": "yehi_ratzon_pre_elokai",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": true,
+      "allowed_nusach": []
+    },
+    {
       "segment_id": "amidah_conclusion",
       "condition_flags": [],
       "exclude_flags": [],
