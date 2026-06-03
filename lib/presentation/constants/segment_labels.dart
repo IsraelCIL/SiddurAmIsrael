@@ -92,6 +92,7 @@ const _segmentLabels = <String, String>{
   'emet_veyatziv': 'אמת ויציב',
   // ── Other morning segments ────────────────────────────────────────────────
   'beit_yaakov': 'בית יעקב',
+  'tefila_ledavid_ps86': 'תפילה לדוד',
   'petihat_eliyahu': 'פתיחת אליהו',
   'korbanot_mincha': 'קרבנות',
   // ── Shacharit structure ────────────────────────────────────────────────────
@@ -144,6 +145,8 @@ const _segmentLabels = <String, String>{
   'lulav_bracha': 'ברכת הלולב',
   // ── Post-amidah ────────────────────────────────────────────────────────────
   'uva_letzion': 'ובא לציון',
+  'uva_letzion_block': 'מ"יהוה ימלוך" עד "יגדיל תורה"',
+  'uva_letzion_closing': '',
   'avinu_malkeinu': 'אבינו מלכנו',
   'aleinu': 'עלינו לשבח',
   'aleinu_al_ken': '',
@@ -179,7 +182,6 @@ const _segmentLabels = <String, String>{
   'ssy_em_extra_day_after_yk': '',
   'shir_hamaalot_lulei': '',
   'shofar_elul': '',
-  'tefila_ledavid_ps86': '',
   // ── Maariv ─────────────────────────────────────────────────────────────────
   'maariv_aravim': 'מעריב ערבים',
   'maariv_ahavat_olam': 'אהבת עולם',

@@ -64,6 +64,15 @@
       "allowed_nusach": []
     },
     {
+      "sub_template_id": "chatzi_kaddish",
+      "condition_flags": [
+        "with_minyan"
+      ],
+      "exclude_flags": [
+        "skip_tachanun"
+      ]
+    },
+    {
       "segment_id": "lulav_lshem_yichud",
       "condition_flags": [
         "lulav_day"
@@ -565,6 +574,20 @@
       "condition_flags": [],
       "exclude_flags": [],
       "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "uva_letzion_block",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": true,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "uva_letzion_closing",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": true,
       "allowed_nusach": []
     },
     {
