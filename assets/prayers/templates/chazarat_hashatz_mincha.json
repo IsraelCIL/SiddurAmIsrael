@@ -47,13 +47,6 @@
       ]
     },
     {
-      "segment_id": "amidah_kedushah_hashem",
-      "condition_flags": [],
-      "exclude_flags": [],
-      "optional": false,
-      "allowed_nusach": []
-    },
-    {
       "segment_id": "amidah_daat",
       "condition_flags": [],
       "exclude_flags": [],
