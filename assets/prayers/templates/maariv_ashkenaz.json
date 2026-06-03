@@ -98,7 +98,8 @@
         "with_minyan"
       ],
       "exclude_flags": [
-        "yom_tov_next_week"
+        "yom_tov_next_week",
+        "tisha_beav"
       ],
       "optional": false,
       "allowed_nusach": []
@@ -110,7 +111,8 @@
       ],
       "exclude_flags": [
         "yom_tov_next_week",
-        "yom_tov_next_shabbat"
+        "yom_tov_next_shabbat",
+        "tisha_beav"
       ],
       "optional": false,
       "allowed_nusach": []
@@ -122,7 +124,8 @@
       ],
       "exclude_flags": [
         "yom_tov_next_week",
-        "yom_tov_next_shabbat"
+        "yom_tov_next_shabbat",
+        "tisha_beav"
       ],
       "optional": false,
       "allowed_nusach": []
@@ -134,7 +137,8 @@
       ],
       "exclude_flags": [
         "yom_tov_next_week",
-        "yom_tov_next_shabbat"
+        "yom_tov_next_shabbat",
+        "tisha_beav"
       ],
       "optional": false,
       "allowed_nusach": []
@@ -145,7 +149,9 @@
         "motzaei_shabbat",
         "yom_tov_next_shabbat"
       ],
-      "exclude_flags": [],
+      "exclude_flags": [
+        "tisha_beav"
+      ],
       "optional": true,
       "allowed_nusach": []
     },
@@ -155,7 +161,9 @@
         "motzaei_shabbat",
         "yom_tov_next_shabbat"
       ],
-      "exclude_flags": [],
+      "exclude_flags": [
+        "tisha_beav"
+      ],
       "optional": true,
       "allowed_nusach": []
     },
@@ -165,7 +173,9 @@
         "motzaei_shabbat",
         "yom_tov_next_shabbat"
       ],
-      "exclude_flags": [],
+      "exclude_flags": [
+        "tisha_beav"
+      ],
       "optional": true,
       "allowed_nusach": []
     },
@@ -176,7 +186,8 @@
         "with_minyan"
       ],
       "exclude_flags": [
-        "yom_tov_next_week"
+        "yom_tov_next_week",
+        "tisha_beav"
       ],
       "optional": false,
       "allowed_nusach": []
