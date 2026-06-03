@@ -191,16 +191,6 @@
       "allowed_nusach": []
     },
     {
-      "segment_id": "birkat_kohanim",
-      "condition_flags": [],
-      "exclude_flags": [
-        "tefila_mincha",
-        "ein_kohanim"
-      ],
-      "optional": false,
-      "allowed_nusach": []
-    },
-    {
       "segment_id": "ein_kohanim_bracha",
       "condition_flags": [
         "ein_kohanim"
@@ -216,16 +206,6 @@
       "condition_flags": [],
       "exclude_flags": [
         "tefila_mincha"
-      ],
-      "optional": false,
-      "allowed_nusach": []
-    },
-    {
-      "segment_id": "elokeinu_velohei_avoteinu",
-      "condition_flags": [],
-      "exclude_flags": [
-        "tefila_mincha",
-        "ein_kohanim"
       ],
       "optional": false,
       "allowed_nusach": []
