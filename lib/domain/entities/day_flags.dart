@@ -81,6 +81,10 @@ abstract final class DayFlag {
   static const purimKatan = 'purim_katan';
   static const shushanPurimKatan = 'shushan_purim_katan';
   static const erevPurim = 'erev_purim';
+  // purimSecondDay: user celebrates BOTH 14 and 15 Adar and today is the
+  // 15th (Shushan Purim). On this day A/S read megillah without blessings;
+  // EM does not say Al HaNisim.
+  static const purimSecondDay = 'purim_second_day';
   static const tuBishvat = 'tu_bishvat';
   static const pesachSheni = 'pesach_sheni';
   static const erevPesachSheni = 'erev_pesach_sheni';

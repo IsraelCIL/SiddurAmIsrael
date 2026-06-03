@@ -194,7 +194,12 @@
     "inline_toggle_kohanim": "assets/prayers/shared_global/common/inline_toggle_kohanim.json",
     "yehi_ratzon_pre_elokai": "assets/prayers/shared_global/amidah/common/yehi_ratzon_pre_elokai.json",
     "vihi_noam_before_psalm": "assets/prayers/maariv/lifnei_maariv/common/vihi_noam_before_psalm.json",
-    "vihi_noam_after_psalm": "assets/prayers/maariv/lifnei_maariv/common/vihi_noam_after_psalm.json"
+    "vihi_noam_after_psalm": "assets/prayers/maariv/lifnei_maariv/common/vihi_noam_after_psalm.json",
+    "megillah_brachot_lifnei": "assets/prayers/purim/common/megillah_brachot_lifnei.json",
+    "megillah_brachot_lifnei_shnei": "assets/prayers/purim/common/megillah_brachot_lifnei_shnei.json",
+    "megillah_esther": "assets/prayers/purim/common/megillah_esther.json",
+    "asher_henia": "assets/prayers/purim/common/asher_henia.json",
+    "shoshanat_yaakov": "assets/prayers/purim/common/shoshanat_yaakov.json"
   },
   "nusach": {
     "ashkenaz": {
@@ -306,7 +311,8 @@
       "yotzer_or": "assets/prayers/shacharit/birkot_kriat_shema/nusach/ashkenaz/yotzer_or.json",
       "zokef_kefufim": "assets/prayers/shacharit/lifnei_hatfila/nusach/ashkenaz/zokef_kefufim.json",
       "amidah_shalom_rav": "assets/prayers/shared_global/amidah/nusach/ashkenaz/amidah_shalom_rav.json",
-      "pitum_haketoreh_ashkenaz": "assets/prayers/shacharit/sof_hatfila/nusach/ashkenaz/pitum_haketoreh_ashkenaz.json"
+      "pitum_haketoreh_ashkenaz": "assets/prayers/shacharit/sof_hatfila/nusach/ashkenaz/pitum_haketoreh_ashkenaz.json",
+      "megillah_bracha_acharei": "assets/prayers/purim/nusach/ashkenaz/megillah_bracha_acharei.json"
     },
     "edot_mizrach": {
       "adon_olam": "assets/prayers/shacharit/lifnei_hatfila/nusach/edot_mizrach/adon_olam.json",
@@ -437,7 +443,9 @@
       "yishtabach": "assets/prayers/shacharit/pesukei_dezimra/nusach/edot_mizrach/yishtabach.json",
       "yotzer_or": "assets/prayers/shacharit/birkot_kriat_shema/nusach/edot_mizrach/yotzer_or.json",
       "zokef_kefufim": "assets/prayers/shacharit/lifnei_hatfila/nusach/edot_mizrach/zokef_kefufim.json",
-      "seder_tzitzit_gadol_em": "assets/prayers/shacharit/lifnei_hatfila/nusach/edot_mizrach/seder_tzitzit_gadol_em.json"
+      "seder_tzitzit_gadol_em": "assets/prayers/shacharit/lifnei_hatfila/nusach/edot_mizrach/seder_tzitzit_gadol_em.json",
+      "megillah_bracha_acharei": "assets/prayers/purim/nusach/edot_mizrach/megillah_bracha_acharei.json",
+      "arur_haman_em": "assets/prayers/purim/nusach/edot_mizrach/arur_haman_em.json"
     },
     "sfard": {
       "adon_olam": "assets/prayers/shacharit/lifnei_hatfila/nusach/sfard/adon_olam.json",
@@ -549,7 +557,8 @@
       "yotzer_or": "assets/prayers/shacharit/birkot_kriat_shema/nusach/sfard/yotzer_or.json",
       "zokef_kefufim": "assets/prayers/shacharit/lifnei_hatfila/nusach/sfard/zokef_kefufim.json",
       "psukim_acharei_tanya": "assets/prayers/shacharit/sof_hatfila/nusach/sfard/psukim_acharei_tanya.json",
-      "al_tira": "assets/prayers/shared_global/nusach/sfard/al_tira.json"
+      "al_tira": "assets/prayers/shared_global/nusach/sfard/al_tira.json",
+      "megillah_bracha_acharei": "assets/prayers/purim/nusach/sfard/megillah_bracha_acharei.json"
     }
   },
   "templates": {

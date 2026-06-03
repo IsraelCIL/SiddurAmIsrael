@@ -8,7 +8,9 @@
         "kriat_hatorah",
         "with_minyan"
       ],
-      "exclude_flags": [],
+      "exclude_flags": [
+        "purim"
+      ],
       "optional": false,
       "allowed_nusach": []
     },

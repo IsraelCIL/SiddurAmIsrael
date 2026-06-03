@@ -120,6 +120,12 @@ flutter:
     - assets/prayers/maariv/sefirat_haomer/nusach/sfard/
     - assets/prayers/maariv/sefirat_haomer/nusach/edot_mizrach/
 
+    # Purim
+    - assets/prayers/purim/common/
+    - assets/prayers/purim/nusach/ashkenaz/
+    - assets/prayers/purim/nusach/sfard/
+    - assets/prayers/purim/nusach/edot_mizrach/
+
     # Musaf
     - assets/prayers/musaf/common/
     - assets/prayers/musaf/amidah/common/
