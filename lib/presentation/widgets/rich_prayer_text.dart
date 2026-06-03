@@ -59,7 +59,7 @@ List<TextSpan> parsePrayerText(
 }
 
 TextStyle _fallbackLabel(TextStyle? base) => TextStyle(
-      fontSize: (base?.fontSize ?? 22) * 0.80,
+      fontSize: (base?.fontSize ?? 22) * (14.0 / 22.0),
       color: AppColors.primary,
       fontWeight: FontWeight.w700,
       height: (base?.height ?? 1.5),
@@ -85,7 +85,7 @@ class RichPrayerText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final labelStyle = TextStyle(
-      fontSize: style.fontSize != null ? style.fontSize! * 0.80 : 18,
+      fontSize: style.fontSize != null ? style.fontSize! * (14.0 / 22.0) : 14,
       color: AppColors.primary,
       fontWeight: FontWeight.w700,
       height: style.height,
