@@ -1,6 +1,6 @@
 {
   "id": "uva_letzion_block",
-  "optional": true,
+  "optional": false,
   "sections": [
     {
       "text": [
