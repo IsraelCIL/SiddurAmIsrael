@@ -308,6 +308,18 @@ class _OptionalSegmentTileState extends ConsumerState<_OptionalSegmentTile> {
     _expanded = widget.initiallyExpanded || saved.contains(widget.segment.id);
   }
 
+  /// Returns the text to display in the accordion header.
+  /// If the label is non-empty, use it. Otherwise, take the first two words
+  /// of the segment's resolved text as a preview.
+  String get _headerText {
+    if (widget.label.isNotEmpty) return widget.label;
+    final raw = widget.segment.resolvedText
+        .replaceAll(RegExp(r'<[^>]+>'), '') // strip tags
+        .trim();
+    final words = raw.split(RegExp(r'\s+')).where((w) => w.isNotEmpty);
+    return words.take(2).join(' ');
+  }
+
   @override
   Widget build(BuildContext context) {
     final headerStyle = TextStyle(
@@ -315,12 +327,6 @@ class _OptionalSegmentTileState extends ConsumerState<_OptionalSegmentTile> {
       fontWeight: FontWeight.w700,
       color: AppColors.primary,
       letterSpacing: 0.5,
-    );
-    final hintStyle = TextStyle(
-      fontSize: 12 * widget.factor,
-      fontWeight: FontWeight.w400,
-      color: AppColors.primary.withValues(alpha: 0.6),
-      letterSpacing: 0.3,
     );
 
     return Padding(
@@ -349,14 +355,9 @@ class _OptionalSegmentTileState extends ConsumerState<_OptionalSegmentTile> {
                 ),
                 const SizedBox(width: 6),
                 Flexible(
-                  child: Text.rich(
-                    TextSpan(children: [
-                      TextSpan(text: widget.label, style: headerStyle),
-                      if (!_expanded) ...[
-                        TextSpan(text: '  ', style: hintStyle),
-                        TextSpan(text: '[לחץ להצגה]', style: hintStyle),
-                      ],
-                    ]),
+                  child: Text(
+                    _headerText,
+                    style: headerStyle,
                     textDirection: TextDirection.rtl,
                   ),
                 ),
