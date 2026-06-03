@@ -128,6 +128,7 @@ const _segmentLabels = <String, String>{
   'amidah_shalom_rav': 'שלום רב',
   'pitum_haketoreh_ashkenaz': '',
   'amidah_conclusion': 'אלקי נצור',
+  'yehi_ratzon_pre_elokai': 'יהיו לרצון',
   // ── Chazarat HaShatz ───────────────────────────────────────────────────────
   'chazarat_hashatz_header': 'חזרת הש״ץ',
   'kedushah': 'קדושה',
