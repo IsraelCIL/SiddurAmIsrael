@@ -28,6 +28,8 @@ class SettingsScreen extends ConsumerWidget {
     final fontFactor = ref.watch(fontSizeFactorProvider);
     final showLabels = ref.watch(showSegmentLabelsProvider);
     final wearsTallitGadol = ref.watch(wearsTallitGadolProvider);
+    final isShaliachTzibbur = ref.watch(isShaliachTzibburProvider);
+    final einKohanim = ref.watch(einKohanumProvider);
     final isAshkenazOrSfard = nusach == 'ashkenaz' || nusach == 'sfard';
 
     return Directionality(
@@ -109,6 +111,26 @@ class SettingsScreen extends ConsumerWidget {
                 onChanged: (v) =>
                     ref.read(wearsTallitGadolProvider.notifier).set(v),
               ),
+            SwitchListTile(
+              title: const Text('אני שליח ציבור'),
+              subtitle: const Text(
+                'מסתיר מודים דרבנן (השליח ציבור אומר את המודים הרגיל)',
+                style: TextStyle(fontSize: 12),
+              ),
+              value: isShaliachTzibbur,
+              onChanged: (v) =>
+                  ref.read(isShaliachTzibburProvider.notifier).set(v),
+            ),
+            SwitchListTile(
+              title: const Text('אין כהנים'),
+              subtitle: const Text(
+                'מציג "אלהינו ואלהי אבותינו ברכנו" במקום ברכת כהנים',
+                style: TextStyle(fontSize: 12),
+              ),
+              value: einKohanim,
+              onChanged: (v) =>
+                  ref.read(einKohanumProvider.notifier).set(v),
+            ),
             SwitchListTile(
               title: const Text('מתפלל במניין'),
               subtitle: const Text(

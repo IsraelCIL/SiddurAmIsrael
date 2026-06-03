@@ -23,9 +23,22 @@
       "exclude_flags": []
     },
     {
+      "segment_id": "kedushah_ledorvador",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": [
+        "sfard"
+      ]
+    },
+    {
       "segment_id": "amidah_kedushah_hashem",
       "condition_flags": [],
-      "exclude_flags": []
+      "exclude_flags": [],
+      "allowed_nusach": [
+        "ashkenaz",
+        "edot_mizrach"
+      ]
     },
     {
       "segment_id": "amidah_musaf_intermediate_rc",

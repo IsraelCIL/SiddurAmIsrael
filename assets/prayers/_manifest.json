@@ -187,7 +187,8 @@
     "hoshienu": "assets/prayers/shacharit/sof_hatfila/common/hoshienu.json",
     "seder_tzitzit_gadol": "assets/prayers/shacharit/lifnei_hatfila/common/seder_tzitzit_gadol.json",
     "uva_letzion_block": "assets/prayers/shacharit/acharei_amidah/common/uva_letzion_block.json",
-    "uva_letzion_closing": "assets/prayers/shacharit/acharei_amidah/common/uva_letzion_closing.json"
+    "uva_letzion_closing": "assets/prayers/shacharit/acharei_amidah/common/uva_letzion_closing.json",
+    "ein_kohanim_bracha": "assets/prayers/shared_global/amidah/common/ein_kohanim_bracha.json"
   },
   "nusach": {
     "ashkenaz": {

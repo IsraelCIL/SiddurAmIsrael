@@ -44,7 +44,10 @@
       "condition_flags": [],
       "exclude_flags": [],
       "optional": false,
-      "allowed_nusach": []
+      "allowed_nusach": [
+        "sfard",
+        "edot_mizrach"
+      ]
     },
     {
       "segment_id": "amidah_daat",
@@ -154,14 +157,16 @@
       "allowed_nusach": []
     },
     {
-      "segment_id": "amidah_modim",
+      "segment_id": "modim_derabanan",
       "condition_flags": [],
-      "exclude_flags": [],
+      "exclude_flags": [
+        "is_shaliach_tzibbur"
+      ],
       "optional": false,
       "allowed_nusach": []
     },
     {
-      "segment_id": "modim_derabanan",
+      "segment_id": "amidah_modim",
       "condition_flags": [],
       "exclude_flags": [],
       "optional": false,
@@ -177,10 +182,22 @@
       "allowed_nusach": []
     },
     {
+      "segment_id": "ein_kohanim_bracha",
+      "condition_flags": [
+        "ein_kohanim"
+      ],
+      "exclude_flags": [
+        "tefila_mincha"
+      ],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
       "segment_id": "birkat_kohanim_bracha",
       "condition_flags": [],
       "exclude_flags": [
-        "tefila_mincha"
+        "tefila_mincha",
+        "ein_kohanim"
       ],
       "optional": true,
       "allowed_nusach": []
@@ -189,7 +206,8 @@
       "segment_id": "elokeinu_velohei_avoteinu",
       "condition_flags": [],
       "exclude_flags": [
-        "tefila_mincha"
+        "tefila_mincha",
+        "ein_kohanim"
       ],
       "optional": true,
       "allowed_nusach": []

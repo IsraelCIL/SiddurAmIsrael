@@ -237,6 +237,20 @@ final expandedSegmentsProvider =
 /// Whether the user wears a tallit gadol (default true).
 /// Used to inject [DayFlag.wearsTallitGadol] into the Shacharit context for
 /// Ashkenaz/Sfard, gating the seder atifat tallit gadol accordion.
+final isShaliachTzibburProvider = NotifierProvider<_PersistentNotifier<bool>, bool>(
+  () => _PersistentNotifier<bool>(
+    read: (r) => r.getIsShaliachTzibbur(),
+    write: (r, v) => r.setIsShaliachTzibbur(v),
+  ),
+);
+
+final einKohanumProvider = NotifierProvider<_PersistentNotifier<bool>, bool>(
+  () => _PersistentNotifier<bool>(
+    read: (r) => r.getEinKohanim(),
+    write: (r, v) => r.setEinKohanim(v),
+  ),
+);
+
 final wearsTallitGadolProvider = NotifierProvider<_PersistentNotifier<bool>, bool>(
   () => _PersistentNotifier<bool>(
     read: (r) => r.getWearsTallitGadol(),
@@ -325,15 +339,15 @@ final shacharitProvider = FutureProvider<List<AssembledSegment>>((ref) {
   final assembler = ref.watch(prayerAssemblerProvider);
   final baseCtx = ref.watch(userContextProvider);
   final wearsTallitGadol = ref.watch(wearsTallitGadolProvider);
-  // Inject service_shacharit so segments that must not appear at Shacharit
-  // (e.g. "כי שם ה' אקרא") can use exclude_flags: [service_shacharit].
-  // Inject wears_tallit_gadol for Ashkenaz/Sfard when user wears tallit gadol
-  // — gates seder_tzitzit_gadol (the tallit gadol accordion).
+  final isShaliachTzibbur = ref.watch(isShaliachTzibburProvider);
+  final einKohanim = ref.watch(einKohanumProvider);
   final extra = [
     DayFlag.serviceShacharit,
     if (wearsTallitGadol &&
         (baseCtx.nusach == 'ashkenaz' || baseCtx.nusach == 'sfard'))
       DayFlag.wearsTallitGadol,
+    if (isShaliachTzibbur) DayFlag.isShaliachTzibbur,
+    if (einKohanim) DayFlag.einKohanim,
   ];
   final ctx = _ctxWithExtraFlags(baseCtx, extra);
   return assembler.assemble(

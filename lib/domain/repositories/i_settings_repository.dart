@@ -32,4 +32,10 @@ abstract class ISettingsRepository {
 
   bool getWearsTallitGadol();
   Future<void> setWearsTallitGadol(bool value);
+
+  bool getIsShaliachTzibbur();
+  Future<void> setIsShaliachTzibbur(bool value);
+
+  bool getEinKohanim();
+  Future<void> setEinKohanim(bool value);
 }
