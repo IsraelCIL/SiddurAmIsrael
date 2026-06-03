@@ -527,16 +527,7 @@ class _GroupAccordionState extends ConsumerState<_GroupAccordion> {
                       letterSpacing: 0.4,
                     ),
                   ),
-                  if (!_expanded) ...[
-                    const SizedBox(width: 8),
-                    Text(
-                      '[לחץ להצגה]',
-                      style: TextStyle(
-                        color: AppColors.primary.withValues(alpha: 0.55),
-                        fontSize: 12,
-                      ),
-                    ),
-                  ],
+                  // No hint text — the arrow icon already signals tappability.
                 ],
               ),
             ),
