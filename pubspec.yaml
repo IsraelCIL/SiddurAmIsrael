@@ -24,6 +24,9 @@ dependencies:
   freezed_annotation: ^2.4.4
   json_annotation: ^4.9.0
 
+  # Typography — Hebrew-optimised font with full nikud support
+  google_fonts: ^6.2.0
+
   # Local persistence (nusach, settings)
   shared_preferences: ^2.3.3
 
