@@ -35,10 +35,7 @@ class PrayerTextWidget extends ConsumerWidget {
     final factor = ref.watch(fontSizeFactorProvider);
     final showLabels = ref.watch(showSegmentLabelsProvider);
     final label = segmentLabel(segment.id);
-    // Tinos: a serif font that renders Hebrew nikud cleanly in Flutter with
-    // no dagesh+vowel glyph-clash artifacts. height:1.5 gives vowels enough
-    // vertical room without the excessive gaps of the previous 1.9 value.
-    final bodyStyle = GoogleFonts.tinos(
+    final bodyStyle = GoogleFonts.rubik(
       fontSize: 22 * factor,
       height: 1.5,
       color: Colors.black87,
