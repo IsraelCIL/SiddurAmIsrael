@@ -190,7 +190,7 @@ class PrayerAssembler implements IPrayerAssembler {
     return sections
         .where((s) => s.conditionFlags.every(contextKeys.contains))
         .where((s) => !s.excludeFlags.any(contextKeys.contains))
-        .map((s) => s.text)
+        .map((s) => s.isRubric ? '<rubric>${s.text}</rubric>' : s.text)
         .where((t) => t.isNotEmpty)
         .join('\n');
   }

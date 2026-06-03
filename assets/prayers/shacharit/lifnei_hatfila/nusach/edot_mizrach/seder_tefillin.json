@@ -33,7 +33,8 @@
         "יניח תפילין של יד על קיבורת ידו, וקודם שיהדק יברך:"
       ],
       "condition_flags": [],
-      "exclude_flags": []
+      "exclude_flags": [],
+      "is_rubric": true
     },
     {
       "text": [
@@ -48,16 +49,15 @@
         "ואחר כך מניח של ראש בלא ברכה (אלא אם הפסיק בין יד לראש שאז מברך):"
       ],
       "condition_flags": [],
-      "exclude_flags": []
+      "exclude_flags": [],
+      "is_rubric": true
     },
     {
       "text": [
         "בָּרוּךְ אַתָּה יְהֹוָה, אֱלֹהֵינוּ מֶלֶךְ הָעוֹלָם,",
         "אֲשֶׁר קִדְּשָׁנוּ בְּמִצְוֹתָיו, וְצִוָּנוּ עַל מִצְוַת תְּפִלִּין:"
       ],
-      "condition_flags": [
-        "hefsek_tefillin"
-      ],
+      "condition_flags": [],
       "exclude_flags": []
     }
   ]
