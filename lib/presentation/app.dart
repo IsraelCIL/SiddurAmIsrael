@@ -28,17 +28,6 @@ class SmartSiddurApp extends ConsumerWidget {
           seedColor: AppColors.primary,
           brightness: Brightness.light,
         ),
-        // Frank Ruhl Libre — traditional Torah-style serif font with full
-        // nikud (Hebrew vowel) support. Applied as the global text theme so
-        // every Text widget that does not specify an explicit fontFamily
-        // inherits this typeface automatically, including all prayer body text.
-        //
-        // Note for App Store release: bundle the font as a local asset and
-        // call GoogleFonts.config.allowRuntimeFetching = false in main() to
-        // guarantee offline operation without a network request.
-        textTheme: GoogleFonts.frankRuhlLibreTextTheme(
-          ThemeData.light().textTheme,
-        ),
         appBarTheme: const AppBarTheme(
           backgroundColor: AppColors.primary,
           foregroundColor: Colors.white,

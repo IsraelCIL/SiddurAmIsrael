@@ -64,7 +64,7 @@ class PrayerTextWidget extends ConsumerWidget {
             Text(
               label,
               textDirection: TextDirection.rtl,
-              style: GoogleFonts.frankRuhlLibre(
+              style: TextStyle(
                 fontSize: 14 * factor,
                 fontWeight: FontWeight.w700,
                 color: AppColors.primary,
@@ -112,13 +112,13 @@ class _OptionalSegmentTileState extends State<_OptionalSegmentTile> {
 
   @override
   Widget build(BuildContext context) {
-    final headerStyle = GoogleFonts.frankRuhlLibre(
+    final headerStyle = TextStyle(
       fontSize: 14 * widget.factor,
       fontWeight: FontWeight.w700,
       color: AppColors.primary,
       letterSpacing: 0.5,
     );
-    final hintStyle = GoogleFonts.frankRuhlLibre(
+    final hintStyle = TextStyle(
       fontSize: 12 * widget.factor,
       fontWeight: FontWeight.w400,
       color: AppColors.primary.withValues(alpha: 0.6),
