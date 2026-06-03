@@ -281,6 +281,15 @@ const _segmentLabels = <String, String>{
   'inline_toggle_tallit_gadol': '',
   'inline_toggle_shaliach_tzibbur': '',
   'inline_toggle_kohanim': '',
+  // ── Purim ──────────────────────────────────────────────────────────────────
+  'megillah_brachot_lifnei': 'ברכות קריאת המגילה',
+  'megillah_brachot_lifnei_shnei': 'ברכות קריאת המגילה',
+  'megillah_esther': 'מגילת אסתר',
+  'megillah_bracha_acharei': '',
+  'asher_henia': 'אשר הניא',
+  'shoshanat_yaakov': 'שושנת יעקב',
+  'arur_haman_em': 'ארור המן',
+
   // ── Hoshanot ───────────────────────────────────────────────────────────────
   'hoshanot_ashk_link': 'הושענות — לחץ להצגת הסבר',
   'hoshanot_day_2': 'הושענות',

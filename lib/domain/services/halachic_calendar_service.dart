@@ -427,6 +427,11 @@ class HalachicCalendarService implements ICalendarFlagProvider {
           ctx.purimDate == PurimDate.both) {
         f.add(DayFlag.purim);
       }
+      // On the 15th when celebrating both days, 14th was the primary reading:
+      // megillah is read again without blessings (A/S), Al HaNisim omitted (EM).
+      if (ctx.purimDate == PurimDate.both) {
+        f.add(DayFlag.purimSecondDay);
+      }
     }
   }
 

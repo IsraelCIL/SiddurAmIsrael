@@ -598,6 +598,52 @@
       "allowed_nusach": []
     },
     {
+      "segment_id": "kriat_hatorah_hachnasah",
+      "condition_flags": [
+        "purim",
+        "kriat_hatorah",
+        "with_minyan"
+      ],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "megillah_brachot_lifnei",
+      "condition_flags": [
+        "purim",
+        "service_shacharit"
+      ],
+      "exclude_flags": [
+        "purim_second_day"
+      ]
+    },
+    {
+      "segment_id": "megillah_esther",
+      "condition_flags": [
+        "purim",
+        "service_shacharit"
+      ],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "megillah_bracha_acharei",
+      "condition_flags": [
+        "purim",
+        "service_shacharit",
+        "with_minyan"
+      ],
+      "exclude_flags": [
+        "purim_second_day"
+      ]
+    },
+    {
+      "segment_id": "shoshanat_yaakov",
+      "condition_flags": [
+        "purim",
+        "service_shacharit"
+      ],
+      "exclude_flags": []
+    },
+    {
       "segment_id": "yehi_ratzon_mon_thu",
       "condition_flags": [
         "monday_thursday",
