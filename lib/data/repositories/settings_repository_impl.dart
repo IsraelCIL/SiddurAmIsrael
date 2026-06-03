@@ -85,4 +85,11 @@ class SettingsRepositoryImpl implements ISettingsRepository {
   @override
   Future<void> setExpandedSegments(Set<String> ids) =>
       _ds.writeExpandedSegments(ids);
+
+  @override
+  bool getWearsTallitGadol() => _ds.readWearsTallitGadol();
+
+  @override
+  Future<void> setWearsTallitGadol(bool value) =>
+      _ds.writeWearsTallitGadol(value);
 }

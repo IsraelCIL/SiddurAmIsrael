@@ -15,15 +15,6 @@
       "allowed_nusach": []
     },
     {
-      "segment_id": "tefila_ledavid_ps86",
-      "condition_flags": [],
-      "exclude_flags": [
-        "skip_tachanun"
-      ],
-      "optional": false,
-      "allowed_nusach": []
-    },
-    {
       "segment_id": "beit_yaakov",
       "condition_flags": [],
       "exclude_flags": [

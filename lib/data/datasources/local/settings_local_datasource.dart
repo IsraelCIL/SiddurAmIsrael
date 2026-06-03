@@ -16,6 +16,7 @@ class SettingsLocalDatasource {
   static const _kSeenBanner = 'v1.settings.seen_banner';
   static const _kShowLabels = 'v1.settings.show_labels';
   static const _kExpandedSegments = 'v1.settings.expanded_segments';
+  static const _kWearsTallitGadol = 'v1.settings.wears_tallit_gadol';
 
   String? readNusach() => _prefs.getString(_kNusach);
   Future<void> writeNusach(String v) => _prefs.setString(_kNusach, v);
@@ -50,4 +51,8 @@ class SettingsLocalDatasource {
 
   Future<void> writeExpandedSegments(Set<String> ids) =>
       _prefs.setString(_kExpandedSegments, ids.join(','));
+
+  bool readWearsTallitGadol() => _prefs.getBool(_kWearsTallitGadol) ?? true;
+  Future<void> writeWearsTallitGadol(bool v) =>
+      _prefs.setBool(_kWearsTallitGadol, v);
 }

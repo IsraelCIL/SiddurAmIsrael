@@ -27,6 +27,8 @@ class SettingsScreen extends ConsumerWidget {
     final purimDate = ref.watch(purimDateProvider);
     final fontFactor = ref.watch(fontSizeFactorProvider);
     final showLabels = ref.watch(showSegmentLabelsProvider);
+    final wearsTallitGadol = ref.watch(wearsTallitGadolProvider);
+    final isAshkenazOrSfard = nusach == 'ashkenaz' || nusach == 'sfard';
 
     return Directionality(
       textDirection: TextDirection.rtl,
@@ -96,6 +98,17 @@ class SettingsScreen extends ConsumerWidget {
             ),
 
             _SectionHeader(title: 'תפילה'),
+            if (isAshkenazOrSfard)
+              SwitchListTile(
+                title: const Text('מתעטף בטלית גדול'),
+                subtitle: const Text(
+                  'מציג סדר עטיפת טלית גדול (ברירת מחדל: כן)',
+                  style: TextStyle(fontSize: 12),
+                ),
+                value: wearsTallitGadol,
+                onChanged: (v) =>
+                    ref.read(wearsTallitGadolProvider.notifier).set(v),
+              ),
             SwitchListTile(
               title: const Text('מתפלל במניין'),
               subtitle: const Text(

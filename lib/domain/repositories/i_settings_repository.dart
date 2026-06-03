@@ -29,4 +29,7 @@ abstract class ISettingsRepository {
 
   Set<String> getExpandedSegments();
   Future<void> setExpandedSegments(Set<String> ids);
+
+  bool getWearsTallitGadol();
+  Future<void> setWearsTallitGadol(bool value);
 }
