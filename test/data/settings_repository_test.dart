@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:smart_siddur/data/datasources/local/settings_local_datasource.dart';
-import 'package:smart_siddur/data/repositories/settings_repository_impl.dart';
-import 'package:smart_siddur/domain/entities/user_context.dart';
+import 'package:siddur_am_israel_chai/data/datasources/local/settings_local_datasource.dart';
+import 'package:siddur_am_israel_chai/data/repositories/settings_repository_impl.dart';
+import 'package:siddur_am_israel_chai/domain/entities/user_context.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();

@@ -1,6 +1,6 @@
-import 'package:smart_siddur/data/datasources/local/sukkot_korbanot_datasource.dart';
-import 'package:smart_siddur/domain/entities/sukkot_korban.dart';
-import 'package:smart_siddur/domain/repositories/i_sukkot_korbanot_repository.dart';
+import 'package:siddur_am_israel_chai/data/datasources/local/sukkot_korbanot_datasource.dart';
+import 'package:siddur_am_israel_chai/domain/entities/sukkot_korban.dart';
+import 'package:siddur_am_israel_chai/domain/repositories/i_sukkot_korbanot_repository.dart';
 
 class SukkotKorbanotRepositoryImpl implements ISukkotKorbanotRepository {
   const SukkotKorbanotRepositoryImpl(this._datasource);

@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:smart_siddur/presentation/providers/prayer_providers.dart';
-import 'package:smart_siddur/presentation/theme/app_colors.dart';
-import 'package:smart_siddur/presentation/theme/app_dimens.dart';
+import 'package:siddur_am_israel_chai/presentation/providers/prayer_providers.dart';
+import 'package:siddur_am_israel_chai/presentation/theme/app_colors.dart';
+import 'package:siddur_am_israel_chai/presentation/theme/app_dimens.dart';
 
 /// Bottom-corner mini-FAB cluster for adjusting the prayer text size
 /// while davening one-handed. Fades to ~25% opacity after [_idleFadeDelay]

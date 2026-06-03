@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:smart_siddur/core/calendar/hebrew_date.dart';
-import 'package:smart_siddur/core/utils/hebrew_formatter.dart';
+import 'package:siddur_am_israel_chai/core/calendar/hebrew_date.dart';
+import 'package:siddur_am_israel_chai/core/utils/hebrew_formatter.dart';
 
 void main() {
   group('toHebrewNumeral', () {

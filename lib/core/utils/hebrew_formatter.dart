@@ -1,4 +1,4 @@
-import 'package:smart_siddur/core/calendar/hebrew_date.dart';
+import 'package:siddur_am_israel_chai/core/calendar/hebrew_date.dart';
 
 abstract final class HebrewFormatter {
   // ── Numeral conversion ──────────────────────────────────────────────────────

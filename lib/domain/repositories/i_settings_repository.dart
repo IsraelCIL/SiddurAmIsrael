@@ -1,4 +1,4 @@
-import 'package:smart_siddur/domain/entities/user_context.dart';
+import 'package:siddur_am_israel_chai/domain/entities/user_context.dart';
 
 /// Persistent user preferences. Backed by SharedPreferences in production;
 /// can be mocked in tests by providing an in-memory implementation.

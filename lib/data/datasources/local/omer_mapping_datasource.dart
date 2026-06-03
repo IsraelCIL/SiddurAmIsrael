@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/services.dart';
 
-import 'package:smart_siddur/domain/entities/omer_day.dart';
+import 'package:siddur_am_israel_chai/domain/entities/omer_day.dart';
 
 class OmerMappingDatasource {
   OmerMappingDatasource({AssetBundle? bundle}) : _bundle = bundle ?? rootBundle;
