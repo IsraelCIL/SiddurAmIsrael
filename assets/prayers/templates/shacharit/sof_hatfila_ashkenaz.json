@@ -56,7 +56,7 @@
       ]
     },
     {
-      "segment_id": "kaddish_yatom",
+      "sub_template_id": "kaddish_yatom",
       "condition_flags": [
         "with_minyan"
       ],
@@ -140,7 +140,7 @@
       "allowed_nusach": []
     },
     {
-      "segment_id": "kaddish_yatom",
+      "sub_template_id": "kaddish_yatom",
       "condition_flags": [
         "ladavid_season",
         "with_minyan"
