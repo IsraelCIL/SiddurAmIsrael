@@ -23,6 +23,8 @@ const _noTrailingSpace = <String>{
   'kaddish_closing',
   'kaddish_derabanan_paragraph',
   'kaddish_titkabal_paragraph',
+  // אין כאלהינו flows directly into אתה הוא שהקטירו (no visual gap)
+  'ein_keloheinu',
 };
 
 class PrayerTextWidget extends ConsumerWidget {
