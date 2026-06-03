@@ -269,6 +269,9 @@ const _segmentLabels = <String, String>{
   'selichot_bahab_sheni_kama': 'סליחות בה"ב',
   'selichot_bahab_chamishi': 'סליחות בה"ב',
   'selichot_bahab_sheni_batra': 'סליחות בה"ב',
+  'hoshienu': 'הושיענו',
+  'psukim_acharei_tanya': 'ה׳ צבאות עמנו',
+  'al_tira': 'אל תירא',
   // ── Hoshanot ───────────────────────────────────────────────────────────────
   'hoshanot_ashk_link': 'הושענות — לחץ להצגת הסבר',
   'hoshanot_day_2': 'הושענות',
