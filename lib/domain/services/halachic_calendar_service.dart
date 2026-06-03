@@ -623,6 +623,10 @@ class HalachicCalendarService implements ICalendarFlagProvider {
 
   void _addAlHaNisim(Set<String> f) {
     if (f.contains(DayFlag.chanukah) || f.contains(DayFlag.purim)) {
+      // EM does not say Al HaNisim on the second day of Purim (15 Adar,
+      // when the user celebrates both days — 14th was the primary day).
+      if (f.contains(DayFlag.purimSecondDay) &&
+          f.contains(DayFlag.nusachEdotMizrach)) return;
       f.add(DayFlag.alHaNisim);
     }
   }
