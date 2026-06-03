@@ -351,4 +351,10 @@ abstract final class DayFlag {
   // "כי שם ה' אקרא" is said only at Mincha and Musaf, not Shacharit.
   static const serviceShacharit = 'service_shacharit';
   static const serviceMincha = 'service_mincha';
+
+  // ── Situational (user-toggled) ────────────────────────────────────────────
+  // beit_avel: the user is davening in a house of mourning (shiva).
+  // Currently not auto-detected — requires explicit user toggle.
+  // Used to gate 'ואני זאת בריתי' in ובא לציון and similar passages.
+  static const beitAvel = 'beit_avel';
 }

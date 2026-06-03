@@ -637,7 +637,7 @@
       "segment_id": "uva_letzion_block",
       "condition_flags": [],
       "exclude_flags": [],
-      "optional": true,
+      "optional": false,
       "allowed_nusach": []
     },
     {
