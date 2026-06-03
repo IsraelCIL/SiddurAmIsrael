@@ -289,6 +289,7 @@ List<_ListItem> _buildListItems(List<AssembledSegment> segments) {
       }
       final title = _groupTitles[gid] ?? gid;
       items.add(_GroupItem(
+        groupId: gid,
         title: title,
         segments: grouped,
         counts: counts,
@@ -379,6 +380,7 @@ class _SegmentItem extends _ListItem {
 
 class _GroupItem extends _ListItem {
   _GroupItem({
+    required this.groupId,
     required this.title,
     required this.segments,
     required Map<String, int> counts,
@@ -413,6 +415,7 @@ class _GroupItem extends _ListItem {
     _childNavEntries = entries;
   }
 
+  final String groupId;
   final String title;
   final List<AssembledSegment> segments;
   final int itemIndex;
@@ -428,6 +431,7 @@ class _GroupItem extends _ListItem {
   @override
   Widget build(BuildContext context) => _GroupAccordion(
         key: _key,
+        groupId: groupId,
         title: title,
         segments: segments,
         controller: _controller,
@@ -437,26 +441,37 @@ class _GroupItem extends _ListItem {
 
 // ── Group accordion widget ────────────────────────────────────────────────────
 
-class _GroupAccordion extends StatefulWidget {
+class _GroupAccordion extends ConsumerStatefulWidget {
   const _GroupAccordion({
     super.key,
+    required this.groupId,
     required this.title,
     required this.segments,
     required this.controller,
     required this.childKeys,
   });
 
+  final String groupId;
   final String title;
   final List<AssembledSegment> segments;
   final ExpansibleController controller;
   final Map<int, GlobalKey> childKeys;
 
   @override
-  State<_GroupAccordion> createState() => _GroupAccordionState();
+  ConsumerState<_GroupAccordion> createState() => _GroupAccordionState();
 }
 
-class _GroupAccordionState extends State<_GroupAccordion> {
-  bool _expanded = false;
+class _GroupAccordionState extends ConsumerState<_GroupAccordion> {
+  late bool _expanded;
+
+  // Persist key for the group's open/closed state (distinct from segment IDs).
+  String get _persistKey => 'group:${widget.groupId}';
+
+  @override
+  void initState() {
+    super.initState();
+    _expanded = ref.read(expandedSegmentsProvider).contains(_persistKey);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -475,10 +490,16 @@ class _GroupAccordionState extends State<_GroupAccordion> {
             tilePadding:
                 const EdgeInsets.symmetric(horizontal: 14, vertical: 4),
             childrenPadding: EdgeInsets.zero,
-            initiallyExpanded: false,
+            initiallyExpanded: _expanded,
             shape: const Border(),
             collapsedShape: const Border(),
-            onExpansionChanged: (v) => setState(() => _expanded = v),
+            onExpansionChanged: (v) {
+              setState(() => _expanded = v);
+              final saved = ref.read(expandedSegmentsProvider).contains(_persistKey);
+              if (v != saved) {
+                ref.read(expandedSegmentsProvider.notifier).toggle(_persistKey);
+              }
+            },
             title: Directionality(
               textDirection: TextDirection.rtl,
               child: Row(
