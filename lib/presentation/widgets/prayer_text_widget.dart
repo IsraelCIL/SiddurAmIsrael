@@ -102,9 +102,9 @@ class _PrayerInlineToggle extends ConsumerWidget {
             ),
             const SizedBox(width: 8),
             Switch(
-              value: isGadol,
+              value: !isGadol, // RTL flips knob direction → invert value
               onChanged: (v) =>
-                  ref.read(wearsTallitGadolProvider.notifier).set(v),
+                  ref.read(wearsTallitGadolProvider.notifier).set(!v),
               activeColor: AppColors.primary,
             ),
             const SizedBox(width: 8),
