@@ -275,7 +275,7 @@
       "segment_id": "leolam_yehe_adam",
       "condition_flags": [],
       "exclude_flags": [],
-      "optional": true,
+      "optional": false,
       "allowed_nusach": []
     },
     {

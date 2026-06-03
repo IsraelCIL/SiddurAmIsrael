@@ -145,7 +145,7 @@ const _segmentLabels = <String, String>{
   'lulav_bracha': 'ברכת הלולב',
   // ── Post-amidah ────────────────────────────────────────────────────────────
   'uva_letzion': 'ובא לציון',
-  'uva_letzion_block': 'מ"יהוה ימלוך" עד "יגדיל תורה"',
+  'uva_letzion_block': '',
   'uva_letzion_closing': '',
   'avinu_malkeinu': 'אבינו מלכנו',
   'aleinu': 'עלינו לשבח',
