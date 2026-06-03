@@ -1,0 +1,66 @@
+{
+  "pesach": {
+    "2": {
+      "2": "tehillim_gra_78",
+      "3": "tehillim_gra_80",
+      "4": "tehillim_gra_105",
+      "5": "tehillim_gra_92",
+      "6": "tehillim_gra_135"
+    },
+    "4": {
+      "2": "tehillim_gra_78",
+      "3": "tehillim_gra_92",
+      "4": "tehillim_gra_80",
+      "5": "tehillim_gra_105",
+      "6": "tehillim_gra_135"
+    },
+    "6": {
+      "2": "tehillim_gra_114",
+      "3": "tehillim_gra_78",
+      "4": "tehillim_gra_80",
+      "5": "tehillim_gra_105",
+      "6": "tehillim_gra_135"
+    },
+    "7": {
+      "2": "tehillim_gra_78",
+      "3": "tehillim_gra_80",
+      "4": "tehillim_gra_105",
+      "5": "tehillim_gra_135",
+      "6": "tehillim_gra_66"
+    }
+  },
+  "sukkot": {
+    "1": {
+      "2": "tehillim_gra_29",
+      "3": "tehillim_gra_50",
+      "4": "tehillim_gra_94b",
+      "5": "tehillim_gra_94a",
+      "6": "tehillim_gra_92",
+      "7": "tehillim_gra_81"
+    },
+    "2": {
+      "2": "tehillim_gra_29",
+      "3": "tehillim_gra_50",
+      "4": "tehillim_gra_94b",
+      "5": "tehillim_gra_92",
+      "6": "tehillim_gra_94a",
+      "7": "tehillim_gra_81"
+    },
+    "4": {
+      "2": "tehillim_gra_29",
+      "3": "tehillim_gra_92",
+      "4": "tehillim_gra_50",
+      "5": "tehillim_gra_94b",
+      "6": "tehillim_gra_94a",
+      "7": "tehillim_gra_81"
+    },
+    "6": {
+      "2": "tehillim_gra_29",
+      "3": "tehillim_gra_50",
+      "4": "tehillim_gra_94b",
+      "5": "tehillim_gra_94a",
+      "6": "tehillim_gra_81",
+      "7": "tehillim_gra_82"
+    }
+  }
+}

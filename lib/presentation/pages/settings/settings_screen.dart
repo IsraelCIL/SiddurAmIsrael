@@ -8,10 +8,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:smart_siddur/domain/entities/user_context.dart';
-import 'package:smart_siddur/presentation/providers/prayer_providers.dart';
-import 'package:smart_siddur/presentation/theme/app_colors.dart';
-import 'package:smart_siddur/presentation/theme/app_dimens.dart';
+import 'package:siddur_am_israel_chai/domain/entities/user_context.dart';
+import 'package:siddur_am_israel_chai/presentation/providers/prayer_providers.dart';
+import 'package:siddur_am_israel_chai/presentation/theme/app_colors.dart';
+import 'package:siddur_am_israel_chai/presentation/theme/app_dimens.dart';
 
 /// User preferences screen. Every change writes through to
 /// SharedPreferences immediately via the persistent providers.

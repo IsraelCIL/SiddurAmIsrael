@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import 'package:smart_siddur/domain/entities/blessing_section.dart';
+import 'package:siddur_am_israel_chai/domain/entities/blessing_section.dart';
 
 part 'prayer_segment.freezed.dart';
 part 'prayer_segment.g.dart';

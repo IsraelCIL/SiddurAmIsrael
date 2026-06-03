@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:smart_siddur/domain/entities/assembled_segment.dart';
-import 'package:smart_siddur/domain/entities/sukkot_korban.dart';
-import 'package:smart_siddur/domain/services/sukkot_korbanot_post_processor.dart';
+import 'package:siddur_am_israel_chai/domain/entities/assembled_segment.dart';
+import 'package:siddur_am_israel_chai/domain/entities/sukkot_korban.dart';
+import 'package:siddur_am_israel_chai/domain/services/sukkot_korbanot_post_processor.dart';
 
 void main() {
   const proc = SukkotKorbanotPostProcessor();

@@ -1,0 +1,10 @@
+{
+  "id": "kaddish_titkabal",
+  "name": "קדיש תתקבל",
+  "segments": [
+    {"segment_id": "kaddish_titkabal_header",    "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
+    {"segment_id": "kaddish_body",               "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
+    {"segment_id": "kaddish_titkabal_paragraph", "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
+    {"segment_id": "kaddish_closing",            "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []}
+  ]
+}

@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:smart_siddur/data/datasources/local/prayer_local_datasource.dart';
+import 'package:siddur_am_israel_chai/data/datasources/local/prayer_local_datasource.dart';
 
 class _FakeBundle extends AssetBundle {
   _FakeBundle(this._files);

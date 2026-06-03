@@ -1,0 +1,31 @@
+{
+  "id": "musaf_ashkenaz",
+  "name": "מוסף",
+  "segments": [
+    {
+      "segment_id": "musaf_header",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "sub_template_id": "amidah_musaf",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "sub_template_id": "chazarat_hashatz_musaf",
+      "condition_flags": [
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "group_id": "chazarat_hashatz"
+    },
+    {
+      "sub_template_id": "kaddish_titkabal",
+      "condition_flags": [
+        "with_minyan"
+      ],
+      "exclude_flags": []
+    }
+  ]
+}

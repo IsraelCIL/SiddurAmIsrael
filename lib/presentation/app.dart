@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:smart_siddur/presentation/app_shell.dart';
-import 'package:smart_siddur/presentation/theme/app_colors.dart';
-import 'package:smart_siddur/presentation/widgets/dev_overlay.dart';
+import 'package:siddur_am_israel_chai/presentation/app_shell.dart';
+import 'package:siddur_am_israel_chai/presentation/theme/app_colors.dart';
+import 'package:siddur_am_israel_chai/presentation/widgets/dev_overlay.dart';
 
 class SmartSiddurApp extends ConsumerWidget {
   const SmartSiddurApp({super.key});
