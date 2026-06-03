@@ -185,7 +185,9 @@
     "yigdal": "assets/prayers/shacharit/lifnei_hatfila/common/yigdal.json",
     "yiru_einenu": "assets/prayers/maariv/birkot_kriat_shema/common/yiru_einenu.json",
     "hoshienu": "assets/prayers/shacharit/sof_hatfila/common/hoshienu.json",
-    "seder_tzitzit_gadol": "assets/prayers/shacharit/lifnei_hatfila/common/seder_tzitzit_gadol.json"
+    "seder_tzitzit_gadol": "assets/prayers/shacharit/lifnei_hatfila/common/seder_tzitzit_gadol.json",
+    "uva_letzion_block": "assets/prayers/shacharit/acharei_amidah/common/uva_letzion_block.json",
+    "uva_letzion_closing": "assets/prayers/shacharit/acharei_amidah/common/uva_letzion_closing.json"
   },
   "nusach": {
     "ashkenaz": {

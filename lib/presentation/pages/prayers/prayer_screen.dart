@@ -13,6 +13,9 @@ import 'package:siddur_am_israel_chai/presentation/widgets/settings_reminder_ban
 
 const _groupTitles = <String, String>{
   'chazarat_hashatz': 'חזרת הש״ץ',
+  'ketoret_group': 'פרשת הקטורת',
+  'pitum_group': 'פטום הקטורת',
+  'eizehu_group': 'איזהו מקומן',
 };
 
 // ── Nav anchors ───────────────────────────────────────────────────────────────
