@@ -373,7 +373,13 @@ final minchaProvider = FutureProvider<List<AssembledSegment>>((ref) {
 
 final maarivProvider = FutureProvider<List<AssembledSegment>>((ref) {
   final assembler = ref.watch(prayerAssemblerProvider);
-  final ctx = ref.watch(userContextProvider);
+  final baseCtx = ref.watch(userContextProvider);
+  // Inject motzaei_shabbat when viewing Maariv on Shabbat — this gates
+  // Atah Honantanu in amidah_daat and the Vihi Noam section.
+  final extra = [
+    if (baseCtx.activeFlags.contains(DayFlag.shabbat)) DayFlag.motzaeiShabbat,
+  ];
+  final ctx = extra.isEmpty ? baseCtx : _ctxWithExtraFlags(baseCtx, extra);
   return assembler.assemble(
     templateId: 'maariv_${ctx.nusach}',
     userContext: ctx,

@@ -271,6 +271,8 @@ const _segmentLabels = <String, String>{
   'selichot_bahab_chamishi': 'סליחות בה"ב',
   'selichot_bahab_sheni_batra': 'סליחות בה"ב',
   'hoshienu': 'הושיענו',
+  'vihi_noam_before_psalm': '',
+  'vihi_noam_after_psalm': '',
   'psukim_acharei_tanya': 'ה׳ צבאות עמנו',
   'al_tira': 'אל תירא',
   'seder_tzitzit_gadol': 'עטיפת טלית',
