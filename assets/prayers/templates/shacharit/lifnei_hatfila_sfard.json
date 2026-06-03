@@ -66,30 +66,12 @@
       "allowed_nusach": []
     },
     {
-      "segment_id": "yehi_ratzon_tzitzit",
+      "segment_id": "seder_tzitzit_gadol",
       "condition_flags": [
         "wears_tallit_gadol"
       ],
       "exclude_flags": [],
-      "optional": false,
-      "allowed_nusach": []
-    },
-    {
-      "segment_id": "birkat_tzitzit_gadol",
-      "condition_flags": [
-        "wears_tallit_gadol"
-      ],
-      "exclude_flags": [],
-      "optional": false,
-      "allowed_nusach": []
-    },
-    {
-      "segment_id": "mah_yakar_tallit",
-      "condition_flags": [
-        "wears_tallit_gadol"
-      ],
-      "exclude_flags": [],
-      "optional": false,
+      "optional": true,
       "allowed_nusach": []
     },
     {
@@ -98,7 +80,7 @@
       "exclude_flags": [
         "wears_tallit_gadol"
       ],
-      "optional": false,
+      "optional": true,
       "allowed_nusach": []
     },
     {

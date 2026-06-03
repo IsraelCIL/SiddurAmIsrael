@@ -26,4 +26,7 @@ abstract class ISettingsRepository {
 
   bool getShowSegmentLabels();
   Future<void> setShowSegmentLabels(bool value);
+
+  Set<String> getExpandedSegments();
+  Future<void> setExpandedSegments(Set<String> ids);
 }

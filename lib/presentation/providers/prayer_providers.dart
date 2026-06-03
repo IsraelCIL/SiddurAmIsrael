@@ -209,6 +209,31 @@ final showSegmentLabelsProvider =
   ),
 );
 
+/// Persists which optional segment IDs the user has chosen to keep expanded.
+/// Tapping an accordion toggle saves/removes the ID from this set so the
+/// choice survives app restarts — stored locally via SharedPreferences.
+class _ExpandedSegmentsNotifier extends Notifier<Set<String>> {
+  @override
+  Set<String> build() =>
+      ref.read(settingsRepositoryProvider).getExpandedSegments();
+
+  void toggle(String segmentId) {
+    final next = {...state};
+    if (next.contains(segmentId)) {
+      next.remove(segmentId);
+    } else {
+      next.add(segmentId);
+    }
+    state = next;
+    ref.read(settingsRepositoryProvider).setExpandedSegments(next);
+  }
+}
+
+final expandedSegmentsProvider =
+    NotifierProvider<_ExpandedSegmentsNotifier, Set<String>>(
+  _ExpandedSegmentsNotifier.new,
+);
+
 // ── Derived / computed ───────────────────────────────────────────────────────
 
 final hebrewDateProvider = Provider<HebrewDate>(

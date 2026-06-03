@@ -86,7 +86,7 @@ class PrayerTextWidget extends ConsumerWidget {
 /// + hint) and taps to expand. Use for community-specific or alternate
 /// minhag content (e.g. Gr"a Shir Shel Yom variants, alternate L'shem
 /// Yichud forms) that shouldn't be in the main reading flow by default.
-class _OptionalSegmentTile extends StatefulWidget {
+class _OptionalSegmentTile extends ConsumerStatefulWidget {
   const _OptionalSegmentTile({
     required this.label,
     required this.factor,
@@ -102,11 +102,20 @@ class _OptionalSegmentTile extends StatefulWidget {
   final bool initiallyExpanded;
 
   @override
-  State<_OptionalSegmentTile> createState() => _OptionalSegmentTileState();
+  ConsumerState<_OptionalSegmentTile> createState() =>
+      _OptionalSegmentTileState();
 }
 
-class _OptionalSegmentTileState extends State<_OptionalSegmentTile> {
-  late bool _expanded = widget.initiallyExpanded;
+class _OptionalSegmentTileState extends ConsumerState<_OptionalSegmentTile> {
+  late bool _expanded;
+
+  @override
+  void initState() {
+    super.initState();
+    // Start expanded if the hardcoded default OR the user previously opened it.
+    final saved = ref.read(expandedSegmentsProvider);
+    _expanded = widget.initiallyExpanded || saved.contains(widget.segment.id);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -133,7 +142,10 @@ class _OptionalSegmentTileState extends State<_OptionalSegmentTile> {
           initiallyExpanded: widget.initiallyExpanded,
           shape: const Border(),
           collapsedShape: const Border(),
-          onExpansionChanged: (v) => setState(() => _expanded = v),
+          onExpansionChanged: (v) {
+            setState(() => _expanded = v);
+            ref.read(expandedSegmentsProvider.notifier).toggle(widget.segment.id);
+          },
           title: Directionality(
             textDirection: TextDirection.rtl,
             child: Row(
