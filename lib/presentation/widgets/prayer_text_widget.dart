@@ -35,11 +35,12 @@ class PrayerTextWidget extends ConsumerWidget {
     final factor = ref.watch(fontSizeFactorProvider);
     final showLabels = ref.watch(showSegmentLabelsProvider);
     final label = segmentLabel(segment.id);
-    // Explicit font family avoids the TextSpan inheritance issue that prevents
-    // theme-level font from reaching RichText leaf spans.
-    final bodyStyle = GoogleFonts.frankRuhlLibre(
+    // Tinos: a serif font that renders Hebrew nikud cleanly in Flutter with
+    // no dagesh+vowel glyph-clash artifacts. height:1.5 gives vowels enough
+    // vertical room without the excessive gaps of the previous 1.9 value.
+    final bodyStyle = GoogleFonts.tinos(
       fontSize: 22 * factor,
-      height: 1.9,
+      height: 1.5,
       color: Colors.black87,
     );
 
