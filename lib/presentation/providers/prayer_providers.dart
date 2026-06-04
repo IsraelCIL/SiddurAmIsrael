@@ -342,12 +342,16 @@ final shacharitProvider = FutureProvider<List<AssembledSegment>>((ref) {
   final wearsTallitGadol = ref.watch(wearsTallitGadolProvider);
   final isShaliachTzibbur = ref.watch(isShaliachTzibburProvider);
   final einKohanim = ref.watch(einKohanumProvider);
+  final isMale = baseCtx.gender == Gender.male;
   final extra = [
     DayFlag.serviceShacharit,
-    if (wearsTallitGadol &&
+    // Tallit / shaliach tzibbur flags are male-only — women do not wear a
+    // tallit gadol or serve as shaliach tzibbur in Orthodox Halacha.
+    if (isMale &&
+        wearsTallitGadol &&
         (baseCtx.nusach == 'ashkenaz' || baseCtx.nusach == 'sfard'))
       DayFlag.wearsTallitGadol,
-    if (isShaliachTzibbur) DayFlag.isShaliachTzibbur,
+    if (isMale && isShaliachTzibbur) DayFlag.isShaliachTzibbur,
     if (einKohanim) DayFlag.einKohanim,
   ];
   final ctx = _ctxWithExtraFlags(baseCtx, extra);
