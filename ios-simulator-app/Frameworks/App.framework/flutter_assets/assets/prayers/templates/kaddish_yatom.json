@@ -1,0 +1,9 @@
+{
+  "id": "kaddish_yatom",
+  "name": "קדיש יתום",
+  "segments": [
+    {"segment_id": "kaddish_yatom_header", "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
+    {"segment_id": "kaddish_body",         "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
+    {"segment_id": "kaddish_closing", "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []}
+  ]
+}

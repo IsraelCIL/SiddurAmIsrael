@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:smart_siddur/domain/services/service_time_resolver.dart';
+import 'package:siddur_am_israel_chai/domain/services/service_time_resolver.dart';
 
 void main() {
   // Default coordinates of the resolver (central Israel, 32.08, 34.78).

@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-import 'package:smart_siddur/domain/entities/assembled_segment.dart';
-import 'package:smart_siddur/domain/entities/omer_day.dart';
-import 'package:smart_siddur/presentation/constants/segment_labels.dart';
-import 'package:smart_siddur/presentation/providers/prayer_providers.dart';
-import 'package:smart_siddur/presentation/theme/app_colors.dart';
-import 'package:smart_siddur/presentation/widgets/rich_prayer_text.dart';
+import 'package:siddur_am_israel_chai/domain/entities/assembled_segment.dart';
+import 'package:siddur_am_israel_chai/domain/entities/omer_day.dart';
+import 'package:siddur_am_israel_chai/presentation/constants/segment_labels.dart';
+import 'package:siddur_am_israel_chai/presentation/providers/prayer_providers.dart';
+import 'package:siddur_am_israel_chai/presentation/theme/app_colors.dart';
+import 'package:siddur_am_israel_chai/presentation/widgets/rich_prayer_text.dart';
 
 // Optional segments that should start EXPANDED (open accordion by default).
 const _initiallyExpanded = <String>{'birkat_kohanim_bracha'};
@@ -22,6 +23,192 @@ const _noTrailingSpace = <String>{
   'kaddish_closing',
   'kaddish_derabanan_paragraph',
   'kaddish_titkabal_paragraph',
+  // אין כאלהינו flows directly into אתה הוא שהקטירו (no visual gap)
+  'ein_keloheinu',
+};
+
+/// Compact inline toggle row rendered inside the prayer scroll view.
+class _PrayerInlineToggle extends ConsumerWidget {
+  const _PrayerInlineToggle({required this.segmentId});
+  final String segmentId;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    // Tallit toggle: segmented control (not a simple on/off switch)
+    if (segmentId == 'inline_toggle_tallit_gadol') {
+      return _buildTallitSegmented(ref);
+    }
+    // Kohanim toggle: section title + switch with "יש כהנים" label
+    if (segmentId == 'inline_toggle_kohanim') {
+      return _buildKohanumToggle(ref);
+    }
+    final (label, value, onChanged) = _resolve(ref);
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+      child: Material(
+        color: AppColors.surface,
+        borderRadius: BorderRadius.circular(10),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+          child: Row(
+            textDirection: TextDirection.rtl,
+            children: [
+              Expanded(
+                child: Text(
+                  label,
+                  textDirection: TextDirection.rtl,
+                  style: const TextStyle(
+                    fontSize: 14,
+                    color: AppColors.primaryDarker,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+              Transform.scale(
+                scale: 0.8,
+                child: Switch(
+                  value: value,
+                  onChanged: onChanged,
+                  activeColor: AppColors.primary,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildKohanumToggle(WidgetRef ref) {
+    final einKohanim = ref.watch(einKohanumProvider);
+    final yeshKohanim = !einKohanim;
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+      child: Material(
+        color: AppColors.surface,
+        borderRadius: BorderRadius.circular(10),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+          child: Row(
+            textDirection: TextDirection.rtl,
+            children: [
+              // Section title on the right
+              const Text(
+                'ברכת כהנים',
+                style: TextStyle(
+                  fontSize: 14,
+                  color: AppColors.primaryDarker,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              const Spacer(),
+              // "יש כהנים" label + switch
+              GestureDetector(
+                onTap: () => ref
+                    .read(einKohanumProvider.notifier)
+                    .set(yeshKohanim),
+                child: Text(
+                  'יש כהנים',
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: yeshKohanim
+                        ? AppColors.primaryDarker
+                        : AppColors.primaryDarker.withValues(alpha: 0.45),
+                    fontWeight: yeshKohanim
+                        ? FontWeight.w600
+                        : FontWeight.normal,
+                  ),
+                ),
+              ),
+              Transform.scale(
+                scale: 0.8,
+                child: Switch(
+                  value: yeshKohanim,
+                  onChanged: (v) =>
+                      ref.read(einKohanumProvider.notifier).set(!v),
+                  activeColor: AppColors.primary,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTallitSegmented(WidgetRef ref) {
+    final isGadol = ref.watch(wearsTallitGadolProvider);
+    final activeStyle = const TextStyle(
+      fontSize: 14,
+      fontWeight: FontWeight.w700,
+      color: AppColors.primaryDarker,
+    );
+    final inactiveStyle = TextStyle(
+      fontSize: 13,
+      color: AppColors.primaryDarker.withValues(alpha: 0.45),
+    );
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+      child: Center(
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          textDirection: TextDirection.rtl,
+          children: [
+            // Right label (RTL first = visual right): עטיפת טלית
+            GestureDetector(
+              onTap: () =>
+                  ref.read(wearsTallitGadolProvider.notifier).set(true),
+              child: Text('עטיפת טלית',
+                  style: isGadol ? activeStyle : inactiveStyle),
+            ),
+            const SizedBox(width: 8),
+            Switch(
+              value: !isGadol, // RTL flips knob direction → invert value
+              onChanged: (v) =>
+                  ref.read(wearsTallitGadolProvider.notifier).set(!v),
+              activeColor: AppColors.primary,
+            ),
+            const SizedBox(width: 8),
+            // Left label: ברכת ציצית
+            GestureDetector(
+              onTap: () =>
+                  ref.read(wearsTallitGadolProvider.notifier).set(false),
+              child: Text('ברכת ציצית',
+                  style: !isGadol ? activeStyle : inactiveStyle),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  (String, bool, void Function(bool)) _resolve(WidgetRef ref) {
+    switch (segmentId) {
+      case 'inline_toggle_tallit_gadol':
+        // Rendered as segmented control (see _buildInlineToggle override below)
+        return ('', false, (_) {});
+      case 'inline_toggle_shaliach_tzibbur':
+        return (
+          'אני שליח ציבור',
+          ref.watch(isShaliachTzibburProvider),
+          (v) => ref.read(isShaliachTzibburProvider.notifier).set(v),
+        );
+      case 'inline_toggle_kohanim':
+        return (
+          'יש כהנים',
+          !ref.watch(einKohanumProvider),
+          (v) => ref.read(einKohanumProvider.notifier).set(!v),
+        );
+      default:
+        return ('', false, (_) {});
+    }
+  }
+}
+
+const _inlineToggleIds = {
+  'inline_toggle_tallit_gadol',
+  'inline_toggle_shaliach_tzibbur',
+  'inline_toggle_kohanim',
 };
 
 class PrayerTextWidget extends ConsumerWidget {
@@ -31,12 +218,17 @@ class PrayerTextWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // Inline toggle markers render as compact toggle rows, not prayer text.
+    if (_inlineToggleIds.contains(segment.id)) {
+      return _PrayerInlineToggle(segmentId: segment.id);
+    }
+
     final factor = ref.watch(fontSizeFactorProvider);
     final showLabels = ref.watch(showSegmentLabelsProvider);
     final label = segmentLabel(segment.id);
-    final bodyStyle = TextStyle(
+    final bodyStyle = GoogleFonts.notoSerifHebrew(
       fontSize: 22 * factor,
-      height: 1.9,
+      height: 1.5,
       color: Colors.black87,
     );
 
@@ -85,7 +277,7 @@ class PrayerTextWidget extends ConsumerWidget {
 /// + hint) and taps to expand. Use for community-specific or alternate
 /// minhag content (e.g. Gr"a Shir Shel Yom variants, alternate L'shem
 /// Yichud forms) that shouldn't be in the main reading flow by default.
-class _OptionalSegmentTile extends StatefulWidget {
+class _OptionalSegmentTile extends ConsumerStatefulWidget {
   const _OptionalSegmentTile({
     required this.label,
     required this.factor,
@@ -101,11 +293,32 @@ class _OptionalSegmentTile extends StatefulWidget {
   final bool initiallyExpanded;
 
   @override
-  State<_OptionalSegmentTile> createState() => _OptionalSegmentTileState();
+  ConsumerState<_OptionalSegmentTile> createState() =>
+      _OptionalSegmentTileState();
 }
 
-class _OptionalSegmentTileState extends State<_OptionalSegmentTile> {
-  late bool _expanded = widget.initiallyExpanded;
+class _OptionalSegmentTileState extends ConsumerState<_OptionalSegmentTile> {
+  late bool _expanded;
+
+  @override
+  void initState() {
+    super.initState();
+    // Start expanded if the hardcoded default OR the user previously opened it.
+    final saved = ref.read(expandedSegmentsProvider);
+    _expanded = widget.initiallyExpanded || saved.contains(widget.segment.id);
+  }
+
+  /// Returns the text to display in the accordion header.
+  /// If the label is non-empty, use it. Otherwise, take the first two words
+  /// of the segment's resolved text as a preview.
+  String get _headerText {
+    if (widget.label.isNotEmpty) return widget.label;
+    final raw = widget.segment.resolvedText
+        .replaceAll(RegExp(r'<[^>]+>'), '') // strip tags
+        .trim();
+    final words = raw.split(RegExp(r'\s+')).where((w) => w.isNotEmpty);
+    return words.take(2).join(' ');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -114,12 +327,6 @@ class _OptionalSegmentTileState extends State<_OptionalSegmentTile> {
       fontWeight: FontWeight.w700,
       color: AppColors.primary,
       letterSpacing: 0.5,
-    );
-    final hintStyle = TextStyle(
-      fontSize: 12 * widget.factor,
-      fontWeight: FontWeight.w400,
-      color: AppColors.primary.withValues(alpha: 0.6),
-      letterSpacing: 0.3,
     );
 
     return Padding(
@@ -132,7 +339,10 @@ class _OptionalSegmentTileState extends State<_OptionalSegmentTile> {
           initiallyExpanded: widget.initiallyExpanded,
           shape: const Border(),
           collapsedShape: const Border(),
-          onExpansionChanged: (v) => setState(() => _expanded = v),
+          onExpansionChanged: (v) {
+            setState(() => _expanded = v);
+            ref.read(expandedSegmentsProvider.notifier).toggle(widget.segment.id);
+          },
           title: Directionality(
             textDirection: TextDirection.rtl,
             child: Row(
@@ -145,14 +355,9 @@ class _OptionalSegmentTileState extends State<_OptionalSegmentTile> {
                 ),
                 const SizedBox(width: 6),
                 Flexible(
-                  child: Text.rich(
-                    TextSpan(children: [
-                      TextSpan(text: widget.label, style: headerStyle),
-                      if (!_expanded) ...[
-                        TextSpan(text: '  ', style: hintStyle),
-                        TextSpan(text: '[לחץ להצגה]', style: hintStyle),
-                      ],
-                    ]),
+                  child: Text(
+                    _headerText,
+                    style: headerStyle,
                     textDirection: TextDirection.rtl,
                   ),
                 ),

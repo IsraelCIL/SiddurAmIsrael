@@ -1,12 +1,12 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:smart_siddur/domain/entities/assembled_segment.dart';
-import 'package:smart_siddur/domain/entities/blessing_section.dart';
-import 'package:smart_siddur/domain/entities/prayer_segment.dart';
-import 'package:smart_siddur/domain/entities/prayer_template.dart';
-import 'package:smart_siddur/domain/entities/user_context.dart';
-import 'package:smart_siddur/domain/repositories/i_prayer_repository.dart';
-import 'package:smart_siddur/domain/services/prayer_assembler.dart';
+import 'package:siddur_am_israel_chai/domain/entities/assembled_segment.dart';
+import 'package:siddur_am_israel_chai/domain/entities/blessing_section.dart';
+import 'package:siddur_am_israel_chai/domain/entities/prayer_segment.dart';
+import 'package:siddur_am_israel_chai/domain/entities/prayer_template.dart';
+import 'package:siddur_am_israel_chai/domain/entities/user_context.dart';
+import 'package:siddur_am_israel_chai/domain/repositories/i_prayer_repository.dart';
+import 'package:siddur_am_israel_chai/domain/services/prayer_assembler.dart';
 
 class MockPrayerRepository extends Mock implements IPrayerRepository {}
 

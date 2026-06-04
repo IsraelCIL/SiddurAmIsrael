@@ -64,6 +64,15 @@
       "allowed_nusach": []
     },
     {
+      "sub_template_id": "chatzi_kaddish",
+      "condition_flags": [
+        "with_minyan"
+      ],
+      "exclude_flags": [
+        "skip_tachanun"
+      ]
+    },
+    {
       "segment_id": "lulav_lshem_yichud",
       "condition_flags": [
         "lulav_day"
@@ -532,6 +541,43 @@
       "allowed_nusach": []
     },
     {
+      "segment_id": "megillah_brachot_lifnei",
+      "condition_flags": [
+        "purim",
+        "service_shacharit"
+      ],
+      "exclude_flags": [
+        "purim_second_day"
+      ]
+    },
+    {
+      "segment_id": "megillah_esther",
+      "condition_flags": [
+        "purim",
+        "service_shacharit"
+      ],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "megillah_bracha_acharei",
+      "condition_flags": [
+        "purim",
+        "service_shacharit",
+        "with_minyan"
+      ],
+      "exclude_flags": [
+        "purim_second_day"
+      ]
+    },
+    {
+      "segment_id": "shoshanat_yaakov",
+      "condition_flags": [
+        "purim",
+        "service_shacharit"
+      ],
+      "exclude_flags": []
+    },
+    {
       "segment_id": "yehi_ratzon_mon_thu",
       "condition_flags": [
         "monday_thursday",
@@ -565,6 +611,20 @@
       "condition_flags": [],
       "exclude_flags": [],
       "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "uva_letzion_block",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "uva_letzion_closing",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": true,
       "allowed_nusach": []
     },
     {

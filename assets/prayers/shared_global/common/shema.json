@@ -73,7 +73,7 @@
     },
     {
       "text": [
-        "החזן חוזר ואומר:"
+        "<label>החזן חוזר ואומר:</label>"
       ],
       "condition_flags": [
         "with_minyan"

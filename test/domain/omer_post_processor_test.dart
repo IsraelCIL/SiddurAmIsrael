@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:smart_siddur/domain/entities/assembled_segment.dart';
-import 'package:smart_siddur/domain/entities/omer_day.dart';
-import 'package:smart_siddur/domain/services/omer_post_processor.dart';
+import 'package:siddur_am_israel_chai/domain/entities/assembled_segment.dart';
+import 'package:siddur_am_israel_chai/domain/entities/omer_day.dart';
+import 'package:siddur_am_israel_chai/domain/services/omer_post_processor.dart';
 
 OmerDay _day({
   required int day,

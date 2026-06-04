@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/services.dart';
 
-import 'package:smart_siddur/domain/entities/sukkot_korban.dart';
+import 'package:siddur_am_israel_chai/domain/entities/sukkot_korban.dart';
 
 class SukkotKorbanotDatasource {
   SukkotKorbanotDatasource({AssetBundle? bundle})

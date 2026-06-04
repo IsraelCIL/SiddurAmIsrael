@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:smart_siddur/domain/entities/assembled_segment.dart';
-import 'package:smart_siddur/presentation/theme/app_colors.dart';
-import 'package:smart_siddur/presentation/widgets/font_size_fab.dart';
-import 'package:smart_siddur/presentation/widgets/halachic_header.dart';
-import 'package:smart_siddur/presentation/widgets/prayer_text_widget.dart';
-import 'package:smart_siddur/presentation/widgets/settings_reminder_banner.dart';
+import 'package:siddur_am_israel_chai/domain/entities/assembled_segment.dart';
+import 'package:siddur_am_israel_chai/presentation/providers/prayer_providers.dart';
+import 'package:siddur_am_israel_chai/presentation/theme/app_colors.dart';
+import 'package:siddur_am_israel_chai/presentation/widgets/font_size_fab.dart';
+import 'package:siddur_am_israel_chai/presentation/widgets/halachic_header.dart';
+import 'package:siddur_am_israel_chai/presentation/widgets/prayer_text_widget.dart';
+import 'package:siddur_am_israel_chai/presentation/widgets/settings_reminder_banner.dart';
 
 // ── Group accordion config ────────────────────────────────────────────────────
 
 const _groupTitles = <String, String>{
   'chazarat_hashatz': 'חזרת הש״ץ',
+  'ketoret_group': 'פרשת הקטורת',
+  'pitum_group': 'פטום הקטורת',
+  'eizehu_group': 'איזהו מקומן',
 };
 
 // ── Nav anchors ───────────────────────────────────────────────────────────────
@@ -124,9 +129,26 @@ class _PrayerScreenState extends ConsumerState<PrayerScreen> {
 
   void _updateCache(List<AssembledSegment> segments) {
     if (identical(segments, _lastSegments)) return;
+    // Save scroll offset before the list rebuilds (e.g. after inline toggle).
+    final savedOffset = _scrollController.hasClients &&
+            _scrollController.position.hasContentDimensions
+        ? _scrollController.offset
+        : 0.0;
     _lastSegments = segments;
     _cachedItems = _buildListItems(segments);
     _cachedNavEntries = _buildNavEntries(_cachedItems!);
+    // Restore scroll position after layout so inline toggles don't jump.
+    if (savedOffset > 0) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (_scrollController.hasClients &&
+            _scrollController.position.hasContentDimensions) {
+          _scrollController.jumpTo(
+            savedOffset.clamp(
+                0.0, _scrollController.position.maxScrollExtent),
+          );
+        }
+      });
+    }
   }
 
   void _showNavSheet() {
@@ -146,9 +168,12 @@ class _PrayerScreenState extends ConsumerState<PrayerScreen> {
   @override
   Widget build(BuildContext context) {
     final prayerAsync = ref.watch(widget.contentProvider);
+    final bannerSeen = ref.watch(hasSeenSettingsBannerProvider);
     return Scaffold(
       backgroundColor: AppColors.background,
-      body: Stack(
+      body: SafeArea(
+        bottom: false,
+        child: Stack(
         children: [
           Column(
             children: [
@@ -177,6 +202,13 @@ class _PrayerScreenState extends ConsumerState<PrayerScreen> {
                       ),
                     ),
                     prayerAsync.when(
+                      // Inline toggles change a watched provider → the prayer
+                      // FutureProvider RELOADS (dependency change), not just
+                      // refreshes. skipLoadingOnReload keeps the previous
+                      // content visible so the SliverList is never replaced by
+                      // the loading spinner — which is what reset scroll to top.
+                      skipLoadingOnReload: true,
+                      skipLoadingOnRefresh: true,
                       loading: () => const SliverFillRemaining(
                         child: Center(
                           child: CircularProgressIndicator(
@@ -199,11 +231,18 @@ class _PrayerScreenState extends ConsumerState<PrayerScreen> {
                       data: (segments) {
                         _updateCache(segments);
                         final items = _cachedItems!;
-                        // Eager (non-lazy) list so every GlobalKey is always
-                        // in the widget tree — required for reliable nav scroll.
-                        return SliverList(
-                          delegate: SliverChildListDelegate(
-                            [for (final item in items) item.build(context)],
+                        // Truly eager: a Column inside SliverToBoxAdapter keeps
+                        // EVERY child (and its nav GlobalKey) in the element
+                        // tree at all times — unlike SliverList, which is lazy
+                        // and only builds children near the viewport. This is
+                        // required so Scrollable.ensureVisible can always reach
+                        // any nav target accurately, regardless of distance.
+                        return SliverToBoxAdapter(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              for (final item in items) item.build(context),
+                            ],
                           ),
                         );
                       },
@@ -217,11 +256,15 @@ class _PrayerScreenState extends ConsumerState<PrayerScreen> {
           if (prayerAsync.hasValue &&
               (_cachedNavEntries?.isNotEmpty ?? false))
             Positioned(
-              right: 16,
-              bottom: 16,
+              // Below the collapsed toolbar + clear of the title text.
+              // Add extra offset when the settings banner is still visible
+              // (~44 dp) so the button doesn't land on the banner row.
+              top: bannerSeen ? kToolbarHeight + 4 : kToolbarHeight + 48,
+              right: 12,
               child: _NavFab(onTap: _showNavSheet),
             ),
         ],
+      ),
       ),
     );
   }
@@ -254,6 +297,7 @@ List<_ListItem> _buildListItems(List<AssembledSegment> segments) {
       }
       final title = _groupTitles[gid] ?? gid;
       items.add(_GroupItem(
+        groupId: gid,
         title: title,
         segments: grouped,
         counts: counts,
@@ -344,6 +388,7 @@ class _SegmentItem extends _ListItem {
 
 class _GroupItem extends _ListItem {
   _GroupItem({
+    required this.groupId,
     required this.title,
     required this.segments,
     required Map<String, int> counts,
@@ -378,6 +423,7 @@ class _GroupItem extends _ListItem {
     _childNavEntries = entries;
   }
 
+  final String groupId;
   final String title;
   final List<AssembledSegment> segments;
   final int itemIndex;
@@ -393,6 +439,7 @@ class _GroupItem extends _ListItem {
   @override
   Widget build(BuildContext context) => _GroupAccordion(
         key: _key,
+        groupId: groupId,
         title: title,
         segments: segments,
         controller: _controller,
@@ -402,26 +449,37 @@ class _GroupItem extends _ListItem {
 
 // ── Group accordion widget ────────────────────────────────────────────────────
 
-class _GroupAccordion extends StatefulWidget {
+class _GroupAccordion extends ConsumerStatefulWidget {
   const _GroupAccordion({
     super.key,
+    required this.groupId,
     required this.title,
     required this.segments,
     required this.controller,
     required this.childKeys,
   });
 
+  final String groupId;
   final String title;
   final List<AssembledSegment> segments;
   final ExpansibleController controller;
   final Map<int, GlobalKey> childKeys;
 
   @override
-  State<_GroupAccordion> createState() => _GroupAccordionState();
+  ConsumerState<_GroupAccordion> createState() => _GroupAccordionState();
 }
 
-class _GroupAccordionState extends State<_GroupAccordion> {
-  bool _expanded = false;
+class _GroupAccordionState extends ConsumerState<_GroupAccordion> {
+  late bool _expanded;
+
+  // Persist key for the group's open/closed state (distinct from segment IDs).
+  String get _persistKey => 'group:${widget.groupId}';
+
+  @override
+  void initState() {
+    super.initState();
+    _expanded = ref.read(expandedSegmentsProvider).contains(_persistKey);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -440,10 +498,16 @@ class _GroupAccordionState extends State<_GroupAccordion> {
             tilePadding:
                 const EdgeInsets.symmetric(horizontal: 14, vertical: 4),
             childrenPadding: EdgeInsets.zero,
-            initiallyExpanded: false,
+            initiallyExpanded: _expanded,
             shape: const Border(),
             collapsedShape: const Border(),
-            onExpansionChanged: (v) => setState(() => _expanded = v),
+            onExpansionChanged: (v) {
+              setState(() => _expanded = v);
+              final saved = ref.read(expandedSegmentsProvider).contains(_persistKey);
+              if (v != saved) {
+                ref.read(expandedSegmentsProvider.notifier).toggle(_persistKey);
+              }
+            },
             title: Directionality(
               textDirection: TextDirection.rtl,
               child: Row(
@@ -463,16 +527,7 @@ class _GroupAccordionState extends State<_GroupAccordion> {
                       letterSpacing: 0.4,
                     ),
                   ),
-                  if (!_expanded) ...[
-                    const SizedBox(width: 8),
-                    Text(
-                      '[לחץ להצגה]',
-                      style: TextStyle(
-                        color: AppColors.primary.withValues(alpha: 0.55),
-                        fontSize: 12,
-                      ),
-                    ),
-                  ],
+                  // No hint text — the arrow icon already signals tappability.
                 ],
               ),
             ),
@@ -516,9 +571,9 @@ class _NavFab extends StatelessWidget {
           ],
         ),
         child: const Icon(
-          Icons.format_list_bulleted,
+          Icons.keyboard_arrow_down,
           color: AppColors.primary,
-          size: 22,
+          size: 26,
         ),
       ),
     );
@@ -569,36 +624,26 @@ class _NavSheet extends StatelessWidget {
     }
 
     final ctx = entry.key.currentContext;
-    if (ctx != null && ctx.mounted) {
-      await Scrollable.ensureVisible(
-        ctx,
-        duration: const Duration(milliseconds: 400),
-        curve: Curves.easeInOut,
-        alignment: 0.0,
-      );
-      return;
-    }
+    if (ctx == null || !ctx.mounted) return;
 
-    // Item off-screen — use item-list fraction for a better position estimate.
-    final maxExtent = scrollController.position.maxScrollExtent;
-    final fraction = entry.totalItems > 1
-        ? entry.itemIndex / entry.totalItems
-        : entries.indexOf(entry) / entries.length.clamp(1, 9999);
+    // Compute the exact scroll offset that brings the target to the top of the
+    // viewport, then subtract the pinned app bar's collapsed height so the
+    // section lands just BELOW the app bar instead of behind it.
+    // Because the list is rendered eagerly (Column in SliverToBoxAdapter),
+    // every nav target's render object is always available — no estimation.
+    final box = ctx.findRenderObject();
+    if (box is! RenderBox) return;
+    final viewport = RenderAbstractViewport.of(box);
+    final revealOffset = viewport.getOffsetToReveal(box, 0.0).offset;
+    const pinnedAppBarHeight = kToolbarHeight;
+    final target = (revealOffset - pinnedAppBarHeight)
+        .clamp(0.0, scrollController.position.maxScrollExtent);
+
     await scrollController.animateTo(
-      maxExtent * fraction,
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.easeOut,
+      target,
+      duration: const Duration(milliseconds: 400),
+      curve: Curves.easeInOut,
     );
-    await Future.delayed(const Duration(milliseconds: 150));
-    final ctx2 = entry.key.currentContext;
-    if (ctx2 != null && ctx2.mounted) {
-      Scrollable.ensureVisible(
-        ctx2,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
-        alignment: 0.0,
-      );
-    }
   }
 
   @override

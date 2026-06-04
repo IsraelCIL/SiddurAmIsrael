@@ -3,54 +3,6 @@
   "name": "shacharit_sof_hatfila_ashkenaz",
   "segments": [
     {
-      "segment_id": "ein_keloheinu",
-      "condition_flags": [],
-      "exclude_flags": [],
-      "optional": false,
-      "allowed_nusach": []
-    },
-    {
-      "segment_id": "atah_hu_shehiktiruv",
-      "condition_flags": [],
-      "exclude_flags": [],
-      "optional": false,
-      "allowed_nusach": []
-    },
-    {
-      "segment_id": "tana_devei_eliyahu",
-      "condition_flags": [],
-      "exclude_flags": [],
-      "optional": false,
-      "allowed_nusach": []
-    },
-    {
-      "segment_id": "amar_rabbi_elazar",
-      "condition_flags": [],
-      "exclude_flags": [],
-      "optional": false,
-      "allowed_nusach": []
-    },
-    {
-      "sub_template_id": "kaddish_derabanan",
-      "condition_flags": [
-        "with_minyan"
-      ],
-      "exclude_flags": [],
-      "optional": false,
-      "allowed_nusach": []
-    },
-    {
-      "segment_id": "barchu",
-      "condition_flags": [
-        "with_minyan"
-      ],
-      "exclude_flags": [
-        "kriat_hatorah"
-      ],
-      "optional": false,
-      "allowed_nusach": []
-    },
-    {
       "segment_id": "aleinu",
       "condition_flags": [],
       "exclude_flags": [],
@@ -69,7 +21,10 @@
       "condition_flags": [
         "with_minyan"
       ],
-      "exclude_flags": [],
+      "exclude_flags": [
+        "hallel_with_musaf",
+        "ladavid_season"
+      ],
       "optional": false,
       "allowed_nusach": []
     },
@@ -106,6 +61,63 @@
         "with_minyan"
       ],
       "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "ein_keloheinu",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "atah_hu_shehiktiruv",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "pitum_haketoreh_ashkenaz",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": [
+        "ashkenaz"
+      ]
+    },
+    {
+      "segment_id": "tana_devei_eliyahu",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "amar_rabbi_elazar",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "sub_template_id": "kaddish_derabanan",
+      "condition_flags": [
+        "with_minyan"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "barchu",
+      "condition_flags": [
+        "with_minyan"
+      ],
+      "exclude_flags": [
+        "kriat_hatorah"
+      ],
       "optional": false,
       "allowed_nusach": []
     },

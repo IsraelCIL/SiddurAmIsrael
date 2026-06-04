@@ -3,7 +3,7 @@
   "sections": [
     {
       "text": [
-        "שמוציאים ספר תורה אומרים:"
+        "<label>שמוציאים ספר תורה אומרים:</label>"
       ],
       "condition_flags": [],
       "exclude_flags": []

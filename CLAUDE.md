@@ -19,6 +19,11 @@
 - **Forbidden content**: Any reference — direct or indirect — to Reform, Conservative, Egalitarian, Liberal, or Reconstructionist practices is strictly forbidden anywhere in the codebase (source code, comments, JSON data, tests, and documentation). This includes but is not limited to: adding the Imahot (matriarchs) to the Avot blessing, egalitarian liturgical changes, or gender-neutral God-language.
 - **Gender variants**: The only permitted gender differences are those that have a recognised Halachic basis in mainstream Orthodox poskim (e.g. a woman reciting a different verbal form). Always cite the Halachic source before adding such a variant.
 
+## Segment Labels (Hebrew UI)
+- **No English labels**: The app UI language is Hebrew. Every segment ID that appears in a prayer template MUST have an entry in `lib/presentation/constants/segment_labels.dart`. The fallback `segmentLabel(id) ?? id` returns the raw English ID — this must never reach the user.
+- When creating a new segment, immediately add its label to `segment_labels.dart` (empty string `''` if no visible header is desired; a Hebrew string if a section header is needed).
+- Run the segment-ID coverage check before committing: `node -e "..."` (see README) to verify all template segment IDs are covered.
+
 ## JSON Text Formatting
 - **Long text must be split into arrays**: Any `text` field in a segment JSON that would exceed ~80 characters on a single line must be written as a JSON array of strings. The parser joins them with a single space at runtime. This keeps files readable without requiring scrolling.
   ```json

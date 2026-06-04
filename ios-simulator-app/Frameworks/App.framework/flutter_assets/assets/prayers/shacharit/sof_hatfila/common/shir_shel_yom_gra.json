@@ -1,0 +1,12 @@
+{
+  "id": "shir_shel_yom_gra",
+  "sections": [
+    {
+      "text": [
+        "{{gra_chapter}}"
+      ],
+      "condition_flags": [],
+      "exclude_flags": []
+    }
+  ]
+}

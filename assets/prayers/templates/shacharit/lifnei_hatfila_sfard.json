@@ -66,27 +66,19 @@
       "allowed_nusach": []
     },
     {
-      "segment_id": "yehi_ratzon_tzitzit",
+      "segment_id": "inline_toggle_tallit_gadol",
       "condition_flags": [
-        "wears_tallit_gadol"
+        "gender_male"
       ],
       "exclude_flags": [],
       "optional": false,
       "allowed_nusach": []
     },
     {
-      "segment_id": "birkat_tzitzit_gadol",
+      "segment_id": "seder_tzitzit_gadol",
       "condition_flags": [
-        "wears_tallit_gadol"
-      ],
-      "exclude_flags": [],
-      "optional": false,
-      "allowed_nusach": []
-    },
-    {
-      "segment_id": "mah_yakar_tallit",
-      "condition_flags": [
-        "wears_tallit_gadol"
+        "wears_tallit_gadol",
+        "gender_male"
       ],
       "exclude_flags": [],
       "optional": false,
@@ -94,8 +86,11 @@
     },
     {
       "segment_id": "birkat_tzitzit_katan",
-      "condition_flags": [],
+      "condition_flags": [
+        "gender_male"
+      ],
       "exclude_flags": [
+        "wears_tallit_gadol",
         "wears_tallit_gadol"
       ],
       "optional": false,
@@ -103,7 +98,9 @@
     },
     {
       "segment_id": "seder_tefillin",
-      "condition_flags": [],
+      "condition_flags": [
+        "gender_male"
+      ],
       "exclude_flags": [
         "skip_tefillin"
       ],
@@ -112,7 +109,9 @@
     },
     {
       "segment_id": "parshat_kadesh",
-      "condition_flags": [],
+      "condition_flags": [
+        "gender_male"
+      ],
       "exclude_flags": [
         "skip_tefillin"
       ],
@@ -121,7 +120,9 @@
     },
     {
       "segment_id": "parshat_vehaya_ki_yeviacha",
-      "condition_flags": [],
+      "condition_flags": [
+        "gender_male"
+      ],
       "exclude_flags": [
         "skip_tefillin"
       ],
@@ -283,28 +284,28 @@
       "segment_id": "akeidah",
       "condition_flags": [],
       "exclude_flags": [],
-      "optional": false,
+      "optional": true,
       "allowed_nusach": []
     },
     {
       "segment_id": "akeidah_yehi_ratzon",
       "condition_flags": [],
       "exclude_flags": [],
-      "optional": false,
+      "optional": true,
       "allowed_nusach": []
     },
     {
       "segment_id": "leolam_yehe_adam",
       "condition_flags": [],
       "exclude_flags": [],
-      "optional": false,
+      "optional": true,
       "allowed_nusach": []
     },
     {
       "segment_id": "korbanot_tamid",
       "condition_flags": [],
       "exclude_flags": [],
-      "optional": false,
+      "optional": true,
       "allowed_nusach": []
     },
     {
@@ -312,48 +313,54 @@
       "condition_flags": [],
       "exclude_flags": [],
       "optional": false,
-      "allowed_nusach": []
+      "allowed_nusach": [],
+      "group_id": "ketoret_group"
     },
     {
       "segment_id": "korbanot_ketoret",
       "condition_flags": [],
       "exclude_flags": [],
       "optional": false,
-      "allowed_nusach": []
+      "allowed_nusach": [],
+      "group_id": "ketoret_group"
     },
     {
       "segment_id": "korbanot_pitum_header",
       "condition_flags": [],
       "exclude_flags": [],
       "optional": false,
-      "allowed_nusach": []
+      "allowed_nusach": [],
+      "group_id": "pitum_group"
     },
     {
       "segment_id": "korbanot_pitum",
       "condition_flags": [],
       "exclude_flags": [],
       "optional": false,
-      "allowed_nusach": []
+      "allowed_nusach": [],
+      "group_id": "pitum_group"
     },
     {
       "segment_id": "korbanot_eizehu_header",
       "condition_flags": [],
       "exclude_flags": [],
       "optional": false,
-      "allowed_nusach": []
+      "allowed_nusach": [],
+      "group_id": "eizehu_group"
     },
     {
       "segment_id": "korbanot_eizehu",
       "condition_flags": [],
       "exclude_flags": [],
       "optional": false,
-      "allowed_nusach": []
+      "allowed_nusach": [],
+      "group_id": "eizehu_group"
     },
     {
       "segment_id": "korbanot_conclusion",
       "condition_flags": [],
       "exclude_flags": [],
-      "optional": false,
+      "optional": true,
       "allowed_nusach": []
     },
     {

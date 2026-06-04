@@ -2,7 +2,9 @@
   "id": "barchu",
   "sections": [
     {
-      "text": "שׁ\"ץ:",
+      "text": [
+        "<label>שׁ\"ץ:</label>"
+      ],
       "condition_flags": [],
       "exclude_flags": []
     },
@@ -12,7 +14,9 @@
       "exclude_flags": []
     },
     {
-      "text": "קָהָל:",
+      "text": [
+        "<label>קָהָל:</label>"
+      ],
       "condition_flags": [],
       "exclude_flags": []
     },
@@ -22,7 +26,9 @@
       "exclude_flags": []
     },
     {
-      "text": "שׁ\"ץ חוֹזֵר:",
+      "text": [
+        "<label>שׁ\"ץ חוֹזֵר:</label>"
+      ],
       "condition_flags": [],
       "exclude_flags": []
     },

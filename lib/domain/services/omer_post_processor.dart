@@ -1,5 +1,5 @@
-import 'package:smart_siddur/domain/entities/assembled_segment.dart';
-import 'package:smart_siddur/domain/entities/omer_day.dart';
+import 'package:siddur_am_israel_chai/domain/entities/assembled_segment.dart';
+import 'package:siddur_am_israel_chai/domain/entities/omer_day.dart';
 
 /// Applies day-specific transformations to Sefirat HaOmer segments after
 /// they have been assembled.

@@ -1,4 +1,4 @@
-import 'package:smart_siddur/domain/entities/omer_day.dart';
+import 'package:siddur_am_israel_chai/domain/entities/omer_day.dart';
 
 /// Loads the per-day Sefirat HaOmer mapping
 /// (`assets/prayers/maariv/sefirat_haomer/_omer_mapping.json`).
