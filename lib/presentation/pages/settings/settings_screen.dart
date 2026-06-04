@@ -1,4 +1,4 @@
-// The nusach/gender/purim selectors keep RadioListTile bound directly to the
+// The nusach/purim selectors keep RadioListTile bound directly to the
 // persistent providers. Flutter's RadioListTile group API (groupValue/
 // onChanged) is deprecated in favor of a RadioGroup ancestor, but introducing
 // that ancestor would restructure the provider-bound tiles for no behavioral
@@ -7,8 +7,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'package:siddur_am_israel_chai/domain/entities/user_context.dart';
+import 'package:siddur_am_israel_chai/presentation/constants/app_config.dart';
 import 'package:siddur_am_israel_chai/presentation/providers/prayer_providers.dart';
 import 'package:siddur_am_israel_chai/presentation/theme/app_colors.dart';
 import 'package:siddur_am_israel_chai/presentation/theme/app_dimens.dart';
@@ -67,21 +69,13 @@ class SettingsScreen extends ConsumerWidget {
             ),
 
             _SectionHeader(title: 'מתפלל/ת'),
-            RadioListTile<Gender>(
-              value: Gender.male,
-              groupValue: gender,
-              title: const Text('זכר'),
-              onChanged: (v) => ref
+            SwitchListTile(
+              title: const Text('אני אשה'),
+              value: gender == Gender.female,
+              activeColor: AppColors.primary,
+              onChanged: (isFemale) => ref
                   .read(userGenderProvider.notifier)
-                  .set(v ?? Gender.male),
-            ),
-            RadioListTile<Gender>(
-              value: Gender.female,
-              groupValue: gender,
-              title: const Text('נקבה'),
-              onChanged: (v) => ref
-                  .read(userGenderProvider.notifier)
-                  .set(v ?? Gender.female),
+                  .set(isFemale ? Gender.female : Gender.male),
             ),
 
             _SectionHeader(title: 'מיקום'),
@@ -172,6 +166,33 @@ class SettingsScreen extends ConsumerWidget {
                   textAlign: TextAlign.right,
                   style: TextStyle(fontSize: 22 * fontFactor),
                 ),
+              ),
+            ),
+            const SizedBox(height: 8),
+            _SectionHeader(title: 'יצירת קשר'),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+              child: OutlinedButton.icon(
+                icon: const Icon(Icons.email_outlined),
+                label: const Text('שלח מייל לתמיכה'),
+                style: OutlinedButton.styleFrom(
+                  foregroundColor: AppColors.primary,
+                  side: const BorderSide(color: AppColors.primary),
+                  alignment: AlignmentDirectional.centerEnd,
+                  minimumSize: const Size.fromHeight(44),
+                ),
+                onPressed: () async {
+                  final uri = Uri(
+                    scheme: 'mailto',
+                    path: AppConfig.supportEmail,
+                    queryParameters: {
+                      'subject': AppConfig.supportEmailSubject,
+                    },
+                  );
+                  if (await canLaunchUrl(uri)) {
+                    await launchUrl(uri);
+                  }
+                },
               ),
             ),
             const SizedBox(height: 24),

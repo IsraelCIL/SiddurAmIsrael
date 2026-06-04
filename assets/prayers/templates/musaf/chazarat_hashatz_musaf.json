@@ -9,7 +9,9 @@
     },
     {
       "segment_id": "inline_toggle_shaliach_tzibbur",
-      "condition_flags": [],
+      "condition_flags": [
+        "gender_male"
+      ],
       "exclude_flags": [],
       "optional": false,
       "allowed_nusach": []

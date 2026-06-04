@@ -36,6 +36,9 @@ dependencies:
   # Hebrew / Jewish calendar calculations (offline-first)
   kosher_dart: ^2.0.19
 
+  # Open email / URLs from the app
+  url_launcher: ^6.3.0
+
 # ─────────────────────────────────────────────────────────────────────────────
 # DEV / BUILD-TIME DEPENDENCIES
 # Code generation: dart run build_runner build --delete-conflicting-outputs
@@ -44,6 +47,9 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^6.0.0
+
+  # Launcher Icons Generator (Added for the logo)
+  flutter_launcher_icons: ^0.13.1
 
   # Riverpod code generation
   riverpod_generator: ^2.6.2
@@ -149,3 +155,12 @@ flutter:
     - assets/prayers/shared_global/tachanun/nusach/ashkenaz/
     - assets/prayers/shared_global/tachanun/nusach/sfard/
     - assets/prayers/shared_global/tachanun/nusach/edot_mizrach/
+
+# ─────────────────────────────────────────────────────────────────────────────
+# LAUNCHER ICONS CONFIGURATION (Root-level, no indentation)
+# ─────────────────────────────────────────────────────────────────────────────
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/app_icon.jpg"
+  remove_alpha_ios: true

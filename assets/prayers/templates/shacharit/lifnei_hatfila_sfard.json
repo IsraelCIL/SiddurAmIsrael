@@ -67,7 +67,9 @@
     },
     {
       "segment_id": "inline_toggle_tallit_gadol",
-      "condition_flags": [],
+      "condition_flags": [
+        "gender_male"
+      ],
       "exclude_flags": [],
       "optional": false,
       "allowed_nusach": []
@@ -75,7 +77,8 @@
     {
       "segment_id": "seder_tzitzit_gadol",
       "condition_flags": [
-        "wears_tallit_gadol"
+        "wears_tallit_gadol",
+        "gender_male"
       ],
       "exclude_flags": [],
       "optional": false,
@@ -83,7 +86,9 @@
     },
     {
       "segment_id": "birkat_tzitzit_katan",
-      "condition_flags": [],
+      "condition_flags": [
+        "gender_male"
+      ],
       "exclude_flags": [
         "wears_tallit_gadol",
         "wears_tallit_gadol"
@@ -93,7 +98,9 @@
     },
     {
       "segment_id": "seder_tefillin",
-      "condition_flags": [],
+      "condition_flags": [
+        "gender_male"
+      ],
       "exclude_flags": [
         "skip_tefillin"
       ],
@@ -102,7 +109,9 @@
     },
     {
       "segment_id": "parshat_kadesh",
-      "condition_flags": [],
+      "condition_flags": [
+        "gender_male"
+      ],
       "exclude_flags": [
         "skip_tefillin"
       ],
@@ -111,7 +120,9 @@
     },
     {
       "segment_id": "parshat_vehaya_ki_yeviacha",
-      "condition_flags": [],
+      "condition_flags": [
+        "gender_male"
+      ],
       "exclude_flags": [
         "skip_tefillin"
       ],
