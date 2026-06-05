@@ -1,6 +1,11 @@
 include: package:flutter_lints/flutter.yaml
 
 analyzer:
+  exclude:
+    # The Sefaria importer is a standalone dev tool with its own pubspec/package
+    # (it depends on package:test). It is analyzed & tested on its own, not as
+    # part of the app build — so keep it out of the app's analysis context.
+    - tools/**
   language:
     strict-casts: true
     strict-inference: true
