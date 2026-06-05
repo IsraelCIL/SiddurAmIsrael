@@ -25,9 +25,10 @@ workflows:
       app_store_connect: SmartSiddur_ASC
 
     environment:
-      ios_signing:
-        distribution_type: app_store
-        bundle_identifier: com.sidduramisrael.app   # ← keep in sync with BUNDLE_ID below
+      # NOTE: code signing is handled entirely in the scripts below (after the
+      # iOS project is generated). We deliberately do NOT use `ios_signing` here,
+      # because that makes Codemagic look for ios/Runner.xcodeproj before our
+      # `flutter create` step runs — which would fail with "Did not find xcodeproj".
       vars:
         BUNDLE_ID: "com.sidduramisrael.app"       # ← MUST match the App ID in App Store Connect
         APP_DISPLAY_NAME: "Siddur Am Israel"      # home-screen name
