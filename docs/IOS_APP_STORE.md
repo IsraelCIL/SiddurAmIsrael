@@ -122,12 +122,17 @@ Apple review typically takes 24–48 hours.
 ## Notes / troubleshooting
 
 - **`flutter: 3.41.9` not found** → change it to `stable` in `codemagic.yaml`.
-- **Bundle ID mismatch errors** → ensure `BUNDLE_ID`, `ios_signing.bundle_identifier`,
-  the App ID, and the App Store Connect record all match.
+- **Bundle ID mismatch errors** → ensure `BUNDLE_ID` in `codemagic.yaml`, the
+  `PRODUCT_BUNDLE_IDENTIFIER` in `ios/Runner.xcodeproj/project.pbxproj`, the App ID,
+  and the App Store Connect record all match (`com.sidduramisrael.app`).
 - **`ITMS-91053` (missing API declaration) email** → the privacy manifest
-  (`ci/PrivacyInfo.xcprivacy`) already covers UserDefaults; add any new required-reason
-  API there if a new plugin needs one.
+  (`ios/Runner/PrivacyInfo.xcprivacy`) already covers UserDefaults; add any new
+  required-reason API there if a new plugin needs one.
 - **Build minutes** → the `Static analysis & tests` step is the slowest; remove it from
   `codemagic.yaml` once you trust the pipeline, to conserve free-tier minutes.
-- The iOS project is generated fresh on every build, so there is **no `ios/` folder to
-  commit** — all iOS config lives in `codemagic.yaml` + `ci/`.
+- The `ios/` project is **committed** in the repo. Bundle id, app name, the localized
+  home-screen name (`en.lproj` / `he.lproj`), and the privacy manifest are configured in
+  `ios/` + wired in by `ci/configure_ios.rb` at build time.
+- **App name**: home-screen label is localized — `Siddur Am Israel` (English / default)
+  and `סידור עם ישראל` (Hebrew devices). Set both names again per-language in the App
+  Store **listing** (App Store Connect → your app → add Hebrew + English localizations).

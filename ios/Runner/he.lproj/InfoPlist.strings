@@ -1,0 +1,3 @@
+/* Home-screen app name — Hebrew (shown on Hebrew-language devices) */
+"CFBundleDisplayName" = "סידור עם ישראל";
+"CFBundleName" = "סידור עם ישראל";

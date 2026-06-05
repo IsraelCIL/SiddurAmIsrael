@@ -1,0 +1,3 @@
+/* Home-screen app name — English (and default for non-Hebrew devices) */
+"CFBundleDisplayName" = "Siddur Am Israel";
+"CFBundleName" = "Siddur Am Israel";

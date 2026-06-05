@@ -1,16 +1,19 @@
 # ─────────────────────────────────────────────────────────────────────────────
 # Codemagic CI/CD — build & publish Siddur Am Israel to the Apple App Store.
-# This lets you ship from Windows: the build runs on Codemagic's macOS machines.
+# Builds on Codemagic's macOS machines, so you can ship from Windows.
 # Docs: https://docs.codemagic.io/yaml-quick-start/building-a-flutter-app/
+#
+# The repo now contains a committed ios/ project, so this pipeline uses it
+# directly (no `flutter create`). Bundle id, app name, localized name, and the
+# privacy manifest are all configured in the repo (ios/ + ci/configure_ios.rb).
 #
 # ┌─ ONE-TIME SETUP IN THE CODEMAGIC UI (before the first build) ──────────────┐
 # │ 1. Connect this repo (github.com/IsraelCIL/SiddurAmIsrael).                 │
 # │ 2. Add your App Store Connect API key:                                      │
 # │      Codemagic → Teams/User settings → Integrations → App Store Connect.    │
 # │    Name the integration EXACTLY:  SmartSiddur_ASC                           │
-# │    (paste Issuer ID, Key ID, and upload the .p8 file).                      │
-# │ 3. Confirm BUNDLE_ID below matches the App ID you register in              │
-# │    App Store Connect (com.sidduramisrael.app).                              │
+# │ 3. App Store Connect app must use Bundle ID  com.sidduramisrael.app         │
+# │ 4. Build the `main` branch with the "iOS — App Store" workflow below.       │
 # └─────────────────────────────────────────────────────────────────────────────┘
 # ─────────────────────────────────────────────────────────────────────────────
 
@@ -25,60 +28,25 @@ workflows:
       app_store_connect: SmartSiddur_ASC
 
     environment:
-      # NOTE: code signing is handled entirely in the scripts below (after the
-      # iOS project is generated). We deliberately do NOT use `ios_signing` here,
-      # because that makes Codemagic look for ios/Runner.xcodeproj before our
-      # `flutter create` step runs — which would fail with "Did not find xcodeproj".
       vars:
-        BUNDLE_ID: "com.sidduramisrael.app"       # ← MUST match the App ID in App Store Connect
-        APP_DISPLAY_NAME: "Siddur Am Israel"      # home-screen name
+        BUNDLE_ID: "com.sidduramisrael.app"   # ← must match the committed ios/ project + App Store Connect
       flutter: 3.41.9        # matches README.md; change to "stable" if this exact version is unavailable
       xcode: latest
       cocoapods: default
 
     scripts:
-      - name: Generate iOS platform files
-        script: |
-          set -e
-          # The repo has no ios/ folder — generate the native iOS scaffolding.
-          flutter create --project-name smart_siddur --platforms=ios .
-
-      - name: Configure bundle id, app name, Hebrew localization & encryption flag
-        script: |
-          set -e
-          # Set the bundle identifier on the Runner target (skip the RunnerTests lines).
-          sed -i '' -E "/RunnerTests/!s/PRODUCT_BUNDLE_IDENTIFIER = [^;]+;/PRODUCT_BUNDLE_IDENTIFIER = $BUNDLE_ID;/g" ios/Runner.xcodeproj/project.pbxproj
-
-          PLIST=ios/Runner/Info.plist
-          # Home-screen display name
-          plutil -replace CFBundleDisplayName -string "$APP_DISPLAY_NAME" "$PLIST" 2>/dev/null \
-            || plutil -insert CFBundleDisplayName -string "$APP_DISPLAY_NAME" "$PLIST"
-          # Hebrew-first localization (drives RTL + store language)
-          plutil -replace CFBundleDevelopmentRegion -string "he" "$PLIST"
-          plutil -insert CFBundleLocalizations -json '["he","en"]' "$PLIST" 2>/dev/null \
-            || plutil -replace CFBundleLocalizations -json '["he","en"]' "$PLIST"
-          # App uses no non-exempt encryption (offline siddur) — avoids the manual
-          # export-compliance prompt on every TestFlight build.
-          plutil -replace ITSAppUsesNonExemptEncryption -bool false "$PLIST" 2>/dev/null \
-            || plutil -insert ITSAppUsesNonExemptEncryption -bool false "$PLIST"
-
-      - name: Add privacy manifest (declares zero data collection)
-        script: |
-          set -e
-          cp ci/PrivacyInfo.xcprivacy ios/Runner/PrivacyInfo.xcprivacy
-          gem install xcodeproj --no-document
-          ruby ci/add_privacy_manifest.rb
-
       - name: Install Dart/Flutter packages
         script: |
           set -e
           flutter pub get
 
-      - name: Generate app launcher icons
+      - name: Register iOS app resources (privacy manifest + localized name)
         script: |
           set -e
-          # Reads assets/icon/app_icon.png (1024×1024, no alpha) → writes iOS icon set.
-          dart run flutter_launcher_icons
+          # Wires ios/Runner/PrivacyInfo.xcprivacy and the en/he InfoPlist.strings
+          # (localized home-screen name) into the Xcode project so they're bundled.
+          gem install xcodeproj --no-document
+          ruby ci/configure_ios.rb
 
       - name: Generate code (freezed / riverpod / json_serializable)
         script: |
