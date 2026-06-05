@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:smart_siddur/core/calendar/hebrew_date.dart';
-import 'package:smart_siddur/domain/entities/day_flags.dart';
-import 'package:smart_siddur/domain/entities/user_context.dart';
-import 'package:smart_siddur/domain/services/halachic_calendar_service.dart';
+import 'package:siddur_am_israel_chai/core/calendar/hebrew_date.dart';
+import 'package:siddur_am_israel_chai/domain/entities/day_flags.dart';
+import 'package:siddur_am_israel_chai/domain/entities/user_context.dart';
+import 'package:siddur_am_israel_chai/domain/services/halachic_calendar_service.dart';
 
 // ── Verified Gregorian↔Hebrew date anchors (year 5785) ────────────────────
 // Oct  2 2024 (Wed) = 29 Elul  5784  — Erev Rosh Hashanah

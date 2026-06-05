@@ -89,7 +89,7 @@
     },
     {
       "text": [
-        "הקהל עונים:"
+        "<label>הקהל עונים:</label>"
       ],
       "condition_flags": [],
       "exclude_flags": []

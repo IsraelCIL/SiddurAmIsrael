@@ -85,7 +85,204 @@
       "condition_flags": [
         "with_minyan"
       ],
-      "exclude_flags": [],
+      "exclude_flags": [
+        "motzaei_shabbat"
+      ],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "kaddish_titkabal",
+      "condition_flags": [
+        "purim",
+        "motzaei_shabbat",
+        "with_minyan"
+      ],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "megillah_brachot_lifnei",
+      "condition_flags": [
+        "purim"
+      ],
+      "exclude_flags": [
+        "purim_second_day"
+      ]
+    },
+    {
+      "segment_id": "megillah_esther",
+      "condition_flags": [
+        "purim"
+      ],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "megillah_bracha_acharei",
+      "condition_flags": [
+        "purim",
+        "with_minyan"
+      ],
+      "exclude_flags": [
+        "purim_second_day"
+      ]
+    },
+    {
+      "segment_id": "asher_henia",
+      "condition_flags": [
+        "purim"
+      ],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "shoshanat_yaakov",
+      "condition_flags": [
+        "purim"
+      ],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "vihi_noam_before_psalm",
+      "condition_flags": [
+        "purim",
+        "motzaei_shabbat"
+      ],
+      "exclude_flags": [
+        "yom_tov_next_week",
+        "tisha_beav"
+      ]
+    },
+    {
+      "segment_id": "psalm_091",
+      "condition_flags": [
+        "purim",
+        "motzaei_shabbat"
+      ],
+      "exclude_flags": [
+        "yom_tov_next_week",
+        "tisha_beav"
+      ]
+    },
+    {
+      "segment_id": "vihi_noam_after_psalm",
+      "condition_flags": [
+        "purim"
+      ],
+      "exclude_flags": []
+    },
+    {
+      "sub_template_id": "kaddish_yatom",
+      "condition_flags": [
+        "purim",
+        "with_minyan"
+      ],
+      "exclude_flags": []
+    },
+    {
+      "sub_template_id": "chatzi_kaddish",
+      "condition_flags": [
+        "motzaei_shabbat",
+        "with_minyan"
+      ],
+      "exclude_flags": [
+        "yom_tov_next_week",
+        "tisha_beav",
+        "purim"
+      ],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "vihi_noam_before_psalm",
+      "condition_flags": [
+        "motzaei_shabbat"
+      ],
+      "exclude_flags": [
+        "yom_tov_next_week",
+        "yom_tov_next_shabbat",
+        "tisha_beav",
+        "purim"
+      ],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "psalm_091",
+      "condition_flags": [
+        "motzaei_shabbat"
+      ],
+      "exclude_flags": [
+        "yom_tov_next_week",
+        "yom_tov_next_shabbat",
+        "tisha_beav",
+        "purim"
+      ],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "vihi_noam_after_psalm",
+      "condition_flags": [
+        "motzaei_shabbat"
+      ],
+      "exclude_flags": [
+        "yom_tov_next_week",
+        "yom_tov_next_shabbat",
+        "tisha_beav",
+        "purim"
+      ],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "vihi_noam_before_psalm",
+      "condition_flags": [
+        "motzaei_shabbat",
+        "yom_tov_next_shabbat"
+      ],
+      "exclude_flags": [
+        "tisha_beav",
+        "purim"
+      ],
+      "optional": true,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "psalm_091",
+      "condition_flags": [
+        "motzaei_shabbat",
+        "yom_tov_next_shabbat"
+      ],
+      "exclude_flags": [
+        "tisha_beav",
+        "purim"
+      ],
+      "optional": true,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "vihi_noam_after_psalm",
+      "condition_flags": [
+        "motzaei_shabbat",
+        "yom_tov_next_shabbat"
+      ],
+      "exclude_flags": [
+        "tisha_beav",
+        "purim"
+      ],
+      "optional": true,
+      "allowed_nusach": []
+    },
+    {
+      "sub_template_id": "kaddish_titkabal",
+      "condition_flags": [
+        "motzaei_shabbat",
+        "with_minyan"
+      ],
+      "exclude_flags": [
+        "yom_tov_next_week",
+        "tisha_beav",
+        "purim"
+      ],
       "optional": false,
       "allowed_nusach": []
     },

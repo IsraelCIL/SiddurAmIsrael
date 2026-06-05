@@ -8,7 +8,9 @@
         "kriat_hatorah",
         "with_minyan"
       ],
-      "exclude_flags": [],
+      "exclude_flags": [
+        "purim"
+      ],
       "optional": false,
       "allowed_nusach": []
     },
@@ -21,6 +23,13 @@
     },
     {
       "sub_template_id": "shir_shel_yom",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "hoshienu",
       "condition_flags": [],
       "exclude_flags": [],
       "optional": false,
@@ -59,6 +68,15 @@
       "exclude_flags": [],
       "optional": false,
       "allowed_nusach": []
+    },
+    {
+      "segment_id": "psukim_acharei_tanya",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": [
+        "sfard"
+      ]
     },
     {
       "segment_id": "tana_devei_eliyahu",
@@ -107,6 +125,15 @@
       "exclude_flags": [],
       "optional": false,
       "allowed_nusach": []
+    },
+    {
+      "segment_id": "al_tira",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": true,
+      "allowed_nusach": [
+        "sfard"
+      ]
     },
     {
       "sub_template_id": "kaddish_yatom",

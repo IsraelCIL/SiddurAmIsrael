@@ -37,7 +37,8 @@
         "יניח תפילין של יד על קיבורת ידו, וקודם שיהדק יברך:"
       ],
       "condition_flags": [],
-      "exclude_flags": []
+      "exclude_flags": [],
+      "is_rubric": true
     },
     {
       "text": [
@@ -52,7 +53,8 @@
         "ויכרוך שבע כריכות סביב זרועו, ואחר כך יניח של ראש, וקודם שיהדק יברך:"
       ],
       "condition_flags": [],
-      "exclude_flags": []
+      "exclude_flags": [],
+      "is_rubric": true
     },
     {
       "text": [
@@ -67,7 +69,8 @@
         "ואחר שיהדק הרצועה על ראשו יאמר:"
       ],
       "condition_flags": [],
-      "exclude_flags": []
+      "exclude_flags": [],
+      "is_rubric": true
     },
     {
       "text": "בָּרוּךְ שֵׁם כְּבוֹד מַלְכוּתוֹ לְעוֹלָם וָעֶד:",
@@ -90,7 +93,8 @@
         "ואחר כך כורך הרצועה של יד על אצבעו ואומר:"
       ],
       "condition_flags": [],
-      "exclude_flags": []
+      "exclude_flags": [],
+      "is_rubric": true
     },
     {
       "text": [

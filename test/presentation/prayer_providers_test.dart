@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:smart_siddur/domain/entities/user_context.dart';
-import 'package:smart_siddur/presentation/providers/prayer_providers.dart';
+import 'package:siddur_am_israel_chai/domain/entities/user_context.dart';
+import 'package:siddur_am_israel_chai/presentation/providers/prayer_providers.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();

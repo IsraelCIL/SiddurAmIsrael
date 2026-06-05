@@ -1,7 +1,7 @@
-import 'package:smart_siddur/data/datasources/local/prayer_local_datasource.dart';
-import 'package:smart_siddur/domain/entities/prayer_segment.dart';
-import 'package:smart_siddur/domain/entities/prayer_template.dart';
-import 'package:smart_siddur/domain/repositories/i_prayer_repository.dart';
+import 'package:siddur_am_israel_chai/data/datasources/local/prayer_local_datasource.dart';
+import 'package:siddur_am_israel_chai/domain/entities/prayer_segment.dart';
+import 'package:siddur_am_israel_chai/domain/entities/prayer_template.dart';
+import 'package:siddur_am_israel_chai/domain/repositories/i_prayer_repository.dart';
 
 class PrayerRepositoryImpl implements IPrayerRepository {
   const PrayerRepositoryImpl(this._datasource);

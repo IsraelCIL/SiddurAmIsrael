@@ -10,7 +10,7 @@
     },
     {
       "text": [
-        "הקהל עונים:"
+        "<label>הקהל עונים:</label>"
       ],
       "condition_flags": [],
       "exclude_flags": []
@@ -24,7 +24,7 @@
     },
     {
       "text": [
-        "העולה חוזר:"
+        "<label>העולה חוזר:</label>"
       ],
       "condition_flags": [],
       "exclude_flags": []
@@ -48,7 +48,7 @@
     },
     {
       "text": [
-        "ולאחר הקריאה מברך:"
+        "<label>ולאחר הקריאה מברך:</label>"
       ],
       "condition_flags": [],
       "exclude_flags": []

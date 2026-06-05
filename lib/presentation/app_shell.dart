@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:smart_siddur/domain/services/service_time_resolver.dart';
-import 'package:smart_siddur/presentation/pages/prayers/maariv_screen.dart';
-import 'package:smart_siddur/presentation/pages/prayers/mincha_screen.dart';
-import 'package:smart_siddur/presentation/pages/prayers/shacharit_screen.dart';
-import 'package:smart_siddur/presentation/pages/settings/settings_screen.dart';
-import 'package:smart_siddur/presentation/providers/prayer_providers.dart';
-import 'package:smart_siddur/presentation/theme/app_colors.dart';
+import 'package:siddur_am_israel_chai/domain/services/service_time_resolver.dart';
+import 'package:siddur_am_israel_chai/presentation/pages/prayers/maariv_screen.dart';
+import 'package:siddur_am_israel_chai/presentation/pages/prayers/mincha_screen.dart';
+import 'package:siddur_am_israel_chai/presentation/pages/prayers/shacharit_screen.dart';
+import 'package:siddur_am_israel_chai/presentation/pages/settings/settings_screen.dart';
+import 'package:siddur_am_israel_chai/presentation/providers/prayer_providers.dart';
+import 'package:siddur_am_israel_chai/presentation/theme/app_colors.dart';
 
 /// Top-level shell with 4 bottom tabs:
 ///   0 → Shacharit  (visually rightmost in RTL)

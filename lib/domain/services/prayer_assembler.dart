@@ -1,15 +1,15 @@
-import 'package:smart_siddur/domain/entities/assembled_segment.dart';
-import 'package:smart_siddur/domain/entities/blessing_section.dart';
-import 'package:smart_siddur/domain/entities/prayer_template.dart';
-import 'package:smart_siddur/domain/entities/user_context.dart';
-import 'package:smart_siddur/domain/repositories/i_gra_ssy_repository.dart';
-import 'package:smart_siddur/domain/repositories/i_kriah_repository.dart';
-import 'package:smart_siddur/domain/repositories/i_omer_mapping_repository.dart';
-import 'package:smart_siddur/domain/repositories/i_prayer_repository.dart';
-import 'package:smart_siddur/domain/repositories/i_sukkot_korbanot_repository.dart';
-import 'package:smart_siddur/domain/services/i_prayer_assembler.dart';
-import 'package:smart_siddur/domain/services/omer_post_processor.dart';
-import 'package:smart_siddur/domain/services/sukkot_korbanot_post_processor.dart';
+import 'package:siddur_am_israel_chai/domain/entities/assembled_segment.dart';
+import 'package:siddur_am_israel_chai/domain/entities/blessing_section.dart';
+import 'package:siddur_am_israel_chai/domain/entities/prayer_template.dart';
+import 'package:siddur_am_israel_chai/domain/entities/user_context.dart';
+import 'package:siddur_am_israel_chai/domain/repositories/i_gra_ssy_repository.dart';
+import 'package:siddur_am_israel_chai/domain/repositories/i_kriah_repository.dart';
+import 'package:siddur_am_israel_chai/domain/repositories/i_omer_mapping_repository.dart';
+import 'package:siddur_am_israel_chai/domain/repositories/i_prayer_repository.dart';
+import 'package:siddur_am_israel_chai/domain/repositories/i_sukkot_korbanot_repository.dart';
+import 'package:siddur_am_israel_chai/domain/services/i_prayer_assembler.dart';
+import 'package:siddur_am_israel_chai/domain/services/omer_post_processor.dart';
+import 'package:siddur_am_israel_chai/domain/services/sukkot_korbanot_post_processor.dart';
 
 class PrayerAssembler implements IPrayerAssembler {
   const PrayerAssembler(
@@ -190,7 +190,7 @@ class PrayerAssembler implements IPrayerAssembler {
     return sections
         .where((s) => s.conditionFlags.every(contextKeys.contains))
         .where((s) => !s.excludeFlags.any(contextKeys.contains))
-        .map((s) => s.text)
+        .map((s) => s.isRubric ? '<rubric>${s.text}</rubric>' : s.text)
         .where((t) => t.isNotEmpty)
         .join('\n');
   }

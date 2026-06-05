@@ -81,6 +81,10 @@ abstract final class DayFlag {
   static const purimKatan = 'purim_katan';
   static const shushanPurimKatan = 'shushan_purim_katan';
   static const erevPurim = 'erev_purim';
+  // purimSecondDay: user celebrates BOTH 14 and 15 Adar and today is the
+  // 15th (Shushan Purim). On this day A/S read megillah without blessings;
+  // EM does not say Al HaNisim.
+  static const purimSecondDay = 'purim_second_day';
   static const tuBishvat = 'tu_bishvat';
   static const pesachSheni = 'pesach_sheni';
   static const erevPesachSheni = 'erev_pesach_sheni';
@@ -344,4 +348,41 @@ abstract final class DayFlag {
   // Middot inside Tachanun / Selichot. Default true in UserContext —
   // user toggles off when davening b'yechidut.
   static const withMinyan = 'with_minyan';
+
+  // ── Service identity ─────────────────────────────────────────────────────
+  // Injected by the service-specific providers (shacharitProvider etc.) to
+  // allow segments to condition on which tefila is being assembled.
+  // "כי שם ה' אקרא" is said only at Mincha and Musaf, not Shacharit.
+  static const serviceShacharit = 'service_shacharit';
+  static const serviceMincha = 'service_mincha';
+
+  // ── Situational (user-toggled) ────────────────────────────────────────────
+  // beit_avel: the user is davening in a house of mourning (shiva).
+  // Currently not auto-detected — requires explicit user toggle.
+  // Used to gate 'ואני זאת בריתי' in ובא לציון and similar passages.
+  static const beitAvel = 'beit_avel';
+
+  // ── Motzaei Shabbat ──────────────────────────────────────────────────────
+  // Injected by maarivProvider when the calendar day is Shabbat.
+  // Gates: Atah Honantanu (in amidah_daat) + Vihi Noam section.
+  static const motzaeiShabbat = 'motzaei_shabbat';
+
+  // yom_tov_next_week: a Yom Tov from the excluded list falls within the
+  // next Mon–Fri after this Motzaei Shabbat (Ashkenaz/Sfard only).
+  // When set, the Vihi Noam section is shown as an optional accordion.
+  // yom_tov_next_week: a blocking YT falls on a weekday (Mon–Fri) in the
+  // upcoming week → Vihi Noam is omitted entirely for Ashkenaz/Sfard.
+  static const yomTovNextWeek = 'yom_tov_next_week';
+  // yom_tov_next_shabbat: blocking YT falls on the very next Shabbat →
+  // Vihi Noam is shown but as an optional accordion for Ashkenaz/Sfard.
+  static const yomTovNextShabbat = 'yom_tov_next_shabbat';
+
+  // ── Prayer-role flags (user-toggled) ─────────────────────────────────────
+  // is_shaliach_tzibbur: the user is the cantor (shaliach tzibbur).
+  // When set: modim_derabanan is excluded (chazzan says full modim instead).
+  static const isShaliachTzibbur = 'is_shaliach_tzibbur';
+
+  // ein_kohanim: there are no kohanim present to duchen.
+  // When set: birkat_kohanim_bracha is replaced by ein_kohanim_bracha.
+  static const einKohanim = 'ein_kohanim';
 }

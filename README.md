@@ -17,6 +17,7 @@ An **offline-first Orthodox Halachic siddur** built with Flutter. Prayer texts a
 9. [Halachic Standard](#halachic-standard)
 10. [App Store Deployment](#app-store-deployment)
 11. [Adding New Content](#adding-new-prayers--content)
+12. [Project Status & Tooling](#project-status--tooling)
 
 ---
 
@@ -402,3 +403,54 @@ Upload `build/app/outputs/bundle/release/app-release.aab` to the Play Console.
 6. Run `flutter test` to verify no regressions.
 
 **JSON text formatting rule**: any `text` field longer than ~80 characters must use the array form (`List<String>`), split at natural phrase or cantillation-pause boundaries. The parser joins array elements with a single space at runtime.
+
+---
+
+## Project Status & Tooling
+
+### Developer Tools
+
+**Date / Time Override Panel (debug builds only)**
+
+A floating 🛠 button appears in the bottom-right corner of every screen **only when the app is run in debug mode** (`flutter run` or IDE launch). It is completely absent from release/profile builds.
+
+**How it works — compile-time gating:**
+
+```dart
+// lib/presentation/widgets/dev_overlay.dart
+if (!kDebugMode) return child;   // ← compile-time constant; release compiler
+                                  //   prunes all code below this line
+```
+
+`kDebugMode` is `bool.fromEnvironment('dart.vm.product') == false` — a Dart compile-time constant. Flutter's dead-code elimination removes the entire dev branch (including `_DevFab`, the preset panel, and all `devDateTimeOverrideProvider` reads) from App Store / Play Store binaries. There are no manual toggles or environment variables to manage.
+
+**How to use (debug builds):**
+
+1. Tap 🛠 to open the preset panel.
+2. Use the date/time pickers or tap a quick-preset button to jump to any halachic scenario:
+   - Chanukah (each day 1–8)
+   - Rosh Chodesh + RC Tevet (Chanukah composite)
+   - Chol HaMoed Pesach / Sukkot (each day)
+   - Purim / Shushan Purim
+   - Fast days (Tzom Gedaliah, 10 Tevet, Taanit Esther, 17 Tammuz, Tisha B'Av)
+   - Sefirat HaOmer (any of the 49 days)
+   - Aseret Yemei Teshuva, Yom Kippur, Hoshana Raba, etc.
+3. The orange/teal 🛠 badge shows the currently active override date.
+4. Tap **Reset** to return to the real current date/time.
+
+The override affects `HalachicCalendarService`, `ServiceTimeResolver`, and all three prayer providers simultaneously, so you can verify the complete assembled prayer for any date without changing device settings.
+
+---
+
+### Current Content Limitations (Known Gaps — v1)
+
+The following liturgical sections are **explicitly out of scope for v1** and are not yet implemented. Any developer onboarding to this project should be aware that these areas require future template wiring:
+
+| Area | Status | Notes |
+|---|---|---|
+| **Purim — full prayer service** | ⚠️ Partial | The halachic calendar flags (`purim`, `shushan_purim`, `kriat_hatorah_purim`, `al_hanisim`) are fully implemented and gate the correct segments within Shacharit/Mincha/Maariv. **Not yet implemented**: dedicated Purim Shacharit template with Megillah reading blocks, Al HaNisim standalone segment for Birkat HaMazon, and the Purim-specific Mincha additions. |
+| **Tisha B'Av — full prayer service** | ⚠️ Partial | The `tisha_beav` and `tisha_beav_mincha` flags are implemented and drive `Nachem` insertion at Mincha. **Not yet implemented**: Tisha B'Av Shacharit Kinot section, the abbreviated Psukei DeZimra nusach for the morning, and the Maariv-after-fast structure. |
+| **Shabbat prayer services** | 🚫 Out of scope | Kabbalat Shabbat, Shacharit Shabbat (Musaf Shabbat, Kriat HaTorah Shabbat), and Maariv Motzei Shabbat are out of scope for v1. |
+| **Yom Tov full services** | 🚫 Out of scope | Yom Tov-specific Shacharit (full Hallel, Musaf Yom Tov) and Maariv are out of scope for v1. |
+
+**Next steps for Purim / Tisha B'Av**: Add dedicated segment JSON files, register them in `_manifest.json`, create the template entries with the appropriate `condition_flags`, and wire the relevant `DayFlag` constants (already defined in `lib/domain/entities/day_flags.dart`).

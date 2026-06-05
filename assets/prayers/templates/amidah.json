@@ -2,26 +2,184 @@
   "id": "amidah",
   "name": "תפילת עמידה",
   "segments": [
-    {"segment_id": "amidah_intro",           "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
-    {"segment_id": "amidah_avot",            "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
-    {"segment_id": "amidah_gevurot",         "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
-    {"segment_id": "amidah_kedushah_hashem", "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
-    {"segment_id": "amidah_daat",            "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
-    {"segment_id": "amidah_teshuva",         "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
-    {"segment_id": "amidah_selicha",         "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
-    {"segment_id": "amidah_geula",           "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
-    {"segment_id": "amidah_refuah",          "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
-    {"segment_id": "amidah_shanim",          "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
-    {"segment_id": "amidah_galuyot",         "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
-    {"segment_id": "amidah_mishpat",         "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
-    {"segment_id": "amidah_minim",           "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
-    {"segment_id": "amidah_tzaddikim",       "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
-    {"segment_id": "amidah_yerushalayim",    "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
-    {"segment_id": "amidah_david",           "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
-    {"segment_id": "amidah_shema_koleinu",   "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
-    {"segment_id": "amidah_retzeh",          "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
-    {"segment_id": "amidah_modim",           "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
-    {"segment_id": "amidah_shalom",          "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []},
-    {"segment_id": "amidah_conclusion",      "condition_flags": [], "exclude_flags": [], "optional": false, "allowed_nusach": []}
+    {
+      "segment_id": "amidah_intro",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "amidah_avot",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "amidah_gevurot",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "amidah_kedushah_hashem",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "amidah_daat",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "amidah_teshuva",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "amidah_selicha",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "amidah_geula",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "amidah_refuah",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "amidah_shanim",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "amidah_galuyot",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "amidah_mishpat",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "amidah_minim",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "amidah_tzaddikim",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "amidah_yerushalayim",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "amidah_david",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "amidah_shema_koleinu",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "amidah_retzeh",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "amidah_modim",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "amidah_shalom",
+      "condition_flags": [
+        "service_shacharit"
+      ],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": [
+        "ashkenaz"
+      ]
+    },
+    {
+      "segment_id": "amidah_shalom_rav",
+      "condition_flags": [],
+      "exclude_flags": [
+        "service_shacharit"
+      ],
+      "optional": false,
+      "allowed_nusach": [
+        "ashkenaz"
+      ]
+    },
+    {
+      "segment_id": "amidah_shalom",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": [
+        "sfard",
+        "edot_mizrach"
+      ]
+    },
+    {
+      "segment_id": "yehi_ratzon_pre_elokai",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": true,
+      "allowed_nusach": []
+    },
+    {
+      "segment_id": "amidah_conclusion",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": false,
+      "allowed_nusach": []
+    }
   ]
 }

@@ -1,6 +1,6 @@
-import 'package:smart_siddur/data/datasources/local/omer_mapping_datasource.dart';
-import 'package:smart_siddur/domain/entities/omer_day.dart';
-import 'package:smart_siddur/domain/repositories/i_omer_mapping_repository.dart';
+import 'package:siddur_am_israel_chai/data/datasources/local/omer_mapping_datasource.dart';
+import 'package:siddur_am_israel_chai/domain/entities/omer_day.dart';
+import 'package:siddur_am_israel_chai/domain/repositories/i_omer_mapping_repository.dart';
 
 class OmerMappingRepositoryImpl implements IOmerMappingRepository {
   const OmerMappingRepositoryImpl(this._datasource);

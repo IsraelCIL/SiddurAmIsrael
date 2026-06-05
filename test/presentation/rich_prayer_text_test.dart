@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:smart_siddur/presentation/widgets/rich_prayer_text.dart';
+import 'package:siddur_am_israel_chai/presentation/widgets/rich_prayer_text.dart';
 
 void main() {
   const base = TextStyle(fontSize: 20);

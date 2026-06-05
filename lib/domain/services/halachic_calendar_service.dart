@@ -1,8 +1,8 @@
 import 'package:kosher_dart/kosher_dart.dart';
 
-import 'package:smart_siddur/domain/entities/day_flags.dart';
-import 'package:smart_siddur/domain/entities/user_context.dart';
-import 'package:smart_siddur/domain/services/i_calendar_flag_provider.dart';
+import 'package:siddur_am_israel_chai/domain/entities/day_flags.dart';
+import 'package:siddur_am_israel_chai/domain/entities/user_context.dart';
+import 'package:siddur_am_israel_chai/domain/services/i_calendar_flag_provider.dart';
 
 /// Computes the full set of Halachic flags for a given Gregorian date
 /// and user context. All Hebrew calendar arithmetic is handled by the
@@ -427,6 +427,11 @@ class HalachicCalendarService implements ICalendarFlagProvider {
           ctx.purimDate == PurimDate.both) {
         f.add(DayFlag.purim);
       }
+      // On the 15th when celebrating both days, 14th was the primary reading:
+      // megillah is read again without blessings (A/S), Al HaNisim omitted (EM).
+      if (ctx.purimDate == PurimDate.both) {
+        f.add(DayFlag.purimSecondDay);
+      }
     }
   }
 
@@ -618,6 +623,10 @@ class HalachicCalendarService implements ICalendarFlagProvider {
 
   void _addAlHaNisim(Set<String> f) {
     if (f.contains(DayFlag.chanukah) || f.contains(DayFlag.purim)) {
+      // EM does not say Al HaNisim on the second day of Purim (15 Adar,
+      // when the user celebrates both days — 14th was the primary day).
+      if (f.contains(DayFlag.purimSecondDay) &&
+          f.contains(DayFlag.nusachEdotMizrach)) return;
       f.add(DayFlag.alHaNisim);
     }
   }

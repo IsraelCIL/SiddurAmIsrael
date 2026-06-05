@@ -8,10 +8,13 @@ import 'package:flutter/material.dart';
 /// status colors (`dev_overlay.dart`) are intentionally kept local, as they
 /// are not part of the brand palette.
 abstract final class AppColors {
-  // ── Brand teal ──────────────────────────────────────────────────────────
-  static const Color primary = Color(0xFF00695C);
-  static const Color primaryDark = Color(0xFF004D40);
-  static const Color primaryDarker = Color(0xFF003830);
+  // ── Israel Blue ─────────────────────────────────────────────────────────
+  /// Royal Blue — main header background, icons, and interactive elements.
+  static const Color primary = Color(0xFF0047AB);
+  /// Deep Navy — gradient top of the header block.
+  static const Color primaryDark = Color(0xFF0A3663);
+  /// Dark Navy — text on the cream banner; internal section headers.
+  static const Color primaryDarker = Color(0xFF0B3C5D);
 
   // ── Parchment / surfaces ────────────────────────────────────────────────
   static const Color background = Color(0xFFFDF8F0);
@@ -23,12 +26,13 @@ abstract final class AppColors {
   static const Color divider = Color(0xFFEEE5D5);
 
   // ── Text ────────────────────────────────────────────────────────────────
-  static const Color textPrimary = Color(0xFF3A2E22);
+  /// Deep navy — section headers and labels (high contrast on cream).
+  static const Color textPrimary = Color(0xFF0B3C5D);
   static const Color textSecondary = Color(0xFF6B5848);
 
   // ── Accents ─────────────────────────────────────────────────────────────
-  /// Light teal subtitle text on the teal header gradient.
-  static const Color headerSubtitle = Color(0xFF80CBC4);
+  /// Light periwinkle — subtitle text on the blue header gradient.
+  static const Color headerSubtitle = Color(0xFFBDD7F0);
 
   /// Background of the first-launch settings-reminder banner.
   static const Color bannerBackground = Color(0xFFFFF6DE);

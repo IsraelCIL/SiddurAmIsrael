@@ -3,7 +3,7 @@
   "sections": [
     {
       "text": [
-        "ואומר החזן:"
+        "<label>ואומר החזן:</label>"
       ],
       "condition_flags": [],
       "exclude_flags": []
@@ -15,7 +15,7 @@
     },
     {
       "text": [
-        "הקהל עונים:"
+        "<label>הקהל עונים:</label>"
       ],
       "condition_flags": [],
       "exclude_flags": []

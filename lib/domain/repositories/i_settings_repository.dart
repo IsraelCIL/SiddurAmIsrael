@@ -1,4 +1,4 @@
-import 'package:smart_siddur/domain/entities/user_context.dart';
+import 'package:siddur_am_israel_chai/domain/entities/user_context.dart';
 
 /// Persistent user preferences. Backed by SharedPreferences in production;
 /// can be mocked in tests by providing an in-memory implementation.
@@ -26,4 +26,16 @@ abstract class ISettingsRepository {
 
   bool getShowSegmentLabels();
   Future<void> setShowSegmentLabels(bool value);
+
+  Set<String> getExpandedSegments();
+  Future<void> setExpandedSegments(Set<String> ids);
+
+  bool getWearsTallitGadol();
+  Future<void> setWearsTallitGadol(bool value);
+
+  bool getIsShaliachTzibbur();
+  Future<void> setIsShaliachTzibbur(bool value);
+
+  bool getEinKohanim();
+  Future<void> setEinKohanim(bool value);
 }

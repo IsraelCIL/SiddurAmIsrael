@@ -1,6 +1,6 @@
-import 'package:smart_siddur/data/datasources/local/settings_local_datasource.dart';
-import 'package:smart_siddur/domain/entities/user_context.dart';
-import 'package:smart_siddur/domain/repositories/i_settings_repository.dart';
+import 'package:siddur_am_israel_chai/data/datasources/local/settings_local_datasource.dart';
+import 'package:siddur_am_israel_chai/domain/entities/user_context.dart';
+import 'package:siddur_am_israel_chai/domain/repositories/i_settings_repository.dart';
 
 class SettingsRepositoryImpl implements ISettingsRepository {
   SettingsRepositoryImpl(this._ds);
@@ -78,4 +78,31 @@ class SettingsRepositoryImpl implements ISettingsRepository {
 
   @override
   Future<void> setShowSegmentLabels(bool value) => _ds.writeShowLabels(value);
+
+  @override
+  Set<String> getExpandedSegments() => _ds.readExpandedSegments();
+
+  @override
+  Future<void> setExpandedSegments(Set<String> ids) =>
+      _ds.writeExpandedSegments(ids);
+
+  @override
+  bool getWearsTallitGadol() => _ds.readWearsTallitGadol();
+
+  @override
+  Future<void> setWearsTallitGadol(bool value) =>
+      _ds.writeWearsTallitGadol(value);
+
+  @override
+  bool getIsShaliachTzibbur() => _ds.readIsShaliachTzibbur();
+
+  @override
+  Future<void> setIsShaliachTzibbur(bool value) =>
+      _ds.writeIsShaliachTzibbur(value);
+
+  @override
+  bool getEinKohanim() => _ds.readEinKohanim();
+
+  @override
+  Future<void> setEinKohanim(bool value) => _ds.writeEinKohanim(value);
 }
