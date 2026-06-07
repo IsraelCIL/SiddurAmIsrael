@@ -94,10 +94,9 @@ git push -u origin feature/ios-app-store-deployment
 
 In App Store Connect → your app → **App Store** tab:
 
-1. **Screenshots** — required sizes (use the iOS Simulator on Codemagic or a service,
-   or capture from a friend's device):
-   - 6.9" iPhone (1320×2868) **and** 6.5" iPhone (1242×2688) — at least one each.
-   - 13" iPad (2064×2752) only if you mark the app iPad-compatible.
+1. **Screenshots** — the app is **iPhone-only** (`TARGETED_DEVICE_FAMILY = "1"`), so
+   you only need the **iPhone 6.9" (1320×2868)** set; Apple scales it for smaller
+   iPhones. **No iPad screenshots required.** Must be RGB with **no alpha channel**.
 2. **Description, keywords, support URL, marketing info** (Hebrew + optionally English).
 3. **App Privacy** → answer the questionnaire: **"Data Not Collected"** (matches the
    privacy manifest). No tracking.
