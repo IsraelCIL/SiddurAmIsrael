@@ -1,6 +1,5 @@
 /// App-wide configuration constants.
-/// To change the support email address: update [supportEmail] here.
+/// To change the support link: update [supportUrl] here.
 abstract final class AppConfig {
-  static const String supportEmail = 'Israel9390@gmail.com';
-  static const String supportEmailSubject = 'סידור עם ישראל — פנייה';
+  static const String supportUrl = 'https://github.com/IsraelCIL/SiddurAmIsrael';
 }

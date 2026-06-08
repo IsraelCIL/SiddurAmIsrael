@@ -46,11 +46,12 @@ class SettingsScreen extends ConsumerWidget {
           children: [
             _SectionHeader(title: 'נוסח התפילה'),
             RadioListTile<String>(
-              value: 'ashkenaz',
+              value: 'edot_mizrach',
               groupValue: nusach,
-              title: const Text('אשכנז'),
-              onChanged: (v) =>
-                  ref.read(nusachProvider.notifier).set(v ?? 'ashkenaz'),
+              title: const Text('עדות המזרח'),
+              onChanged: (v) => ref
+                  .read(nusachProvider.notifier)
+                  .set(v ?? 'edot_mizrach'),
             ),
             RadioListTile<String>(
               value: 'sfard',
@@ -60,12 +61,11 @@ class SettingsScreen extends ConsumerWidget {
                   ref.read(nusachProvider.notifier).set(v ?? 'sfard'),
             ),
             RadioListTile<String>(
-              value: 'edot_mizrach',
+              value: 'ashkenaz',
               groupValue: nusach,
-              title: const Text('עדות המזרח'),
-              onChanged: (v) => ref
-                  .read(nusachProvider.notifier)
-                  .set(v ?? 'edot_mizrach'),
+              title: const Text('אשכנז'),
+              onChanged: (v) =>
+                  ref.read(nusachProvider.notifier).set(v ?? 'ashkenaz'),
             ),
 
             _SectionHeader(title: 'מתפלל/ת'),
@@ -173,8 +173,8 @@ class SettingsScreen extends ConsumerWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
               child: OutlinedButton.icon(
-                icon: const Icon(Icons.email_outlined),
-                label: const Text('שלח מייל לתמיכה'),
+                icon: const Icon(Icons.open_in_new),
+                label: const Text('לתמיכה'),
                 style: OutlinedButton.styleFrom(
                   foregroundColor: AppColors.primary,
                   side: const BorderSide(color: AppColors.primary),
@@ -182,15 +182,9 @@ class SettingsScreen extends ConsumerWidget {
                   minimumSize: const Size.fromHeight(44),
                 ),
                 onPressed: () async {
-                  final uri = Uri(
-                    scheme: 'mailto',
-                    path: AppConfig.supportEmail,
-                    queryParameters: {
-                      'subject': AppConfig.supportEmailSubject,
-                    },
-                  );
+                  final uri = Uri.parse(AppConfig.supportUrl);
                   if (await canLaunchUrl(uri)) {
-                    await launchUrl(uri);
+                    await launchUrl(uri, mode: LaunchMode.externalApplication);
                   }
                 },
               ),
