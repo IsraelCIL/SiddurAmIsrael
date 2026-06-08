@@ -63,5 +63,22 @@ void main() {
     test('cityById falls back to Jerusalem for an unknown id', () {
       expect(cityById('nope').id, 'jerusalem');
     });
+
+    test('extra info includes Daf Yomi (modern date)', () {
+      final day = svc.dayFor(DateTime(2025, 1, 15), jerusalem);
+      expect(day.extraInfo.any((r) => r.label == 'דף יומי'), isTrue);
+    });
+
+    test('upcoming events: present, distinct, ordered by days-until', () {
+      final day = svc.dayFor(DateTime(2025, 1, 15), jerusalem);
+      expect(day.upcoming, isNotEmpty);
+      expect(day.upcoming.length, lessThanOrEqualTo(5));
+      for (var i = 1; i < day.upcoming.length; i++) {
+        expect(day.upcoming[i].daysUntil,
+            greaterThanOrEqualTo(day.upcoming[i - 1].daysUntil));
+      }
+      final names = day.upcoming.map((e) => e.name).toSet();
+      expect(names.length, day.upcoming.length); // distinct labels
+    });
   });
 }

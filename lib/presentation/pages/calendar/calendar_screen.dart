@@ -339,7 +339,7 @@ class CalendarScreen extends ConsumerWidget {
                           fontWeight: FontWeight.bold,
                           color: Color(0xFF1A6E5A))),
                 ),
-              if (info.tags.isNotEmpty || info.dafYomi != null)
+              if (info.tags.isNotEmpty || info.shabbatNotes.isNotEmpty)
                 Padding(
                   padding: const EdgeInsets.only(top: 6),
                   child: Wrap(
@@ -348,9 +348,8 @@ class CalendarScreen extends ConsumerWidget {
                     children: [
                       for (final t in info.tags)
                         _chip(t, const Color(0xFFFBE9EB), _holidayColor),
-                      if (info.dafYomi != null)
-                        _chip('דף יומי: ${info.dafYomi}',
-                            const Color(0xFFE9F0FB), AppColors.primary),
+                      for (final s in info.shabbatNotes)
+                        _chip(s, const Color(0xFFECE4F7), const Color(0xFF5B3A86)),
                     ],
                   ),
                 ),
@@ -365,6 +364,16 @@ class CalendarScreen extends ConsumerWidget {
         const SizedBox(height: 10),
         _sectionHeader('🕒 זמני היום', AppColors.primary),
         _zmanCard(info.zmanim),
+        if (info.extraInfo.isNotEmpty) ...[
+          const SizedBox(height: 10),
+          _sectionHeader('📖 מידע נוסף ליום', AppColors.primary),
+          _infoCard(info.extraInfo),
+        ],
+        if (info.upcoming.isNotEmpty) ...[
+          const SizedBox(height: 10),
+          _sectionHeader('📅 מועדים קרובים', AppColors.primary),
+          _upcomingCard(info.upcoming),
+        ],
       ],
     );
   }
@@ -435,6 +444,109 @@ class CalendarScreen extends ConsumerWidget {
       ),
     );
   }
+
+  Widget _infoCard(List<InfoRow> rows) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(11),
+        border: Border.all(color: AppColors.borderLight),
+      ),
+      padding: const EdgeInsets.symmetric(horizontal: 12),
+      child: Column(
+        children: [
+          for (var i = 0; i < rows.length; i++)
+            Container(
+              decoration: BoxDecoration(
+                border: i == rows.length - 1
+                    ? null
+                    : const Border(
+                        bottom: BorderSide(color: Color(0xFFEEE5D5))),
+              ),
+              padding: const EdgeInsets.symmetric(vertical: 9),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text(rows[i].label,
+                        style: const TextStyle(
+                            fontSize: 13.5, color: AppColors.textPrimary)),
+                  ),
+                  Text(rows[i].value,
+                      style: const TextStyle(
+                          fontSize: 13.5,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black87)),
+                ],
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+
+  Widget _upcomingCard(List<UpcomingEvent> rows) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(11),
+        border: Border.all(color: AppColors.borderLight),
+      ),
+      padding: const EdgeInsets.symmetric(horizontal: 12),
+      child: Column(
+        children: [
+          for (var i = 0; i < rows.length; i++)
+            Container(
+              decoration: BoxDecoration(
+                border: i == rows.length - 1
+                    ? null
+                    : const Border(
+                        bottom: BorderSide(color: Color(0xFFEEE5D5))),
+              ),
+              padding: const EdgeInsets.symmetric(vertical: 9),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: RichText(
+                      text: TextSpan(
+                        style: const TextStyle(
+                            fontSize: 13.5,
+                            fontWeight: FontWeight.w700,
+                            color: AppColors.textPrimary),
+                        children: [
+                          TextSpan(text: rows[i].name),
+                          TextSpan(
+                              text: '  · ${rows[i].hebrewDate}',
+                              style: const TextStyle(
+                                  fontSize: 11,
+                                  fontWeight: FontWeight.normal,
+                                  color: AppColors.textSecondary)),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 9, vertical: 3),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFEEF0FB),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Text(_daysLabel(rows[i].daysUntil),
+                        style: const TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.primary)),
+                  ),
+                ],
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+
+  static String _daysLabel(int n) =>
+      n == 1 ? 'מחר' : (n == 2 ? 'מחרתיים' : 'עוד $n ימים');
 
   static String _fmtTime(DateTime? t) => t == null
       ? '—'

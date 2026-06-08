@@ -103,6 +103,18 @@ class CalendarService {
       );
     }
 
+    // ── Special-Shabbat notes, extra info, upcoming events ──
+    final shabbatNotes = <String>[];
+    if (jc.isShabbosMevorchim()) shabbatNotes.add('שבת מברכים');
+    final specialParsha = fmt.formatSpecialParsha(jc);
+    if (specialParsha.isNotEmpty) shabbatNotes.add(specialParsha);
+
+    final extraInfo = <InfoRow>[
+      if (dafYomi != null) InfoRow('דף יומי', dafYomi),
+    ];
+
+    final upcoming = _upcoming(day, city.inIsrael, fmt);
+
     final monthName = HebrewFormatter.monthName(hebrew.month);
     final dayNum = HebrewFormatter.toHebrewNumeral(hebrew.day);
     final yearStr = HebrewFormatter.formatHebrewYear(hebrew.year);
@@ -120,7 +132,36 @@ class CalendarService {
       dafYomi: dafYomi,
       zmanim: zmanim,
       shabbatZmanim: shabbatZmanim,
+      shabbatNotes: shabbatNotes,
+      extraInfo: extraInfo,
+      upcoming: upcoming,
     );
+  }
+
+  /// Scans forward up to ~4 months for the next distinct holidays / Rosh
+  /// Chodesh / fast days (skipping Chol HaMoed and erev days), with days-until.
+  List<UpcomingEvent> _upcoming(
+      DateTime base, bool inIsrael, HebrewDateFormatter fmt) {
+    final out = <UpcomingEvent>[];
+    final seen = <String>{};
+    for (var i = 1; i <= 120 && out.length < 5; i++) {
+      final d = base.add(Duration(days: i));
+      final jc = JewishCalendar.fromDateTime(d)..inIsrael = inIsrael;
+      if (jc.isCholHamoed() || jc.isErevYomTov()) continue;
+      var label = '';
+      if (jc.getYomTovIndex() >= 0) {
+        label = fmt.formatYomTov(jc);
+      } else if (jc.isRoshChodesh()) {
+        label = fmt.formatRoshChodesh(jc);
+      }
+      if (label.isEmpty || seen.contains(label)) continue;
+      seen.add(label);
+      final hd = HebrewDate.fromGregorian(d);
+      final hebDate =
+          '${HebrewFormatter.toHebrewNumeral(hd.day)} ${HebrewFormatter.monthName(hd.month)}';
+      out.add(UpcomingEvent(label, hebDate, i));
+    }
+    return out;
   }
 
   static const _months = [

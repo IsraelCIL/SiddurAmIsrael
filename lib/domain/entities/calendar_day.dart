@@ -13,6 +13,23 @@ class ZmanEntry {
   final String? note;
 }
 
+/// A label/value row for the "מידע נוסף ליום" section (e.g. Daf Yomi).
+class InfoRow {
+  const InfoRow(this.label, this.value);
+  final String label;
+  final String value;
+}
+
+/// An upcoming event for the "מועדים קרובים" list.
+class UpcomingEvent {
+  const UpcomingEvent(this.name, this.hebrewDate, this.daysUntil);
+  final String name;
+
+  /// e.g. "א׳ כסלו".
+  final String hebrewDate;
+  final int daysUntil;
+}
+
 /// All information for a single calendar day at a given location: the Hebrew
 /// date, holiday/parsha/omer tags, Daf Yomi, and the full zmanim list.
 class CalendarDay {
@@ -27,6 +44,9 @@ class CalendarDay {
     required this.isYomTov,
     required this.zmanim,
     required this.shabbatZmanim,
+    required this.shabbatNotes,
+    required this.extraInfo,
+    required this.upcoming,
     this.parsha,
     this.dafYomi,
   });
@@ -60,4 +80,13 @@ class CalendarDay {
 
   /// Candle-lighting / havdalah rows — non-empty only on erev/Shabbat/Yom Tov.
   final List<ZmanEntry> shabbatZmanim;
+
+  /// Special-Shabbat notes (שבת מברכים, שבת זכור/פרה/החדש…), may be empty.
+  final List<String> shabbatNotes;
+
+  /// Extra per-day info rows (Daf Yomi, …), may be empty.
+  final List<InfoRow> extraInfo;
+
+  /// Upcoming events (next holidays / Rosh Chodesh / fasts).
+  final List<UpcomingEvent> upcoming;
 }
