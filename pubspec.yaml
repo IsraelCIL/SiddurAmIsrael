@@ -1,7 +1,7 @@
 name: siddur_am_israel_chai
 description: סידור עם ישראל — אפליקציית תפילה חכמה לאייפון
 publish_to: 'none'
-version: 1.0.0+1
+version: 1.0.1+2
 
 environment:
   sdk: '>=3.3.0 <4.0.0'
