@@ -39,6 +39,9 @@ dependencies:
   # Open email / URLs from the app
   url_launcher: ^6.3.0
 
+  # Device location for the calendar's optional GPS zmanim (used on-device only)
+  geolocator: ^13.0.0
+
 # ─────────────────────────────────────────────────────────────────────────────
 # DEV / BUILD-TIME DEPENDENCIES
 # Code generation: dart run build_runner build --delete-conflicting-outputs

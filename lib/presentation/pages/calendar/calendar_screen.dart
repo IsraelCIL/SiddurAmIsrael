@@ -23,7 +23,7 @@ class CalendarScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final city = ref.watch(selectedCityProvider);
+    final city = ref.watch(effectiveCityProvider);
     final anchor = ref.watch(calendarAnchorProvider);
     final selected = ref.watch(calendarSelectedDayProvider);
     final today = calendarToday();

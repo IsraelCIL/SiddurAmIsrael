@@ -71,4 +71,10 @@ class SettingsLocalDatasource {
   String? readLocationCity() => _prefs.getString(_kLocationCity);
   Future<void> writeLocationCity(String v) =>
       _prefs.setString(_kLocationCity, v);
+
+  // Location mode: 'city' (fixed) or 'gps'. Default handled in the repository.
+  static const _kLocationMode = 'v1.settings.location_mode';
+  String? readLocationMode() => _prefs.getString(_kLocationMode);
+  Future<void> writeLocationMode(String v) =>
+      _prefs.setString(_kLocationMode, v);
 }

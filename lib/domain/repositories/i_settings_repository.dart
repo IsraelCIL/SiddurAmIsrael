@@ -42,4 +42,8 @@ abstract class ISettingsRepository {
   /// Selected city id for zmanim (defaults to Jerusalem).
   String getLocationCityId();
   Future<void> setLocationCityId(String value);
+
+  /// Location mode: 'city' (fixed) or 'gps' (default 'city').
+  String getLocationMode();
+  Future<void> setLocationMode(String value);
 }

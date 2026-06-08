@@ -70,5 +70,7 @@
     <array>
         <string>https</string>
     </array>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>המיקום משמש לחישוב זמני היום (זריחה, שקיעה, הדלקת נרות) במכשירך בלבד — אינו נשמר ואינו משותף.</string>
 </dict>
 </plist>

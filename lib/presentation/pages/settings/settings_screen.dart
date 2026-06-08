@@ -64,6 +64,7 @@ class SettingsScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final nusach = ref.watch(nusachProvider);
     final city = ref.watch(selectedCityProvider);
+    final locationMode = ref.watch(locationModeProvider);
     final gender = ref.watch(userGenderProvider);
     final inIsrael = ref.watch(isInIsraelProvider);
     final withMinyan = ref.watch(withMinyanProvider);
@@ -110,15 +111,47 @@ class SettingsScreen extends ConsumerWidget {
             ),
 
             _SectionHeader(title: 'מיקום לזמנים'),
-            ListTile(
-              leading: const Icon(Icons.location_on_outlined,
-                  color: AppColors.primary),
-              title: const Text('עיר לזמני היום'),
-              subtitle: Text(city.name),
-              trailing:
-                  const Icon(Icons.chevron_left, color: AppColors.primary),
-              onTap: () => _pickCity(context, ref, city.id),
+            SwitchListTile(
+              title: const Text('מיקום נוכחי (GPS)'),
+              subtitle:
+                  const Text('זמנים מדויקים לפי מיקומך · דורש הרשאת מיקום'),
+              value: locationMode == 'gps',
+              activeColor: AppColors.primary,
+              onChanged: (v) {
+                ref.read(locationModeProvider.notifier).set(v ? 'gps' : 'city');
+                if (v) ref.invalidate(currentLocationProvider);
+              },
             ),
+            if (locationMode != 'gps')
+              ListTile(
+                leading: const Icon(Icons.location_city_outlined,
+                    color: AppColors.primary),
+                title: const Text('עיר לזמני היום'),
+                subtitle: Text(city.name),
+                trailing:
+                    const Icon(Icons.chevron_left, color: AppColors.primary),
+                onTap: () => _pickCity(context, ref, city.id),
+              )
+            else
+              ref.watch(currentLocationProvider).when(
+                    data: (c) => ListTile(
+                      leading: const Icon(Icons.my_location,
+                          color: AppColors.primary),
+                      title: Text(c != null
+                          ? 'משתמש במיקומך הנוכחי'
+                          : 'לא ניתן לאתר מיקום — נעשה שימוש ב${city.name}'),
+                    ),
+                    loading: () => const ListTile(
+                      leading:
+                          Icon(Icons.my_location, color: AppColors.primary),
+                      title: Text('מאתר מיקום…'),
+                    ),
+                    error: (_, __) => ListTile(
+                      leading: const Icon(Icons.location_disabled,
+                          color: AppColors.primary),
+                      title: Text('שגיאת מיקום — נעשה שימוש ב${city.name}'),
+                    ),
+                  ),
 
             _SectionHeader(title: 'מתפלל/ת'),
             SwitchListTile(

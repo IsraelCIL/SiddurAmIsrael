@@ -261,6 +261,15 @@ final selectedCityIdProvider =
   ),
 );
 
+/// Location mode for the calendar's zmanim: 'city' (fixed) or 'gps'.
+final locationModeProvider =
+    NotifierProvider<_PersistentNotifier<String>, String>(
+  () => _PersistentNotifier<String>(
+    read: (r) => r.getLocationMode(),
+    write: (r, v) => r.setLocationMode(v),
+  ),
+);
+
 final wearsTallitGadolProvider = NotifierProvider<_PersistentNotifier<bool>, bool>(
   () => _PersistentNotifier<bool>(
     read: (r) => r.getWearsTallitGadol(),

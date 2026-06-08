@@ -113,4 +113,10 @@ class SettingsRepositoryImpl implements ISettingsRepository {
 
   @override
   Future<void> setLocationCityId(String value) => _ds.writeLocationCity(value);
+
+  @override
+  String getLocationMode() => _ds.readLocationMode() ?? 'city';
+
+  @override
+  Future<void> setLocationMode(String value) => _ds.writeLocationMode(value);
 }
