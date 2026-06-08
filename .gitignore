@@ -57,6 +57,9 @@ linux/
 # iOS build artifacts
 Payload/
 *.ipa
+*.app.zip
+ios-simulator-app/
+ios-simulator.app/
 
 # Scratch / temporary Sefaria fetches & comparison artefacts at repo root.
 # These are inputs to scripts/build_*.js and useful for ad-hoc analysis; the
