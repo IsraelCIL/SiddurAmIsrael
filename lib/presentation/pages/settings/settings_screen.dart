@@ -9,11 +9,51 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'package:siddur_am_israel_chai/core/data/cities.dart';
 import 'package:siddur_am_israel_chai/domain/entities/user_context.dart';
 import 'package:siddur_am_israel_chai/presentation/constants/app_config.dart';
+import 'package:siddur_am_israel_chai/presentation/providers/calendar_providers.dart';
 import 'package:siddur_am_israel_chai/presentation/providers/prayer_providers.dart';
 import 'package:siddur_am_israel_chai/presentation/theme/app_colors.dart';
 import 'package:siddur_am_israel_chai/presentation/theme/app_dimens.dart';
+
+/// Bottom sheet to choose the city used for the Hebrew-calendar zmanim.
+Future<void> _pickCity(
+    BuildContext context, WidgetRef ref, String currentId) async {
+  final id = await showModalBottomSheet<String>(
+    context: context,
+    showDragHandle: true,
+    backgroundColor: AppColors.background,
+    builder: (ctx) => Directionality(
+      textDirection: TextDirection.rtl,
+      child: SafeArea(
+        child: ListView(
+          shrinkWrap: true,
+          children: [
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 10),
+              child: Text('בחר עיר',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      color: AppColors.primary)),
+            ),
+            for (final c in kCities)
+              ListTile(
+                title: Text(c.name),
+                trailing: c.id == currentId
+                    ? const Icon(Icons.check, color: AppColors.primary)
+                    : null,
+                onTap: () => Navigator.pop(ctx, c.id),
+              ),
+          ],
+        ),
+      ),
+    ),
+  );
+  if (id != null) ref.read(selectedCityIdProvider.notifier).set(id);
+}
 
 /// User preferences screen. Every change writes through to
 /// SharedPreferences immediately via the persistent providers.
@@ -23,6 +63,7 @@ class SettingsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final nusach = ref.watch(nusachProvider);
+    final city = ref.watch(selectedCityProvider);
     final gender = ref.watch(userGenderProvider);
     final inIsrael = ref.watch(isInIsraelProvider);
     final withMinyan = ref.watch(withMinyanProvider);
@@ -66,6 +107,17 @@ class SettingsScreen extends ConsumerWidget {
               title: const Text('אשכנז'),
               onChanged: (v) =>
                   ref.read(nusachProvider.notifier).set(v ?? 'ashkenaz'),
+            ),
+
+            _SectionHeader(title: 'מיקום לזמנים'),
+            ListTile(
+              leading: const Icon(Icons.location_on_outlined,
+                  color: AppColors.primary),
+              title: const Text('עיר לזמני היום'),
+              subtitle: Text(city.name),
+              trailing:
+                  const Icon(Icons.chevron_left, color: AppColors.primary),
+              onTap: () => _pickCity(context, ref, city.id),
             ),
 
             _SectionHeader(title: 'מתפלל/ת'),

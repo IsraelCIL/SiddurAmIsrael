@@ -38,4 +38,8 @@ abstract class ISettingsRepository {
 
   bool getEinKohanim();
   Future<void> setEinKohanim(bool value);
+
+  /// Selected city id for zmanim (defaults to Jerusalem).
+  String getLocationCityId();
+  Future<void> setLocationCityId(String value);
 }

@@ -252,6 +252,15 @@ final einKohanumProvider = NotifierProvider<_PersistentNotifier<bool>, bool>(
   ),
 );
 
+/// Selected city id for the Hebrew calendar's zmanim (default Jerusalem).
+final selectedCityIdProvider =
+    NotifierProvider<_PersistentNotifier<String>, String>(
+  () => _PersistentNotifier<String>(
+    read: (r) => r.getLocationCityId(),
+    write: (r, v) => r.setLocationCityId(v),
+  ),
+);
+
 final wearsTallitGadolProvider = NotifierProvider<_PersistentNotifier<bool>, bool>(
   () => _PersistentNotifier<bool>(
     read: (r) => r.getWearsTallitGadol(),

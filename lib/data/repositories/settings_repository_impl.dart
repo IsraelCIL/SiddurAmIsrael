@@ -105,4 +105,12 @@ class SettingsRepositoryImpl implements ISettingsRepository {
 
   @override
   Future<void> setEinKohanim(bool value) => _ds.writeEinKohanim(value);
+
+  static const _defaultLocationCity = 'jerusalem';
+
+  @override
+  String getLocationCityId() => _ds.readLocationCity() ?? _defaultLocationCity;
+
+  @override
+  Future<void> setLocationCityId(String value) => _ds.writeLocationCity(value);
 }

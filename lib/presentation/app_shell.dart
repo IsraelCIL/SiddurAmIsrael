@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:siddur_am_israel_chai/domain/services/service_time_resolver.dart';
+import 'package:siddur_am_israel_chai/presentation/pages/calendar/calendar_screen.dart';
 import 'package:siddur_am_israel_chai/presentation/pages/prayers/maariv_screen.dart';
 import 'package:siddur_am_israel_chai/presentation/pages/prayers/mincha_screen.dart';
 import 'package:siddur_am_israel_chai/presentation/pages/prayers/shacharit_screen.dart';
@@ -9,11 +10,12 @@ import 'package:siddur_am_israel_chai/presentation/pages/settings/settings_scree
 import 'package:siddur_am_israel_chai/presentation/providers/prayer_providers.dart';
 import 'package:siddur_am_israel_chai/presentation/theme/app_colors.dart';
 
-/// Top-level shell with 4 bottom tabs:
+/// Top-level shell with 5 bottom tabs:
 ///   0 → Shacharit  (visually rightmost in RTL)
 ///   1 → Mincha
 ///   2 → Maariv
-///   3 → Settings   (visually leftmost in RTL)
+///   3 → Calendar (לוח)
+///   4 → Settings   (visually leftmost in RTL)
 ///
 /// Initial tab is picked from [currentServiceProvider] (halachic zmanim).
 /// Tab state is preserved via [IndexedStack] so scroll positions and
@@ -31,7 +33,7 @@ class _AppShellState extends ConsumerState<AppShell> {
   static const int _shacharitIdx = 0;
   static const int _minchaIdx = 1;
   static const int _maarivIdx = 2;
-  static const int _settingsIdx = 3;
+  static const int _settingsIdx = 4;
 
   @override
   void initState() {
@@ -52,6 +54,7 @@ class _AppShellState extends ConsumerState<AppShell> {
       ShacharitScreen(onOpenSettings: _openSettings),
       MinchaScreen(onOpenSettings: _openSettings),
       MaarivScreen(onOpenSettings: _openSettings),
+      const CalendarScreen(),
       const SettingsScreen(),
     ];
 
@@ -82,6 +85,11 @@ class _AppShellState extends ConsumerState<AppShell> {
               icon: Icon(Icons.brightness_4_outlined),
               activeIcon: Icon(Icons.brightness_4),
               label: 'ערבית',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.calendar_today_outlined),
+              activeIcon: Icon(Icons.calendar_today),
+              label: 'לוח',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.settings_outlined),

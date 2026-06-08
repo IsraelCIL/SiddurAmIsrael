@@ -64,4 +64,11 @@ class SettingsLocalDatasource {
   static const _kEinKohanim = 'v1.settings.ein_kohanim';
   bool readEinKohanim() => _prefs.getBool(_kEinKohanim) ?? false;
   Future<void> writeEinKohanim(bool v) => _prefs.setBool(_kEinKohanim, v);
+
+  // Selected city id for zmanim (see lib/core/data/cities.dart). Default handled
+  // in the repository.
+  static const _kLocationCity = 'v1.settings.location_city';
+  String? readLocationCity() => _prefs.getString(_kLocationCity);
+  Future<void> writeLocationCity(String v) =>
+      _prefs.setString(_kLocationCity, v);
 }
