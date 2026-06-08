@@ -15,6 +15,17 @@
 # │ 3. App Store Connect app must use Bundle ID  com.sidduramisrael.app         │
 # │ 4. Build the `main` branch with the "iOS — App Store" workflow below.       │
 # └─────────────────────────────────────────────────────────────────────────────┘
+#
+# ┌─ ONE-TIME SETUP FOR ANDROID (before the first "Android — Google Play" build)┐
+# │ 1. Codemagic → Code signing identities → Android keystores → upload         │
+# │      android/app/upload-keystore.jks  (kept locally, NOT in git).           │
+# │    Reference name MUST be:  siddur_upload_keystore                           │
+# │    Alias: upload   (store & key password: from your saved key.properties)   │
+# │ 2. Google Play Console: create the app with package com.sidduramisrael.app  │
+# │    and do the FIRST release manually by uploading the .aab artifact.        │
+# │ 3. (Later) For auto-publishing, add a Google Play service-account JSON and  │
+# │    uncomment the `google_play:` publishing block at the bottom.             │
+# └─────────────────────────────────────────────────────────────────────────────┘
 # ─────────────────────────────────────────────────────────────────────────────
 
 workflows:
@@ -108,3 +119,69 @@ workflows:
         notify:
           success: true
           failure: true
+
+  # ───────────────────────────────────────────────────────────────────────────
+  # Android — builds a signed Android App Bundle (.aab) for the Google Play Store.
+  # Runs on Linux (cheaper/faster than mac). Signing uses the keystore you upload
+  # to Codemagic under the reference name `siddur_upload_keystore`; Codemagic then
+  # exposes CM_KEYSTORE_PATH / CM_KEYSTORE_PASSWORD / CM_KEY_ALIAS / CM_KEY_PASSWORD,
+  # which android/app/build.gradle.kts reads to sign the release build.
+  # ───────────────────────────────────────────────────────────────────────────
+  android-google-play:
+    name: Android — Google Play
+    instance_type: linux_x2
+    max_build_duration: 60
+
+    environment:
+      android_signing:
+        # Must match the Android keystore reference name created in the Codemagic UI.
+        - siddur_upload_keystore
+      vars:
+        PACKAGE_NAME: "com.sidduramisrael.app"   # ← must match android/app/build.gradle.kts + Play Console
+      flutter: 3.41.9        # matches the iOS workflow / README.md
+      java: 17
+
+    scripts:
+      - name: Install Dart/Flutter packages
+        script: |
+          set -e
+          flutter pub get
+
+      - name: Generate code (freezed / riverpod / json_serializable)
+        script: |
+          set -e
+          # *.freezed.dart / *.g.dart are git-ignored, so they must be generated here.
+          dart run build_runner build --delete-conflicting-outputs
+
+      - name: Static analysis & tests (report-only, non-blocking)
+        script: |
+          flutter analyze --no-fatal-infos --no-fatal-warnings || true
+          flutter test || true
+
+      - name: Build signed AAB
+        script: |
+          set -e
+          # Build name comes from pubspec; build number = Codemagic build index.
+          flutter build appbundle --release \
+            --build-number=$BUILD_NUMBER
+
+    artifacts:
+      - build/app/outputs/bundle/release/*.aab
+      - build/app/outputs/**/mapping.txt
+      - flutter_drive.log
+
+    publishing:
+      email:
+        recipients:
+          - israel9390@gmail.com
+        notify:
+          success: true
+          failure: true
+      # ── Optional auto-publish to Google Play. Enable AFTER the app exists in
+      # ── the Console and you've added a service-account JSON to a Codemagic
+      # ── group as GCLOUD_SERVICE_ACCOUNT_CREDENTIALS. Until then, download the
+      # ── .aab artifact from the build and upload it to the Console manually.
+      # google_play:
+      #   credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS
+      #   track: internal
+      #   submit_as_draft: true

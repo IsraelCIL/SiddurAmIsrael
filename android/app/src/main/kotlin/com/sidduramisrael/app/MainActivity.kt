@@ -1,4 +1,4 @@
-package com.example.smart_siddur
+package com.sidduramisrael.app
 
 import io.flutter.embedding.android.FlutterActivity
 
