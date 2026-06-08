@@ -50,6 +50,15 @@ const _extraBottomPadding = <String>{
   'bhm_em_sheva_kos',
 };
 
+// Segments where assembled sections should flow on one line — the assembler
+// joins sections with \n, but for these segments the \n is replaced with a
+// space so the food-type suffixes stay inline with the opening phrase.
+const _inlineJoin = <String>{
+  'ms_opening',
+  'ms_kiatah',
+  'ms_chatima',
+};
+
 // Segments whose top padding is suppressed (they follow a tight predecessor).
 const _noTopPadding = <String>{
   // hazan chatima caps the unbroken hazan passage
@@ -79,20 +88,20 @@ class _PrayerInlineToggle extends ConsumerWidget {
     if (segmentId == 'inline_toggle_kohanim') {
       return _buildKohanumToggle(ref);
     }
-    // Birkat HaMazon meal-context selectors (multi-option segmented controls).
+    // Birkat HaMazon meal-context selectors.
+    // "רגילה" is not shown — it is the implicit default when nothing is
+    // selected. Tapping the active chip deselects it (resets to regular).
     if (segmentId == 'inline_toggle_meal_type') {
       final value = ref.watch(mealTypeProvider);
       final nusach = ref.watch(nusachProvider);
       // EM has no distinct seudat-mitzvah text — only sheva brachot / brit
-      // milah produce different content, so hide that option there.
+      // milah produce different content, so that option is omitted there.
       final options = nusach == 'edot_mizrach'
           ? const [
-              (MealType.regular, 'רגילה'),
               (MealType.shevaBrachot, 'שבע ברכות'),
               (MealType.britMilah, 'ברית מילה'),
             ]
           : const [
-              (MealType.regular, 'רגילה'),
               (MealType.seudatMitzvah, 'סעודת מצוה'),
               (MealType.shevaBrachot, 'שבע ברכות'),
               (MealType.britMilah, 'ברית מילה'),
@@ -101,9 +110,10 @@ class _PrayerInlineToggle extends ConsumerWidget {
         current: value,
         options: options,
         onSelect: (v) {
-          ref.read(mealTypeProvider.notifier).set(v);
-          // Sheva Brachot / Brit Milah default to a zimmun of ten.
-          if (v == MealType.shevaBrachot || v == MealType.britMilah) {
+          // Tap selected chip → deselect (regular). Tap other → select.
+          final next = v == value ? MealType.regular : v;
+          ref.read(mealTypeProvider.notifier).set(next);
+          if (next == MealType.shevaBrachot || next == MealType.britMilah) {
             ref.read(zimmunModeProvider.notifier).set(ZimmunMode.ten);
           }
         },
@@ -547,7 +557,12 @@ class PrayerTextWidget extends ConsumerWidget {
             const SizedBox(height: 8),
           ],
           if (segment.resolvedText.isNotEmpty)
-            RichPrayerText(text: segment.resolvedText, style: bodyStyle),
+            RichPrayerText(
+              text: _inlineJoin.contains(segment.id)
+                  ? segment.resolvedText.replaceAll('\n', ' ')
+                  : segment.resolvedText,
+              style: bodyStyle,
+            ),
           if (segment.id == 'sefirat_haomer_day_count') _OmerSummary(factor: factor),
           SizedBox(height: noTrailing ? 2
               : _extraBottomPadding.contains(segment.id) ? 36
