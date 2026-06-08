@@ -7,7 +7,7 @@ class SettingsRepositoryImpl implements ISettingsRepository {
 
   final SettingsLocalDatasource _ds;
 
-  static const _defaultNusach = 'ashkenaz';
+  static const _defaultNusach = 'edot_mizrach';
   static const _defaultGender = Gender.male;
   static const _defaultIsInIsrael = true;
   static const _defaultWithMinyan = true;
