@@ -1,0 +1,12 @@
+{
+  "id": "bhm_rachem_open_ashk",
+  "sections": [
+    {
+      "text": "רַחֵם",
+      "condition_flags": [
+        "nusach_ashkenaz"
+      ],
+      "exclude_flags": []
+    }
+  ]
+}

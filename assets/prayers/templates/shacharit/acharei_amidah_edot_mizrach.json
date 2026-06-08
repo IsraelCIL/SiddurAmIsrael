@@ -95,7 +95,9 @@
       "condition_flags": [
         "lulav_day"
       ],
-      "exclude_flags": [],
+      "exclude_flags": [
+        "gender_female"
+      ],
       "optional": false,
       "allowed_nusach": []
     },

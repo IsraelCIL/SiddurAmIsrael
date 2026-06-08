@@ -483,6 +483,8 @@ class _GroupAccordionState extends ConsumerState<_GroupAccordion> {
 
   @override
   Widget build(BuildContext context) {
+    // Group titles scale with the prayer-text font factor, like segment labels.
+    final factor = ref.watch(fontSizeFactorProvider);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
       child: DecoratedBox(
@@ -515,14 +517,14 @@ class _GroupAccordionState extends ConsumerState<_GroupAccordion> {
                   Icon(
                     _expanded ? Icons.expand_less : Icons.expand_more,
                     color: AppColors.primary,
-                    size: 20,
+                    size: 20 * factor,
                   ),
                   const SizedBox(width: 8),
                   Text(
                     widget.title,
-                    style: const TextStyle(
+                    style: TextStyle(
                       color: AppColors.primary,
-                      fontSize: 14,
+                      fontSize: 14 * factor,
                       fontWeight: FontWeight.w700,
                       letterSpacing: 0.4,
                     ),

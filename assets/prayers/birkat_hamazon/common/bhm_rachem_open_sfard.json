@@ -1,0 +1,12 @@
+{
+  "id": "bhm_rachem_open_sfard",
+  "sections": [
+    {
+      "text": "רַחֵם נָא",
+      "condition_flags": [
+        "nusach_sfard"
+      ],
+      "exclude_flags": []
+    }
+  ]
+}

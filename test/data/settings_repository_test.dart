@@ -14,9 +14,9 @@ void main() {
   }
 
   group('SettingsRepository — defaults', () {
-    test('nusach defaults to ashkenaz', () async {
+    test('nusach defaults to edot_mizrach', () async {
       final r = await makeRepo();
-      expect(r.getNusach(), 'ashkenaz');
+      expect(r.getNusach(), 'edot_mizrach');
     });
 
     test('gender defaults to male', () async {

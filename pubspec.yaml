@@ -126,6 +126,22 @@ flutter:
     - assets/prayers/maariv/sefirat_haomer/nusach/sfard/
     - assets/prayers/maariv/sefirat_haomer/nusach/edot_mizrach/
 
+    # Birkat HaMazon (Berachot)
+    - assets/prayers/birkat_hamazon/common/
+    - assets/prayers/birkat_hamazon/nusach/edot_mizrach/
+
+    # Berachah Me'ein Shalosh (Berachot)
+    - assets/prayers/meein_shalosh/common/
+    - assets/prayers/meein_shalosh/nusach/ashkenaz/
+    - assets/prayers/meein_shalosh/nusach/sfard/
+    - assets/prayers/meein_shalosh/nusach/edot_mizrach/
+
+    # Tefilat HaDerech (Berachot)
+    - assets/prayers/tefilat_haderech/common/
+    - assets/prayers/tefilat_haderech/nusach/ashkenaz/
+    - assets/prayers/tefilat_haderech/nusach/sfard/
+    - assets/prayers/tefilat_haderech/nusach/edot_mizrach/
+
     # Purim
     - assets/prayers/purim/common/
     - assets/prayers/purim/nusach/ashkenaz/

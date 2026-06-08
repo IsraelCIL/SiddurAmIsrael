@@ -210,6 +210,7 @@ final showSegmentLabelsProvider =
   ),
 );
 
+
 /// Persists which optional segment IDs the user has chosen to keep expanded.
 /// Tapping an accordion toggle saves/removes the ID from this set so the
 /// choice survives app restarts — stored locally via SharedPreferences.
@@ -257,6 +258,54 @@ final wearsTallitGadolProvider = NotifierProvider<_PersistentNotifier<bool>, boo
     read: (r) => r.getWearsTallitGadol(),
     write: (r, v) => r.setWearsTallitGadol(v),
   ),
+);
+
+// ── Birkat HaMazon meal context (transient — NOT persisted) ──────────────────
+// These reset to their defaults on every app launch by design: meal context
+// changes per meal, so persisting it would be misleading.
+
+class _TransientNotifier<T> extends Notifier<T> {
+  _TransientNotifier(this.initial);
+  final T initial;
+  @override
+  T build() => initial;
+  void set(T value) => state = value;
+}
+
+final mealTypeProvider = NotifierProvider<_TransientNotifier<MealType>, MealType>(
+  () => _TransientNotifier<MealType>(MealType.regular),
+);
+
+final zimmunModeProvider =
+    NotifierProvider<_TransientNotifier<ZimmunMode>, ZimmunMode>(
+  () => _TransientNotifier<ZimmunMode>(ZimmunMode.individual),
+);
+
+final diningStatusProvider =
+    NotifierProvider<_TransientNotifier<DiningStatus>, DiningStatus>(
+  () => _TransientNotifier<DiningStatus>(DiningStatus.ownTable),
+);
+
+// ── Berachah Me'ein Shalosh (transient — per-occasion) ───────────────────────
+// Which food type(s) are being blessed. Defaults to mezonot so the blessing
+// is complete on open.
+final meeinTypesProvider =
+    NotifierProvider<_TransientNotifier<Set<MeeinType>>, Set<MeeinType>>(
+  () => _TransientNotifier<Set<MeeinType>>({MeeinType.mezonot}),
+);
+
+// Eretz-Yisrael provenance for wine / fruit / grain. Default false = chutz
+// la'aretz (per user spec). The grain (mezonot) toggle is only meaningful in
+// Edot HaMizrach, but the provider exists for all nuscachim and is ignored
+// elsewhere by the assembler.
+final meeinGefenEyProvider = NotifierProvider<_TransientNotifier<bool>, bool>(
+  () => _TransientNotifier<bool>(false),
+);
+final meeinPerotEyProvider = NotifierProvider<_TransientNotifier<bool>, bool>(
+  () => _TransientNotifier<bool>(false),
+);
+final meeinMezonotEyProvider = NotifierProvider<_TransientNotifier<bool>, bool>(
+  () => _TransientNotifier<bool>(false),
 );
 
 // ── Derived / computed ───────────────────────────────────────────────────────
@@ -421,6 +470,123 @@ final maarivProvider = FutureProvider<List<AssembledSegment>>((ref) {
   final ctx = extra.isEmpty ? baseCtx : _ctxWithExtraFlags(baseCtx, extra);
   return assembler.assemble(
     templateId: 'maariv_${ctx.nusach}',
+    userContext: ctx,
+  );
+});
+
+final birkatHamazonProvider = FutureProvider<List<AssembledSegment>>((ref) {
+  final assembler = ref.watch(prayerAssemblerProvider);
+  final baseCtx = ref.watch(userContextProvider);
+  final mealType = ref.watch(mealTypeProvider);
+  final zimmun = ref.watch(zimmunModeProvider);
+  final dining = ref.watch(diningStatusProvider);
+  final flags = baseCtx.activeFlags.toSet();
+
+  final extra = <String>[];
+
+  switch (mealType) {
+    case MealType.regular:
+      break;
+    case MealType.seudatMitzvah:
+      extra.add(DayFlag.mealSeudatMitzvah);
+    case MealType.shevaBrachot:
+      extra.add(DayFlag.mealShevaBrachot);
+    case MealType.britMilah:
+      extra.add(DayFlag.mealBritMilah);
+  }
+
+  switch (zimmun) {
+    case ZimmunMode.individual:
+      break;
+    case ZimmunMode.three:
+      extra
+        ..add(DayFlag.zimmunActive)
+        ..add(DayFlag.zimmunThree);
+    case ZimmunMode.ten:
+      extra
+        ..add(DayFlag.zimmunActive)
+        ..add(DayFlag.zimmunTen);
+  }
+
+  switch (dining) {
+    case DiningStatus.ownTable:
+      extra.add(DayFlag.diningOwnTable);
+    case DiningStatus.parentsTable:
+      extra.add(DayFlag.diningParents);
+    case DiningStatus.guest:
+      extra.add(DayFlag.diningGuest);
+  }
+
+  // Pre-bentching psalm: Shir HaMaalot (Ps 126) on festive days (Hallel /
+  // Al HaNisim / Shabbat); otherwise Al Naharot Bavel (Ps 137) accordion.
+  final festive = flags.contains(DayFlag.fullHallel) ||
+      flags.contains(DayFlag.halfHallel) ||
+      flags.contains(DayFlag.alHaNisim) ||
+      flags.contains(DayFlag.shabbat);
+  if (festive) extra.add(DayFlag.birkatFestivePsalm);
+
+  // מַגְדִּיל → מִגְדּוֹל in the closing Harachaman. The trigger differs by
+  // nusach: A/S say מִגְדּוֹל on Rosh Chodesh / Chol HaMoed; EM say it on any
+  // Musaf day, Motzaei Shabbat (proxied by the shabbat flag), Purim, or a
+  // Brit Milah meal.
+  final migdol = baseCtx.nusach == 'edot_mizrach'
+      ? (flags.contains(DayFlag.musafDay) ||
+          flags.contains(DayFlag.shabbat) ||
+          flags.contains(DayFlag.purim) ||
+          mealType == MealType.britMilah)
+      : (flags.contains(DayFlag.roshChodesh) ||
+          flags.contains(DayFlag.cholHamoedPesach) ||
+          flags.contains(DayFlag.cholHamoedSukkot));
+  if (migdol) extra.add(DayFlag.migdolWord);
+
+  final ctx = _ctxWithExtraFlags(baseCtx, extra);
+  return assembler.assemble(
+    templateId: 'birkat_hamazon_${ctx.nusach}',
+    userContext: ctx,
+  );
+});
+
+final meeinShaloshProvider = FutureProvider<List<AssembledSegment>>((ref) {
+  final assembler = ref.watch(prayerAssemblerProvider);
+  final baseCtx = ref.watch(userContextProvider);
+  final types = ref.watch(meeinTypesProvider);
+  final gefenEy = ref.watch(meeinGefenEyProvider);
+  final perotEy = ref.watch(meeinPerotEyProvider);
+  final mezonotEy = ref.watch(meeinMezonotEyProvider);
+
+  // Calendar additions (Rosh Chodesh / Chol HaMoed) come from baseCtx.activeFlags
+  // and are matched directly by the ms_date_* segments — no injection needed.
+  final extra = <String>[];
+  if (types.contains(MeeinType.mezonot)) {
+    extra.add(DayFlag.meeinMezonot);
+    // EY grain wording exists only in Edot HaMizrach.
+    if (mezonotEy && baseCtx.nusach == 'edot_mizrach') {
+      extra.add(DayFlag.meeinMezonotEy);
+    }
+  }
+  if (types.contains(MeeinType.gefen)) {
+    extra.add(DayFlag.meeinGefen);
+    if (gefenEy) extra.add(DayFlag.meeinGefenEy);
+  }
+  if (types.contains(MeeinType.perot)) {
+    extra.add(DayFlag.meeinPerot);
+    if (perotEy) extra.add(DayFlag.meeinPerotEy);
+  }
+
+  final ctx = _ctxWithExtraFlags(baseCtx, extra);
+  return assembler.assemble(
+    templateId: 'meein_shalosh_${ctx.nusach}',
+    userContext: ctx,
+  );
+});
+
+/// Tefilat HaDerech (Traveler's Prayer): the main blessing plus an accordion
+/// of additional verses. No conditional content beyond nusach selection.
+final tefilatHaderechProvider = FutureProvider<List<AssembledSegment>>((ref) {
+  final assembler = ref.watch(prayerAssemblerProvider);
+  final ctx = ref.watch(userContextProvider);
+  return assembler.assemble(
+    templateId: 'tefilat_haderech_${ctx.nusach}',
     userContext: ctx,
   );
 });

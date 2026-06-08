@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'package:siddur_am_israel_chai/domain/entities/assembled_segment.dart';
 import 'package:siddur_am_israel_chai/domain/entities/omer_day.dart';
+import 'package:siddur_am_israel_chai/domain/entities/user_context.dart';
 import 'package:siddur_am_israel_chai/presentation/constants/segment_labels.dart';
 import 'package:siddur_am_israel_chai/presentation/providers/prayer_providers.dart';
 import 'package:siddur_am_israel_chai/presentation/theme/app_colors.dart';
@@ -41,6 +42,54 @@ class _PrayerInlineToggle extends ConsumerWidget {
     // Kohanim toggle: section title + switch with "יש כהנים" label
     if (segmentId == 'inline_toggle_kohanim') {
       return _buildKohanumToggle(ref);
+    }
+    // Birkat HaMazon meal-context selectors (multi-option segmented controls).
+    if (segmentId == 'inline_toggle_meal_type') {
+      final value = ref.watch(mealTypeProvider);
+      return _buildSegmentedChoice<MealType>(
+        current: value,
+        options: const [
+          (MealType.regular, 'רגילה'),
+          (MealType.seudatMitzvah, 'סעודת מצוה'),
+          (MealType.shevaBrachot, 'שבע ברכות'),
+          (MealType.britMilah, 'ברית מילה'),
+        ],
+        onSelect: (v) {
+          ref.read(mealTypeProvider.notifier).set(v);
+          // Sheva Brachot / Brit Milah default to a zimmun of ten.
+          if (v == MealType.shevaBrachot || v == MealType.britMilah) {
+            ref.read(zimmunModeProvider.notifier).set(ZimmunMode.ten);
+          }
+        },
+      );
+    }
+    if (segmentId == 'inline_toggle_zimmun') {
+      final value = ref.watch(zimmunModeProvider);
+      return _buildSegmentedChoice<ZimmunMode>(
+        current: value,
+        options: const [
+          (ZimmunMode.individual, 'ביחיד'),
+          (ZimmunMode.three, 'זימון בשלושה'),
+          (ZimmunMode.ten, 'זימון בעשרה'),
+        ],
+        onSelect: (v) => ref.read(zimmunModeProvider.notifier).set(v),
+      );
+    }
+    if (segmentId == 'inline_toggle_dining') {
+      final value = ref.watch(diningStatusProvider);
+      return _buildSegmentedChoice<DiningStatus>(
+        current: value,
+        options: const [
+          (DiningStatus.ownTable, 'על שולחני'),
+          (DiningStatus.parentsTable, 'על שולחן הורַי'),
+          (DiningStatus.guest, 'אורח'),
+        ],
+        onSelect: (v) => ref.read(diningStatusProvider.notifier).set(v),
+      );
+    }
+    // Me'ein Shalosh: multi-select food types + small Eretz-Yisrael toggles.
+    if (segmentId == 'inline_toggle_meein') {
+      return _buildMeeinToggle(ref);
     }
     final (label, value, onChanged) = _resolve(ref);
     return Padding(
@@ -182,6 +231,183 @@ class _PrayerInlineToggle extends ConsumerWidget {
     );
   }
 
+  /// Generic multi-option chip row for transient meal-context choices.
+  /// Renders each option as a tappable pill; the selected one is filled.
+  Widget _buildSegmentedChoice<T>({
+    required T current,
+    required List<(T, String)> options,
+    required void Function(T) onSelect,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      child: Wrap(
+        alignment: WrapAlignment.center,
+        spacing: 6,
+        runSpacing: 6,
+        textDirection: TextDirection.rtl,
+        children: [
+          for (final (value, label) in options)
+            GestureDetector(
+              onTap: () => onSelect(value),
+              child: Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
+                decoration: BoxDecoration(
+                  color: value == current
+                      ? AppColors.primary
+                      : AppColors.surface,
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(
+                    color: value == current
+                        ? AppColors.primary
+                        : AppColors.borderLight,
+                  ),
+                ),
+                child: Text(
+                  label,
+                  textDirection: TextDirection.rtl,
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight:
+                        value == current ? FontWeight.w700 : FontWeight.w500,
+                    color: value == current
+                        ? Colors.white
+                        : AppColors.primaryDarker,
+                  ),
+                ),
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+
+  /// Me'ein Shalosh selector: a multi-select row of food types (mezonot /
+  /// gefen / perot) plus, beneath it, small unobtrusive Eretz-Yisrael
+  /// provenance toggles that appear only for the selected types (the grain
+  /// toggle only in Edot HaMizrach).
+  Widget _buildMeeinToggle(WidgetRef ref) {
+    final types = ref.watch(meeinTypesProvider);
+    final nusach = ref.watch(nusachProvider);
+    final gefenEy = ref.watch(meeinGefenEyProvider);
+    final perotEy = ref.watch(meeinPerotEyProvider);
+    final mezonotEy = ref.watch(meeinMezonotEyProvider);
+
+    void toggleType(MeeinType t) {
+      final next = {...types};
+      next.contains(t) ? next.remove(t) : next.add(t);
+      if (next.isEmpty) return; // always keep at least one type selected
+      ref.read(meeinTypesProvider.notifier).set(next);
+    }
+
+    Widget typeChip(MeeinType t, String label) {
+      final selected = types.contains(t);
+      return GestureDetector(
+        onTap: () => toggleType(t),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          decoration: BoxDecoration(
+            color: selected ? AppColors.primary : AppColors.surface,
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(
+              color: selected ? AppColors.primary : AppColors.borderLight,
+            ),
+          ),
+          child: Text(
+            label,
+            textDirection: TextDirection.rtl,
+            style: TextStyle(
+              fontSize: 15,
+              fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
+              color: selected ? Colors.white : AppColors.primaryDarker,
+            ),
+          ),
+        ),
+      );
+    }
+
+    // Small, low-emphasis provenance toggle (filled = Eretz Yisrael).
+    Widget eyChip(String label, bool value, void Function(bool) onChanged) {
+      return GestureDetector(
+        onTap: () => onChanged(!value),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+          decoration: BoxDecoration(
+            color: value
+                ? AppColors.primary.withValues(alpha: 0.12)
+                : Colors.transparent,
+            borderRadius: BorderRadius.circular(14),
+            border: Border.all(
+              color: value ? AppColors.primary : AppColors.borderLight,
+            ),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            textDirection: TextDirection.rtl,
+            children: [
+              Icon(
+                value ? Icons.check_circle : Icons.circle_outlined,
+                size: 13,
+                color: value ? AppColors.primary : AppColors.textSecondary,
+              ),
+              const SizedBox(width: 4),
+              Text(
+                label,
+                textDirection: TextDirection.rtl,
+                style: TextStyle(
+                  fontSize: 12,
+                  color: value ? AppColors.primary : AppColors.textSecondary,
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
+    final eyToggles = <Widget>[
+      if (types.contains(MeeinType.mezonot) && nusach == 'edot_mizrach')
+        eyChip('מזונות מארץ ישראל', mezonotEy,
+            (v) => ref.read(meeinMezonotEyProvider.notifier).set(v)),
+      if (types.contains(MeeinType.gefen))
+        eyChip('יין מארץ ישראל', gefenEy,
+            (v) => ref.read(meeinGefenEyProvider.notifier).set(v)),
+      if (types.contains(MeeinType.perot))
+        eyChip('פירות מארץ ישראל', perotEy,
+            (v) => ref.read(meeinPerotEyProvider.notifier).set(v)),
+    ];
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Wrap(
+            alignment: WrapAlignment.center,
+            spacing: 6,
+            runSpacing: 6,
+            textDirection: TextDirection.rtl,
+            children: [
+              typeChip(MeeinType.mezonot, 'מזונות'),
+              typeChip(MeeinType.gefen, 'גפן'),
+              typeChip(MeeinType.perot, 'פירות'),
+            ],
+          ),
+          if (eyToggles.isNotEmpty) ...[
+            const SizedBox(height: 8),
+            Wrap(
+              alignment: WrapAlignment.center,
+              spacing: 6,
+              runSpacing: 6,
+              textDirection: TextDirection.rtl,
+              children: eyToggles,
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+
   (String, bool, void Function(bool)) _resolve(WidgetRef ref) {
     switch (segmentId) {
       case 'inline_toggle_tallit_gadol':
@@ -209,6 +435,10 @@ const _inlineToggleIds = {
   'inline_toggle_tallit_gadol',
   'inline_toggle_shaliach_tzibbur',
   'inline_toggle_kohanim',
+  'inline_toggle_meal_type',
+  'inline_toggle_zimmun',
+  'inline_toggle_dining',
+  'inline_toggle_meein',
 };
 
 class PrayerTextWidget extends ConsumerWidget {

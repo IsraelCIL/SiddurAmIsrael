@@ -1,0 +1,62 @@
+{
+  "id": "ms_opening",
+  "sections": [
+    {
+      "text": "בָּרוּךְ אַתָּה יְהֹוָה, אֱלֹהֵֽינוּ מֶֽלֶךְ הָעוֹלָם,",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "text": "עַל הַמִּחְיָה וְעַל הַכַּלְכָּלָה",
+      "condition_flags": [
+        "ms_mezonot"
+      ],
+      "exclude_flags": []
+    },
+    {
+      "text": "עַל הַגֶּֽפֶן וְעַל פְּרִי הַגֶּֽפֶן",
+      "condition_flags": [
+        "ms_gefen"
+      ],
+      "exclude_flags": [
+        "ms_mezonot"
+      ]
+    },
+    {
+      "text": "וְעַל הַגֶּֽפֶן וְעַל פְּרִי הַגֶּֽפֶן",
+      "condition_flags": [
+        "ms_gefen",
+        "ms_mezonot"
+      ],
+      "exclude_flags": []
+    },
+    {
+      "text": "עַל הָעֵץ וְעַל פְּרִי הָעֵץ",
+      "condition_flags": [
+        "ms_perot"
+      ],
+      "exclude_flags": [
+        "ms_mezonot",
+        "ms_gefen"
+      ]
+    },
+    {
+      "text": "וְעַל הָעֵץ וְעַל פְּרִי הָעֵץ",
+      "condition_flags": [
+        "ms_perot",
+        "ms_mezonot"
+      ],
+      "exclude_flags": []
+    },
+    {
+      "text": "וְעַל הָעֵץ וְעַל פְּרִי הָעֵץ",
+      "condition_flags": [
+        "ms_perot",
+        "ms_gefen"
+      ],
+      "exclude_flags": [
+        "ms_mezonot"
+      ]
+    }
+  ]
+}

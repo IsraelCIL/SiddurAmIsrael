@@ -1,0 +1,19 @@
+{
+  "id": "bhm_em_rachem_chatima",
+  "sections": [
+    {
+      "text": [
+        "וְתִבְנֶה יְרוּשָׁלַֽיִם עִירָךְ בִּמְהֵרָה בְיָמֵֽינוּ.",
+        "בָּרוּךְ אַתָּה יְהֹוָה. בּוֹנֵה יְרוּשָׁלָֽיִם"
+      ],
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "text": "(ואומר בלחש: אָמֵן)",
+      "is_rubric": true,
+      "condition_flags": [],
+      "exclude_flags": []
+    }
+  ]
+}
