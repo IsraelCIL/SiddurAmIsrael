@@ -46,4 +46,9 @@ abstract class ISettingsRepository {
   /// Location mode: 'city' (fixed) or 'gps' (default 'city').
   String getLocationMode();
   Future<void> setLocationMode(String value);
+
+  /// Interface language code ('he' | 'en' | 'ru' | 'fr'). Defaults to 'he'.
+  /// Affects only the framework UI, never the prayer texts.
+  String getAppLanguage();
+  Future<void> setAppLanguage(String value);
 }

@@ -1,0 +1,116 @@
+{
+  "id": "bhm_zimmun_brit_intro",
+  "sections": [
+    {
+      "text": "הַמְזַמֵּן:",
+      "is_rubric": true,
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "text": "נוֹדֶה לְשִׁמְךָ בְּתוֹךְ אֱמוּנַי, בְּרוּכִים אַתֶּם לַיהֹוָה:",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "text": "וּמַמְשִׁיךְ:",
+      "is_rubric": true,
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "text": [
+        "בִּרְשׁוּת אֵל אָיוֹם וְנוֹרָא, מִשְׂגָּב לְעִתּוֹת בַּצָּרָה,",
+        "אֵל נֶאְזָר בִּגְבוּרָה, אַדִּיר בַּמָּרוֹם יְהֹוָה:"
+      ],
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "text": "הַמְסֻבִּין:",
+      "is_rubric": true,
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "text": "נוֹדֶה לְשִׁמְךָ בְּתוֹךְ אֱמוּנַי, בְּרוּכִים אַתֶּם לַיהֹוָה:",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "text": "הַמְזַמֵּן:",
+      "is_rubric": true,
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "text": [
+        "בִּרְשׁוּת הַתּוֹרָה הַקְּדוֹשָׁה, טְהוֹרָה הִיא וְגַם פְּרוּשָׁה,",
+        "צִוָּה לָֽנוּ מוֹרָשָׁה, מֹשֶׁה עֶֽבֶד יְהֹוָה:"
+      ],
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "text": "הַמְסֻבִּין:",
+      "is_rubric": true,
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "text": "נוֹדֶה לְשִׁמְךָ בְּתוֹךְ אֱמוּנַי, בְּרוּכִים אַתֶּם לַיהֹוָה:",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "text": "הַמְזַמֵּן:",
+      "is_rubric": true,
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "text": [
+        "בִּרְשׁוּת הַכֹּהֲנִים וְהַלְוִיִּם, אֶקְרָא לֵאלֹהֵי הָעִבְרִיִּים,",
+        "אֲהוֹדֶֽנּוּ בְּכָל אִיִּים, אֲבָרְ֒כָה אֶת יְהֹוָה:"
+      ],
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "text": "הַמְסֻבִּין:",
+      "is_rubric": true,
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "text": "נוֹדֶה לְשִׁמְךָ בְּתוֹךְ אֱמוּנַי, בְּרוּכִים אַתֶּם לַיהֹוָה:",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "text": "הַמְזַמֵּן:",
+      "is_rubric": true,
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "text": [
+        "בִּרְשׁוּת מָרָנָן וְרַבָּנָן וְרַבּוֹתַי, אֶפְתְּ֒חָה בְּשִׁיר פִּי וּשְׂפָתַי,",
+        "וְתֹאמַֽרְנָה עַצְמוֹתַי, בָּרוּךְ הַבָּא בְּשֵׁם יְהֹוָה:"
+      ],
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "text": "הַמְסֻבִּין:",
+      "is_rubric": true,
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "text": "נוֹדֶה לְשִׁמְךָ בְּתוֹךְ אֱמוּנַי, בְּרוּכִים אַתֶּם לַיהֹוָה:",
+      "condition_flags": [],
+      "exclude_flags": []
+    }
+  ]
+}

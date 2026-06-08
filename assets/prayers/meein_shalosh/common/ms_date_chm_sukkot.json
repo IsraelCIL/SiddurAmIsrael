@@ -1,0 +1,12 @@
+{
+  "id": "ms_date_chm_sukkot",
+  "sections": [
+    {
+      "text": "וְשַׂמְּחֵֽנוּ בְּיוֹם חַג הַסֻּכּוֹת הַזֶּה,",
+      "condition_flags": [
+        "chol_hamoed_sukkot"
+      ],
+      "exclude_flags": []
+    }
+  ]
+}

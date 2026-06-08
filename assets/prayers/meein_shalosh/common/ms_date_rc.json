@@ -1,0 +1,12 @@
+{
+  "id": "ms_date_rc",
+  "sections": [
+    {
+      "text": "וְזָכְרֵֽנוּ לְטוֹבָה בְּיוֹם רֹאשׁ הַחֹֽדֶשׁ הַזֶּה.",
+      "condition_flags": [
+        "rosh_chodesh"
+      ],
+      "exclude_flags": []
+    }
+  ]
+}

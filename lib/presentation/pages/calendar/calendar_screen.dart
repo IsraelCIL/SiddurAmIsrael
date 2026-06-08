@@ -50,7 +50,9 @@ class CalendarScreen extends ConsumerWidget {
 
     final info = ref.watch(calendarDayProvider(selected));
 
-    return Scaffold(
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
         backgroundColor: AppColors.primary,
@@ -89,7 +91,7 @@ class CalendarScreen extends ConsumerWidget {
           ],
         ),
       ),
-    );
+    ));
   }
 
   // ── Month navigation row ──────────────────────────────────────────────────

@@ -1,0 +1,94 @@
+{
+  "id": "ms_chatima",
+  "sections": [
+    {
+      "text": "בָּרוּךְ אַתָּה יְהֹוָה, עַל הָאָֽרֶץ",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "text": "וְעַל הַמִּחְיָה וְעַל הַכַּלְכָּלָה",
+      "condition_flags": [
+        "ms_mezonot",
+        "ms_gefen"
+      ],
+      "exclude_flags": []
+    },
+    {
+      "text": "וְעַל הַמִּחְיָה וְעַל הַכַּלְכָּלָה",
+      "condition_flags": [
+        "ms_mezonot",
+        "ms_perot"
+      ],
+      "exclude_flags": [
+        "ms_gefen"
+      ]
+    },
+    {
+      "text": "וְעַל הַמִּחְיָה וְעַל הַכַּלְכָּלָה:",
+      "condition_flags": [
+        "ms_mezonot"
+      ],
+      "exclude_flags": [
+        "ms_gefen",
+        "ms_perot"
+      ]
+    },
+    {
+      "text": "וְעַל פְּרִי הַגָּֽפֶן",
+      "condition_flags": [
+        "ms_gefen",
+        "ms_perot"
+      ],
+      "exclude_flags": [
+        "ms_gefen_ey"
+      ]
+    },
+    {
+      "text": "וְעַל פְּרִי גַפְנָהּ",
+      "condition_flags": [
+        "ms_gefen",
+        "ms_perot",
+        "ms_gefen_ey"
+      ],
+      "exclude_flags": []
+    },
+    {
+      "text": "וְעַל פְּרִי הַגָּֽפֶן:",
+      "condition_flags": [
+        "ms_gefen"
+      ],
+      "exclude_flags": [
+        "ms_perot",
+        "ms_gefen_ey"
+      ]
+    },
+    {
+      "text": "וְעַל פְּרִי גַפְנָהּ:",
+      "condition_flags": [
+        "ms_gefen",
+        "ms_gefen_ey"
+      ],
+      "exclude_flags": [
+        "ms_perot"
+      ]
+    },
+    {
+      "text": "וְעַל הַפֵּרוֹת:",
+      "condition_flags": [
+        "ms_perot"
+      ],
+      "exclude_flags": [
+        "ms_perot_ey"
+      ]
+    },
+    {
+      "text": "וְעַל פֵּרוֹתֶֽיהָ:",
+      "condition_flags": [
+        "ms_perot",
+        "ms_perot_ey"
+      ],
+      "exclude_flags": []
+    }
+  ]
+}

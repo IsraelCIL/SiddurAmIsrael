@@ -119,4 +119,20 @@ class SettingsRepositoryImpl implements ISettingsRepository {
 
   @override
   Future<void> setLocationMode(String value) => _ds.writeLocationMode(value);
+
+  static const _defaultAppLanguage = 'he';
+  static const _supportedLanguages = {'he', 'en', 'ru', 'fr'};
+
+  @override
+  String getAppLanguage() {
+    final raw = _ds.readAppLanguage();
+    return (raw != null && _supportedLanguages.contains(raw))
+        ? raw
+        : _defaultAppLanguage;
+  }
+
+  @override
+  Future<void> setAppLanguage(String value) => _ds.writeAppLanguage(
+        _supportedLanguages.contains(value) ? value : _defaultAppLanguage,
+      );
 }

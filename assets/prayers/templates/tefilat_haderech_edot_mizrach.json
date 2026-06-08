@@ -1,0 +1,17 @@
+{
+  "id": "tefilat_haderech_edot_mizrach",
+  "name": "תפילת הדרך",
+  "segments": [
+    {
+      "segment_id": "thd_main",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "thd_additions_em",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": true
+    }
+  ]
+}

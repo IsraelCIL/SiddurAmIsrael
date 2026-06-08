@@ -21,8 +21,8 @@ void main() {
     setUp(() async => container = await makeContainer());
     tearDown(() => container.dispose());
 
-    test('nusachProvider defaults to ashkenaz', () {
-      expect(container.read(nusachProvider), 'ashkenaz');
+    test('nusachProvider defaults to edot_mizrach', () {
+      expect(container.read(nusachProvider), 'edot_mizrach');
     });
 
     test('isInIsraelProvider defaults to true', () {
@@ -53,7 +53,7 @@ void main() {
 
     test('reflects default nusach', () {
       final ctx = container.read(userContextProvider);
-      expect(ctx.nusach, 'ashkenaz');
+      expect(ctx.nusach, 'edot_mizrach');
     });
 
     test('reflects updated nusach', () {

@@ -385,4 +385,44 @@ abstract final class DayFlag {
   // ein_kohanim: there are no kohanim present to duchen.
   // When set: birkat_kohanim_bracha is replaced by ein_kohanim_bracha.
   static const einKohanim = 'ein_kohanim';
+
+  // ── Birkat HaMazon (meal-context, user-toggled — transient) ───────────────
+  // Meal type. regular emits no flag. The three below are injected by the
+  // birkatHamazonProvider from the (non-persisted) mealTypeProvider.
+  static const mealSeudatMitzvah = 'meal_seudat_mitzvah';
+  static const mealShevaBrachot = 'meal_sheva_brachot';
+  static const mealBritMilah = 'meal_brit_milah';
+
+  // Zimmun. individual emits no flag. zimmun_active fires for three OR ten.
+  static const zimmunActive = 'zimmun_active';
+  static const zimmunThree = 'zimmun_three';
+  static const zimmunTen = 'zimmun_ten';
+
+  // Whose table — drives the host Harachaman blessing.
+  static const diningOwnTable = 'dining_own_table';
+  static const diningParents = 'dining_parents';
+  static const diningGuest = 'dining_guest';
+
+  // birkat_festive_psalm: injected when the pre-bentching psalm is Shir
+  // HaMaalot (Ps 126) rather than Al Naharot Bavel (Ps 137) — fires on days
+  // with Hallel / Al HaNisim / Shabbat. When absent, Al Naharot Bavel is
+  // offered as an optional accordion instead.
+  static const birkatFestivePsalm = 'birkat_festive_psalm';
+
+  // migdol_word: on Rosh Chodesh / Chol HaMoed the closing Harachaman reads
+  // "מִגְדּוֹל" (Ps 18 ktiv) instead of the everyday "מַגְדִּיל" (II Sam 22).
+  static const migdolWord = 'migdol_word';
+
+  // ── Berachah Me'ein Shalosh ───────────────────────────────────────────────
+  // Which food type(s) are being blessed (any combination). The recitation
+  // order is fixed: mezonot → gefen → perot.
+  static const meeinMezonot = 'ms_mezonot';
+  static const meeinGefen = 'ms_gefen';
+  static const meeinPerot = 'ms_perot';
+  // Eretz-Yisrael provenance toggles. When present, the closing reverts to the
+  // EY wording (פֵּרוֹתֶיהָ / גַפְנָהּ / מִחְיָתָהּ). Default (absent) = chutz la'aretz.
+  // Note: the mezonot EY form exists only in Edot HaMizrach.
+  static const meeinMezonotEy = 'ms_mezonot_ey';
+  static const meeinGefenEy = 'ms_gefen_ey';
+  static const meeinPerotEy = 'ms_perot_ey';
 }

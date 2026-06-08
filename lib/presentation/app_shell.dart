@@ -2,24 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:siddur_am_israel_chai/domain/services/service_time_resolver.dart';
+import 'package:siddur_am_israel_chai/presentation/i18n/app_strings.dart';
+import 'package:siddur_am_israel_chai/presentation/pages/berachot/berachot_screen.dart';
 import 'package:siddur_am_israel_chai/presentation/pages/calendar/calendar_screen.dart';
-import 'package:siddur_am_israel_chai/presentation/pages/prayers/maariv_screen.dart';
-import 'package:siddur_am_israel_chai/presentation/pages/prayers/mincha_screen.dart';
-import 'package:siddur_am_israel_chai/presentation/pages/prayers/shacharit_screen.dart';
+import 'package:siddur_am_israel_chai/presentation/pages/prayers/prayer_menu_screen.dart';
 import 'package:siddur_am_israel_chai/presentation/pages/settings/settings_screen.dart';
 import 'package:siddur_am_israel_chai/presentation/providers/prayer_providers.dart';
 import 'package:siddur_am_israel_chai/presentation/theme/app_colors.dart';
 
-/// Top-level shell with 5 bottom tabs:
-///   0 → Shacharit  (visually rightmost in RTL)
-///   1 → Mincha
-///   2 → Maariv
-///   3 → Calendar (לוח)
-///   4 → Settings   (visually leftmost in RTL)
+/// Top-level shell with 4 bottom tabs:
+///   0 → Prayers   (Shacharit / Mincha / Maariv — opens on the current service)
+///   1 → Berachot  (Birkat HaMazon, Me'ein Shalosh, …)
+///   2 → Calendar  (לוח)
+///   3 → Settings
 ///
-/// Initial tab is picked from [currentServiceProvider] (halachic zmanim).
-/// Tab state is preserved via [IndexedStack] so scroll positions and
-/// transient UI state survive tab switches.
+/// The Prayers tab is a nested [Navigator] whose initial stack is
+/// [menu, current-service], so the app opens directly onto the prayer that
+/// matches the current time while a back-tap (or re-tapping the tab) reveals
+/// the list. Tab state is preserved via [IndexedStack].
 class AppShell extends ConsumerStatefulWidget {
   const AppShell({super.key});
 
@@ -28,76 +28,106 @@ class AppShell extends ConsumerStatefulWidget {
 }
 
 class _AppShellState extends ConsumerState<AppShell> {
-  late int _currentIndex;
+  int _currentIndex = 0;
 
-  static const int _shacharitIdx = 0;
-  static const int _minchaIdx = 1;
-  static const int _maarivIdx = 2;
-  static const int _settingsIdx = 4;
+  static const int _prayersIdx = 0;
+  static const int _settingsIdx = 3;
 
-  @override
-  void initState() {
-    super.initState();
-    final initial = ref.read(currentServiceProvider);
-    _currentIndex = switch (initial) {
-      PrayerService.shacharit => _shacharitIdx,
-      PrayerService.mincha => _minchaIdx,
-      PrayerService.maariv => _maarivIdx,
-    };
-  }
+  final _prayersNavKey = GlobalKey<NavigatorState>();
 
   void _openSettings() => setState(() => _currentIndex = _settingsIdx);
 
+  void _onTapTab(int i) {
+    // Re-tapping the active Prayers tab returns to its list (pops the reader).
+    if (i == _currentIndex && i == _prayersIdx) {
+      _prayersNavKey.currentState?.popUntil((r) => r.isFirst);
+      return;
+    }
+    setState(() => _currentIndex = i);
+  }
+
   @override
   Widget build(BuildContext context) {
+    final s = ref.watch(appStringsProvider);
+
     final screens = <Widget>[
-      ShacharitScreen(onOpenSettings: _openSettings),
-      MinchaScreen(onOpenSettings: _openSettings),
-      MaarivScreen(onOpenSettings: _openSettings),
+      _PrayersTab(navKey: _prayersNavKey, onOpenSettings: _openSettings),
+      const BerachotScreen(),
       const CalendarScreen(),
       const SettingsScreen(),
     ];
 
-    return Directionality(
-      textDirection: TextDirection.rtl,
-      child: Scaffold(
-        body: IndexedStack(index: _currentIndex, children: screens),
-        bottomNavigationBar: BottomNavigationBar(
-          currentIndex: _currentIndex,
-          onTap: (i) => setState(() => _currentIndex = i),
-          type: BottomNavigationBarType.fixed,
-          selectedItemColor: AppColors.primary,
-          unselectedItemColor: Colors.grey,
-          backgroundColor: AppColors.background,
-          showUnselectedLabels: true,
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.wb_sunny_outlined),
-              activeIcon: Icon(Icons.wb_sunny),
-              label: 'שחרית',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.brightness_6_outlined),
-              activeIcon: Icon(Icons.brightness_6),
-              label: 'מנחה',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.brightness_4_outlined),
-              activeIcon: Icon(Icons.brightness_4),
-              label: 'ערבית',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.calendar_today_outlined),
-              activeIcon: Icon(Icons.calendar_today),
-              label: 'לוח',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.settings_outlined),
-              activeIcon: Icon(Icons.settings),
-              label: 'הגדרות',
-            ),
-          ],
+    return Scaffold(
+      body: IndexedStack(index: _currentIndex, children: screens),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex,
+        onTap: _onTapTab,
+        type: BottomNavigationBarType.fixed,
+        selectedItemColor: AppColors.primary,
+        unselectedItemColor: Colors.grey,
+        backgroundColor: AppColors.background,
+        showUnselectedLabels: true,
+        items: [
+          BottomNavigationBarItem(
+            icon: const Icon(Icons.auto_stories_outlined),
+            activeIcon: const Icon(Icons.auto_stories),
+            label: s.t('tab_prayers'),
+          ),
+          BottomNavigationBarItem(
+            icon: const Icon(Icons.menu_book_outlined),
+            activeIcon: const Icon(Icons.menu_book),
+            label: s.t('tab_berachot'),
+          ),
+          BottomNavigationBarItem(
+            icon: const Icon(Icons.calendar_today_outlined),
+            activeIcon: const Icon(Icons.calendar_today),
+            label: s.t('tab_calendar'),
+          ),
+          BottomNavigationBarItem(
+            icon: const Icon(Icons.settings_outlined),
+            activeIcon: const Icon(Icons.settings),
+            label: s.t('tab_settings'),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// The Prayers tab: a nested navigator whose root is the prayer menu, with the
+/// current-time service pushed on top so the app opens straight into it.
+class _PrayersTab extends ConsumerWidget {
+  const _PrayersTab({required this.navKey, required this.onOpenSettings});
+
+  final GlobalKey<NavigatorState> navKey;
+  final VoidCallback onOpenSettings;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final s = ref.read(appStringsProvider);
+    final current = ref.read(currentServiceProvider);
+    final currentTitleKey = switch (current) {
+      PrayerService.shacharit => 'shacharit',
+      PrayerService.mincha => 'mincha',
+      PrayerService.maariv => 'maariv',
+    };
+
+    return Navigator(
+      key: navKey,
+      onGenerateInitialRoutes: (navigator, initialRoute) => [
+        MaterialPageRoute<void>(
+          builder: (_) => PrayerMenuScreen(onOpenSettings: onOpenSettings),
         ),
+        MaterialPageRoute<void>(
+          builder: (_) => buildPrayerReader(
+            current,
+            s.t(currentTitleKey),
+            onOpenSettings: onOpenSettings,
+          ),
+        ),
+      ],
+      onGenerateRoute: (settings) => MaterialPageRoute<void>(
+        builder: (_) => PrayerMenuScreen(onOpenSettings: onOpenSettings),
       ),
     );
   }

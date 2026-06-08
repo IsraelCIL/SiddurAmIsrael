@@ -77,4 +77,11 @@ class SettingsLocalDatasource {
   String? readLocationMode() => _prefs.getString(_kLocationMode);
   Future<void> writeLocationMode(String v) =>
       _prefs.setString(_kLocationMode, v);
+
+  /// Interface language code (e.g. 'he', 'en', 'ru', 'fr'). Affects only the
+  /// app's framework UI (tabs, titles, settings) — never the prayer texts.
+  static const _kAppLanguage = 'v1.settings.app_language';
+  String? readAppLanguage() => _prefs.getString(_kAppLanguage);
+  Future<void> writeAppLanguage(String v) =>
+      _prefs.setString(_kAppLanguage, v);
 }

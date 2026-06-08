@@ -1,0 +1,38 @@
+{
+  "id": "bhm_zimmun_open",
+  "sections": [
+    {
+      "text": "הַמְזַמֵּן:",
+      "is_rubric": true,
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "text": "רַבּוֹתַי נְבָרֵךְ:",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "text": "הַמְסֻבִּין עוֹנִים:",
+      "is_rubric": true,
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "text": "יְהִי שֵׁם יְהֹוָה מְבֹרָךְ מֵעַתָּה וְעַד־עוֹלָם:",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "text": "הַמְזַמֵּן חוֹזֵר:",
+      "is_rubric": true,
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "text": "יְהִי שֵׁם יְהֹוָה מְבֹרָךְ מֵעַתָּה וְעַד־עוֹלָם:",
+      "condition_flags": [],
+      "exclude_flags": []
+    }
+  ]
+}

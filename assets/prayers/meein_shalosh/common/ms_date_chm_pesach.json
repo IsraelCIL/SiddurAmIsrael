@@ -1,0 +1,12 @@
+{
+  "id": "ms_date_chm_pesach",
+  "sections": [
+    {
+      "text": "וְשַׂמְּחֵֽנוּ בְּיוֹם חַג הַמַּצּוֹת הַזֶּה,",
+      "condition_flags": [
+        "chol_hamoed_pesach"
+      ],
+      "exclude_flags": []
+    }
+  ]
+}

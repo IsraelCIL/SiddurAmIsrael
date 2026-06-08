@@ -1,0 +1,17 @@
+{
+  "id": "tefilat_haderech_sfard",
+  "name": "תפילת הדרך",
+  "segments": [
+    {
+      "segment_id": "thd_main",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "thd_additions",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": true
+    }
+  ]
+}

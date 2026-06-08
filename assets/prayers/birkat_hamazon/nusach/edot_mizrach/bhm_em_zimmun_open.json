@@ -1,0 +1,27 @@
+{
+  "id": "bhm_em_zimmun_open",
+  "sections": [
+    {
+      "text": "הַמְזַמֵּן:",
+      "is_rubric": true,
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "text": "הַב לָן וְנִבְרִיךְ לְמַלְכָּא עִלָּאָה קַדִּישָׁא:",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "text": "הַמְסֻבִּין עוֹנִים:",
+      "is_rubric": true,
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "text": "שָׁמַֽיִם:",
+      "condition_flags": [],
+      "exclude_flags": []
+    }
+  ]
+}

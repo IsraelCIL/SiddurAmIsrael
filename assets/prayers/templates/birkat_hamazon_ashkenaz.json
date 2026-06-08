@@ -1,0 +1,285 @@
+{
+  "id": "birkat_hamazon_ashkenaz",
+  "name": "ברכת המזון",
+  "segments": [
+    {
+      "segment_id": "inline_toggle_meal_type",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "bhm_shir_hamaalot",
+      "condition_flags": [
+        "birkat_festive_psalm"
+      ],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "bhm_naharot",
+      "condition_flags": [],
+      "exclude_flags": [
+        "birkat_festive_psalm"
+      ],
+      "optional": true
+    },
+    {
+      "segment_id": "inline_toggle_zimmun",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "bhm_zimmun_open",
+      "condition_flags": [
+        "zimmun_active"
+      ],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "bhm_zimmun_sheva_intro",
+      "condition_flags": [
+        "zimmun_active",
+        "meal_sheva_brachot"
+      ],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "bhm_zimmun_brit_intro",
+      "condition_flags": [
+        "zimmun_active",
+        "meal_brit_milah"
+      ],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "bhm_zimmun_main_three",
+      "condition_flags": [
+        "zimmun_three"
+      ],
+      "exclude_flags": [
+        "meal_sheva_brachot"
+      ]
+    },
+    {
+      "segment_id": "bhm_zimmun_main_ten",
+      "condition_flags": [
+        "zimmun_ten"
+      ],
+      "exclude_flags": [
+        "meal_sheva_brachot"
+      ]
+    },
+    {
+      "segment_id": "bhm_zimmun_main_sheva",
+      "condition_flags": [
+        "zimmun_active",
+        "meal_sheva_brachot"
+      ],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "bhm_hazan_a",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "bhm_hazan_kaamur",
+      "condition_flags": [
+        "nusach_sfard"
+      ],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "bhm_hazan_chatima",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "bhm_nodeh",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "bhm_al_hanisim_header",
+      "condition_flags": [
+        "al_hanisim"
+      ],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "bhm_al_hanisim_chanukah",
+      "condition_flags": [
+        "chanukah"
+      ],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "bhm_al_hanisim_purim",
+      "condition_flags": [
+        "purim"
+      ],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "bhm_veal_hakol",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "bhm_rachem_open_ashk",
+      "condition_flags": [
+        "nusach_ashkenaz"
+      ],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "bhm_rachem_open_sfard",
+      "condition_flags": [
+        "nusach_sfard"
+      ],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "bhm_rachem_body",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "bhm_yaaleh_rc",
+      "condition_flags": [
+        "rosh_chodesh"
+      ],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "bhm_yaaleh_pesach",
+      "condition_flags": [
+        "chol_hamoed_pesach"
+      ],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "bhm_yaaleh_sukkot",
+      "condition_flags": [
+        "chol_hamoed_sukkot"
+      ],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "bhm_rachem_chatima",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "bhm_hatov",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "bhm_harachaman_main",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "inline_toggle_dining",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "bhm_dining_own_male",
+      "condition_flags": [
+        "dining_own_table",
+        "gender_male"
+      ],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "bhm_dining_own_female",
+      "condition_flags": [
+        "dining_own_table",
+        "gender_female"
+      ],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "bhm_dining_parents",
+      "condition_flags": [
+        "dining_parents"
+      ],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "bhm_dining_guest",
+      "condition_flags": [
+        "dining_guest"
+      ],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "bhm_dining_continuation",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "bhm_guest_bracha",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": true
+    },
+    {
+      "segment_id": "bhm_bamarom",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "bhm_brit_harachaman",
+      "condition_flags": [
+        "meal_brit_milah"
+      ],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "bhm_harachaman_rc",
+      "condition_flags": [
+        "rosh_chodesh"
+      ],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "bhm_harachaman_sukkot",
+      "condition_flags": [
+        "chol_hamoed_sukkot"
+      ],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "bhm_yezakenu_migdil",
+      "condition_flags": [],
+      "exclude_flags": [
+        "migdol_word"
+      ]
+    },
+    {
+      "segment_id": "bhm_yezakenu_migdol",
+      "condition_flags": [
+        "migdol_word"
+      ],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "bhm_sheva_kos",
+      "condition_flags": [
+        "meal_sheva_brachot",
+        "zimmun_active"
+      ],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "bhm_kos_bpg",
+      "condition_flags": [],
+      "exclude_flags": [
+        "meal_sheva_brachot"
+      ],
+      "optional": true
+    }
+  ]
+}

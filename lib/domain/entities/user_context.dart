@@ -10,6 +10,34 @@ enum Gender { male, female }
 /// Both       = celebrates both days (e.g. living near a walled city).
 enum PurimDate { fourteenth, fifteenth, both }
 
+/// Type of meal for Birkat HaMazon. Transient (per-meal) — NOT persisted.
+/// regular        = everyday meal
+/// seudatMitzvah  = a generic mitzvah meal
+/// shevaBrachot   = wedding / sheva brachot meal (adds zimmun + kos blessings)
+/// britMilah      = circumcision meal (adds zimmun intro + Harachaman block)
+enum MealType { regular, seudatMitzvah, shevaBrachot, britMilah }
+
+/// Zimmun mode for Birkat HaMazon. Transient — NOT persisted.
+/// individual = no zimmun (eating alone / fewer than 3)
+/// three      = zimmun of 3 (without "אלהינו")
+/// ten        = zimmun of 10 (with "אלהינו")
+enum ZimmunMode { individual, three, ten }
+
+/// Whose table the meal is eaten at — drives the Harachaman blessing for
+/// the host. Transient — NOT persisted.
+/// ownTable     = eating at one's own table
+/// parentsTable = eating at one's parents' table (adds אבי מורי / אמי מורתי)
+/// guest        = guest at someone else's table
+enum DiningStatus { ownTable, parentsTable, guest }
+
+/// Food type(s) for Berachah Me'ein Shalosh. A user may bless on any
+/// combination; recitation order is always mezonot → gefen → perot.
+/// Transient (per-occasion) — NOT persisted.
+/// mezonot = five grains (על המחיה)
+/// gefen   = wine (על הגפן)
+/// perot   = fruit of the seven species (על העץ)
+enum MeeinType { mezonot, gefen, perot }
+
 @freezed
 class UserContext with _$UserContext {
   const factory UserContext({

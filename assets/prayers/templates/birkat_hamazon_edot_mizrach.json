@@ -1,0 +1,207 @@
+{
+  "id": "birkat_hamazon_edot_mizrach",
+  "name": "ברכת המזון",
+  "segments": [
+    {
+      "segment_id": "inline_toggle_meal_type",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "bhm_em_lamnatzeach",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "inline_toggle_zimmun",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "bhm_em_zimmun_open",
+      "condition_flags": [
+        "zimmun_active"
+      ],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "bhm_em_zimmun_main_three",
+      "condition_flags": [
+        "zimmun_three"
+      ],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "bhm_em_zimmun_main_ten",
+      "condition_flags": [
+        "zimmun_ten"
+      ],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "bhm_em_hazan",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "bhm_em_nodeh",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "bhm_em_al_hanisim_header",
+      "condition_flags": [
+        "al_hanisim"
+      ],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "bhm_em_al_hanisim_chanukah",
+      "condition_flags": [
+        "chanukah"
+      ],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "bhm_em_al_hanisim_purim",
+      "condition_flags": [
+        "purim"
+      ],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "bhm_em_al_hakol",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "bhm_em_rachem",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "bhm_em_yaaleh_rc",
+      "condition_flags": [
+        "rosh_chodesh"
+      ],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "bhm_em_yaaleh_pesach",
+      "condition_flags": [
+        "chol_hamoed_pesach"
+      ],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "bhm_em_yaaleh_sukkot",
+      "condition_flags": [
+        "chol_hamoed_sukkot"
+      ],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "bhm_em_rachem_chatima",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "bhm_em_hatov",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "bhm_em_harachaman_main",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "bhm_em_harachaman_rc",
+      "condition_flags": [
+        "rosh_chodesh"
+      ],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "bhm_em_harachaman_sukkot",
+      "condition_flags": [
+        "chol_hamoed_sukkot"
+      ],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "bhm_em_harachaman_moadim",
+      "condition_flags": [
+        "chol_hamoed_pesach"
+      ],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "bhm_em_harachaman_moadim",
+      "condition_flags": [
+        "chol_hamoed_sukkot"
+      ],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "bhm_em_harachaman_yita",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "bhm_em_guest_bracha",
+      "condition_flags": [],
+      "exclude_flags": [],
+      "optional": true
+    },
+    {
+      "segment_id": "bhm_em_chatan",
+      "condition_flags": [
+        "meal_sheva_brachot"
+      ],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "bhm_em_mila",
+      "condition_flags": [
+        "meal_brit_milah"
+      ],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "bhm_em_yechayenu",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "bhm_em_closing_migdil",
+      "condition_flags": [],
+      "exclude_flags": [
+        "migdol_word"
+      ]
+    },
+    {
+      "segment_id": "bhm_em_closing_migdol",
+      "condition_flags": [
+        "migdol_word"
+      ],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "bhm_em_sheva_kos",
+      "condition_flags": [
+        "meal_sheva_brachot",
+        "zimmun_active"
+      ],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "bhm_kos_bpg",
+      "condition_flags": [],
+      "exclude_flags": [
+        "meal_sheva_brachot"
+      ],
+      "optional": true
+    }
+  ]
+}

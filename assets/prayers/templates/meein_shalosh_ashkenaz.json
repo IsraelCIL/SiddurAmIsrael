@@ -1,0 +1,52 @@
+{
+  "id": "meein_shalosh_ashkenaz",
+  "name": "ברכה מעין שלוש",
+  "segments": [
+    {
+      "segment_id": "inline_toggle_meein",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "ms_opening",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "ms_eretz",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "ms_date_rc",
+      "condition_flags": [
+        "rosh_chodesh"
+      ],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "ms_date_chm_pesach",
+      "condition_flags": [
+        "chol_hamoed_pesach"
+      ],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "ms_date_chm_sukkot",
+      "condition_flags": [
+        "chol_hamoed_sukkot"
+      ],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "ms_kiatah",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "ms_chatima",
+      "condition_flags": [],
+      "exclude_flags": []
+    }
+  ]
+}
