@@ -80,5 +80,19 @@ void main() {
       final names = day.upcoming.map((e) => e.name).toSet();
       expect(names.length, day.upcoming.length); // distinct labels
     });
+
+    test('molad is announced on a Shabbat Mevarchim (within ~5 weeks)', () {
+      // Every Hebrew month has a Shabbat Mevarchim, so a 40-day scan must hit one.
+      var found = false;
+      final start = DateTime(2025, 1, 1);
+      for (var i = 0; i < 40; i++) {
+        final day = svc.dayFor(start.add(Duration(days: i)), jerusalem);
+        if (day.extraInfo.any((r) => r.label.startsWith('מולד'))) {
+          found = true;
+          break;
+        }
+      }
+      expect(found, isTrue);
+    });
   });
 }

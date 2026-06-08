@@ -112,6 +112,17 @@ class CalendarService {
     final extraInfo = <InfoRow>[
       if (dafYomi != null) InfoRow('דף יומי', dafYomi),
     ];
+    // On Shabbat Mevarchim, announce the molad of the upcoming month. +8 days
+    // lands safely inside the next month, whose getMolad() we then read.
+    if (jc.isShabbosMevorchim()) {
+      final nextJc =
+          JewishCalendar.fromDateTime(day.add(const Duration(days: 8)))
+            ..inIsrael = city.inIsrael;
+      extraInfo.add(InfoRow(
+        'מולד ${HebrewFormatter.monthName(nextJc.getJewishMonth())}',
+        _formatMolad(nextJc.getMolad()),
+      ));
+    }
 
     final upcoming = _upcoming(day, city.inIsrael, fmt);
 
@@ -170,4 +181,19 @@ class CalendarService {
   ];
 
   String _gregorianLabel(DateTime d) => '${d.day} ${_months[d.month - 1]} ${d.year}';
+
+  // Molad day-of-week names (kosher_dart getDayOfWeek: 1=Sunday … 7=Saturday).
+  static const _moladDows = [
+    '', 'יום ראשון', 'יום שני', 'יום שלישי', 'יום רביעי', 'יום חמישי',
+    'יום שישי', 'שבת קודש',
+  ];
+
+  /// Formats a molad [JewishDate] as "יום W, H:MM ו-C חלקים".
+  String _formatMolad(JewishDate molad) {
+    final dow = _moladDows[molad.getDayOfWeek()];
+    final h = molad.getMoladHours();
+    final m = molad.getMoladMinutes().toString().padLeft(2, '0');
+    final c = molad.getMoladChalakim();
+    return '$dow, $h:$m ו-$c חלקים';
+  }
 }
