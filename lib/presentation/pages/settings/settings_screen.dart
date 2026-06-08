@@ -91,9 +91,7 @@ class SettingsScreen extends ConsumerWidget {
           leading: onBack == null
               ? null
               : IconButton(
-                  icon: Icon(lang.direction == TextDirection.rtl
-                      ? Icons.arrow_forward
-                      : Icons.arrow_back),
+                  icon: const BackButtonIcon(),
                   onPressed: onBack,
                 ),
           title: Text(s.t('tab_settings'),
