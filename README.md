@@ -459,3 +459,12 @@ The override affects `HalachicCalendarService`, `ServiceTimeResolver`, and all p
 | **Yom Tov full services** | 🚫 Out of scope | Yom Tov Musaf Amidah, full Hallel Shacharit |
 | **Tisha B'Av full service** | ⚠️ Partial | Nachem at Mincha is implemented; Shacharit Kinot and abbreviated Psukei DeZimra are not |
 | **Kiddush Levana** | 📋 Planned | Placeholder in the Berachot tab; content not yet implemented |
+
+---
+
+## Credits
+
+The application's code infrastructure was developed by **Refael Gamliel** (רפאל גמליאל).
+
+- LinkedIn: [www.linkedin.com/in/refael-gamliel](https://www.linkedin.com/in/refael-gamliel)
+- Email: [refaelgamliel@gmail.com](mailto:refaelgamliel@gmail.com)
