@@ -546,11 +546,15 @@ final birkatHamazonProvider = FutureProvider<List<AssembledSegment>>((ref) {
   }
 
   // Pre-bentching psalm: Shir HaMaalot (Ps 126) on festive days (Hallel /
-  // Al HaNisim / Shabbat); otherwise Al Naharot Bavel (Ps 137) accordion.
+  // Al HaNisim / Shabbat) or at a mitzvah meal (Seudat Mitzvah / Sheva
+  // Brachot / Brit Milah); otherwise Al Naharot Bavel (Ps 137) accordion.
   final festive = flags.contains(DayFlag.fullHallel) ||
       flags.contains(DayFlag.halfHallel) ||
       flags.contains(DayFlag.alHaNisim) ||
-      flags.contains(DayFlag.shabbat);
+      flags.contains(DayFlag.shabbat) ||
+      mealType == MealType.seudatMitzvah ||
+      mealType == MealType.shevaBrachot ||
+      mealType == MealType.britMilah;
   if (festive) extra.add(DayFlag.birkatFestivePsalm);
 
   // מַגְדִּיל → מִגְדּוֹל in the closing Harachaman. The trigger differs by

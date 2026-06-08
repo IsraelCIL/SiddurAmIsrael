@@ -13,8 +13,8 @@ import 'package:siddur_am_israel_chai/presentation/widgets/rich_prayer_text.dart
 // Optional segments that should start EXPANDED (open accordion by default).
 const _initiallyExpanded = <String>{'birkat_kohanim_bracha'};
 
-// Segments that are part of a tight block (e.g. kaddish components): no
-// trailing spacer so consecutive segments flow without visual gaps.
+// Segments that are part of a tight block: no trailing spacer so consecutive
+// segments flow without visual gaps.
 const _noTrailingSpace = <String>{
   'chatzi_kaddish_header',
   'kaddish_derabanan_header',
@@ -24,8 +24,44 @@ const _noTrailingSpace = <String>{
   'kaddish_closing',
   'kaddish_derabanan_paragraph',
   'kaddish_titkabal_paragraph',
-  // אין כאלהינו flows directly into אתה הוא שהקטירו (no visual gap)
+  // אין כאלהינו flows directly into אתה הוא שהקטירו
   'ein_keloheinu',
+  // Birkat HaMazon — hazan flows as one unbroken passage
+  'bhm_hazan_a',
+  'bhm_hazan_kaamur',
+  // Birkat HaMazon — rachem flows as one unbroken passage
+  'bhm_rachem_open_ashk',
+  'bhm_rachem_open_sfard',
+  'bhm_rachem_body',
+  // Birkat HaMazon EM — equivalent rachem segment
+  'bhm_em_rachem',
+  // Me'ein Shalosh — chips attach tightly to the opening text
+  'inline_toggle_meein',
+  // Me'ein Shalosh — near-closing attaches to chatima
+  'ms_kiatah',
+};
+
+// Segments that get extra bottom padding (typically the last segment of a flow).
+const _extraBottomPadding = <String>{
+  // Extra whitespace after the al hakos optional block at the end of BHM.
+  'bhm_kos_bpg',
+  // Extra whitespace after the sheva brachot block (before BPG).
+  'bhm_sheva_kos',
+  'bhm_em_sheva_kos',
+};
+
+// Segments whose top padding is suppressed (they follow a tight predecessor).
+const _noTopPadding = <String>{
+  // hazan chatima caps the unbroken hazan passage
+  'bhm_hazan_chatima',
+  // rachem body + chatima continue the unbroken rachem passage
+  'bhm_rachem_body',
+  'bhm_rachem_chatima',
+  'bhm_em_rachem_chatima',
+  // Me'ein Shalosh: opening text starts right below the chips
+  'ms_opening',
+  // chatima starts right below kiatah
+  'ms_chatima',
 };
 
 /// Compact inline toggle row rendered inside the prayer scroll view.
@@ -46,14 +82,24 @@ class _PrayerInlineToggle extends ConsumerWidget {
     // Birkat HaMazon meal-context selectors (multi-option segmented controls).
     if (segmentId == 'inline_toggle_meal_type') {
       final value = ref.watch(mealTypeProvider);
+      final nusach = ref.watch(nusachProvider);
+      // EM has no distinct seudat-mitzvah text — only sheva brachot / brit
+      // milah produce different content, so hide that option there.
+      final options = nusach == 'edot_mizrach'
+          ? const [
+              (MealType.regular, 'רגילה'),
+              (MealType.shevaBrachot, 'שבע ברכות'),
+              (MealType.britMilah, 'ברית מילה'),
+            ]
+          : const [
+              (MealType.regular, 'רגילה'),
+              (MealType.seudatMitzvah, 'סעודת מצוה'),
+              (MealType.shevaBrachot, 'שבע ברכות'),
+              (MealType.britMilah, 'ברית מילה'),
+            ];
       return _buildSegmentedChoice<MealType>(
         current: value,
-        options: const [
-          (MealType.regular, 'רגילה'),
-          (MealType.seudatMitzvah, 'סעודת מצוה'),
-          (MealType.shevaBrachot, 'שבע ברכות'),
-          (MealType.britMilah, 'ברית מילה'),
-        ],
+        options: options,
         onSelect: (v) {
           ref.read(mealTypeProvider.notifier).set(v);
           // Sheva Brachot / Brit Milah default to a zimmun of ten.
@@ -463,19 +509,27 @@ class PrayerTextWidget extends ConsumerWidget {
     );
 
     if (segment.optional) {
-      return _OptionalSegmentTile(
+      final tile = _OptionalSegmentTile(
         label: label,
         factor: factor,
         bodyStyle: bodyStyle,
         segment: segment,
         initiallyExpanded: _initiallyExpanded.contains(segment.id),
       );
+      if (_extraBottomPadding.contains(segment.id)) {
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 20),
+          child: tile,
+        );
+      }
+      return tile;
     }
 
-    final tight = _noTrailingSpace.contains(segment.id);
+    final noTrailing = _noTrailingSpace.contains(segment.id);
+    final noTop = _noTopPadding.contains(segment.id);
 
     return Padding(
-      padding: EdgeInsets.fromLTRB(20, tight ? 0 : 12, 20, 0),
+      padding: EdgeInsets.fromLTRB(20, noTop ? 0 : 12, 20, 0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -495,7 +549,9 @@ class PrayerTextWidget extends ConsumerWidget {
           if (segment.resolvedText.isNotEmpty)
             RichPrayerText(text: segment.resolvedText, style: bodyStyle),
           if (segment.id == 'sefirat_haomer_day_count') _OmerSummary(factor: factor),
-          SizedBox(height: tight ? 2 : 16),
+          SizedBox(height: noTrailing ? 2
+              : _extraBottomPadding.contains(segment.id) ? 36
+              : 16),
         ],
       ),
     );
