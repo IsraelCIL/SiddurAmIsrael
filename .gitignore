@@ -61,6 +61,9 @@ Payload/
 ios-simulator-app/
 ios-simulator.app/
 
+# Design mockups (throwaway, not part of the app)
+mockups/
+
 # Scratch / temporary Sefaria fetches & comparison artefacts at repo root.
 # These are inputs to scripts/build_*.js and useful for ad-hoc analysis; the
 # canonical outputs live under assets/prayers/. Safe to delete any time.
