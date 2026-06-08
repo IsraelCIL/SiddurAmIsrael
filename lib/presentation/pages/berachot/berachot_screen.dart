@@ -77,12 +77,6 @@ class BerachotScreen extends ConsumerWidget {
               ),
             ),
           ),
-          _BerachaTile(
-            title: s.t('kiddush_levana'),
-            subtitle: s.t('coming_soon'),
-            icon: Icons.nightlight_outlined,
-            onTap: null,
-          ),
         ],
       ),
     );

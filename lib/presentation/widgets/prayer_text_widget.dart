@@ -13,8 +13,10 @@ import 'package:siddur_am_israel_chai/presentation/widgets/rich_prayer_text.dart
 // Optional segments that should start EXPANDED (open accordion by default).
 const _initiallyExpanded = <String>{'birkat_kohanim_bracha'};
 
-// Segments that are part of a tight block (e.g. kaddish components): no
-// trailing spacer so consecutive segments flow without visual gaps.
+// Segments that are part of a tight block: no trailing spacer so consecutive
+// segments flow without visual gaps. (Continuous in-line flow of a single
+// blessing is handled upstream by the flow-group merge in the providers; these
+// sets only tune the vertical spacing between the resulting blocks.)
 const _noTrailingSpace = <String>{
   'chatzi_kaddish_header',
   'kaddish_derabanan_header',
@@ -24,8 +26,32 @@ const _noTrailingSpace = <String>{
   'kaddish_closing',
   'kaddish_derabanan_paragraph',
   'kaddish_titkabal_paragraph',
-  // אין כאלהינו flows directly into אתה הוא שהקטירו (no visual gap)
+  // אין כאלהינו flows directly into אתה הוא שהקטירו
   'ein_keloheinu',
+  // Me'ein Shalosh — chips attach tightly to the opening text; the opening,
+  // date insertion and closing stack with just a line break between them.
+  'inline_toggle_meein',
+  'ms_opening',
+};
+
+// Segments that get extra bottom padding (typically the last segment of a flow).
+const _extraBottomPadding = <String>{
+  // Extra whitespace after the al hakos optional block at the end of BHM.
+  'bhm_kos_bpg',
+  // Extra whitespace after the sheva brachot block (before BPG).
+  'bhm_sheva_kos',
+  'bhm_em_sheva_kos',
+};
+
+// Segments whose top padding is suppressed (they follow a tight predecessor).
+const _noTopPadding = <String>{
+  // Me'ein Shalosh: opening below the chips; date / closing follow with just
+  // a line break (no larger gap).
+  'ms_opening',
+  'ms_date_rc',
+  'ms_date_chm_pesach',
+  'ms_date_chm_sukkot',
+  'ms_kiatah',
 };
 
 /// Compact inline toggle row rendered inside the prayer scroll view.
@@ -43,21 +69,32 @@ class _PrayerInlineToggle extends ConsumerWidget {
     if (segmentId == 'inline_toggle_kohanim') {
       return _buildKohanumToggle(ref);
     }
-    // Birkat HaMazon meal-context selectors (multi-option segmented controls).
+    // Birkat HaMazon meal-context selectors.
+    // "רגילה" is not shown — it is the implicit default when nothing is
+    // selected. Tapping the active chip deselects it (resets to regular).
     if (segmentId == 'inline_toggle_meal_type') {
       final value = ref.watch(mealTypeProvider);
+      final nusach = ref.watch(nusachProvider);
+      // EM has no distinct seudat-mitzvah text — only sheva brachot / brit
+      // milah produce different content, so that option is omitted there.
+      final options = nusach == 'edot_mizrach'
+          ? const [
+              (MealType.shevaBrachot, 'שבע ברכות'),
+              (MealType.britMilah, 'ברית מילה'),
+            ]
+          : const [
+              (MealType.seudatMitzvah, 'סעודת מצוה'),
+              (MealType.shevaBrachot, 'שבע ברכות'),
+              (MealType.britMilah, 'ברית מילה'),
+            ];
       return _buildSegmentedChoice<MealType>(
         current: value,
-        options: const [
-          (MealType.regular, 'רגילה'),
-          (MealType.seudatMitzvah, 'סעודת מצוה'),
-          (MealType.shevaBrachot, 'שבע ברכות'),
-          (MealType.britMilah, 'ברית מילה'),
-        ],
+        options: options,
         onSelect: (v) {
-          ref.read(mealTypeProvider.notifier).set(v);
-          // Sheva Brachot / Brit Milah default to a zimmun of ten.
-          if (v == MealType.shevaBrachot || v == MealType.britMilah) {
+          // Tap selected chip → deselect (regular). Tap other → select.
+          final next = v == value ? MealType.regular : v;
+          ref.read(mealTypeProvider.notifier).set(next);
+          if (next == MealType.shevaBrachot || next == MealType.britMilah) {
             ref.read(zimmunModeProvider.notifier).set(ZimmunMode.ten);
           }
         },
@@ -463,19 +500,27 @@ class PrayerTextWidget extends ConsumerWidget {
     );
 
     if (segment.optional) {
-      return _OptionalSegmentTile(
+      final tile = _OptionalSegmentTile(
         label: label,
         factor: factor,
         bodyStyle: bodyStyle,
         segment: segment,
         initiallyExpanded: _initiallyExpanded.contains(segment.id),
       );
+      if (_extraBottomPadding.contains(segment.id)) {
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 20),
+          child: tile,
+        );
+      }
+      return tile;
     }
 
-    final tight = _noTrailingSpace.contains(segment.id);
+    final noTrailing = _noTrailingSpace.contains(segment.id);
+    final noTop = _noTopPadding.contains(segment.id);
 
     return Padding(
-      padding: EdgeInsets.fromLTRB(20, tight ? 0 : 12, 20, 0),
+      padding: EdgeInsets.fromLTRB(20, noTop ? 0 : 12, 20, 0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -495,7 +540,9 @@ class PrayerTextWidget extends ConsumerWidget {
           if (segment.resolvedText.isNotEmpty)
             RichPrayerText(text: segment.resolvedText, style: bodyStyle),
           if (segment.id == 'sefirat_haomer_day_count') _OmerSummary(factor: factor),
-          SizedBox(height: tight ? 2 : 16),
+          SizedBox(height: noTrailing ? 2
+              : _extraBottomPadding.contains(segment.id) ? 36
+              : 16),
         ],
       ),
     );

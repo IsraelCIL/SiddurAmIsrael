@@ -413,6 +413,82 @@ UserContext _ctxWithExtraFlags(UserContext base, Iterable<String> extra) {
   );
 }
 
+// ── Flow groups (continuous-paragraph merging) ───────────────────────────────
+// Some blessings are authored as several small segments (for conditional
+// variants), but read as one continuous flowing sentence. A flow group lists
+// the segment IDs that, when they appear consecutively in the assembled
+// output, are merged into a single segment whose text flows on one line.
+class _FlowGroup {
+  const _FlowGroup(this.members, [this.joiner = ' ']);
+  final List<String> members;
+  final String joiner; // inserted between merged members
+}
+
+const _flowGroups = <_FlowGroup>[
+  // Birkat HaMazon (Ashkenaz/Sfard): הזן … (כאמור פותח) … ברוך … הזן את הכל
+  _FlowGroup(['bhm_hazan_a', 'bhm_hazan_kaamur', 'bhm_hazan_chatima']),
+  // Birkat HaMazon (A/S): רחם (נא) … body … בונה ברחמיו ירושלים
+  _FlowGroup([
+    'bhm_rachem_open_ashk',
+    'bhm_rachem_open_sfard',
+    'bhm_rachem_body',
+    'bhm_rachem_chatima',
+  ]),
+  // Birkat HaMazon (A/S): הרחמן הוא יברך … אותנו ואת כל אשר לנו
+  _FlowGroup([
+    'bhm_dining_own_male',
+    'bhm_dining_own_female',
+    'bhm_dining_parents',
+    'bhm_dining_guest',
+    'bhm_dining_continuation',
+  ]),
+  // Me'ein Shalosh: opening + ועל תנובת הארץ … בקדושה ובטהרה
+  _FlowGroup(['ms_opening', 'ms_eretz']),
+  // Me'ein Shalosh: near-closing + period + ברוך אתה ה' … chatima
+  _FlowGroup(['ms_kiatah', 'ms_chatima'], '. '),
+];
+
+/// Merges each maximal run of consecutive segments that all belong to the same
+/// [_FlowGroup] into a single segment whose text flows continuously (internal
+/// line breaks within each member collapse to spaces).
+List<AssembledSegment> _applyFlowGroups(List<AssembledSegment> segs) {
+  final memberToGroup = <String, _FlowGroup>{};
+  for (final g in _flowGroups) {
+    for (final m in g.members) {
+      memberToGroup[m] = g;
+    }
+  }
+
+  final out = <AssembledSegment>[];
+  var i = 0;
+  while (i < segs.length) {
+    final group = memberToGroup[segs[i].id];
+    if (group == null) {
+      out.add(segs[i]);
+      i++;
+      continue;
+    }
+    // Collect the consecutive run belonging to the same group.
+    final run = <AssembledSegment>[];
+    var j = i;
+    while (j < segs.length && identical(memberToGroup[segs[j].id], group)) {
+      run.add(segs[j]);
+      j++;
+    }
+    if (run.length == 1) {
+      out.add(run.first);
+    } else {
+      final text = run
+          .map((s) => s.resolvedText.replaceAll('\n', ' ').trim())
+          .where((t) => t.isNotEmpty)
+          .join(group.joiner);
+      out.add(run.first.copyWith(resolvedText: text));
+    }
+    i = j;
+  }
+  return out;
+}
+
 final shacharitProvider = FutureProvider<List<AssembledSegment>>((ref) {
   final assembler = ref.watch(prayerAssemblerProvider);
   final baseCtx = ref.watch(userContextProvider);
@@ -502,7 +578,8 @@ final maarivProvider = FutureProvider<List<AssembledSegment>>((ref) {
   );
 });
 
-final birkatHamazonProvider = FutureProvider<List<AssembledSegment>>((ref) {
+final birkatHamazonProvider =
+    FutureProvider<List<AssembledSegment>>((ref) async {
   final assembler = ref.watch(prayerAssemblerProvider);
   final baseCtx = ref.watch(userContextProvider);
   final mealType = ref.watch(mealTypeProvider);
@@ -546,11 +623,15 @@ final birkatHamazonProvider = FutureProvider<List<AssembledSegment>>((ref) {
   }
 
   // Pre-bentching psalm: Shir HaMaalot (Ps 126) on festive days (Hallel /
-  // Al HaNisim / Shabbat); otherwise Al Naharot Bavel (Ps 137) accordion.
+  // Al HaNisim / Shabbat) or at a mitzvah meal (Seudat Mitzvah / Sheva
+  // Brachot / Brit Milah); otherwise Al Naharot Bavel (Ps 137) accordion.
   final festive = flags.contains(DayFlag.fullHallel) ||
       flags.contains(DayFlag.halfHallel) ||
       flags.contains(DayFlag.alHaNisim) ||
-      flags.contains(DayFlag.shabbat);
+      flags.contains(DayFlag.shabbat) ||
+      mealType == MealType.seudatMitzvah ||
+      mealType == MealType.shevaBrachot ||
+      mealType == MealType.britMilah;
   if (festive) extra.add(DayFlag.birkatFestivePsalm);
 
   // מַגְדִּיל → מִגְדּוֹל in the closing Harachaman. The trigger differs by
@@ -568,13 +649,15 @@ final birkatHamazonProvider = FutureProvider<List<AssembledSegment>>((ref) {
   if (migdol) extra.add(DayFlag.migdolWord);
 
   final ctx = _ctxWithExtraFlags(baseCtx, extra);
-  return assembler.assemble(
+  final segs = await assembler.assemble(
     templateId: 'birkat_hamazon_${ctx.nusach}',
     userContext: ctx,
   );
+  return _applyFlowGroups(segs);
 });
 
-final meeinShaloshProvider = FutureProvider<List<AssembledSegment>>((ref) {
+final meeinShaloshProvider =
+    FutureProvider<List<AssembledSegment>>((ref) async {
   final assembler = ref.watch(prayerAssemblerProvider);
   final baseCtx = ref.watch(userContextProvider);
   final types = ref.watch(meeinTypesProvider);
@@ -602,10 +685,11 @@ final meeinShaloshProvider = FutureProvider<List<AssembledSegment>>((ref) {
   }
 
   final ctx = _ctxWithExtraFlags(baseCtx, extra);
-  return assembler.assemble(
+  final segs = await assembler.assemble(
     templateId: 'meein_shalosh_${ctx.nusach}',
     userContext: ctx,
   );
+  return _applyFlowGroups(segs);
 });
 
 /// Tefilat HaDerech (Traveler's Prayer): the main blessing plus an accordion

@@ -29,21 +29,39 @@ class AppShell extends ConsumerStatefulWidget {
 
 class _AppShellState extends ConsumerState<AppShell> {
   int _currentIndex = 0;
+  // Tab to return to when leaving Settings via its back arrow.
+  int _previousIndex = 0;
 
   static const int _prayersIdx = 0;
+  static const int _berachotIdx = 1;
   static const int _settingsIdx = 3;
 
   final _prayersNavKey = GlobalKey<NavigatorState>();
+  final _berachotNavKey = GlobalKey<NavigatorState>();
 
-  void _openSettings() => setState(() => _currentIndex = _settingsIdx);
+  void _goTo(int i) {
+    if (i == _currentIndex) return;
+    setState(() {
+      _previousIndex = _currentIndex;
+      _currentIndex = i;
+    });
+  }
+
+  void _openSettings() => _goTo(_settingsIdx);
 
   void _onTapTab(int i) {
-    // Re-tapping the active Prayers tab returns to its list (pops the reader).
-    if (i == _currentIndex && i == _prayersIdx) {
-      _prayersNavKey.currentState?.popUntil((r) => r.isFirst);
-      return;
+    // Re-tapping an active tab with a nested navigator returns to its root.
+    if (i == _currentIndex) {
+      if (i == _prayersIdx) {
+        _prayersNavKey.currentState?.popUntil((r) => r.isFirst);
+        return;
+      }
+      if (i == _berachotIdx) {
+        _berachotNavKey.currentState?.popUntil((r) => r.isFirst);
+        return;
+      }
     }
-    setState(() => _currentIndex = i);
+    _goTo(i);
   }
 
   @override
@@ -52,9 +70,9 @@ class _AppShellState extends ConsumerState<AppShell> {
 
     final screens = <Widget>[
       _PrayersTab(navKey: _prayersNavKey, onOpenSettings: _openSettings),
-      const BerachotScreen(),
+      _BerachotTab(navKey: _berachotNavKey),
       const CalendarScreen(),
-      const SettingsScreen(),
+      SettingsScreen(onBack: () => _goTo(_previousIndex)),
     ];
 
     return Scaffold(
@@ -128,6 +146,25 @@ class _PrayersTab extends ConsumerWidget {
       ],
       onGenerateRoute: (settings) => MaterialPageRoute<void>(
         builder: (_) => PrayerMenuScreen(onOpenSettings: onOpenSettings),
+      ),
+    );
+  }
+}
+
+/// The Berachot tab: a nested navigator rooted at the blessings menu, so that
+/// opening a blessing keeps the bottom navigation bar visible (the push stays
+/// inside the tab rather than covering the whole shell).
+class _BerachotTab extends StatelessWidget {
+  const _BerachotTab({required this.navKey});
+
+  final GlobalKey<NavigatorState> navKey;
+
+  @override
+  Widget build(BuildContext context) {
+    return Navigator(
+      key: navKey,
+      onGenerateRoute: (settings) => MaterialPageRoute<void>(
+        builder: (_) => const BerachotScreen(),
       ),
     );
   }

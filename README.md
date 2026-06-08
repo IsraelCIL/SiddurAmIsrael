@@ -1,4 +1,4 @@
-# Smart Siddur
+# סידור עם ישראל
 
 An **offline-first Orthodox Halachic siddur** built with Flutter. Prayer texts are bundled as versioned JSON assets; no network connection is required at runtime. The app automatically selects the correct prayer, text variants, and halachic additions for the current date, time of day, and user profile.
 
@@ -23,12 +23,23 @@ An **offline-first Orthodox Halachic siddur** built with Flutter. Prayer texts a
 
 ## Features
 
+### Prayers (תפילות)
 - **Three nusachim**: Ashkenaz, Sfard, Edot HaMizrach
-- **Three daily services**: Shacharit, Mincha, Maariv — auto-selected by halachic zmanim
-- **Full halachic calendar**: Shabbat, Yom Tov, Chol HaMoed, Rosh Chodesh, Chanukah, Purim, fast days, Sefirat HaOmer, Sukkot (hoshanot, daily korban), Kriat HaTorah (Mon/Thu, RC, CHM, Chanukah, Purim, fast days)
-- **User settings** (persisted across sessions): nusach, gender, Israel/diaspora, minyan/individual, Purim date
+- **Three daily services**: Shacharit, Mincha, Maariv — auto-selected by halachic zmanim; the app opens directly to the current service; tapping the tab or back-arrow reveals the service list
+- **Full halachic calendar**: Shabbat, Yom Tov, Chol HaMoed, Rosh Chodesh, Chanukah, Purim (Shacharit + Maariv with Megillat Esther), fast days, Sefirat HaOmer, Sukkot (hoshanot, daily korban), Kriat HaTorah (Mon/Thu, RC, CHM, Chanukah, Purim, fast days)
 - **In-prayer navigation panel**: jump-to-section within each service
 - **Adjustable font size** with one-tap FAB controls
+- **Inline prayer toggles**: tallit, tefillin, shaliach tzibbur, kohanim, and more — shown contextually within the prayer, not buried in settings
+
+### Berachot (ברכות)
+- **Birkat HaMazon** — all three nusachim, with transient meal-context selectors: meal type (regular / seudat mitzvah / sheva brachot / brit milah), zimmun (individual / 3 / 10), and dining status. Al HaNisim, Ya'aleh VeYavo, Harachaman blocks, and al hakos / sheva brachot adapt automatically
+- **Berachah Me'ein Shalosh** — all three nusachim; multi-select food types (mezonot / gefen / perot) with correct vav-prefix and closing colon; Eretz-Yisrael provenance toggles; Rosh Chodesh / Chol HaMoed insertions
+- **Tefilat HaDerech** — all three nusachim; main blessing plus an optional accordion of post-blessing verses (A/S 16-part set; Edot HaMizrach 5-verse set with te'amim), each verse repeated its stated number of times with the first occurrence bolded
+
+### Settings & Personalisation
+- **User settings** (persisted across sessions): nusach, gender, Israel/diaspora, minyan/individual, Purim date, font size, segment labels
+- **Interface language**: Hebrew, English, Russian, or French — affects the framework chrome only (tabs, titles, settings labels); prayer texts are always Hebrew
+- **Support contact** button in settings
 
 ---
 
@@ -58,7 +69,7 @@ The codebase follows **Clean Architecture** with strict three-layer separation. 
 │  • Asset bundle access only                  │
 └─────────────────────────────────────────────┘
                ↑ assets/prayers/ ↑
-     572 JSON files, fully bundled offline
+     700+ JSON files, fully bundled offline
 ```
 
 ### Key Design Decisions
@@ -70,6 +81,7 @@ The codebase follows **Clean Architecture** with strict three-layer separation. 
 | `freezed` + `json_serializable` | Immutable domain entities; eliminates mutation bugs |
 | `kosher_dart` for zmanim | Battle-tested Hebrew calendar and zmanim engine |
 | Per-nusach manifest lookup | A single segment ID resolves to the correct file for the active nusach |
+| Transient providers for Berachot | Meal-context toggles (meal type, zimmun, food types) are session-only — no SharedPreferences — so they reset with each bentching |
 
 ---
 
@@ -119,6 +131,8 @@ DateTime.now()  +  UserSettings (nusach, gender, Israel, …)
 - **Segment sections** — the same fields control which text variant renders within a segment
 
 Every flag constant lives in `DayFlag` (`lib/domain/entities/day_flags.dart`) — the single source of truth referenced by both Dart code and JSON assets.
+
+Berachot providers inject additional transient flags (meal type, zimmun mode, dining status, food types) into the `UserContext.activeFlags` for each assembly, without persisting them.
 
 ### Post-Processors
 
@@ -210,7 +224,7 @@ Lookup order: nusach-specific entry → `common` fallback.
 }
 ```
 
-- **`text`**: `String` or `List<String>`. Arrays are joined with `" "` at runtime. **Texts longer than ~80 characters must use the array form**, split at natural phrase/cantillation-pause boundaries.
+- **`text`**: `String` or `List<String>`. Arrays are joined with `" "` at runtime. **Texts longer than ~80 characters must use the array form**, split at natural phrase or cantillation-pause boundaries.
 - **Sections** are filtered by `condition_flags`/`exclude_flags` and concatenated with `\n`.
 - **Bold syntax**: `<b>word</b>` — used by post-processors; rendered by `RichPrayerText`.
 
@@ -220,17 +234,18 @@ Lookup order: nusach-specific entry → `common` fallback.
 
 ```
 smart_siddur/
-├── assets/prayers/               # 572 JSON prayer asset files
+├── assets/prayers/               # 700+ JSON prayer asset files
 │   ├── _manifest.json            # Central segment-ID → path registry
-│   ├── templates/                # 42 prayer templates (nested)
-│   │   ├── shacharit/            # One template per service-section per nusach
-│   │   ├── maariv_ashkenaz.json
-│   │   └── …
+│   ├── templates/                # Prayer templates (one per service-section per nusach)
 │   ├── shared_global/            # Amidah blessings, Kaddish, shared segments
 │   ├── shacharit/                # Shacharit-specific segments by section
 │   ├── mincha/
 │   ├── maariv/
-│   └── musaf/
+│   ├── musaf/
+│   ├── birkat_hamazon/           # Birkat HaMazon segments (common + per nusach)
+│   ├── meein_shalosh/            # Me'ein Shalosh segments (common + per nusach)
+│   ├── tefilat_haderech/         # Tefilat HaDerech segments (common + per nusach)
+│   └── purim/                    # Purim segments (Megillat Esther + blessings)
 │
 ├── lib/
 │   ├── core/
@@ -245,13 +260,17 @@ smart_siddur/
 │   │   └── services/             # HalachicCalendarService · PrayerAssembler · post-processors
 │   └── presentation/
 │       ├── constants/            # segment_labels.dart — Hebrew UI labels per segment ID
-│       ├── pages/                # PrayerScreen (shared) · Shacharit/Mincha/Maariv · Settings
+│       ├── i18n/                 # app_locale.dart · app_strings.dart — interface language
+│       ├── pages/
+│       │   ├── berachot/         # BerachotScreen (Birkat HaMazon, Me'ein Shalosh, …)
+│       │   ├── prayers/          # PrayerScreen (shared) · PrayerMenuScreen
+│       │   └── settings/         # SettingsScreen
 │       ├── providers/            # prayer_providers.dart — all Riverpod providers
 │       ├── theme/                # AppColors · AppDimens — design token constants
 │       └── widgets/              # PrayerTextWidget · HalachicHeader · FontSizeFab · …
 │
 ├── test/
-│   ├── domain/                   # HalachicCalendarService · assembler · post-processors
+│   ├── domain/                   # HalachicCalendarService · assembler · Me'ein Shalosh · post-processors
 │   └── presentation/             # Provider reactivity · widget rendering
 │
 ├── pubspec.yaml
@@ -310,7 +329,7 @@ Generated files (`*.freezed.dart`, `*.g.dart`) are committed to source control a
 ## Running Tests
 
 ```bash
-# Full suite — 200 tests across 11 files
+# Full suite — 218 tests across 12 files
 flutter test
 
 # Verbose output showing each test name
@@ -330,6 +349,7 @@ flutter analyze
 | `halachic_calendar_service_test.dart` | Flag emission for every halachic scenario (RC, YT, CHM, Chanukah, Purim, fasts, Omer, BaHaB, seasons) |
 | `prayer_assembler_test.dart` | Template assembly, condition/exclude gates, sub-template recursion |
 | `prayer_assembler_mincha_test.dart` | Mincha-specific flow (Tisha B'Av, Nachem) |
+| `prayer_assembler_meein_test.dart` | Me'ein Shalosh assembly: vav-prefix, closing colon, EY toggles, nusach differences, Tefilat HaDerech |
 | `omer_post_processor_test.dart` | `{{omer_day_count}}` substitution, Lamenatzeach/Ana BeKoach bold highlighting |
 | `sukkot_korbanot_post_processor_test.dart` | `{{daily_korban}}` injection per day |
 | `service_time_resolver_test.dart` | Zmanim-based service auto-selection |
@@ -337,6 +357,7 @@ flutter analyze
 | `settings_repository_test.dart` | SharedPreferences read/write |
 | `rich_prayer_text_test.dart` | `<b>…</b>` span parsing |
 | `hebrew_formatter_test.dart` | Hebrew date/nusach display strings |
+| `prayer_local_datasource_test.dart` | Asset bundle JSON loading and text normalization |
 
 ---
 
@@ -377,11 +398,10 @@ flutter build ios --release
 
 Then open `ios/Runner.xcworkspace` in Xcode → Product → Archive → Distribute App → App Store Connect.
 
-**Notes for first submission:**
-- Confirm Bundle ID in `ios/Runner.xcodeproj` matches the App Store Connect entry.
+**Notes for submission:**
 - The app requires **no special entitlements**: no push notifications, no background modes, no camera, no microphone, no location.
-- The app does **not** collect or transmit any user data. The privacy manifest (`PrivacyInfo.xcprivacy`) should reflect zero data collection.
-- Hebrew RTL is configured via `flutter_localizations` with `Locale('he')`. No additional localisation work is needed.
+- The app does **not** collect or transmit any user data.
+- Hebrew RTL is configured via `flutter_localizations`. Interface language selection (he/en/ru/fr) does not affect the prayer texts.
 
 ### Android — Google Play
 
@@ -414,16 +434,6 @@ Upload `build/app/outputs/bundle/release/app-release.aab` to the Play Console.
 
 A floating 🛠 button appears in the bottom-right corner of every screen **only when the app is run in debug mode** (`flutter run` or IDE launch). It is completely absent from release/profile builds.
 
-**How it works — compile-time gating:**
-
-```dart
-// lib/presentation/widgets/dev_overlay.dart
-if (!kDebugMode) return child;   // ← compile-time constant; release compiler
-                                  //   prunes all code below this line
-```
-
-`kDebugMode` is `bool.fromEnvironment('dart.vm.product') == false` — a Dart compile-time constant. Flutter's dead-code elimination removes the entire dev branch (including `_DevFab`, the preset panel, and all `devDateTimeOverrideProvider` reads) from App Store / Play Store binaries. There are no manual toggles or environment variables to manage.
-
 **How to use (debug builds):**
 
 1. Tap 🛠 to open the preset panel.
@@ -435,22 +445,26 @@ if (!kDebugMode) return child;   // ← compile-time constant; release compiler
    - Fast days (Tzom Gedaliah, 10 Tevet, Taanit Esther, 17 Tammuz, Tisha B'Av)
    - Sefirat HaOmer (any of the 49 days)
    - Aseret Yemei Teshuva, Yom Kippur, Hoshana Raba, etc.
-3. The orange/teal 🛠 badge shows the currently active override date.
-4. Tap **Reset** to return to the real current date/time.
+3. Tap **Reset** to return to the real current date/time.
 
-The override affects `HalachicCalendarService`, `ServiceTimeResolver`, and all three prayer providers simultaneously, so you can verify the complete assembled prayer for any date without changing device settings.
+The override affects `HalachicCalendarService`, `ServiceTimeResolver`, and all prayer + berachot providers simultaneously.
 
 ---
 
-### Current Content Limitations (Known Gaps — v1)
-
-The following liturgical sections are **explicitly out of scope for v1** and are not yet implemented. Any developer onboarding to this project should be aware that these areas require future template wiring:
+### Known Limitations (v1)
 
 | Area | Status | Notes |
 |---|---|---|
-| **Purim — full prayer service** | ⚠️ Partial | The halachic calendar flags (`purim`, `shushan_purim`, `kriat_hatorah_purim`, `al_hanisim`) are fully implemented and gate the correct segments within Shacharit/Mincha/Maariv. **Not yet implemented**: dedicated Purim Shacharit template with Megillah reading blocks, Al HaNisim standalone segment for Birkat HaMazon, and the Purim-specific Mincha additions. |
-| **Tisha B'Av — full prayer service** | ⚠️ Partial | The `tisha_beav` and `tisha_beav_mincha` flags are implemented and drive `Nachem` insertion at Mincha. **Not yet implemented**: Tisha B'Av Shacharit Kinot section, the abbreviated Psukei DeZimra nusach for the morning, and the Maariv-after-fast structure. |
-| **Shabbat prayer services** | 🚫 Out of scope | Kabbalat Shabbat, Shacharit Shabbat (Musaf Shabbat, Kriat HaTorah Shabbat), and Maariv Motzei Shabbat are out of scope for v1. |
-| **Yom Tov full services** | 🚫 Out of scope | Yom Tov-specific Shacharit (full Hallel, Musaf Yom Tov) and Maariv are out of scope for v1. |
+| **Shabbat prayer services** | 🚫 Out of scope | Kabbalat Shabbat, Shacharit/Musaf Shabbat, Maariv Motzei Shabbat |
+| **Yom Tov full services** | 🚫 Out of scope | Yom Tov Musaf Amidah, full Hallel Shacharit |
+| **Tisha B'Av full service** | ⚠️ Partial | Nachem at Mincha is implemented; Shacharit Kinot and abbreviated Psukei DeZimra are not |
+| **Kiddush Levana** | 📋 Planned | Placeholder in the Berachot tab; content not yet implemented |
 
-**Next steps for Purim / Tisha B'Av**: Add dedicated segment JSON files, register them in `_manifest.json`, create the template entries with the appropriate `condition_flags`, and wire the relevant `DayFlag` constants (already defined in `lib/domain/entities/day_flags.dart`).
+---
+
+## Credits
+
+The application's code infrastructure was developed by **Refael Gamliel** (רפאל גמליאל).
+
+- LinkedIn: [www.linkedin.com/in/refael-gamliel](https://www.linkedin.com/in/refael-gamliel)
+- Email: [refaelgamliel@gmail.com](mailto:refaelgamliel@gmail.com)
