@@ -61,7 +61,11 @@ Future<void> _pickCity(
 /// User preferences screen. Every change writes through to
 /// SharedPreferences immediately via the persistent providers.
 class SettingsScreen extends ConsumerWidget {
-  const SettingsScreen({super.key});
+  const SettingsScreen({super.key, this.onBack});
+
+  /// When provided, a back arrow is shown that returns to the screen the user
+  /// came from (e.g. the prayer they were reading) without re-selecting a tab.
+  final VoidCallback? onBack;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -84,6 +88,14 @@ class SettingsScreen extends ConsumerWidget {
       child: Scaffold(
         backgroundColor: AppColors.background,
         appBar: AppBar(
+          leading: onBack == null
+              ? null
+              : IconButton(
+                  icon: Icon(lang.direction == TextDirection.rtl
+                      ? Icons.arrow_forward
+                      : Icons.arrow_back),
+                  onPressed: onBack,
+                ),
           title: Text(s.t('tab_settings'),
               style: const TextStyle(
                   color: Colors.white, fontWeight: FontWeight.w700)),

@@ -14,7 +14,9 @@ import 'package:siddur_am_israel_chai/presentation/widgets/rich_prayer_text.dart
 const _initiallyExpanded = <String>{'birkat_kohanim_bracha'};
 
 // Segments that are part of a tight block: no trailing spacer so consecutive
-// segments flow without visual gaps.
+// segments flow without visual gaps. (Continuous in-line flow of a single
+// blessing is handled upstream by the flow-group merge in the providers; these
+// sets only tune the vertical spacing between the resulting blocks.)
 const _noTrailingSpace = <String>{
   'chatzi_kaddish_header',
   'kaddish_derabanan_header',
@@ -26,19 +28,10 @@ const _noTrailingSpace = <String>{
   'kaddish_titkabal_paragraph',
   // אין כאלהינו flows directly into אתה הוא שהקטירו
   'ein_keloheinu',
-  // Birkat HaMazon — hazan flows as one unbroken passage
-  'bhm_hazan_a',
-  'bhm_hazan_kaamur',
-  // Birkat HaMazon — rachem flows as one unbroken passage
-  'bhm_rachem_open_ashk',
-  'bhm_rachem_open_sfard',
-  'bhm_rachem_body',
-  // Birkat HaMazon EM — equivalent rachem segment
-  'bhm_em_rachem',
-  // Me'ein Shalosh — chips attach tightly to the opening text
+  // Me'ein Shalosh — chips attach tightly to the opening text; the opening,
+  // date insertion and closing stack with just a line break between them.
   'inline_toggle_meein',
-  // Me'ein Shalosh — near-closing attaches to chatima
-  'ms_kiatah',
+  'ms_opening',
 };
 
 // Segments that get extra bottom padding (typically the last segment of a flow).
@@ -50,27 +43,15 @@ const _extraBottomPadding = <String>{
   'bhm_em_sheva_kos',
 };
 
-// Segments where assembled sections should flow on one line — the assembler
-// joins sections with \n, but for these segments the \n is replaced with a
-// space so the food-type suffixes stay inline with the opening phrase.
-const _inlineJoin = <String>{
-  'ms_opening',
-  'ms_kiatah',
-  'ms_chatima',
-};
-
 // Segments whose top padding is suppressed (they follow a tight predecessor).
 const _noTopPadding = <String>{
-  // hazan chatima caps the unbroken hazan passage
-  'bhm_hazan_chatima',
-  // rachem body + chatima continue the unbroken rachem passage
-  'bhm_rachem_body',
-  'bhm_rachem_chatima',
-  'bhm_em_rachem_chatima',
-  // Me'ein Shalosh: opening text starts right below the chips
+  // Me'ein Shalosh: opening below the chips; date / closing follow with just
+  // a line break (no larger gap).
   'ms_opening',
-  // chatima starts right below kiatah
-  'ms_chatima',
+  'ms_date_rc',
+  'ms_date_chm_pesach',
+  'ms_date_chm_sukkot',
+  'ms_kiatah',
 };
 
 /// Compact inline toggle row rendered inside the prayer scroll view.
@@ -557,12 +538,7 @@ class PrayerTextWidget extends ConsumerWidget {
             const SizedBox(height: 8),
           ],
           if (segment.resolvedText.isNotEmpty)
-            RichPrayerText(
-              text: _inlineJoin.contains(segment.id)
-                  ? segment.resolvedText.replaceAll('\n', ' ')
-                  : segment.resolvedText,
-              style: bodyStyle,
-            ),
+            RichPrayerText(text: segment.resolvedText, style: bodyStyle),
           if (segment.id == 'sefirat_haomer_day_count') _OmerSummary(factor: factor),
           SizedBox(height: noTrailing ? 2
               : _extraBottomPadding.contains(segment.id) ? 36

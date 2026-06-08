@@ -29,6 +29,8 @@ class AppShell extends ConsumerStatefulWidget {
 
 class _AppShellState extends ConsumerState<AppShell> {
   int _currentIndex = 0;
+  // Tab to return to when leaving Settings via its back arrow.
+  int _previousIndex = 0;
 
   static const int _prayersIdx = 0;
   static const int _berachotIdx = 1;
@@ -37,7 +39,15 @@ class _AppShellState extends ConsumerState<AppShell> {
   final _prayersNavKey = GlobalKey<NavigatorState>();
   final _berachotNavKey = GlobalKey<NavigatorState>();
 
-  void _openSettings() => setState(() => _currentIndex = _settingsIdx);
+  void _goTo(int i) {
+    if (i == _currentIndex) return;
+    setState(() {
+      _previousIndex = _currentIndex;
+      _currentIndex = i;
+    });
+  }
+
+  void _openSettings() => _goTo(_settingsIdx);
 
   void _onTapTab(int i) {
     // Re-tapping an active tab with a nested navigator returns to its root.
@@ -51,7 +61,7 @@ class _AppShellState extends ConsumerState<AppShell> {
         return;
       }
     }
-    setState(() => _currentIndex = i);
+    _goTo(i);
   }
 
   @override
@@ -62,7 +72,7 @@ class _AppShellState extends ConsumerState<AppShell> {
       _PrayersTab(navKey: _prayersNavKey, onOpenSettings: _openSettings),
       _BerachotTab(navKey: _berachotNavKey),
       const CalendarScreen(),
-      const SettingsScreen(),
+      SettingsScreen(onBack: () => _goTo(_previousIndex)),
     ];
 
     return Scaffold(
