@@ -11,6 +11,8 @@ import 'package:url_launcher/url_launcher.dart';
 
 import 'package:siddur_am_israel_chai/domain/entities/user_context.dart';
 import 'package:siddur_am_israel_chai/presentation/constants/app_config.dart';
+import 'package:siddur_am_israel_chai/presentation/i18n/app_locale.dart';
+import 'package:siddur_am_israel_chai/presentation/i18n/app_strings.dart';
 import 'package:siddur_am_israel_chai/presentation/providers/prayer_providers.dart';
 import 'package:siddur_am_israel_chai/presentation/theme/app_colors.dart';
 import 'package:siddur_am_israel_chai/presentation/theme/app_dimens.dart';
@@ -29,26 +31,30 @@ class SettingsScreen extends ConsumerWidget {
     final purimDate = ref.watch(purimDateProvider);
     final fontFactor = ref.watch(fontSizeFactorProvider);
     final showLabels = ref.watch(showSegmentLabelsProvider);
+    final language = ref.watch(appLanguageProvider);
+    final lang = ref.watch(appLanguageEnumProvider);
+    final s = ref.watch(appStringsProvider);
     // Tallit / shaliach tzibbur / kohanim toggles are now inline in the prayer screen.
 
     return Directionality(
-      textDirection: TextDirection.rtl,
+      textDirection: lang.direction,
       child: Scaffold(
         backgroundColor: AppColors.background,
         appBar: AppBar(
-          title: const Text('הגדרות',
-              style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700)),
+          title: Text(s.t('tab_settings'),
+              style: const TextStyle(
+                  color: Colors.white, fontWeight: FontWeight.w700)),
           backgroundColor: AppColors.primary,
           foregroundColor: Colors.white,
           centerTitle: true,
         ),
         body: ListView(
           children: [
-            _SectionHeader(title: 'נוסח התפילה'),
+            _SectionHeader(title: s.t('section_nusach')),
             RadioListTile<String>(
               value: 'edot_mizrach',
               groupValue: nusach,
-              title: const Text('עדות המזרח'),
+              title: Text(s.t('nusach_edot_mizrach')),
               onChanged: (v) => ref
                   .read(nusachProvider.notifier)
                   .set(v ?? 'edot_mizrach'),
@@ -56,21 +62,21 @@ class SettingsScreen extends ConsumerWidget {
             RadioListTile<String>(
               value: 'sfard',
               groupValue: nusach,
-              title: const Text('ספרד'),
+              title: Text(s.t('nusach_sfard')),
               onChanged: (v) =>
                   ref.read(nusachProvider.notifier).set(v ?? 'sfard'),
             ),
             RadioListTile<String>(
               value: 'ashkenaz',
               groupValue: nusach,
-              title: const Text('אשכנז'),
+              title: Text(s.t('nusach_ashkenaz')),
               onChanged: (v) =>
                   ref.read(nusachProvider.notifier).set(v ?? 'ashkenaz'),
             ),
 
-            _SectionHeader(title: 'מתפלל/ת'),
+            _SectionHeader(title: s.t('section_davener')),
             SwitchListTile(
-              title: const Text('אני אשה'),
+              title: Text(s.t('i_am_woman')),
               value: gender == Gender.female,
               activeColor: AppColors.primary,
               onChanged: (isFemale) => ref
@@ -78,27 +84,27 @@ class SettingsScreen extends ConsumerWidget {
                   .set(isFemale ? Gender.female : Gender.male),
             ),
 
-            _SectionHeader(title: 'מיקום'),
+            _SectionHeader(title: s.t('section_location')),
             SwitchListTile(
-              title: const Text('אני בארץ ישראל'),
+              title: Text(s.t('in_israel')),
               value: inIsrael,
               onChanged: (v) =>
                   ref.read(isInIsraelProvider.notifier).set(v),
             ),
 
-            _SectionHeader(title: 'תפילה'),
+            _SectionHeader(title: s.t('section_prayer')),
             SwitchListTile(
-              title: const Text('מתפלל במניין'),
+              title: Text(s.t('with_minyan')),
               value: withMinyan,
               onChanged: (v) =>
                   ref.read(withMinyanProvider.notifier).set(v),
             ),
 
-            _SectionHeader(title: 'פורים'),
+            _SectionHeader(title: s.t('section_purim')),
             RadioListTile<PurimDate>(
               value: PurimDate.fourteenth,
               groupValue: purimDate,
-              title: const Text('י״ד אדר (פרזים)'),
+              title: Text(s.t('purim_14')),
               onChanged: (v) => ref
                   .read(purimDateProvider.notifier)
                   .set(v ?? PurimDate.fourteenth),
@@ -106,7 +112,7 @@ class SettingsScreen extends ConsumerWidget {
             RadioListTile<PurimDate>(
               value: PurimDate.fifteenth,
               groupValue: purimDate,
-              title: const Text('ט״ו אדר (מוקפין — ירושלים)'),
+              title: Text(s.t('purim_15')),
               onChanged: (v) => ref
                   .read(purimDateProvider.notifier)
                   .set(v ?? PurimDate.fifteenth),
@@ -114,20 +120,21 @@ class SettingsScreen extends ConsumerWidget {
             RadioListTile<PurimDate>(
               value: PurimDate.both,
               groupValue: purimDate,
-              title: const Text('שני הימים (מסופק)'),
+              title: Text(s.t('purim_both')),
               onChanged: (v) => ref
                   .read(purimDateProvider.notifier)
                   .set(v ?? PurimDate.both),
             ),
 
-            _SectionHeader(title: 'תצוגה'),
+            _SectionHeader(title: s.t('section_display')),
             SwitchListTile(
+              title: Text(s.t('show_labels')),
               value: showLabels,
               onChanged: (v) =>
                   ref.read(showSegmentLabelsProvider.notifier).set(v),
             ),
 
-            _SectionHeader(title: 'גודל גופן'),
+            _SectionHeader(title: s.t('section_font')),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Row(
@@ -169,12 +176,25 @@ class SettingsScreen extends ConsumerWidget {
               ),
             ),
             const SizedBox(height: 8),
-            _SectionHeader(title: 'יצירת קשר'),
+
+            _SectionHeader(title: s.t('section_language')),
+            for (final l in AppLanguage.values)
+              RadioListTile<String>(
+                value: l.code,
+                groupValue: language,
+                title: Text(l.nativeName, textDirection: l.direction),
+                onChanged: (v) => ref
+                    .read(appLanguageProvider.notifier)
+                    .set(v ?? AppLanguage.hebrew.code),
+              ),
+
+            const SizedBox(height: 8),
+            _SectionHeader(title: s.t('section_contact')),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
               child: OutlinedButton.icon(
                 icon: const Icon(Icons.open_in_new),
-                label: const Text('לתמיכה'),
+                label: Text(s.t('support')),
                 style: OutlinedButton.styleFrom(
                   foregroundColor: AppColors.primary,
                   side: const BorderSide(color: AppColors.primary),

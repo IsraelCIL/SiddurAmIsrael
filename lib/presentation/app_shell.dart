@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:siddur_am_israel_chai/domain/services/service_time_resolver.dart';
+import 'package:siddur_am_israel_chai/presentation/i18n/app_strings.dart';
 import 'package:siddur_am_israel_chai/presentation/pages/berachot/berachot_screen.dart';
 import 'package:siddur_am_israel_chai/presentation/pages/prayers/prayer_menu_screen.dart';
 import 'package:siddur_am_israel_chai/presentation/pages/settings/settings_screen.dart';
@@ -45,42 +46,41 @@ class _AppShellState extends ConsumerState<AppShell> {
 
   @override
   Widget build(BuildContext context) {
+    final s = ref.watch(appStringsProvider);
+
     final screens = <Widget>[
       _PrayersTab(navKey: _prayersNavKey, onOpenSettings: _openSettings),
       const BerachotScreen(),
       const SettingsScreen(),
     ];
 
-    return Directionality(
-      textDirection: TextDirection.rtl,
-      child: Scaffold(
-        body: IndexedStack(index: _currentIndex, children: screens),
-        bottomNavigationBar: BottomNavigationBar(
-          currentIndex: _currentIndex,
-          onTap: _onTapTab,
-          type: BottomNavigationBarType.fixed,
-          selectedItemColor: AppColors.primary,
-          unselectedItemColor: Colors.grey,
-          backgroundColor: AppColors.background,
-          showUnselectedLabels: true,
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.auto_stories_outlined),
-              activeIcon: Icon(Icons.auto_stories),
-              label: 'תפילות',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.menu_book_outlined),
-              activeIcon: Icon(Icons.menu_book),
-              label: 'ברכות',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.settings_outlined),
-              activeIcon: Icon(Icons.settings),
-              label: 'הגדרות',
-            ),
-          ],
-        ),
+    return Scaffold(
+      body: IndexedStack(index: _currentIndex, children: screens),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex,
+        onTap: _onTapTab,
+        type: BottomNavigationBarType.fixed,
+        selectedItemColor: AppColors.primary,
+        unselectedItemColor: Colors.grey,
+        backgroundColor: AppColors.background,
+        showUnselectedLabels: true,
+        items: [
+          BottomNavigationBarItem(
+            icon: const Icon(Icons.auto_stories_outlined),
+            activeIcon: const Icon(Icons.auto_stories),
+            label: s.t('tab_prayers'),
+          ),
+          BottomNavigationBarItem(
+            icon: const Icon(Icons.menu_book_outlined),
+            activeIcon: const Icon(Icons.menu_book),
+            label: s.t('tab_berachot'),
+          ),
+          BottomNavigationBarItem(
+            icon: const Icon(Icons.settings_outlined),
+            activeIcon: const Icon(Icons.settings),
+            label: s.t('tab_settings'),
+          ),
+        ],
       ),
     );
   }
@@ -96,11 +96,12 @@ class _PrayersTab extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final s = ref.read(appStringsProvider);
     final current = ref.read(currentServiceProvider);
-    final currentTitle = switch (current) {
-      PrayerService.shacharit => 'שחרית',
-      PrayerService.mincha => 'מנחה',
-      PrayerService.maariv => 'מעריב',
+    final currentTitleKey = switch (current) {
+      PrayerService.shacharit => 'shacharit',
+      PrayerService.mincha => 'mincha',
+      PrayerService.maariv => 'maariv',
     };
 
     return Navigator(
@@ -112,7 +113,7 @@ class _PrayersTab extends ConsumerWidget {
         MaterialPageRoute<void>(
           builder: (_) => buildPrayerReader(
             current,
-            currentTitle,
+            s.t(currentTitleKey),
             onOpenSettings: onOpenSettings,
           ),
         ),

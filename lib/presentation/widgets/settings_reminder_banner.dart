@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:siddur_am_israel_chai/core/utils/hebrew_formatter.dart';
+import 'package:siddur_am_israel_chai/presentation/i18n/app_strings.dart';
 import 'package:siddur_am_israel_chai/presentation/providers/prayer_providers.dart';
 import 'package:siddur_am_israel_chai/presentation/theme/app_colors.dart';
 
@@ -17,7 +17,10 @@ class SettingsReminderBanner extends ConsumerWidget {
     final seen = ref.watch(hasSeenSettingsBannerProvider);
     if (seen) return const SizedBox.shrink();
     final nusach = ref.watch(nusachProvider);
-    final nusachName = HebrewFormatter.nusachName(nusach);
+    final s = ref.watch(appStringsProvider);
+    final lang = ref.watch(appLanguageEnumProvider);
+    final notice =
+        s.t('banner_nusach_notice').replaceFirst('{nusach}', s.t('nusach_$nusach'));
 
     void dismiss() {
       ref.read(hasSeenSettingsBannerProvider.notifier).set(true);
@@ -28,7 +31,7 @@ class SettingsReminderBanner extends ConsumerWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
         child: Directionality(
-          textDirection: TextDirection.rtl,
+          textDirection: lang.direction,
           child: Row(
             children: [
               const Icon(Icons.info_outline,
@@ -36,7 +39,7 @@ class SettingsReminderBanner extends ConsumerWidget {
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
-                  'התפילה מוצגת בנוסח $nusachName. ניתן לשנות בהגדרות.',
+                  notice,
                   style: const TextStyle(
                     fontSize: 13,
                     color: AppColors.primaryDarker,
@@ -55,14 +58,14 @@ class SettingsReminderBanner extends ConsumerWidget {
                       const EdgeInsets.symmetric(horizontal: 8, vertical: 0),
                   minimumSize: const Size(0, 32),
                 ),
-                child: const Text('פתח הגדרות',
-                    style: TextStyle(fontWeight: FontWeight.w700)),
+                child: Text(s.t('open_settings'),
+                    style: const TextStyle(fontWeight: FontWeight.w700)),
               ),
               IconButton(
                 onPressed: dismiss,
                 icon: const Icon(Icons.close, size: 18),
                 color: AppColors.primary,
-                tooltip: 'סגור',
+                tooltip: s.t('close'),
                 visualDensity: VisualDensity.compact,
                 padding: EdgeInsets.zero,
                 constraints: const BoxConstraints(minWidth: 32, minHeight: 32),

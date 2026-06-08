@@ -3,22 +3,23 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:siddur_am_israel_chai/domain/entities/assembled_segment.dart';
 import 'package:siddur_am_israel_chai/domain/services/service_time_resolver.dart';
+import 'package:siddur_am_israel_chai/presentation/i18n/app_strings.dart';
 import 'package:siddur_am_israel_chai/presentation/pages/prayers/prayer_screen.dart';
 import 'package:siddur_am_israel_chai/presentation/providers/prayer_providers.dart';
 import 'package:siddur_am_israel_chai/presentation/theme/app_colors.dart';
 
 /// One selectable prayer service in the menu.
 class _PrayerEntry {
-  const _PrayerEntry(this.service, this.title, this.icon);
+  const _PrayerEntry(this.service, this.titleKey, this.icon);
   final PrayerService service;
-  final String title;
+  final String titleKey;
   final IconData icon;
 }
 
 const _entries = <_PrayerEntry>[
-  _PrayerEntry(PrayerService.shacharit, 'שחרית', Icons.wb_sunny_outlined),
-  _PrayerEntry(PrayerService.mincha, 'מנחה', Icons.brightness_6_outlined),
-  _PrayerEntry(PrayerService.maariv, 'מעריב', Icons.brightness_4_outlined),
+  _PrayerEntry(PrayerService.shacharit, 'shacharit', Icons.wb_sunny_outlined),
+  _PrayerEntry(PrayerService.mincha, 'mincha', Icons.brightness_6_outlined),
+  _PrayerEntry(PrayerService.maariv, 'maariv', Icons.brightness_4_outlined),
 ];
 
 FutureProvider<List<AssembledSegment>> _providerFor(PrayerService s) =>
@@ -29,7 +30,7 @@ FutureProvider<List<AssembledSegment>> _providerFor(PrayerService s) =>
     };
 
 /// Builds the reading screen for [service], wrapped RTL so the Hebrew prayer
-/// text always renders right-to-left.
+/// text always renders right-to-left regardless of the interface language.
 Widget buildPrayerReader(
   PrayerService service,
   String title, {
@@ -53,13 +54,15 @@ class PrayerMenuScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final s = ref.watch(appStringsProvider);
     final current = ref.watch(currentServiceProvider);
 
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
-        title: const Text('תפילות',
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700)),
+        title: Text(s.t('tab_prayers'),
+            style: const TextStyle(
+                color: Colors.white, fontWeight: FontWeight.w700)),
         backgroundColor: AppColors.primary,
         foregroundColor: Colors.white,
         centerTitle: true,
@@ -69,14 +72,15 @@ class PrayerMenuScreen extends ConsumerWidget {
         children: [
           for (final e in _entries)
             _PrayerTile(
-              title: e.title,
+              title: s.t(e.titleKey),
               icon: e.icon,
               isCurrent: e.service == current,
+              nowLabel: s.t('now_badge'),
               onTap: () => Navigator.of(context).push(
                 MaterialPageRoute<void>(
                   builder: (_) => buildPrayerReader(
                     e.service,
-                    e.title,
+                    s.t(e.titleKey),
                     onOpenSettings: onOpenSettings,
                   ),
                 ),
@@ -93,12 +97,14 @@ class _PrayerTile extends StatelessWidget {
     required this.title,
     required this.icon,
     required this.isCurrent,
+    required this.nowLabel,
     required this.onTap,
   });
 
   final String title;
   final IconData icon;
   final bool isCurrent;
+  final String nowLabel;
   final VoidCallback onTap;
 
   @override
@@ -127,8 +133,8 @@ class _PrayerTile extends StatelessWidget {
                   color: AppColors.primary,
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: const Text('עכשיו',
-                    style: TextStyle(
+                child: Text(nowLabel,
+                    style: const TextStyle(
                         color: Colors.white,
                         fontSize: 12,
                         fontWeight: FontWeight.w700)),

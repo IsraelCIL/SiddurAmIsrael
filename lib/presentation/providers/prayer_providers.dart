@@ -210,6 +210,16 @@ final showSegmentLabelsProvider =
   ),
 );
 
+/// Interface language code ('he' | 'en' | 'ru' | 'fr'). Affects only the
+/// framework UI; the prayer texts are always Hebrew. Consumed by
+/// `appLanguageEnumProvider` / `appStringsProvider` and `MaterialApp.locale`.
+final appLanguageProvider =
+    NotifierProvider<_PersistentNotifier<String>, String>(
+  () => _PersistentNotifier<String>(
+    read: (r) => r.getAppLanguage(),
+    write: (r, v) => r.setAppLanguage(v),
+  ),
+);
 
 /// Persists which optional segment IDs the user has chosen to keep expanded.
 /// Tapping an accordion toggle saves/removes the ID from this set so the

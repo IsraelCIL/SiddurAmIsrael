@@ -38,4 +38,9 @@ abstract class ISettingsRepository {
 
   bool getEinKohanim();
   Future<void> setEinKohanim(bool value);
+
+  /// Interface language code ('he' | 'en' | 'ru' | 'fr'). Defaults to 'he'.
+  /// Affects only the framework UI, never the prayer texts.
+  String getAppLanguage();
+  Future<void> setAppLanguage(String value);
 }

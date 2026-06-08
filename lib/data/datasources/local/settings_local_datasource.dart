@@ -64,4 +64,11 @@ class SettingsLocalDatasource {
   static const _kEinKohanim = 'v1.settings.ein_kohanim';
   bool readEinKohanim() => _prefs.getBool(_kEinKohanim) ?? false;
   Future<void> writeEinKohanim(bool v) => _prefs.setBool(_kEinKohanim, v);
+
+  /// Interface language code (e.g. 'he', 'en', 'ru', 'fr'). Affects only the
+  /// app's framework UI (tabs, titles, settings) — never the prayer texts.
+  static const _kAppLanguage = 'v1.settings.app_language';
+  String? readAppLanguage() => _prefs.getString(_kAppLanguage);
+  Future<void> writeAppLanguage(String v) =>
+      _prefs.setString(_kAppLanguage, v);
 }

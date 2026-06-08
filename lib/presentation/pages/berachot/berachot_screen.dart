@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:siddur_am_israel_chai/domain/entities/assembled_segment.dart';
+import 'package:siddur_am_israel_chai/presentation/i18n/app_strings.dart';
 import 'package:siddur_am_israel_chai/presentation/pages/prayers/prayer_screen.dart';
 import 'package:siddur_am_israel_chai/presentation/providers/prayer_providers.dart';
 import 'package:siddur_am_israel_chai/presentation/theme/app_colors.dart';
@@ -9,16 +9,19 @@ import 'package:siddur_am_israel_chai/presentation/theme/app_colors.dart';
 /// Landing screen for the "ברכות" tab — a menu of standalone blessings.
 /// Birkat HaMazon, Me'ein Shalosh and Tefilat HaDerech are live; Kiddush
 /// Levana is a placeholder awaiting its content.
-class BerachotScreen extends StatelessWidget {
+class BerachotScreen extends ConsumerWidget {
   const BerachotScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final s = ref.watch(appStringsProvider);
+
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
-        title: const Text('ברכות',
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700)),
+        title: Text(s.t('tab_berachot'),
+            style: const TextStyle(
+                color: Colors.white, fontWeight: FontWeight.w700)),
         backgroundColor: AppColors.primary,
         foregroundColor: Colors.white,
         centerTitle: true,
@@ -27,42 +30,60 @@ class BerachotScreen extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 8),
         children: [
           _BerachaTile(
-            title: 'ברכת המזון',
-            subtitle: 'לאחר סעודת לחם',
+            title: s.t('birkat_hamazon'),
+            subtitle: s.t('birkat_hamazon_sub'),
             icon: Icons.bakery_dining_outlined,
-            onTap: () => _open(context, 'ברכת המזון', birkatHamazonProvider),
+            onTap: () => Navigator.of(context).push(
+              MaterialPageRoute<void>(
+                builder: (_) => Directionality(
+                  textDirection: TextDirection.rtl,
+                  child: PrayerScreen(
+                    title: s.t('birkat_hamazon'),
+                    contentProvider: birkatHamazonProvider,
+                  ),
+                ),
+              ),
+            ),
           ),
           _BerachaTile(
-            title: 'ברכה מעין שלוש',
-            subtitle: 'לאחר מזונות, יין ופירות',
+            title: s.t('meein_shalosh'),
+            subtitle: s.t('meein_shalosh_sub'),
             icon: Icons.local_cafe_outlined,
-            onTap: () => _open(context, 'ברכה מעין שלוש', meeinShaloshProvider),
+            onTap: () => Navigator.of(context).push(
+              MaterialPageRoute<void>(
+                builder: (_) => Directionality(
+                  textDirection: TextDirection.rtl,
+                  child: PrayerScreen(
+                    title: s.t('meein_shalosh'),
+                    contentProvider: meeinShaloshProvider,
+                  ),
+                ),
+              ),
+            ),
           ),
           _BerachaTile(
-            title: 'תפילת הדרך',
-            subtitle: 'לפני יציאה לדרך',
+            title: s.t('tefilat_haderech'),
+            subtitle: s.t('tefilat_haderech_sub'),
             icon: Icons.directions_walk_outlined,
-            onTap: () => _open(context, 'תפילת הדרך', tefilatHaderechProvider),
+            onTap: () => Navigator.of(context).push(
+              MaterialPageRoute<void>(
+                builder: (_) => Directionality(
+                  textDirection: TextDirection.rtl,
+                  child: PrayerScreen(
+                    title: s.t('tefilat_haderech'),
+                    contentProvider: tefilatHaderechProvider,
+                  ),
+                ),
+              ),
+            ),
           ),
-          const _BerachaTile(
-            title: 'קידוש לבנה',
-            subtitle: 'בקרוב',
+          _BerachaTile(
+            title: s.t('kiddush_levana'),
+            subtitle: s.t('coming_soon'),
             icon: Icons.nightlight_outlined,
             onTap: null,
           ),
         ],
-      ),
-    );
-  }
-
-  void _open(BuildContext context, String title,
-      FutureProvider<List<AssembledSegment>> provider) {
-    Navigator.of(context).push(
-      MaterialPageRoute<void>(
-        builder: (_) => Directionality(
-          textDirection: TextDirection.rtl,
-          child: PrayerScreen(title: title, contentProvider: provider),
-        ),
       ),
     );
   }

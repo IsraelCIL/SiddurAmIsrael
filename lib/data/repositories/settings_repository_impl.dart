@@ -105,4 +105,20 @@ class SettingsRepositoryImpl implements ISettingsRepository {
 
   @override
   Future<void> setEinKohanim(bool value) => _ds.writeEinKohanim(value);
+
+  static const _defaultAppLanguage = 'he';
+  static const _supportedLanguages = {'he', 'en', 'ru', 'fr'};
+
+  @override
+  String getAppLanguage() {
+    final raw = _ds.readAppLanguage();
+    return (raw != null && _supportedLanguages.contains(raw))
+        ? raw
+        : _defaultAppLanguage;
+  }
+
+  @override
+  Future<void> setAppLanguage(String value) => _ds.writeAppLanguage(
+        _supportedLanguages.contains(value) ? value : _defaultAppLanguage,
+      );
 }

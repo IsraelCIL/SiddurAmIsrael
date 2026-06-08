@@ -3,6 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:siddur_am_israel_chai/domain/entities/assembled_segment.dart';
+import 'package:siddur_am_israel_chai/presentation/i18n/app_strings.dart';
 import 'package:siddur_am_israel_chai/presentation/providers/prayer_providers.dart';
 import 'package:siddur_am_israel_chai/presentation/theme/app_colors.dart';
 import 'package:siddur_am_israel_chai/presentation/widgets/font_size_fab.dart';
@@ -159,6 +160,7 @@ class _PrayerScreenState extends ConsumerState<PrayerScreen> {
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       builder: (_) => _NavSheet(
+        title: ref.read(appStringsProvider).t('jump_to_section'),
         entries: entries,
         scrollController: _scrollController,
       ),
@@ -608,10 +610,12 @@ class _NavEntry {
 
 class _NavSheet extends StatelessWidget {
   const _NavSheet({
+    required this.title,
     required this.entries,
     required this.scrollController,
   });
 
+  final String title;
   final List<_NavEntry> entries;
   final ScrollController scrollController;
 
@@ -678,9 +682,9 @@ class _NavSheet extends StatelessWidget {
                   const Icon(Icons.format_list_bulleted,
                       color: AppColors.primary, size: 18),
                   const SizedBox(width: 8),
-                  const Text(
-                    'קפיצה לקטע',
-                    style: TextStyle(
+                  Text(
+                    title,
+                    style: const TextStyle(
                       color: AppColors.primary,
                       fontWeight: FontWeight.w700,
                       fontSize: 15,
