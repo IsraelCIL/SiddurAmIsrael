@@ -261,6 +261,11 @@ const _segmentLabels = <String, String>{
   'tachanun_em_selichot_monday_thursday': '',
   'shomer_yisrael': 'שומר ישראל',
   'vidui_yud_gimel_midot': 'וידוי וי״ג מידות',
+  // Canonical sub-segments of the vidui + 13-middot block (shared by tachanun & selichot)
+  'vidui_intro': 'וידוי וי״ג מידות',
+  'vidui_ashamnu': '',
+  'el_erech_apayim_intro': '',
+  'yud_gimel_midot': '',
   // ── Selichot (fast days + BaHaB) ─────────────────────────────────────────
   'selichot_gedalia': 'סליחות',
   'selichot_10_tevet': 'סליחות',

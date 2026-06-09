@@ -324,7 +324,11 @@
     "selichot_shared_edot_mizrach_0": "assets/prayers/shacharit/acharei_amidah/common/selichot_shared_edot_mizrach_0.json",
     "selichot_shared_edot_mizrach_1": "assets/prayers/shacharit/acharei_amidah/common/selichot_shared_edot_mizrach_1.json",
     "selichot_shared_edot_mizrach_2": "assets/prayers/shacharit/acharei_amidah/common/selichot_shared_edot_mizrach_2.json",
-    "selichot_shared_edot_mizrach_3": "assets/prayers/shacharit/acharei_amidah/common/selichot_shared_edot_mizrach_3.json"
+    "selichot_shared_edot_mizrach_3": "assets/prayers/shacharit/acharei_amidah/common/selichot_shared_edot_mizrach_3.json",
+    "vidui_intro": "assets/prayers/shared_global/tachanun/common/vidui_intro.json",
+    "vidui_ashamnu": "assets/prayers/shared_global/tachanun/common/vidui_ashamnu.json",
+    "el_erech_apayim_intro": "assets/prayers/shared_global/tachanun/common/el_erech_apayim_intro.json",
+    "yud_gimel_midot": "assets/prayers/shared_global/tachanun/common/yud_gimel_midot.json"
   },
   "nusach": {
     "ashkenaz": {
@@ -373,7 +377,6 @@
       "tachanun_monday_thursday_addition": "assets/prayers/shared_global/tachanun/nusach/ashkenaz/tachanun_monday_thursday_addition.json",
       "vayevarech_david": "assets/prayers/shacharit/pesukei_dezimra/nusach/ashkenaz/vayevarech_david.json",
       "vehu_rachum": "assets/prayers/shared_global/tachanun/nusach/ashkenaz/vehu_rachum.json",
-      "vidui_yud_gimel_midot": "assets/prayers/shared_global/tachanun/nusach/ashkenaz/vidui_yud_gimel_midot.json",
       "yehi_ratzon_mon_thu": "assets/prayers/shacharit/acharei_amidah/nusach/ashkenaz/yehi_ratzon_mon_thu.json",
       "yehi_ratzon_shelo_yavo": "assets/prayers/shacharit/lifnei_hatfila/nusach/ashkenaz/yehi_ratzon_shelo_yavo.json",
       "yotzer_or": "assets/prayers/shacharit/birkot_kriat_shema/nusach/ashkenaz/yotzer_or.json",
@@ -595,7 +598,6 @@
       "shomer_yisrael": "assets/prayers/shared_global/amidah/nusach/sfard/shomer_yisrael.json",
       "tachanun_monday_thursday_addition": "assets/prayers/shared_global/tachanun/nusach/sfard/tachanun_monday_thursday_addition.json",
       "vehu_rachum": "assets/prayers/shared_global/tachanun/nusach/sfard/vehu_rachum.json",
-      "vidui_yud_gimel_midot": "assets/prayers/shared_global/tachanun/nusach/sfard/vidui_yud_gimel_midot.json",
       "yehi_ratzon_mon_thu": "assets/prayers/shacharit/acharei_amidah/nusach/sfard/yehi_ratzon_mon_thu.json",
       "yehi_ratzon_shelo_yavo": "assets/prayers/shacharit/lifnei_hatfila/nusach/sfard/yehi_ratzon_shelo_yavo.json",
       "psukim_acharei_tanya": "assets/prayers/shacharit/sof_hatfila/nusach/sfard/psukim_acharei_tanya.json",
