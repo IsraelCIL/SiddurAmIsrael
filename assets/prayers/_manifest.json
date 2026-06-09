@@ -530,7 +530,8 @@
       "ms_eretz": "assets/prayers/meein_shalosh/nusach/edot_mizrach/ms_eretz.json",
       "ms_kiatah": "assets/prayers/meein_shalosh/nusach/edot_mizrach/ms_kiatah.json",
       "ms_chatima": "assets/prayers/meein_shalosh/nusach/edot_mizrach/ms_chatima.json",
-      "thd_main": "assets/prayers/tefilat_haderech/nusach/edot_mizrach/thd_main.json"
+      "thd_main": "assets/prayers/tefilat_haderech/nusach/edot_mizrach/thd_main.json",
+      "atah_hu_shehiktiruv": "assets/prayers/shacharit/sof_hatfila/nusach/edot_mizrach/atah_hu_shehiktiruv.json"
     },
     "sfard": {
       "adon_olam": "assets/prayers/shacharit/lifnei_hatfila/nusach/sfard/adon_olam.json",
