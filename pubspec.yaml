@@ -83,6 +83,7 @@ flutter:
     - assets/prayers/common/haftarah/
 
     # Shacharit
+    - assets/prayers/shacharit/birkot_kriat_shema/common/
     - assets/prayers/shacharit/lifnei_hatfila/common/
     - assets/prayers/shacharit/lifnei_hatfila/nusach/ashkenaz/
     - assets/prayers/shacharit/lifnei_hatfila/nusach/sfard/
@@ -109,6 +110,7 @@ flutter:
     - assets/prayers/shacharit/sof_hatfila/nusach/edot_mizrach/
 
     # Mincha
+    - assets/prayers/mincha/acharei_amidah/common/
     - assets/prayers/mincha/lifnei_mincha/common/
     - assets/prayers/mincha/lifnei_mincha/nusach/edot_mizrach/
     - assets/prayers/mincha/acharei_amidah/nusach/ashkenaz/
@@ -168,9 +170,11 @@ flutter:
     - assets/prayers/shared_global/amidah/nusach/ashkenaz/
     - assets/prayers/shared_global/amidah/nusach/sfard/
     - assets/prayers/shared_global/amidah/nusach/edot_mizrach/
+    - assets/prayers/shared_global/kaddish/common/
     - assets/prayers/shared_global/kaddish/nusach/ashkenaz/
     - assets/prayers/shared_global/kaddish/nusach/sfard/
     - assets/prayers/shared_global/kaddish/nusach/edot_mizrach/
+    - assets/prayers/shared_global/tachanun/common/
     - assets/prayers/shared_global/tachanun/nusach/ashkenaz/
     - assets/prayers/shared_global/tachanun/nusach/sfard/
     - assets/prayers/shared_global/tachanun/nusach/edot_mizrach/
