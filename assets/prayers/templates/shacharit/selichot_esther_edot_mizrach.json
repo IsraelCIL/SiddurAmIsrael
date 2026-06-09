@@ -8,7 +8,7 @@
       "exclude_flags": []
     },
     {
-      "segment_id": "selichot_shared_edot_mizrach_0",
+      "segment_id": "yud_gimel_midot_em",
       "condition_flags": [],
       "exclude_flags": []
     },
@@ -18,7 +18,62 @@
       "exclude_flags": []
     },
     {
-      "segment_id": "selichot_shared_edot_mizrach_1",
+      "segment_id": "el_melech_yoshev_em",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "yud_gimel_midot_em",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "selichot_shared_12",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "el_melech_yoshev_em",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "yud_gimel_midot_em",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "selichot_shared_13",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "el_melech_yoshev_em",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "yud_gimel_midot_em",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "selichot_shared_14",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "selichot_shared_20",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "selichot_shared_21",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "selichot_shared_16",
       "condition_flags": [],
       "exclude_flags": []
     },
@@ -28,22 +83,7 @@
       "exclude_flags": []
     },
     {
-      "segment_id": "selichot_shared_edot_mizrach_2",
-      "condition_flags": [],
-      "exclude_flags": []
-    },
-    {
-      "segment_id": "selichot_esther_edot_mizrach_3",
-      "condition_flags": [],
-      "exclude_flags": []
-    },
-    {
-      "segment_id": "selichot_shared_edot_mizrach_3",
-      "condition_flags": [],
-      "exclude_flags": []
-    },
-    {
-      "segment_id": "selichot_esther_edot_mizrach_4",
+      "segment_id": "selichot_shared_18",
       "condition_flags": [],
       "exclude_flags": []
     }

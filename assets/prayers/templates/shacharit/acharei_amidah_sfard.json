@@ -3,70 +3,58 @@
   "name": "shacharit_acharei_amidah_sfard",
   "segments": [
     {
+      "sub_template_id": "selichot_10_tevet",
       "condition_flags": [
         "fast_10_tevet",
         "with_minyan"
       ],
-      "exclude_flags": [],
-      "optional": false,
-      "allowed_nusach": [],
-      "sub_template_id": "selichot_10_tevet_sfard"
+      "exclude_flags": []
     },
     {
+      "sub_template_id": "selichot_esther",
       "condition_flags": [
         "fast_esther",
         "with_minyan"
       ],
-      "exclude_flags": [],
-      "optional": false,
-      "allowed_nusach": [],
-      "sub_template_id": "selichot_esther_sfard"
+      "exclude_flags": []
     },
     {
+      "sub_template_id": "selichot_17_tammuz",
       "condition_flags": [
         "fast_17_tammuz",
         "with_minyan"
       ],
-      "exclude_flags": [],
-      "optional": false,
-      "allowed_nusach": [],
-      "sub_template_id": "selichot_17_tammuz_sfard"
+      "exclude_flags": []
     },
     {
+      "sub_template_id": "selichot_bahab_sheni_kama",
       "condition_flags": [
         "bahab_sheni_kama",
         "with_minyan"
       ],
       "exclude_flags": [
         "skip_tachanun"
-      ],
-      "optional": false,
-      "allowed_nusach": [],
-      "sub_template_id": "selichot_bahab_sheni_kama_sfard"
+      ]
     },
     {
+      "sub_template_id": "selichot_bahab_chamishi",
       "condition_flags": [
         "bahab_chamishi",
         "with_minyan"
       ],
       "exclude_flags": [
         "skip_tachanun"
-      ],
-      "optional": false,
-      "allowed_nusach": [],
-      "sub_template_id": "selichot_bahab_chamishi_sfard"
+      ]
     },
     {
+      "sub_template_id": "selichot_bahab_sheni_batra",
       "condition_flags": [
         "bahab_sheni_batra",
         "with_minyan"
       ],
       "exclude_flags": [
         "skip_tachanun"
-      ],
-      "optional": false,
-      "allowed_nusach": [],
-      "sub_template_id": "selichot_bahab_sheni_batra_sfard"
+      ]
     },
     {
       "segment_id": "avinu_malkeinu",

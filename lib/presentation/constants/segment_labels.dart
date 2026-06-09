@@ -3,7 +3,14 @@
 /// Returns the Hebrew label for a segment ID. An empty string means "no
 /// label" (the segment is body text, not a section header). Unknown IDs fall
 /// back to the raw ID so they remain visible in dev builds.
-String segmentLabel(String id) => _segmentLabels[id] ?? id;
+String segmentLabel(String id) {
+  final label = _segmentLabels[id];
+  if (label != null) return label;
+  // Generated selichot segments (shared cross-day + day-specific piyutim) are
+  // body text composed by the fast-day templates; they carry no section header.
+  if (id.startsWith('selichot_')) return '';
+  return id;
+}
 
 const _segmentLabels = <String, String>{
   // ── Lifnei HaTfila — morning prep ─────────────────────────────────────────
@@ -263,9 +270,14 @@ const _segmentLabels = <String, String>{
   'vidui_yud_gimel_midot': 'וידוי וי״ג מידות',
   // Canonical sub-segments of the vidui + 13-middot block (shared by tachanun & selichot)
   'vidui_intro': 'וידוי וי״ג מידות',
-  'vidui_ashamnu': '',
+  'ashamnu': '',
+  'sarnu': '',
   'el_erech_apayim_intro': '',
   'yud_gimel_midot': '',
+  'vesalachta': '',
+  'el_melech_yoshev': '',
+  'el_melech_yoshev_em': '',
+  'yud_gimel_midot_em': '',
   // ── Selichot (fast days + BaHaB) ─────────────────────────────────────────
   'selichot_gedalia': 'סליחות',
   'selichot_10_tevet': 'סליחות',

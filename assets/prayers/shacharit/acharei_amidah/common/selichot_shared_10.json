@@ -1,0 +1,21 @@
+{
+  "id": "selichot_shared_10",
+  "sections": [
+    {
+      "text": [
+        "<label>חזן:</label>",
+        "<label>סְלַח נָא לַעֲוֹן הָעָם הַזֶּה כְּגֹדֶל חַסְדֶּךָ וְכַאֲשֶׁר נָשָׂאתָ לָעָם הַזֶּה מִמִּצְרַיִם וְעַד הֵנָּה וְשָׁם נֶאֱמַר:</label>"
+      ],
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "text": [
+        "<label>קהל:</label>",
+        "<label>וַיֹּאמֶר יְהֹוָה סָלַחְתִּי כִּדְבָרֶךָ:</label>"
+      ],
+      "condition_flags": [],
+      "exclude_flags": []
+    }
+  ]
+}

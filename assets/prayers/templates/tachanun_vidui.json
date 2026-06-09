@@ -8,7 +8,12 @@
       "exclude_flags": []
     },
     {
-      "segment_id": "vidui_ashamnu",
+      "segment_id": "ashamnu",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "sarnu",
       "condition_flags": [],
       "exclude_flags": []
     },
@@ -19,6 +24,11 @@
     },
     {
       "segment_id": "yud_gimel_midot",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "vesalachta",
       "condition_flags": [],
       "exclude_flags": []
     }
