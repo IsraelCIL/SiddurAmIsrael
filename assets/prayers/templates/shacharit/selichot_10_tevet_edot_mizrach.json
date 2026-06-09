@@ -1,0 +1,51 @@
+{
+  "id": "selichot_10_tevet_edot_mizrach",
+  "name": "סליחות",
+  "segments": [
+    {
+      "segment_id": "selichot_selichot_10_tevet_edot_mizrach_0",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "selichot_shared_edot_mizrach_0",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "selichot_selichot_10_tevet_edot_mizrach_1",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "selichot_shared_edot_mizrach_1",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "selichot_selichot_10_tevet_edot_mizrach_2",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "selichot_shared_edot_mizrach_2",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "selichot_selichot_10_tevet_edot_mizrach_3",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "selichot_shared_edot_mizrach_3",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "selichot_selichot_10_tevet_edot_mizrach_4",
+      "condition_flags": [],
+      "exclude_flags": []
+    }
+  ]
+}
