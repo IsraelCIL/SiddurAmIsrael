@@ -16,8 +16,10 @@ abstract final class AppColors {
   /// Dark Navy — text on the cream banner; internal section headers.
   static const Color primaryDarker = Color(0xFF0B3C5D);
 
-  // ── Parchment / surfaces ────────────────────────────────────────────────
-  static const Color background = Color(0xFFFDF8F0);
+  // ── Surfaces ────────────────────────────────────────────────────────────
+  /// Pure white — scaffold background of every screen.
+  static const Color background = Color(0xFFFFFFFF);
+  /// Light parchment — prayer-text panels and cards.
   static const Color surface = Color(0xFFFAF5EC);
 
   // ── Borders & dividers ──────────────────────────────────────────────────
@@ -26,7 +28,7 @@ abstract final class AppColors {
   static const Color divider = Color(0xFFEEE5D5);
 
   // ── Text ────────────────────────────────────────────────────────────────
-  /// Deep navy — section headers and labels (high contrast on cream).
+  /// Deep navy — section headers and labels (high contrast on white).
   static const Color textPrimary = Color(0xFF0B3C5D);
   static const Color textSecondary = Color(0xFF6B5848);
 
