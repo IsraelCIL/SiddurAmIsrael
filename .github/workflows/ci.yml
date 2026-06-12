@@ -12,6 +12,10 @@ jobs:
     name: Analyze & Test
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    env:
+      # service_time_resolver tests compute zmanim from host-local time and
+      # assume Israel time; GitHub runners default to UTC.
+      TZ: Asia/Jerusalem
 
     steps:
       - name: Checkout
