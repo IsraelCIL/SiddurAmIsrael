@@ -1,0 +1,36 @@
+{
+  "id": "tachanun_vidui",
+  "name": "וידוי וי״ג מידות",
+  "segments": [
+    {
+      "segment_id": "vidui_intro",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "ashamnu",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "sarnu",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "el_erech_apayim_intro",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "yud_gimel_midot",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "vesalachta",
+      "condition_flags": [],
+      "exclude_flags": []
+    }
+  ]
+}

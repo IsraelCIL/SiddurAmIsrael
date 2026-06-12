@@ -3,13 +3,13 @@
   "name": "תחנון",
   "segments": [
     {
-      "segment_id": "vidui_yud_gimel_midot",
       "condition_flags": [
         "with_minyan"
       ],
       "exclude_flags": [],
       "optional": true,
-      "allowed_nusach": []
+      "allowed_nusach": [],
+      "sub_template_id": "tachanun_vidui"
     },
     {
       "segment_id": "vehu_rachum",
