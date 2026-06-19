@@ -116,7 +116,7 @@
       "exclude_flags": []
     },
     {
-      "segment_id": "bhm_em_harachaman_rc",
+      "segment_id": "bhm_harachaman_rc",
       "condition_flags": [
         "rosh_chodesh"
       ],

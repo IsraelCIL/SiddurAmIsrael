@@ -1,0 +1,146 @@
+{
+  "id": "selichot_17_tammuz",
+  "name": "סליחות",
+  "segments": [
+    {
+      "segment_id": "selichot_shared_0",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "el_erech_apayim_intro",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "yud_gimel_midot",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "vesalachta",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "selichot_17_tammuz_0",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "selichot_shared_1",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "selichot_shared_2",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "selichot_shared_3",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "selichot_shared_4",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "selichot_17_tammuz_1",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "el_melech_yoshev",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "yud_gimel_midot",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "vesalachta",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "selichot_17_tammuz_2",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "selichot_shared_1",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "selichot_17_tammuz_3",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "el_melech_yoshev",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "yud_gimel_midot",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "vesalachta",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "selichot_17_tammuz_4",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "el_melech_yoshev",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "yud_gimel_midot",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "vesalachta",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "selichot_shared_5",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "vidui_intro",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "ashamnu",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "selichot_shared_8",
+      "condition_flags": [],
+      "exclude_flags": []
+    },
+    {
+      "segment_id": "selichot_shared_7",
+      "condition_flags": [],
+      "exclude_flags": []
+    }
+  ]
+}
