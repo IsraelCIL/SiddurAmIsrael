@@ -1,4 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Optional: used only on-device to compute zmanim (sunrise, sunset,
+         candle-lighting) from the user's location. No data is stored or shared. -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <application
         android:label="סידור עם ישראל"
         android:name="${applicationName}"
