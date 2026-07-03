@@ -162,7 +162,7 @@ class SettingsScreen extends ConsumerWidget {
                     color: AppColors.primary),
                 title: Text(s.t('city_for_times')),
                 subtitle: Text(city.name),
-                trailing: const Icon(Icons.chevron_left,
+                trailing: const Icon(Icons.chevron_right,
                     color: AppColors.primary),
                 onTap: () => _pickCity(context, ref, city.id),
               ),

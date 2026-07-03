@@ -95,38 +95,46 @@ class CalendarScreen extends ConsumerWidget {
   }
 
   // ── Month navigation row ──────────────────────────────────────────────────
+  // Fixed physical layout regardless of UI direction: the ‹ button on the
+  // left always goes to the previous month, the › button on the right always
+  // goes to the next month (universal calendar convention; in RTL a logical
+  // Row would invert the sides and feel backwards).
   Widget _monthNav(BuildContext context, WidgetRef ref, String label,
       DateTime firstGreg, int daysInMonth, DateTime anchor) {
     void go(DateTime to) => ref.read(calendarAnchorProvider.notifier).state = to;
-    return Row(
-      children: [
-        IconButton(
-          icon: const Icon(Icons.chevron_right, color: AppColors.primary),
-          onPressed: () => go(firstGreg.subtract(const Duration(days: 1))),
-        ),
-        Expanded(
-          child: InkWell(
-            borderRadius: BorderRadius.circular(16),
-            onTap: () => _pickMonthYear(context, ref, anchor),
-            child: Container(
-              alignment: Alignment.center,
-              padding: const EdgeInsets.symmetric(vertical: 6),
-              child: Text(
-                '$label  ▾',
-                style: const TextStyle(
-                  color: AppColors.primary,
-                  fontWeight: FontWeight.w800,
-                  fontSize: 18,
+    return Directionality(
+      textDirection: TextDirection.ltr,
+      child: Row(
+        children: [
+          IconButton(
+            icon: const Icon(Icons.chevron_left, color: AppColors.primary),
+            onPressed: () => go(firstGreg.subtract(const Duration(days: 1))),
+          ),
+          Expanded(
+            child: InkWell(
+              borderRadius: BorderRadius.circular(16),
+              onTap: () => _pickMonthYear(context, ref, anchor),
+              child: Container(
+                alignment: Alignment.center,
+                padding: const EdgeInsets.symmetric(vertical: 6),
+                child: Text(
+                  '$label  ▾',
+                  textDirection: TextDirection.rtl,
+                  style: const TextStyle(
+                    color: AppColors.primary,
+                    fontWeight: FontWeight.w800,
+                    fontSize: 18,
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-        IconButton(
-          icon: const Icon(Icons.chevron_left, color: AppColors.primary),
-          onPressed: () => go(firstGreg.add(Duration(days: daysInMonth))),
-        ),
-      ],
+          IconButton(
+            icon: const Icon(Icons.chevron_right, color: AppColors.primary),
+            onPressed: () => go(firstGreg.add(Duration(days: daysInMonth))),
+          ),
+        ],
+      ),
     );
   }
 

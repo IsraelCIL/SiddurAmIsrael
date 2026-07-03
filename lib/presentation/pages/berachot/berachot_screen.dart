@@ -117,7 +117,7 @@ class _BerachaTile extends StatelessWidget {
         subtitle: Text(subtitle,
             style: const TextStyle(color: AppColors.textSecondary)),
         trailing: enabled
-            ? const Icon(Icons.chevron_left, color: AppColors.textSecondary)
+            ? const Icon(Icons.chevron_right, color: AppColors.textSecondary)
             : null,
         onTap: onTap,
       ),

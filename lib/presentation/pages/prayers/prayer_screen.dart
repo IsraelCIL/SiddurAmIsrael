@@ -716,7 +716,7 @@ class _NavSheet extends StatelessWidget {
                           horizontal: 20, vertical: 12),
                       child: Row(
                         children: [
-                          const Icon(Icons.chevron_left,
+                          const Icon(Icons.chevron_right,
                               color: AppColors.primary, size: 18),
                           const SizedBox(width: 8),
                           Expanded(

@@ -139,7 +139,7 @@ class _PrayerTile extends StatelessWidget {
                         fontSize: 12,
                         fontWeight: FontWeight.w700)),
               )
-            : const Icon(Icons.chevron_left, color: AppColors.textSecondary),
+            : const Icon(Icons.chevron_right, color: AppColors.textSecondary),
         onTap: onTap,
       ),
     );

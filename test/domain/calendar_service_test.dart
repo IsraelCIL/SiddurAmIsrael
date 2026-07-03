@@ -94,5 +94,35 @@ void main() {
       }
       expect(found, isTrue);
     });
+
+    group('upcoming pinned to upcomingBase', () {
+      final today = DateTime(2025, 1, 15);
+
+      test('browsing a different day keeps the upcoming list of today', () {
+        final pinnedFromToday = svc.dayFor(today, jerusalem).upcoming;
+        final browsedFarAway = svc
+            .dayFor(DateTime(2025, 3, 2), jerusalem, upcomingBase: today)
+            .upcoming;
+
+        expect(
+          browsedFarAway.map((e) => '${e.name}|${e.hebrewDate}|${e.daysUntil}'),
+          pinnedFromToday.map((e) => '${e.name}|${e.hebrewDate}|${e.daysUntil}'),
+        );
+      });
+
+      test('days-until is measured from the base, not the browsed day', () {
+        final browsed = svc
+            .dayFor(DateTime(2025, 6, 20), jerusalem, upcomingBase: today)
+            .upcoming;
+        final direct = svc.dayFor(today, jerusalem).upcoming;
+        expect(browsed.first.daysUntil, direct.first.daysUntil);
+      });
+
+      test('without upcomingBase the browsed day remains the reference', () {
+        final a = svc.dayFor(today, jerusalem).upcoming;
+        final b = svc.dayFor(DateTime(2025, 3, 2), jerusalem).upcoming;
+        expect(a.map((e) => e.name), isNot(equals(b.map((e) => e.name))));
+      });
+    });
   });
 }
