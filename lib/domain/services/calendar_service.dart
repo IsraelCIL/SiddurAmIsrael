@@ -16,9 +16,15 @@ import 'package:siddur_am_israel_chai/domain/entities/city.dart';
 class CalendarService {
   const CalendarService();
 
-  CalendarDay dayFor(DateTime date, City city) {
+  /// [upcomingBase] pins the "מועדים קרובים" list (and its days-until counts)
+  /// to a fixed reference day — the UI passes today, so browsing other dates
+  /// never changes the upcoming-events list. Defaults to [date].
+  CalendarDay dayFor(DateTime date, City city, {DateTime? upcomingBase}) {
     // Normalize to local noon — avoids DST / midnight edge cases in arithmetic.
     final day = DateTime(date.year, date.month, date.day, 12);
+    final upcomingFrom = upcomingBase == null
+        ? day
+        : DateTime(upcomingBase.year, upcomingBase.month, upcomingBase.day, 12);
 
     final jc = JewishCalendar.fromDateTime(day)..inIsrael = city.inIsrael;
     final fmt = HebrewDateFormatter()..hebrewFormat = true;
@@ -124,7 +130,7 @@ class CalendarService {
       ));
     }
 
-    final upcoming = _upcoming(day, city.inIsrael, fmt);
+    final upcoming = _upcoming(upcomingFrom, city.inIsrael, fmt);
 
     final monthName = HebrewFormatter.monthName(hebrew.month);
     final dayNum = HebrewFormatter.toHebrewNumeral(hebrew.day);

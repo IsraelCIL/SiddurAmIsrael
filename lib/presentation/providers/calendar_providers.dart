@@ -50,8 +50,11 @@ final calendarSelectedDayProvider =
     StateProvider<DateTime>((ref) => calendarToday());
 
 /// Full info (Hebrew date, holidays, Daf, all zmanim) for a day at the
-/// selected city.
+/// selected city. The upcoming-events list is always measured from today,
+/// not from the browsed date.
 final calendarDayProvider = Provider.family<CalendarDay, DateTime>((ref, date) {
   final city = ref.watch(effectiveCityProvider);
-  return ref.watch(calendarDayServiceProvider).dayFor(date, city);
+  return ref
+      .watch(calendarDayServiceProvider)
+      .dayFor(date, city, upcomingBase: calendarToday());
 });
