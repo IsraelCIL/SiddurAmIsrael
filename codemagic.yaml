@@ -109,10 +109,13 @@ workflows:
     publishing:
       app_store_connect:
         auth: integration
-        # Uploads to TestFlight automatically. Leave App Store submission manual
-        # for the first release so you can fill in metadata & screenshots first.
+        # Uploads to TestFlight AND submits for App Store review; the version
+        # is released automatically once Apple approves (AFTER_APPROVAL).
+        # If Apple flags missing metadata (e.g. What's New), complete it in
+        # App Store Connect — the submitted build stays attached.
         submit_to_testflight: true
-        submit_to_app_store: false
+        submit_to_app_store: true
+        release_type: AFTER_APPROVAL
       email:
         recipients:
           - israel9390@gmail.com
